@@ -1,0 +1,15 @@
+[submodule "lib/gzip-hpp"]
+	path = lib/gzip-hpp
+	url = https://github.com/NewYaroslav/gzip-hpp.git
+[submodule "lib/zlib"]
+	path = lib/zlib
+	url = https://github.com/madler/zlib.git
+[submodule "lib/openssl_win64"]
+	path = lib/openssl_win64
+	url = https://github.com/NewYaroslav/openssl_win64.git
+[submodule "lib/curl-7.60.0-win64-mingw"]
+	path = lib/curl-7.60.0-win64-mingw
+	url = https://github.com/NewYaroslav/curl-7.60.0-win64-mingw.git
+[submodule "lib/AES"]
+	path = lib/AES
+	url = https://github.com/SergeyBel/AES.git
