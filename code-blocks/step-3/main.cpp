@@ -84,6 +84,7 @@ int main() {
     // Returns POST data
     {
         kurlyk::Client client("https://httpbin.org", true);
+        client.config.follow_location = false;
         client.post("/post", "{\"Heron\":\"kurlyk-kurlyk\"}", {{"Content-Type", "application/json"}}, [&](
                 const kurlyk::Headers &headers,
                 const std::string &response,
@@ -95,6 +96,7 @@ int main() {
     // Returns PUT data
     {
         kurlyk::Client client("https://httpbin.org", true);
+        client.config.follow_location = false;
         client.put("/put", "{\"Heron\":\"kurlyk-kurlyk\"}", {{"Content-Type", "application/json"}}, [&](
                 const kurlyk::Headers &headers,
                 const std::string &response,
@@ -114,6 +116,33 @@ int main() {
             std::cout << response << std::endl;
         });
     }
-
+    // Sets a simple cookie
+    {
+        kurlyk::Client client("https://httpbin.org", true);
+        client.config.follow_location = true;
+        client.config.header = true;
+        client.config.verbose = true;
+        client.get("/cookies/set/author/green",
+                {
+                    {"Connection", "keep-alive"},
+                    {"Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"},
+                    {"Accept-Language", "ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3"},
+                    {"Accept-Encoding", "gzip, deflate, br"},
+                    {"Upgrade-Insecure-Requests", "1"},
+                }, [&](
+                const kurlyk::Headers &headers,
+                const std::string &response,
+                const long err_code,
+                const long response_code) {
+            std::cout << response << std::endl;
+        });
+        client.get("/cookies", {{"Green", "elephant2"}}, [&](
+                const kurlyk::Headers &headers,
+                const std::string &response,
+                const long err_code,
+                const long response_code) {
+            std::cout << response << std::endl;
+        });
+    }
     return 0;
 }
