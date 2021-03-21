@@ -204,7 +204,7 @@ namespace kurlyk {
                 const std::string &path,
                 const std::string &args,
                 const std::string &content,
-                const std::string &cookie,
+                //const std::string &cookie,
                 const Headers &headers,
                 const CurlHeaders &curl_headers,
                 std::string &response,
@@ -461,14 +461,14 @@ namespace kurlyk {
 
             CurlHeaders curl_headers(headers);
             const std::string args_str = get_str_args(args);
-            const std::string cookie_buffer_str = get_str_cookie_buffer();
+            //const std::string cookie_buffer_str = get_str_cookie_buffer();
 
             CURL *curl = init_curl(
                 method,
                 path,
                 args_str,
                 content,
-                cookie_buffer_str,
+                //cookie_buffer_str,
                 headers,
                 curl_headers,
                 response_buffer,

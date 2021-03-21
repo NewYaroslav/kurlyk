@@ -223,10 +223,14 @@ client.config.use_cookie_file = false;
 Библиотека *kurlyk* является *header-only*. Однако, для ее работы нужен **curl** и **OpenSSL**.
 Если вы компилируете при помощи *mingw*, я рекомендую использовать готовые сборки.
 Сборки данных библиотек, на которых тестировалась работа *kurlyk*, находятся в папке *lib* как субмодули.
+
 Первоисточник сборок:
-https://slproweb.com/products/Win32OpenSSL.html
-https://curl.se/windows/
+
+* https://slproweb.com/products/Win32OpenSSL.html
+
+* https://curl.se/windows/
 
 Одним словом, **kurlyk!**
+
 ![logo](doc/logo-mini-end.png)
 
