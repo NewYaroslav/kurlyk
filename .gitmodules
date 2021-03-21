@@ -13,9 +13,6 @@
 [submodule "lib/AES"]
 	path = lib/AES
 	url = https://github.com/SergeyBel/AES.git
-[submodule "json"]
-	path = json
-	url = https://github.com/nlohmann/json.git
 [submodule "lib/brotli-hpp"]
 	path = lib/brotli-hpp
 	url = https://github.com/NewYaroslav/brotli-hpp.git
