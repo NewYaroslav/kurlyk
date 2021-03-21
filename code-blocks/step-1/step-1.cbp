@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="step-1" />
+		<Option pch_mode="2" />
+		<Option compiler="mingw_64_7_3_0" />
+		<Build>
+			<Target title="Release">
+				<Option output="bin/Release/step-1" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_7_3_0" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add option="-Winvalid-pch" />
+					<Add option='-include &quot;pch.hpp&quot;' />
+					<Add directory="../../lib/openssl_win64/include" />
+					<Add directory="../../lib/openssl_win64/lib" />
+					<Add directory="../../lib/openssl_win64/bin" />
+					<Add directory="../../lib/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../lib/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../lib/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../lib/Simple-WebSocket-Server" />
+					<Add directory="../../lib/Simple-Web-Server" />
+					<Add directory="../../lib/json/include" />
+					<Add directory="../../lib/xtime_cpp/src" />
+					<Add directory="../../lib/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../lib/gzip-hpp/include" />
+					<Add directory="../../lib/zlib" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add library="../../lib/openssl_win64/lib/capi.lib" />
+					<Add library="../../lib/openssl_win64/lib/dasync.lib" />
+					<Add library="../../lib/openssl_win64/lib/libcrypto.lib" />
+					<Add library="../../lib/openssl_win64/lib/libssl.lib" />
+					<Add library="../../lib/openssl_win64/lib/openssl.lib" />
+					<Add library="../../lib/openssl_win64/lib/ossltest.lib" />
+					<Add library="../../lib/openssl_win64/lib/padlock.lib" />
+					<Add library="../../lib/curl-7.60.0-win64-mingw/lib/libcurl.a" />
+					<Add library="../../lib/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add directory="../../lib/openssl_win64/lib" />
+					<Add directory="../../lib/openssl_win64/include" />
+					<Add directory="../../lib/openssl_win64/bin" />
+					<Add directory="../../lib/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../lib/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../lib/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../lib/Simple-WebSocket-Server" />
+					<Add directory="../../lib/Simple-Web-Server" />
+					<Add directory="../../lib/json/include" />
+					<Add directory="../../lib/xtime_cpp/src" />
+					<Add directory="../../lib/gzip-hpp/include" />
+					<Add directory="../../lib/zlib" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="../../include/kurlyk-data-encryption.hpp" />
+		<Unit filename="../../include/kurlyk-file-encryption.hpp" />
+		<Unit filename="../../include/kurlyk-utility.hpp" />
+		<Unit filename="../../include/kurlyk.hpp" />
+		<Unit filename="../../lib/Simple-WebSocket-Server/client_ws.hpp" />
+		<Unit filename="../../lib/Simple-WebSocket-Server/client_wss.hpp" />
+		<Unit filename="../../lib/Simple-WebSocket-Server/crypto.hpp" />
+		<Unit filename="../../lib/Simple-WebSocket-Server/status_code.hpp" />
+		<Unit filename="../../lib/Simple-WebSocket-Server/utility.hpp" />
+		<Unit filename="../../lib/gzip-hpp/include/gzip/compress.hpp" />
+		<Unit filename="../../lib/gzip-hpp/include/gzip/config.hpp" />
+		<Unit filename="../../lib/gzip-hpp/include/gzip/decompress.hpp" />
+		<Unit filename="../../lib/gzip-hpp/include/gzip/utils.hpp" />
+		<Unit filename="../../lib/gzip-hpp/include/gzip/version.hpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="pch.hpp">
+			<Option compile="1" />
+			<Option weight="0" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
