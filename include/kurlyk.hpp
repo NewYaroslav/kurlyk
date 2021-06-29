@@ -325,6 +325,21 @@ namespace kurlyk {
             return std::move(temp);
         }
 
+    public:
+
+        Client(const std::string &user_host, const bool use_default = false) noexcept : host(user_host) {
+            curl_global_init(CURL_GLOBAL_ALL);
+            if(use_default) config.set_default();
+#           ifdef KYRLUK_AES_SUPPORT
+            const uint32_t seed = 20032021;
+            config.key = utility::get_generated_key(seed);
+#           endif
+        }
+
+        /** \brief Получить строку из аргументов
+         * \param args  Аргументы
+         * \return Вернет строку
+         */
         std::string get_str_args(const Arguments &args) noexcept {
             if (args.empty()) return std::string();
             std::string temp("?");
@@ -348,17 +363,6 @@ namespace kurlyk {
             }
             curl_easy_cleanup(curl);
             return std::move(temp);
-        }
-
-    public:
-
-        Client(const std::string &user_host, const bool use_default = false) noexcept : host(user_host) {
-            curl_global_init(CURL_GLOBAL_ALL);
-            if(use_default) config.set_default();
-#           ifdef KYRLUK_AES_SUPPORT
-            const uint32_t seed = 20032021;
-            config.key = utility::get_generated_key(seed);
-#           endif
         }
 
         /** \brief Очистить файл Сookie
