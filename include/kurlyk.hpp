@@ -340,7 +340,7 @@ namespace kurlyk {
          * \param args  Аргументы
          * \return Вернет строку
          */
-        std::string get_str_args(const Arguments &args) noexcept {
+		static std::string get_str_args(const Arguments &args) noexcept {
             if (args.empty()) return std::string();
             std::string temp("?");
             CURL *curl = curl_easy_init();
@@ -541,6 +541,7 @@ namespace kurlyk {
                 output.response.swap(response_buffer);
             }
 
+			output.headers.swap(response_headers);
             if(callback != nullptr) {
                 callback(output);
             }
