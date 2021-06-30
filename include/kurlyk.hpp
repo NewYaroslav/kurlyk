@@ -336,35 +336,6 @@ namespace kurlyk {
 #           endif
         }
 
-        /** \brief Получить строку из аргументов
-         * \param args  Аргументы
-         * \return Вернет строку
-         */
-		static std::string get_str_args(const Arguments &args) noexcept {
-            if (args.empty()) return std::string();
-            std::string temp("?");
-            CURL *curl = curl_easy_init();
-            size_t index = 0;
-            const size_t index_end = args.size() - 1;
-            for(auto &a : args) {
-                char *output_key = curl_easy_escape(curl, a.first.c_str(), a.first.size());
-                if(output_key) {
-                    temp += std::string(output_key);
-                    curl_free(output_key);
-                }
-                temp += "=";
-                char *output_value = curl_easy_escape(curl, a.second.c_str(), a.second.size());
-                if(output_value) {
-                    temp += std::string(output_value);
-                    curl_free(output_value);
-                }
-                if(index != index_end) temp += "&";
-                ++index;
-            }
-            curl_easy_cleanup(curl);
-            return std::move(temp);
-        }
-
         /** \brief Очистить файл Сookie
          * Данный метод устанавливает флаг очистки файла Cookie
          * В качестве файла Сookie используется файл для работы с cURL
@@ -464,7 +435,7 @@ namespace kurlyk {
             std::string response_buffer;
 
             CurlHeaders curl_headers(headers);
-            const std::string args_str = get_str_args(args);
+            const std::string args_str = utility::get_str_query_string(args, "?");
             //const std::string cookie_buffer_str = get_str_cookie_buffer();
 
             CURL *curl = init_curl(

@@ -3,6 +3,10 @@
 
 
 int main() {
+    kurlyk::Arguments args;
+    args.emplace("heron", "kurlyk-kurlyk");
+    args.emplace("green", "elephant");
+    std::cout << "args: " << kurlyk::utility::get_str_query_string(args) << std::endl;
     // Returns Origin IP.
     {
         std::cout << "Returns Origin IP, v1" << std::endl;

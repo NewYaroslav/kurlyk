@@ -201,7 +201,40 @@ namespace kurlyk {
             inline bool empty() const noexcept {
                 return (http_headers == nullptr);
             }
-        };
+        }; // CurlHeaders
+
+        /** \brief Получить строку запроса
+         * \param data  Массив данных
+         * \return Вернет строку
+         */
+        template<class T>
+		static std::string get_str_query_string(
+                const T &data,
+                const std::string &prefix = std::string()) noexcept {
+            if (data.empty()) return std::string();
+            std::string temp(prefix);
+            CURL *curl = curl_easy_init();
+            size_t index = 0;
+            const size_t index_end = data.size() - 1;
+            for(auto &a : data) {
+                char *output_key = curl_easy_escape(curl, a.first.c_str(), a.first.size());
+                if(output_key) {
+                    temp += std::string(output_key);
+                    curl_free(output_key);
+                }
+                temp += "=";
+                char *output_value = curl_easy_escape(curl, a.second.c_str(), a.second.size());
+                if(output_value) {
+                    temp += std::string(output_value);
+                    curl_free(output_value);
+                }
+                if(index != index_end) temp += "&";
+                ++index;
+            }
+            curl_easy_cleanup(curl);
+            return std::move(temp);
+        }
+
 	}; // utility
 }; // kurlyk
 
