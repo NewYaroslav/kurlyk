@@ -1,7 +1,7 @@
 /*
 * kurlyk - C ++ library for easy curl work
 *
-* Copyright (c) 2021 Elektro Yar. Email: git.electroyar@gmail.com
+* Copyright (c) 2021-2023 Elektro Yar. Email: git.electroyar@gmail.com
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal

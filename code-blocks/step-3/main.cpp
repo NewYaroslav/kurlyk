@@ -1,8 +1,89 @@
 #include <iostream>
 #include <kurlyk.hpp>
-
+#include <thread>
 
 int main() {
+    // Returns Origin IP.
+    {
+        kurlyk::Client client("https://httpbin.org");
+        client.config.sert_file = "curl-ca-bundle.crt";
+        client.config.header = false;
+        client.config.verbose = false;
+        //
+        client.loop();
+        //
+        for (int i = 0; i < 10; ++i) {
+            client.async_request("GET", "/ip", kurlyk::Arguments(), std::string(), kurlyk::Headers(),
+                    [i](const kurlyk::Output &output) {
+                std::cout << "& <" << i << ">" << std::endl;
+                std::cout << "response: " << std::endl;
+                std::cout << output.response << std::endl;
+                std::cout << "err_code: " << output.curl_code << std::endl;
+                std::cout << "response_code: " << output.response_code << std::endl;
+                std::cout << "----------------------------------------" << std::endl;
+            });
+        }
+        std::cout << "loop" << std::endl;
+
+        std::atomic<bool> reset = ATOMIC_VAR_INIT(false);
+
+        std::thread t1([&reset, &client](){
+            while(!reset) {
+                client.loop();
+            }
+        });
+
+        std::thread t2([&reset, &client](){
+            for (int i = 0; i < 10; ++i) {
+                client.async_request("GET", "/ip", kurlyk::Arguments(), std::string(), kurlyk::Headers(),
+                        [i](const kurlyk::Output &output) {
+                    std::cout << "- <" << i << ">" << std::endl;
+                    std::cout << "response: " << std::endl;
+                    std::cout << output.response << std::endl;
+                    std::cout << "err_code: " << output.curl_code << std::endl;
+                    std::cout << "response_code: " << output.response_code << std::endl;
+                    std::cout << "----------------------------------------" << std::endl;
+                });
+                client.async_request("GET", "/user-agent", kurlyk::Arguments(), std::string(), kurlyk::Headers(),
+                        [i](const kurlyk::Output &output) {
+                    std::cout << "- <" << i << ">" << std::endl;
+                    std::cout << "response: " << std::endl;
+                    std::cout << output.response << std::endl;
+                    std::cout << "err_code: " << output.curl_code << std::endl;
+                    std::cout << "response_code: " << output.response_code << std::endl;
+                    std::cout << "----------------------------------------" << std::endl;
+                });
+            }
+        });
+
+        for (int i = 0; i < 10; ++i) {
+            client.async_request("GET", "/headers", kurlyk::Arguments(), std::string(), kurlyk::Headers(),
+                    [i](const kurlyk::Output &output) {
+                std::cout << "+ <" << i << ">" << std::endl;
+                std::cout << "response: " << std::endl;
+                std::cout << output.response << std::endl;
+                std::cout << "err_code: " << output.curl_code << std::endl;
+                std::cout << "response_code: " << output.response_code << std::endl;
+                std::cout << "----------------------------------------" << std::endl;
+            });
+            client.async_request("GET", "/user-agent", kurlyk::Arguments(), std::string(), kurlyk::Headers(),
+                    [i](const kurlyk::Output &output) {
+                std::cout << "+ <" << i << ">" << std::endl;
+                std::cout << "response: " << std::endl;
+                std::cout << output.response << std::endl;
+                std::cout << "err_code: " << output.curl_code << std::endl;
+                std::cout << "response_code: " << output.response_code << std::endl;
+                std::cout << "----------------------------------------" << std::endl;
+            });
+        }
+
+        reset = true;
+        std::cout << "-1-running_handles: " << client.get_running_handles() << std::endl;
+        t1.join();
+        t2.join();
+        std::cout << "-2-running_handles: " << client.get_running_handles() << std::endl;
+    }
+    //return 0;
     // Returns Origin IP.
     {
         kurlyk::Client client("https://httpbin.org");

@@ -1,7 +1,7 @@
 /*
 * kurlyk - C ++ library for easy curl work
 *
-* Copyright (c) 2021 Elektro Yar. Email: git.electroyar@gmail.com
+* Copyright (c) 2021-2023 Elektro Yar. Email: git.electroyar@gmail.com
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@
 #include <curl/curl.h>
 
 namespace kurlyk {
-	namespace utility {
+    namespace utils {
 
         /** \brief Функция сравнения строк для CaseInsensitiveMultimap
          *
@@ -208,7 +208,7 @@ namespace kurlyk {
          * \return Вернет строку
          */
         template<class T>
-		static std::string get_str_query_string(
+        static std::string get_str_query_string(
                 const T &data,
                 const std::string &prefix = std::string()) noexcept {
             if (data.empty()) return std::string();
@@ -235,7 +235,7 @@ namespace kurlyk {
             return std::move(temp);
         }
 
-	}; // utility
+    }; // utils
 }; // kurlyk
 
 #endif // KURLYK_UTILITY_HPP_INCLUDED

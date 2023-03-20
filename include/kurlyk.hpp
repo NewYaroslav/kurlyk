@@ -1,7 +1,7 @@
 /*
 * kurlyk - C ++ library for easy curl work
 *
-* Copyright (c) 2021 Elektro Yar. Email: git.electroyar@gmail.com
+* Copyright (c) 2021-2023 Elektro Yar. Email: git.electroyar@gmail.com
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -25,11 +25,13 @@
 #ifndef KYRLUK_HPP_INCLUDED
 #define KYRLUK_HPP_INCLUDED
 
-#include "kurlyk-utility.hpp"
+#include "kurlyk-utils.hpp"
 #include <curl/curl.h>
 #include <mutex>
 #include <atomic>
 #include <functional>
+#include <memory>
+#include <map>
 
 #ifdef KYRLUK_BROTLI_SUPPORT
 #include <brotli/decompress.hpp>
@@ -41,25 +43,25 @@
 
 namespace kurlyk {
 
-    using Headers = utility::CaseInsensitiveMultimap;
-    using Arguments = utility::CaseInsensitiveMultimap;
-    using Cookies = utility::CaseInsensitiveCookieMultimap;
-    using Cookie = utility::Cookie;
+    using Headers = utils::CaseInsensitiveMultimap;
+    using Arguments = utils::CaseInsensitiveMultimap;
+    using Cookies = utils::CaseInsensitiveCookieMultimap;
+    using Cookie = utils::Cookie;
 
     enum ErrorCodes {
-        OK = 0,
-        NO_ANSWER = -1000,
-        CONTENT_ENCODING_NOT_SUPPORT = -1001,
-        CURL_REQUEST_FAILED = -1002,
+        OK                              = 0,
+        NO_ANSWER                       = -1000,
+        CONTENT_ENCODING_NOT_SUPPORT    = -1001,
+        CURL_REQUEST_FAILED             = -1002,
     };
 
     enum class ProxyTypes {
-        HTTP = CURLPROXY_HTTP,
-        HTTPS = CURLPROXY_HTTPS,
-        HTTP_1_0 = CURLPROXY_HTTP_1_0,
-        SOCKS4 = CURLPROXY_SOCKS4,
-        SOCKS4A = CURLPROXY_SOCKS4A,
-        SOCKS5 = CURLPROXY_SOCKS5,
+        HTTP        = CURLPROXY_HTTP,
+        HTTPS       = CURLPROXY_HTTPS,
+        HTTP_1_0    = CURLPROXY_HTTP_1_0,
+        SOCKS4      = CURLPROXY_SOCKS4,
+        SOCKS4A     = CURLPROXY_SOCKS4A,
+        SOCKS5      = CURLPROXY_SOCKS5,
         SOCKS5_HOSTNAME = CURLPROXY_SOCKS5_HOSTNAME
     };
 
@@ -133,11 +135,10 @@ namespace kurlyk {
          * Данная функция нужна для внутреннего использования
          */
         static int http_request_writer(char *data, size_t size, size_t nmemb, void *userdata) {
-            int result = 0;
+            int result = size * nmemb;
             std::string *buffer = (std::string*)userdata;
             if(buffer != NULL) {
-                buffer->append(data, size * nmemb);
-                result = size * nmemb;
+                buffer->append(data, result);
             }
             return result;
         }
@@ -178,17 +179,35 @@ namespace kurlyk {
 
     private:
         char error_buffer[CURL_ERROR_SIZE];
-        std::string host;
+        std::string general_host;
         Cookies cookies_buffer;
         std::mutex cookies_buffer_mutex;
         std::atomic<bool> is_clear_cookie_file = ATOMIC_VAR_INIT(false);
 
-        using CurlHeaders = utility::CurlHeaders;
+        // для асинхронного режима
+
+        class CurlRequest {
+        public:
+            Output output;
+            std::function<void(const Output &output)> callback;
+        };
+
+        CURLM* multi_curl = nullptr;
+        std::mutex mutex_multi_curl;
+
+        std::map<CURL*, std::shared_ptr<CurlRequest>> requests;
+        std::mutex mutex_requests;
+
+        static int32_t count_client;
+        static std::mutex mutex_client;
+
+        using CurlHeaders = utils::CurlHeaders;
 
         /** \brief Инициализация CURL
          *
          * Данный метод является общей инициализацией для всех видов запросов
          * Данный метод нужен для внутреннего использования
+         * \param host              Точка доступа
          * \param method            Параметры curl
          * \param path
          * \param content
@@ -200,11 +219,11 @@ namespace kurlyk {
          * \return вернет указатель на CURL или NULL, если инициализация не удалась
          */
         CURL *init_curl(
+                const std::string &host,
                 const std::string &method,
                 const std::string &path,
                 const std::string &args,
                 const std::string &content,
-                //const std::string &cookie,
                 const Headers &headers,
                 const CurlHeaders &curl_headers,
                 std::string &response,
@@ -296,9 +315,9 @@ namespace kurlyk {
             }
 
             /* настроим тело запроса */
-            if (utility::case_insensitive_equal(method, "POST") ||
-                utility::case_insensitive_equal(method, "PUT") ||
-                utility::case_insensitive_equal(method, "DELETE")) {
+            if (utils::case_insensitive_equal(method, "POST") ||
+                utils::case_insensitive_equal(method, "PUT") ||
+                utils::case_insensitive_equal(method, "DELETE")) {
                 curl_easy_setopt(curl, CURLOPT_POSTFIELDS, content.c_str());
             }
 
@@ -325,15 +344,75 @@ namespace kurlyk {
             return std::move(temp);
         }
 
+        void process_messages() {
+            CURLMsg* message;
+            int pending_messages;
+            //while ((message = curl_multi_info_read(multi_curl, &pending_messages))) {
+            while (!false) {
+                std::unique_lock<std::mutex> lock_multi(mutex_multi_curl);
+                message = curl_multi_info_read(multi_curl, &pending_messages);
+                lock_multi.unlock();
+                if (!message) break;
+                if (message->msg == CURLMSG_DONE) {
+                    CURL* curl = message->easy_handle;
+
+                    std::unique_lock<std::mutex> lock(mutex_requests);
+                    auto it = requests.find(curl);
+                    lock.unlock();
+
+                    auto &output = it->second->output;
+                    output.curl_code = message->data.result;
+                    output.response_code = 0;
+
+                    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &output.response_code);
+
+                    it->second->callback(output);
+
+                    lock_multi.lock();
+                    curl_multi_remove_handle(multi_curl, curl);
+                    lock_multi.unlock();
+                    curl_easy_cleanup(curl);
+
+                    lock.lock();
+                    requests.erase(curl);
+                    lock.unlock();
+                }
+            }
+        }
+
     public:
 
-        Client(const std::string &user_host, const bool use_default = false) noexcept : host(user_host) {
+        Client() noexcept {
             curl_global_init(CURL_GLOBAL_ALL);
+            multi_curl = curl_multi_init();
+#           ifdef KYRLUK_AES_SUPPORT
+            const uint32_t seed = 20032021;
+            config.key = utils::get_generated_key(seed);
+#           endif
+            std::lock_guard<std::mutex> lock(mutex_client);
+            ++count_client;
+        }
+
+        Client(const std::string &host, const bool use_default = false) noexcept : general_host(host) {
+            curl_global_init(CURL_GLOBAL_ALL);
+            multi_curl = curl_multi_init();
             if(use_default) config.set_default();
 #           ifdef KYRLUK_AES_SUPPORT
             const uint32_t seed = 20032021;
-            config.key = utility::get_generated_key(seed);
+            config.key = utils::get_generated_key(seed);
 #           endif
+            std::lock_guard<std::mutex> lock(mutex_client);
+            ++count_client;
+        }
+
+        ~Client() {
+            std::unique_lock<std::mutex> lock(mutex_client);
+            --count_client;
+            lock.unlock();
+            curl_multi_cleanup(multi_curl);
+            if (count_client == 0) {
+                curl_global_cleanup();
+            }
         }
 
         /** \brief Очистить файл Сookie
@@ -400,13 +479,13 @@ namespace kurlyk {
                 }
             }
             j_data["cookies"] = j_cookies;
-            return utility::save_encrypt_file(config.cookie_protected_file, j_data, config.key);
+            return utils::save_encrypt_file(config.cookie_protected_file, j_data, config.key);
         }
 
         bool open_protected_file_cookie() const noexcept {
             if(config.cookie_protected_file.empty()) return false;
             nlohmann::json j_data;
-            if(!utility::open_encrypt_file(config.cookie_protected_file, j_data, config.key)) return false
+            if(!utils::open_encrypt_file(config.cookie_protected_file, j_data, config.key)) return false
             nlohmann::json j_cookies = j_data["cookies"];
             {
                 std::lock_guard<std::mutex> lock(cookies_buffer_mutex);
@@ -424,26 +503,49 @@ namespace kurlyk {
 #       endif
 
         long request(
+                const std::string &host,
                 const std::string &method,
                 const std::string &path,
                 const Arguments &args,
                 const std::string &content,
                 const Headers &headers,
-                const std::function<void(const Output &output)> &callback) {
+                const std::function<void(const Output &output)> &callback,
+                const bool async = false) {
 
-            Headers response_headers;
-            std::string response_buffer;
-
+            const std::string args_str = utils::get_str_query_string(args, "?");
             CurlHeaders curl_headers(headers);
-            const std::string args_str = utility::get_str_query_string(args, "?");
-            //const std::string cookie_buffer_str = get_str_cookie_buffer();
 
+            if (async) {
+                std::shared_ptr<CurlRequest> req = std::make_shared<CurlRequest>();
+                req->callback = callback;
+
+                CURL *curl = init_curl(
+                    host,
+                    method,
+                    path,
+                    args_str,
+                    content,
+                    req->output.headers,
+                    curl_headers,
+                    req->output.response,
+                    http_request_writer,
+                    http_request_header_callback,
+                    &req->output.headers);
+
+                std::lock_guard<std::mutex> lock(mutex_requests);
+                requests[curl] = req;
+                curl_multi_add_handle(multi_curl, curl);
+                return CURLE_OK;
+            }
+
+            std::string response_buffer;
+            Headers response_headers;
             CURL *curl = init_curl(
+                host,
                 method,
                 path,
                 args_str,
                 content,
-                //cookie_buffer_str,
                 headers,
                 curl_headers,
                 response_buffer,
@@ -453,7 +555,6 @@ namespace kurlyk {
 
             Output output;
             output.curl_code = curl_easy_perform(curl);
-            //CURLcode curl_code = curl_easy_perform(curl);
             output.response_code = 0;
             curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &output.response_code);
             curl_easy_cleanup(curl);
@@ -469,7 +570,7 @@ namespace kurlyk {
             if(config.use_cookie && !config.use_cookie_file) {
                 auto header_it = response_headers.find("Set-Cookie");
                 if(header_it != response_headers.end()) {
-                    Cookies set_cookie_data = utility::parse_cookie(header_it->second);
+                    Cookies set_cookie_data = utils::parse_cookie(header_it->second);
                     std::lock_guard<std::mutex> lock(cookies_buffer_mutex);
                     cookies_buffer.insert(set_cookie_data.begin(), set_cookie_data.end());
                 }
@@ -512,11 +613,43 @@ namespace kurlyk {
                 output.response.swap(response_buffer);
             }
 
-			output.headers.swap(response_headers);
+            output.headers.swap(response_headers);
             if(callback != nullptr) {
                 callback(output);
             }
             return static_cast<long>(output.curl_code);
+        }
+
+        long request(
+                const std::string &method,
+                const std::string &path,
+                const Arguments &args,
+                const std::string &content,
+                const Headers &headers,
+                const std::function<void(const Output &output)> &callback,
+                const bool async = false) {
+            return request(general_host, method, path, args, content, headers, callback, async);
+        }
+
+        long async_request(
+                const std::string &host,
+                const std::string &method,
+                const std::string &path,
+                const Arguments &args,
+                const std::string &content,
+                const Headers &headers,
+                const std::function<void(const Output &output)> &callback) {
+            return request(host, method, path, args, content, headers, callback, true);
+        }
+
+        long async_request(
+                const std::string &method,
+                const std::string &path,
+                const Arguments &args,
+                const std::string &content,
+                const Headers &headers,
+                const std::function<void(const Output &output)> &callback) {
+            return request(general_host, method, path, args, content, headers, callback, true);
         }
 
         long get(
@@ -591,7 +724,27 @@ namespace kurlyk {
                 const std::function<void(const Output &output)> &callback) noexcept {
             return request("PUT", path, Arguments(), content, headers, callback);
         }
+
+        int get_running_handles() {
+            std::lock_guard<std::mutex> lock(mutex_multi_curl);
+            int still_running;
+            curl_multi_perform(multi_curl, &still_running);
+            return still_running;
+        }
+
+        void loop() {
+            int still_running;
+            do {
+                std::unique_lock<std::mutex> lock(mutex_multi_curl);
+                curl_multi_perform(multi_curl, &still_running);
+                lock.unlock();
+                process_messages();
+            } while (still_running);
+        }
     };
+
+    int32_t Client::count_client = 0;
+    std::mutex Client::mutex_client;
 };
 
 #endif // KYRLUK_HPP_INCLUDED
