@@ -178,11 +178,12 @@ namespace kurlyk {
         }
 
     private:
-        char error_buffer[CURL_ERROR_SIZE];
-        std::string general_host;
-        Cookies cookies_buffer;
-        std::mutex cookies_buffer_mutex;
-        std::atomic<bool> is_clear_cookie_file = ATOMIC_VAR_INIT(false);
+        char                error_buffer[CURL_ERROR_SIZE];
+        std::string         general_host;
+        Cookies             cookies_buffer;
+        std::mutex          cookies_buffer_mutex;
+        std::atomic<bool>   is_clear_cookie_file = ATOMIC_VAR_INIT(false);
+        std::atomic<int>    running_req = ATOMIC_VAR_INIT(0);
 
         // для асинхронного режима
 
@@ -239,6 +240,7 @@ namespace kurlyk {
             if(!args.empty()) url += args;
 
             curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+            if (use_multi_threaded) curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
             curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, method.c_str());
             curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
             curl_easy_setopt(curl, CURLOPT_CAINFO, config.sert_file.c_str());
@@ -290,14 +292,14 @@ namespace kurlyk {
                     if(!config.cookie_file.empty()) {
                         curl_easy_setopt(curl, CURLOPT_COOKIEFILE, config.cookie_file.c_str());
                         curl_easy_setopt(curl, CURLOPT_COOKIEJAR, config.cookie_file.c_str());
-                        if(is_clear_cookie_file) curl_easy_setopt(curl, CURLOPT_COOKIELIST, "ALL");
+                        if (is_clear_cookie_file) curl_easy_setopt(curl, CURLOPT_COOKIELIST, "ALL");
                     }
                 } else {
                     const std::string cookie_buffer = get_str_cookie_buffer();
                     //if(!cookie.empty()) curl_easy_setopt(curl, CURLOPT_COOKIE, cookie.c_str());
-                    if(!cookie_buffer.empty()) curl_easy_setopt(curl, CURLOPT_COOKIE, cookie_buffer.c_str());
+                    if (!cookie_buffer.empty()) curl_easy_setopt(curl, CURLOPT_COOKIE, cookie_buffer.c_str());
                     else
-                    if(!config.cookie.empty()) curl_easy_setopt(curl, CURLOPT_COOKIE, config.cookie.c_str());
+                    if (!config.cookie.empty()) curl_easy_setopt(curl, CURLOPT_COOKIE, config.cookie.c_str());
                 }
             }
             is_clear_cookie_file = false;
@@ -345,42 +347,44 @@ namespace kurlyk {
         }
 
         void process_messages() {
-            CURLMsg* message;
-            int pending_messages;
-            //while ((message = curl_multi_info_read(multi_curl, &pending_messages))) {
+            //std::cout << "k0" << std::endl;
             while (!false) {
                 std::unique_lock<std::mutex> lock_multi(mutex_multi_curl);
-                message = curl_multi_info_read(multi_curl, &pending_messages);
-                lock_multi.unlock();
+                int pending_messages;
+                CURLMsg* message = curl_multi_info_read(multi_curl, &pending_messages);
                 if (!message) break;
+                lock_multi.unlock();
+
                 if (message->msg == CURLMSG_DONE) {
                     CURL* curl = message->easy_handle;
 
-                    std::unique_lock<std::mutex> lock(mutex_requests);
+                    std::unique_lock<std::mutex> lock_requests(mutex_requests);
                     auto it = requests.find(curl);
-                    lock.unlock();
+                    auto output = it->second->output;
+                    auto callback = it->second->callback;
+                    lock_requests.unlock();
 
-                    auto &output = it->second->output;
                     output.curl_code = message->data.result;
                     output.response_code = 0;
-
                     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &output.response_code);
-
-                    it->second->callback(output);
+                    callback(output);
 
                     lock_multi.lock();
                     curl_multi_remove_handle(multi_curl, curl);
-                    lock_multi.unlock();
                     curl_easy_cleanup(curl);
+                    lock_multi.unlock();
 
-                    lock.lock();
+                    lock_requests.lock();
                     requests.erase(curl);
-                    lock.unlock();
+                    lock_requests.unlock();
+                    //std::cout << "k2" << std::endl;
                 }
             }
         }
 
     public:
+
+        std::atomic<bool> use_multi_threaded = ATOMIC_VAR_INIT(false);
 
         Client() noexcept {
             curl_global_init(CURL_GLOBAL_ALL);
@@ -396,7 +400,7 @@ namespace kurlyk {
         Client(const std::string &host, const bool use_default = false) noexcept : general_host(host) {
             curl_global_init(CURL_GLOBAL_ALL);
             multi_curl = curl_multi_init();
-            if(use_default) config.set_default();
+            if (use_default) config.set_default();
 #           ifdef KYRLUK_AES_SUPPORT
             const uint32_t seed = 20032021;
             config.key = utils::get_generated_key(seed);
@@ -409,7 +413,9 @@ namespace kurlyk {
             std::unique_lock<std::mutex> lock(mutex_client);
             --count_client;
             lock.unlock();
+            std::unique_lock<std::mutex> lock_multi_curl(mutex_multi_curl);
             curl_multi_cleanup(multi_curl);
+            lock_multi_curl.unlock();
             if (count_client == 0) {
                 curl_global_cleanup();
             }
@@ -514,7 +520,6 @@ namespace kurlyk {
 
             const std::string args_str = utils::get_str_query_string(args, "?");
             CurlHeaders curl_headers(headers);
-
             if (async) {
                 std::shared_ptr<CurlRequest> req = std::make_shared<CurlRequest>();
                 req->callback = callback;
@@ -531,9 +536,10 @@ namespace kurlyk {
                     http_request_writer,
                     http_request_header_callback,
                     &req->output.headers);
-
-                std::lock_guard<std::mutex> lock(mutex_requests);
+                std::unique_lock<std::mutex> lock_requests(mutex_requests);
                 requests[curl] = req;
+                lock_requests.unlock();
+                std::lock_guard<std::mutex> lock_multi_curl(mutex_multi_curl);
                 curl_multi_add_handle(multi_curl, curl);
                 return CURLE_OK;
             }
@@ -726,20 +732,26 @@ namespace kurlyk {
         }
 
         int get_running_handles() {
-            std::lock_guard<std::mutex> lock(mutex_multi_curl);
-            int still_running;
-            curl_multi_perform(multi_curl, &still_running);
-            return still_running;
+            return running_req;
         }
 
         void loop() {
+            //std::cout << "m0" << std::endl;
             int still_running;
+            bool is_run = false;
             do {
                 std::unique_lock<std::mutex> lock(mutex_multi_curl);
                 curl_multi_perform(multi_curl, &still_running);
                 lock.unlock();
+                running_req = still_running;
+                if (still_running > 0) is_run = true;
                 process_messages();
             } while (still_running);
+            if (is_run) {
+                std::lock_guard<std::mutex> lock(mutex_multi_curl);
+                curl_multi_cleanup(multi_curl);
+                multi_curl = curl_multi_init();
+            }
         }
     };
 

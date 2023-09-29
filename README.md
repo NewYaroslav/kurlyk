@@ -144,22 +144,53 @@ add_cookie(const std::string &name, const std::string &value)
 Client.config
 ```
 
-Если вам нужно использовать разные параметры *Client.config*, то рекомендую использовать отдельные экземпляры класса *Client* вместо того, чтобы менять *Client.config* для каждого запроса.
-
-## Дополнительные возможности
-
-**brotli и gzip**
-
-В библиотеке *kurlyk* реализована отдельная декомпрессия сообщений для алгоритмов brotli и gzip.
-Чтобы включить эти механизмы, укажите следующие *define*:
+Можно делать асинхронные запросы следующим образом:
 
 ```cpp
-#define KYRLUK_BROTLI_SUPPORT
-#define KYRLUK_GZIP_SUPPORT
+kurlyk::Client client("https://httpbin.org");
+client.config.sert_file = "curl-ca-bundle.crt";
+client.config.header = false;
+client.config.verbose = false;
+
+client.use_multi_threaded = true;
+
+for (int i = 0; i < 10; ++i) {
+	client.async_request("GET", "/ip", kurlyk::Arguments(), std::string(), kurlyk::Headers(),
+			[i](const kurlyk::Output &output) {
+		std::cout << "& <" << i << ">" << std::endl;
+		std::cout << "response: " << std::endl;
+		std::cout << output.response << std::endl;
+		std::cout << "err_code: " << output.curl_code << std::endl;
+		std::cout << "response_code: " << output.response_code << std::endl;
+		std::cout << "----------------------------------------" << std::endl;
+	});
+}
+
+std::thread t1([&client](){
+	while(!false) {
+		client.loop();
+	}
+});
+t1.detach();
+
+std::thread t2([&client](){
+	for (int i = 0; i < 10; ++i) {
+		client.async_request("GET", "/ip", kurlyk::Arguments(), std::string(), kurlyk::Headers(),
+				[i](const kurlyk::Output &output) {
+			std::cout << "- <" << i << ">" << std::endl;
+			std::cout << "response: " << std::endl;
+			std::cout << output.response << std::endl;
+			std::cout << "err_code: " << output.curl_code << std::endl;
+			std::cout << "response_code: " << output.response_code << std::endl;
+			std::cout << "----------------------------------------" << std::endl;
+		});
+	}
+});
+
+t2.join();
 ```
 
-Тогда, если вы укажите *Client.config.use_accept_encoding = false* библиотека *kurlyk* сама проверит заголовок *Content-Encoding* и сделает декомпрессию, если нужно.
-*Данная опция экспериментальная и может не работать!*
+## Дополнительные возможности
 
 **защищенные файлы cookie**
 
