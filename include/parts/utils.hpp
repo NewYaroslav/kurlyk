@@ -26,7 +26,7 @@
 #define KURLYK_UTILITY_HPP_INCLUDED
 
 #ifdef KYRLUK_AES_SUPPORT
-#include "kurlyk-file-encryption.hpp"
+#include "file-encryption.hpp"
 #endif
 
 #include <unordered_map>

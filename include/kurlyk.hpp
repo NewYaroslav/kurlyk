@@ -25,7 +25,7 @@
 #ifndef KYRLUK_HPP_INCLUDED
 #define KYRLUK_HPP_INCLUDED
 
-#include "kurlyk-utils.hpp"
+#include "parts/common.hpp"
 #include <curl/curl.h>
 #include <mutex>
 #include <atomic>
@@ -42,36 +42,6 @@
 #endif
 
 namespace kurlyk {
-
-    using Headers = utils::CaseInsensitiveMultimap;
-    using Arguments = utils::CaseInsensitiveMultimap;
-    using Cookies = utils::CaseInsensitiveCookieMultimap;
-    using Cookie = utils::Cookie;
-
-    enum ErrorCodes {
-        OK                              = 0,
-        NO_ANSWER                       = -1000,
-        CONTENT_ENCODING_NOT_SUPPORT    = -1001,
-        CURL_REQUEST_FAILED             = -1002,
-    };
-
-    enum class ProxyTypes {
-        HTTP        = CURLPROXY_HTTP,
-        HTTPS       = CURLPROXY_HTTPS,
-        HTTP_1_0    = CURLPROXY_HTTP_1_0,
-        SOCKS4      = CURLPROXY_SOCKS4,
-        SOCKS4A     = CURLPROXY_SOCKS4A,
-        SOCKS5      = CURLPROXY_SOCKS5,
-        SOCKS5_HOSTNAME = CURLPROXY_SOCKS5_HOSTNAME
-    };
-
-    class Output {
-    public:
-        std::string response;
-        Headers headers;
-        long curl_code;
-        long response_code;
-    };
 
     /** \brief Класс для создания запроса
      */
@@ -103,9 +73,9 @@ namespace kurlyk {
             std::string proxy_ip;
             std::string proxy_username;
             std::string proxy_password;
-            int proxy_port = 0;
-            ProxyTypes proxy_type = ProxyTypes::HTTP;
-            bool use_proxy_tunnel = true;
+            int         proxy_port = 0;
+            ProxyType   proxy_type = ProxyType::HTTP;
+            bool        use_proxy_tunnel = true;
 
             /* параметры отладки */
             bool verbose = false;
@@ -144,13 +114,13 @@ namespace kurlyk {
         }
 
         inline static void http_request_parse_pair(const std::string &value, std::string &one, std::string &two) noexcept {
-            if(value.size() < 3) return;
+            if (value.size() < 3) return;
             std::size_t start_pos = 0;
             std::size_t found_beg = value.find_first_of(":", 0);
             std::size_t found_end = value.find_first_not_of(" ", found_beg + 1);
-            if(found_beg != std::string::npos) {
+            if (found_beg != std::string::npos) {
                 std::size_t len = found_beg - start_pos;
-                if(len > 0) {
+                if (len > 0) {
                     one = value.substr(start_pos, len);
                     start_pos = one.size() + 1;
                     len = value.size() - start_pos;
@@ -199,8 +169,8 @@ namespace kurlyk {
         std::map<CURL*, std::shared_ptr<CurlRequest>> requests;
         std::mutex mutex_requests;
 
-        static int32_t count_client;
-        static std::mutex mutex_client;
+        static int32_t      count_client;
+        static std::mutex   mutex_client;
 
         using CurlHeaders = utils::CurlHeaders;
 
@@ -232,19 +202,21 @@ namespace kurlyk {
                 int (*header_callback)(char*, size_t, size_t, void*),
                 void *header_data) {
             CURL *curl = curl_easy_init();
-            if(!curl) return NULL;
+            if (!curl) return NULL;
 
             std::string url(host);
-            if(!path.empty() && path[0] != '/') url += "/";
+            if (!path.empty() && path[0] != '/') url += "/";
             url += path;
-            if(!args.empty()) url += args;
+            if (!args.empty()) url += args;
 
             curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
             if (use_multi_threaded) curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
             curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, method.c_str());
             curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
             curl_easy_setopt(curl, CURLOPT_CAINFO, config.sert_file.c_str());
+            // https://curl.se/libcurl/c/CURLOPT_SSLVERSION.html
             curl_easy_setopt(curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_MAX_DEFAULT);
+            //curl_easy_setopt(curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_MAX_TLSv1_3);
 
             curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, config.follow_location);
             curl_easy_setopt(curl, CURLOPT_MAXREDIRS, config.max_redirects);
@@ -288,8 +260,8 @@ namespace kurlyk {
 
             /* настроим Cookie */
             if (config.use_cookie && headers.find("Cookie") == headers.end()) {
-                if(config.use_cookie_file) {
-                    if(!config.cookie_file.empty()) {
+                if (config.use_cookie_file) {
+                    if (!config.cookie_file.empty()) {
                         curl_easy_setopt(curl, CURLOPT_COOKIEFILE, config.cookie_file.c_str());
                         curl_easy_setopt(curl, CURLOPT_COOKIEJAR, config.cookie_file.c_str());
                         if (is_clear_cookie_file) curl_easy_setopt(curl, CURLOPT_COOKIELIST, "ALL");
@@ -312,7 +284,7 @@ namespace kurlyk {
             /* настроим работу с Headers */
             curl_easy_setopt(curl, CURLOPT_HEADERDATA, header_data);
             curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_callback);
-            if(!headers.empty()) {
+            if (!headers.empty()) {
                 curl_easy_setopt(curl, CURLOPT_HTTPHEADER, curl_headers.get_curl());
             }
 
@@ -332,22 +304,20 @@ namespace kurlyk {
         std::string get_str_cookie_buffer() noexcept {
             std::string temp;
             size_t index = 0;
-            {
-                std::lock_guard<std::mutex> lock(cookies_buffer_mutex);
-                const size_t index_end = cookies_buffer.size() - 1;
-                for(auto &c : cookies_buffer) {
-                    temp += c.second.name;
-                    temp += "=";
-                    temp += c.second.value;
-                    if(index != index_end) temp += "; ";
-                    ++index;
-                }
+            std::unique_lock<std::mutex> lock(cookies_buffer_mutex);
+            const size_t index_end = cookies_buffer.size() - 1;
+            for (auto &c : cookies_buffer) {
+                temp += c.second.name;
+                temp += "=";
+                temp += c.second.value;
+                if(index != index_end) temp += "; ";
+                ++index;
             }
+            lock.unlock();
             return std::move(temp);
         }
 
         void process_messages() {
-            //std::cout << "k0" << std::endl;
             while (!false) {
                 std::unique_lock<std::mutex> lock_multi(mutex_multi_curl);
                 int pending_messages;
@@ -377,7 +347,6 @@ namespace kurlyk {
                     lock_requests.lock();
                     requests.erase(curl);
                     lock_requests.unlock();
-                    //std::cout << "k2" << std::endl;
                 }
             }
         }
@@ -387,17 +356,21 @@ namespace kurlyk {
         std::atomic<bool> use_multi_threaded = ATOMIC_VAR_INIT(false);
 
         Client() noexcept {
+            std::unique_lock<std::mutex> lock(mutex_client);
+            ++count_client;
+            lock.unlock();
             curl_global_init(CURL_GLOBAL_ALL);
             multi_curl = curl_multi_init();
 #           ifdef KYRLUK_AES_SUPPORT
             const uint32_t seed = 20032021;
             config.key = utils::get_generated_key(seed);
 #           endif
-            std::lock_guard<std::mutex> lock(mutex_client);
-            ++count_client;
         }
 
         Client(const std::string &host, const bool use_default = false) noexcept : general_host(host) {
+            std::unique_lock<std::mutex> lock(mutex_client);
+            ++count_client;
+            lock.unlock();
             curl_global_init(CURL_GLOBAL_ALL);
             multi_curl = curl_multi_init();
             if (use_default) config.set_default();
@@ -405,8 +378,6 @@ namespace kurlyk {
             const uint32_t seed = 20032021;
             config.key = utils::get_generated_key(seed);
 #           endif
-            std::lock_guard<std::mutex> lock(mutex_client);
-            ++count_client;
         }
 
         ~Client() {
@@ -456,10 +427,9 @@ namespace kurlyk {
          * \return Вернет true, если файл очищен
          */
         bool clear_protected_file_cookie() const noexcept {
-            {
-                std::lock_guard<std::mutex> lock(cookies_buffer_mutex);
-                cookies_buffer.clear();
-            }
+            std::unique_lock<std::mutex> lock(cookies_buffer_mutex);
+            cookies_buffer.clear();
+            lock.unlock();
             if(config.cookie_protected_file.empty()) return false;
             nlohmann::json j_data;
             j_data["cookies"] = nlohmann::json::array();
@@ -474,16 +444,15 @@ namespace kurlyk {
             nlohmann::json j_data;
             nlohmann::json j_cookies = nlohmann::json::array();
             size_t index = 0;
-            {
-                std::lock_guard<std::mutex> lock(cookies_buffer_mutex);
-                for(auto &c : cookies_buffer) {
-                    j_cookies[index]["name"] = c.second.name;
-                    j_cookies[index]["value"] = c.second.value;
-                    j_cookies[index]["path"] = c.second.path;
-                    j_cookies[index]["expiration_date"] = c.second.expiration_date;
-                    ++index;
-                }
+            std::unique_lock<std::mutex> lock(cookies_buffer_mutex);
+            for(auto &c : cookies_buffer) {
+                j_cookies[index]["name"] = c.second.name;
+                j_cookies[index]["value"] = c.second.value;
+                j_cookies[index]["path"] = c.second.path;
+                j_cookies[index]["expiration_date"] = c.second.expiration_date;
+                ++index;
             }
+            lock.unlock();
             j_data["cookies"] = j_cookies;
             return utils::save_encrypt_file(config.cookie_protected_file, j_data, config.key);
         }
@@ -493,16 +462,14 @@ namespace kurlyk {
             nlohmann::json j_data;
             if(!utils::open_encrypt_file(config.cookie_protected_file, j_data, config.key)) return false
             nlohmann::json j_cookies = j_data["cookies"];
-            {
-                std::lock_guard<std::mutex> lock(cookies_buffer_mutex);
-                for(size_t index = 0; i < j_cookies.size(); ++i) {
-                    Cookie cookie;
-                    cookie.name = j_cookies[index]["name"];
-                    cookie.value = j_cookies[index]["value"];
-                    cookie.path = j_cookies[index]["path"];
-                    cookie.expiration_date = j_cookies[index]["expiration_date"];
-                    cookies_buffer.emplace(cookie.name, cookie);
-                }
+            std::lock_guard<std::mutex> lock(cookies_buffer_mutex);
+            for(size_t index = 0; i < j_cookies.size(); ++i) {
+                Cookie cookie;
+                cookie.name = j_cookies[index]["name"];
+                cookie.value = j_cookies[index]["value"];
+                cookie.path = j_cookies[index]["path"];
+                cookie.expiration_date = j_cookies[index]["expiration_date"];
+                cookies_buffer.emplace(cookie.name, cookie);
             }
             return true;
         }

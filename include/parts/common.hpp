@@ -25,34 +25,53 @@
 #ifndef KURLYK_COMMON_HPP_INCLUDED
 #define KURLYK_COMMON_HPP_INCLUDED
 
+#include "utils.hpp"
 #include <curl/curl.h>
+#include <mutex>
+#include <atomic>
+#include <functional>
+#include <memory>
+#include <map>
+
+#ifdef KYRLUK_BROTLI_SUPPORT
+#include <brotli/decompress.hpp>
+#endif
+
+#ifdef KYRLUK_GZIP_SUPPORT
+#include <gzip/decompress.hpp>
+#endif
 
 namespace kurlyk {
 
-    enum ErrorCodes {
-        OK = 0,
-        NO_ANSWER = -1000,
-        CONTENT_ENCODING_NOT_SUPPORT = -1001,
-        CURL_REQUEST_FAILED = -1002,
+    using Headers = utils::CaseInsensitiveMultimap;
+    using Arguments = utils::CaseInsensitiveMultimap;
+    using Cookies = utils::CaseInsensitiveCookieMultimap;
+    using Cookie = utils::Cookie;
+
+    enum ErrorCode {
+        OK                              = 0,
+        NO_ANSWER                       = -1000,
+        CONTENT_ENCODING_NOT_SUPPORT    = -1001,
+        CURL_REQUEST_FAILED             = -1002,
     };
 
-    enum class ProxyTypes {
-        HTTP = CURLPROXY_HTTP,
-        HTTPS = CURLPROXY_HTTPS,
-        HTTP_1_0 = CURLPROXY_HTTP_1_0,
-        SOCKS4 = CURLPROXY_SOCKS4,
-        SOCKS4A = CURLPROXY_SOCKS4A,
-        SOCKS5 = CURLPROXY_SOCKS5,
+    enum class ProxyType {
+        HTTP        = CURLPROXY_HTTP,
+        HTTPS       = CURLPROXY_HTTPS,
+        HTTP_1_0    = CURLPROXY_HTTP_1_0,
+        SOCKS4      = CURLPROXY_SOCKS4,
+        SOCKS4A     = CURLPROXY_SOCKS4A,
+        SOCKS5      = CURLPROXY_SOCKS5,
         SOCKS5_HOSTNAME = CURLPROXY_SOCKS5_HOSTNAME
     };
-
+    
     class Output {
     public:
         std::string response;
         Headers headers;
         long curl_code;
         long response_code;
-    }; // Output
+    };
 }; // kurlyk
 
 #endif // KURLYK_COMMON_HPP_INCLUDED

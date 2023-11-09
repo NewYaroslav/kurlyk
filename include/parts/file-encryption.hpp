@@ -25,7 +25,7 @@
 #ifndef KYRLUK_ENCRYPTED_FILE_HPP_INCLUDED
 #define KYRLUK_ENCRYPTED_FILE_HPP_INCLUDED
 
-#include "kurlyk-data-encryption.hpp"
+#include "data-encryption.hpp"
 #include "nlohmann/json.hpp"
 #include <fstream>
 #include <dir.h>
