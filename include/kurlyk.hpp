@@ -163,8 +163,58 @@ namespace kurlyk {
             std::function<void(const Output &output)> callback;
         };
 
-        CURLM* multi_curl = nullptr;
-        std::mutex mutex_multi_curl;
+        //----------------------------------------------------------------------
+
+        // Класс для работы с CURLM
+        class CurlManager {
+        public:
+            enum class State {
+                Initial,  // Начальное состояние, можно добавлять запросы
+                Busy,     // Занято, запросы в обработке
+                Ready     // Готово, запросы обработаны
+            } state = State::Initial;
+
+            CURLM* multi_curl = nullptr;
+            std::mutex multi_curl_mutex;
+
+            // Добавить обработчик с проверкой
+            inline bool add_handle(CURL* curl) {
+                std::lock_guard<std::mutex> lock(multi_curl_mutex);
+                if (state != State::Initial) return false;
+                curl_multi_add_handle(multi_curl, curl);
+                return true;
+            }
+
+            CurlManager() {
+                std::lock_guard<std::mutex> lock(multi_curl_mutex);
+                multi_curl = curl_multi_init();
+            }
+
+            ~CurlManager() {
+                std::lock_guard<std::mutex> lock(multi_curl_mutex);
+                curl_multi_cleanup(multi_curl);
+            }
+        };
+
+        std::list<std::shared_ptr<CurlManager>> multi_curl_groups;
+        std::mutex mutex_multi_curl_groups;
+
+        inline void add_to_multi_curl(CURL* curl) {
+            std::lock_guard<std::mutex> lock_multi_curls(mutex_multi_curl_groups);
+            if (multi_curl_groups.empty()) {
+                multi_curl_groups.push_back(std::make_shared<CurlManager>());
+                auto ptr = multi_curl_groups.back();
+                ptr->add_handle(curl);
+                return;
+            }
+            auto &ptr = multi_curl_groups.back();
+            if (!ptr->add_handle(curl)) {
+                multi_curl_groups.push_back(std::make_shared<CurlManager>());
+                auto ptr = multi_curl_groups.back();
+                ptr->add_handle(curl);
+            }
+        }
+        //----------------------------------------------------------------------
 
         std::map<CURL*, std::shared_ptr<CurlRequest>> requests;
         std::mutex mutex_requests;
@@ -317,40 +367,6 @@ namespace kurlyk {
             return std::move(temp);
         }
 
-        void process_messages() {
-            while (!false) {
-                std::unique_lock<std::mutex> lock_multi(mutex_multi_curl);
-                int pending_messages;
-                CURLMsg* message = curl_multi_info_read(multi_curl, &pending_messages);
-                if (!message) break;
-                lock_multi.unlock();
-
-                if (message->msg == CURLMSG_DONE) {
-                    CURL* curl = message->easy_handle;
-
-                    std::unique_lock<std::mutex> lock_requests(mutex_requests);
-                    auto it = requests.find(curl);
-                    auto output = it->second->output;
-                    auto callback = it->second->callback;
-                    lock_requests.unlock();
-
-                    output.curl_code = message->data.result;
-                    output.response_code = 0;
-                    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &output.response_code);
-                    callback(output);
-
-                    lock_multi.lock();
-                    curl_multi_remove_handle(multi_curl, curl);
-                    curl_easy_cleanup(curl);
-                    lock_multi.unlock();
-
-                    lock_requests.lock();
-                    requests.erase(curl);
-                    lock_requests.unlock();
-                }
-            }
-        }
-
     public:
 
         std::atomic<bool> use_multi_threaded = ATOMIC_VAR_INIT(false);
@@ -360,7 +376,6 @@ namespace kurlyk {
             ++count_client;
             lock.unlock();
             curl_global_init(CURL_GLOBAL_ALL);
-            multi_curl = curl_multi_init();
 #           ifdef KYRLUK_AES_SUPPORT
             const uint32_t seed = 20032021;
             config.key = utils::get_generated_key(seed);
@@ -372,7 +387,6 @@ namespace kurlyk {
             ++count_client;
             lock.unlock();
             curl_global_init(CURL_GLOBAL_ALL);
-            multi_curl = curl_multi_init();
             if (use_default) config.set_default();
 #           ifdef KYRLUK_AES_SUPPORT
             const uint32_t seed = 20032021;
@@ -384,9 +398,11 @@ namespace kurlyk {
             std::unique_lock<std::mutex> lock(mutex_client);
             --count_client;
             lock.unlock();
-            std::unique_lock<std::mutex> lock_multi_curl(mutex_multi_curl);
-            curl_multi_cleanup(multi_curl);
-            lock_multi_curl.unlock();
+
+            std::unique_lock<std::mutex> lock_multi_curl_groups(mutex_multi_curl_groups);
+            multi_curl_groups.clear();
+            lock_multi_curl_groups.unlock();
+
             if (count_client == 0) {
                 curl_global_cleanup();
             }
@@ -506,8 +522,7 @@ namespace kurlyk {
                 std::unique_lock<std::mutex> lock_requests(mutex_requests);
                 requests[curl] = req;
                 lock_requests.unlock();
-                std::lock_guard<std::mutex> lock_multi_curl(mutex_multi_curl);
-                curl_multi_add_handle(multi_curl, curl);
+                add_to_multi_curl(curl);
                 return CURLE_OK;
             }
 
@@ -587,7 +602,7 @@ namespace kurlyk {
             }
 
             output.headers.swap(response_headers);
-            if(callback != nullptr) {
+            if (callback) {
                 callback(output);
             }
             return static_cast<long>(output.curl_code);
@@ -702,24 +717,88 @@ namespace kurlyk {
             return running_req;
         }
 
-        void loop() {
-            //std::cout << "m0" << std::endl;
-            int still_running;
-            bool is_run = false;
-            do {
-                std::unique_lock<std::mutex> lock(mutex_multi_curl);
-                curl_multi_perform(multi_curl, &still_running);
-                lock.unlock();
-                running_req = still_running;
-                if (still_running > 0) is_run = true;
-                process_messages();
-            } while (still_running);
-            if (is_run) {
-                std::lock_guard<std::mutex> lock(mutex_multi_curl);
-                curl_multi_cleanup(multi_curl);
-                multi_curl = curl_multi_init();
+    private:
+
+        void process_completed_request(CURLMsg* message, const std::shared_ptr<CurlManager>& ptr) {
+            CURL* curl = message->easy_handle;
+
+            std::unique_lock<std::mutex> lock_requests(mutex_requests);
+            auto it = requests.find(curl);
+            auto request = it->second;
+            requests.erase(curl);
+            lock_requests.unlock();
+
+            auto output = request->output;
+            auto callback = request->callback;
+
+            output.curl_code = message->data.result;
+            output.response_code = 0;
+            curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &output.response_code);
+            callback(output);
+
+            std::lock_guard<std::mutex> lock_ptr(ptr->multi_curl_mutex);
+            curl_multi_remove_handle(ptr->multi_curl, curl);
+            curl_easy_cleanup(curl);
+        }
+
+        void process_messages(const std::shared_ptr<CurlManager>& ptr) {
+            while (!false) {
+                int pending_messages;
+                std::unique_lock<std::mutex> lock_ptr(ptr->multi_curl_mutex);
+                CURLMsg* message = curl_multi_info_read(ptr->multi_curl, &pending_messages);
+                lock_ptr.unlock();
+
+                if (!message) break;
+                if (message->msg == CURLMSG_DONE) {
+                    process_completed_request(message, ptr);
+                }
             }
         }
+
+    public:
+
+        void loop() {
+            int all_running_handles = 0;
+
+            std::unique_lock<std::mutex> lock_groups(mutex_multi_curl_groups);
+            auto it = multi_curl_groups.begin();
+            if (it == multi_curl_groups.end()) {
+                running_req = 0;
+                return;
+            }
+            auto ptr = *it;
+            lock_groups.unlock();
+
+            while (!false) {
+                int running_handles = 0;
+                std::unique_lock<std::mutex> lock_ptr(ptr->multi_curl_mutex);
+                ptr->state = CurlManager::State::Busy;
+                const CURLMcode res = curl_multi_perform(ptr->multi_curl, &running_handles);
+                lock_ptr.unlock();
+
+                if (res != CURLM_OK) {
+                    std::lock_guard<std::mutex> lock(mutex_multi_curl_groups);
+                    it++;
+                    if (it == multi_curl_groups.end()) break;
+                    ptr = *it;
+                    continue;
+                }
+
+                all_running_handles += running_handles;
+
+                process_messages(ptr);
+
+                std::lock_guard<std::mutex> lock(mutex_multi_curl_groups);
+                if (running_handles == 0) {
+                    it = multi_curl_groups.erase(it);
+                } else {
+                    it++;
+                }
+                if (it == multi_curl_groups.end()) break;
+                ptr = *it;
+            }
+            running_req = all_running_handles;
+        } // loop
     };
 
     int32_t Client::count_client = 0;
