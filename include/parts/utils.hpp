@@ -107,11 +107,9 @@ namespace kurlyk {
                     std::string name = cookie.substr(start_pos, (found_separator - start_pos));
 
                     if(name.size() > host_prefix.size() && name.substr(0,2) == "__") {
-
                         std::size_t found_separator_prefix = name.find_first_of("-");
                         if(found_separator_prefix != std::string::npos) {
                             name = name.substr(found_separator_prefix + 1, name.size() - found_separator_prefix - 1);
-                            std::cout << "-3 name = " << name << std::endl;
                         }
                     } else {
                         if (case_insensitive_equal(name, "expires") ||
@@ -148,7 +146,7 @@ namespace kurlyk {
                     break;
                 }
             }
-            return std::move(temp);
+            return temp;
         };
 
         /** \brief Класс для хранения HTTP заголовков библиотеки CURL
@@ -178,6 +176,12 @@ namespace kurlyk {
                 }
             };
 
+            void add_header(const CaseInsensitiveMultimap &headers) noexcept {
+                for(auto &header_field : headers) {
+                    add_header(header_field.first, header_field.second);
+                }
+            }
+
             void add_header(const std::string &header) noexcept {
                 http_headers = curl_slist_append(http_headers, header.c_str());
             }
@@ -188,7 +192,7 @@ namespace kurlyk {
             }
 
             ~CurlHeaders() noexcept {
-                if(http_headers != nullptr) {
+                if(http_headers) {
                     curl_slist_free_all(http_headers);
                     http_headers = nullptr;
                 }
@@ -232,7 +236,7 @@ namespace kurlyk {
                 ++index;
             }
             curl_easy_cleanup(curl);
-            return std::move(temp);
+            return temp;
         }
 
     }; // utils

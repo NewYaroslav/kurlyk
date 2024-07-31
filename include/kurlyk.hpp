@@ -32,6 +32,7 @@
 #include <functional>
 #include <memory>
 #include <map>
+#include <list>
 
 #ifdef KYRLUK_BROTLI_SUPPORT
 #include <brotli/decompress.hpp>
@@ -57,17 +58,17 @@ namespace kurlyk {
             std::string sert_file;
             std::string cookie_file;
             std::string cookie;
-            bool use_cookie = true;
-            bool use_cookie_file = true;
-            bool use_accept_encoding = true;
-            bool use_deflate_encoding = true;
-            bool use_gzip_encoding = true;
-            bool use_brotli_encoding = true;
-            bool use_identity_encoding = false;
+            bool use_cookie             = true;
+            bool use_cookie_file        = true;
+            bool use_accept_encoding    = true;
+            bool use_deflate_encoding   = true;
+            bool use_gzip_encoding      = true;
+            bool use_brotli_encoding    = true;
+            bool use_identity_encoding  = false;
 
-            bool follow_location = true;
-            long max_redirects = 10;
-            bool auto_referer = false;
+            bool follow_location    = true;
+            long max_redirects      = 10;
+            bool auto_referer       = false;
 
             /* параметры прокси */
             std::string proxy_ip;
@@ -78,10 +79,11 @@ namespace kurlyk {
             bool        use_proxy_tunnel = true;
 
             /* параметры отладки */
-            bool verbose = false;
-            bool header = false;
+            bool verbose    = false;
+            bool header     = false;
 
-            int timeout = 5;
+            int timeout         = 30;
+            int connect_timeout = 10;
 
 #           ifdef KYRLUK_AES_SUPPORT
             std::array<uint8_t, 32> key;
@@ -95,7 +97,8 @@ namespace kurlyk {
                 cookie_protected_file = "cookie.dat";
 #               endif
                 sert_file = "curl-ca-bundle.crt";
-                timeout = 5;
+                timeout         = 5;
+                connect_timeout = 10;
             }
         };
 
@@ -159,7 +162,10 @@ namespace kurlyk {
 
         class CurlRequest {
         public:
-            Output output;
+            using CurlHeaders = utils::CurlHeaders;
+
+            CurlHeaders curl_headers;
+            Output      output;
             std::function<void(const Output &output)> callback;
         };
 
@@ -276,6 +282,7 @@ namespace kurlyk {
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writer_callback);
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
             curl_easy_setopt(curl, CURLOPT_TIMEOUT, config.timeout);
+            curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, config.connect_timeout);
 
             if (config.use_accept_encoding) {
                 std::string accept_encoding;
@@ -308,7 +315,7 @@ namespace kurlyk {
                 //curl_easy_setopt(curl, CURLOPT_FRESH_CONNECT, 1);
             }
 
-            /* настроим Cookie */
+            // настроим Cookie
             if (config.use_cookie && headers.find("Cookie") == headers.end()) {
                 if (config.use_cookie_file) {
                     if (!config.cookie_file.empty()) {
@@ -326,12 +333,12 @@ namespace kurlyk {
             }
             is_clear_cookie_file = false;
 
-            /* настроим User Agent */
+            // настроим User Agent
             if (!config.user_agent.empty() && headers.find("User-Agent") == headers.end()) {
                 curl_easy_setopt(curl, CURLOPT_USERAGENT, config.user_agent.c_str());
             }
 
-            /* настроим работу с Headers */
+            // настроим работу с Headers
             curl_easy_setopt(curl, CURLOPT_HEADERDATA, header_data);
             curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_callback);
             if (!headers.empty()) {
@@ -364,7 +371,7 @@ namespace kurlyk {
                 ++index;
             }
             lock.unlock();
-            return std::move(temp);
+            return temp;
         }
 
     public:
@@ -502,19 +509,18 @@ namespace kurlyk {
                 const bool async = false) {
 
             const std::string args_str = utils::get_str_query_string(args, "?");
-            CurlHeaders curl_headers(headers);
             if (async) {
                 std::shared_ptr<CurlRequest> req = std::make_shared<CurlRequest>();
+                req->curl_headers.add_header(headers);
                 req->callback = callback;
-
                 CURL *curl = init_curl(
                     host,
                     method,
                     path,
                     args_str,
                     content,
-                    req->output.headers,
-                    curl_headers,
+                    headers,
+                    req->curl_headers,
                     req->output.response,
                     http_request_writer,
                     http_request_header_callback,
@@ -526,6 +532,7 @@ namespace kurlyk {
                 return CURLE_OK;
             }
 
+            CurlHeaders curl_headers(headers);
             std::string response_buffer;
             Headers response_headers;
             CURL *curl = init_curl(
@@ -554,7 +561,7 @@ namespace kurlyk {
                 return output.response_code;
             }
 
-            /* сохраняем Cookie */
+            // сохраняем Cookie
             if(config.use_cookie && !config.use_cookie_file) {
                 auto header_it = response_headers.find("Set-Cookie");
                 if(header_it != response_headers.end()) {
