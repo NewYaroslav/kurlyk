@@ -1,4 +1,0 @@
-#ifndef PCH_HPP_INCLUDED
-#define PCH_HPP_INCLUDED
-
-#endif // PCH_HPP_INCLUDED

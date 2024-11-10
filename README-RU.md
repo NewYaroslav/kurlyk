@@ -3,7 +3,7 @@
 
 **C++ library for easy networking**
 
-[README на русском](README-RU.md)
+[Do you speak English?](README.md)
 
 ## Описание
 **kurlyk** — это ещё одна библиотека, реализующая HTTP и WebSocket клиенты для C++. Построена как обертка над `curl` и `Simple-WebSocket-Server`, предоставляя упрощённый интерфейс для работы с HTTP и WebSocket в C++ приложениях. Она поддерживает асинхронное выполнение HTTP-запросов с ограничением скорости и повторными попытками, а также работу с WebSocket-соединениями.
