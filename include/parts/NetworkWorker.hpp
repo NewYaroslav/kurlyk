@@ -78,7 +78,6 @@ namespace kurlyk {
             m_future = std::async(std::launch::async,
                     [this] {
                 for (;;) {
-                    KURLYK_PRINT << "--0" << std::endl;
                     std::unique_lock<std::mutex> locker(m_notify_mutex);
                     m_notify_condition.wait(locker, [this](){
                         return m_notify;
@@ -91,7 +90,6 @@ namespace kurlyk {
                         return;
                     }
 
-                    KURLYK_PRINT << "--1" << std::endl;
                     while (is_loaded()) {
                         process();
                         if (m_shutdown) {
@@ -111,7 +109,7 @@ namespace kurlyk {
                             return;
                         }
                     }
-                    KURLYK_PRINT << "--2" << std::endl;
+
                     if (m_shutdown) {
                         shutdown();
                         return;
@@ -124,23 +122,19 @@ namespace kurlyk {
         ///
         /// Signals the worker thread to stop and waits for it to complete all tasks before fully shutting down.
         void stop() {
-            KURLYK_PRINT << "-0" << std::endl;
             if (!m_future.valid()) return;
             m_shutdown = true;
             notify();
-            KURLYK_PRINT << "-1" << std::endl;
             try {
                 m_future.wait();
                 m_future.get();
             } catch(...) {};
-            KURLYK_PRINT << "-2" << std::endl;
         }
 
         /// \brief Shuts down the worker, clearing all active requests and pending tasks.
         ///
         /// Stops both HTTP and WebSocket managers and processes any remaining tasks in the queue.
         void shutdown() {
-            KURLYK_PRINT << "-s1" << std::endl;
 #           if KURLYK_HTTP_SUPPORT
             HttpRequestManager::get_instance().shutdown();
 #           endif
@@ -148,7 +142,6 @@ namespace kurlyk {
             WebSocketManager::get_instance().shutdown();
 #           endif
             process_tasks();
-            KURLYK_PRINT << "-s2" << std::endl;
         }
 
     private:
@@ -167,7 +160,6 @@ namespace kurlyk {
 
         /// \brief Private destructor, ensuring the worker thread stops on destruction.
         ~NetworkWorker() {
-            KURLYK_PRINT << "~NetworkWorker()" << std::endl;
             stop();
         }
 

@@ -1,5 +1,5 @@
 # Kurlyk
-![logo](doc/logo-mini.png)
+![logo](docs/logo-mini.png)
 
 **C ++ library for easy curl work**
 
@@ -57,7 +57,7 @@ std::cout << "response:" << std::endl << client.get("/ip") << std::endl;
 
 ### Максимум возможностей
 
-![logo](doc/header_0.png)
+![logo](docs/header_0.png)
 
 Почти все варианты настроек можно увидеть в примере ниже:
 

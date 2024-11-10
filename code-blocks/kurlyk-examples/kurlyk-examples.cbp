@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="kurlyk-examples" />
+		<Option pch_mode="2" />
+		<Option compiler="mingw_64_7_3_0" />
+		<Build>
+			<Target title="simple_http_request_example">
+				<Option output="simple_http_request_example" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_7_3_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl_win64/lib/capi.lib" />
+					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
+					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
+					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
+					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+			<Target title="http_client_future_example">
+				<Option output="http_client_future_example" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_7_3_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl_win64/lib/capi.lib" />
+					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
+					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
+					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
+					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+			<Target title="http_client_proxy_example">
+				<Option output="http_client_proxy_example" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_7_3_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl_win64/lib/capi.lib" />
+					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
+					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
+					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
+					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+			<Target title="async_multi_request_example">
+				<Option output="async_multi_request_example" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_7_3_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl_win64/lib/capi.lib" />
+					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
+					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
+					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
+					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+			<Target title="redirect_handling_example">
+				<Option output="redirect_handling_example" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_7_3_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl_win64/lib/capi.lib" />
+					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
+					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
+					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
+					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+			<Target title="delayed_request_example">
+				<Option output="delayed_request_example" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_7_3_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl_win64/lib/capi.lib" />
+					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
+					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
+					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
+					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+			<Target title="threaded_request_processing_example">
+				<Option output="threaded_request_processing_example" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_7_3_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl_win64/lib/capi.lib" />
+					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
+					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
+					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
+					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+			<Target title="interrupted_requests_example">
+				<Option output="interrupted_requests_example" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_7_3_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl_win64/lib/capi.lib" />
+					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
+					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
+					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
+					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+			<Target title="websocket_echo_example">
+				<Option output="websocket_echo_example" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_7_3_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl_win64/lib/capi.lib" />
+					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
+					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
+					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
+					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+			<Target title="websocket_client_lifecycle_test">
+				<Option output="websocket_client_lifecycle_test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_7_3_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl_win64/lib/capi.lib" />
+					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
+					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
+					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
+					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
+					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl_win64/lib" />
+					<Add directory="../../libs/openssl_win64/include" />
+					<Add directory="../../libs/openssl_win64/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
+					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
+					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+			<Target title="websocket_independent_clients_example">
+				<Option output="websocket_independent_clients_example" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_12_2_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="../../examples/async_multi_request_example.cpp">
+			<Option target="async_multi_request_example" />
+		</Unit>
+		<Unit filename="../../examples/delayed_request_example.cpp">
+			<Option target="delayed_request_example" />
+		</Unit>
+		<Unit filename="../../examples/http_client_future_example.cpp">
+			<Option target="http_client_future_example" />
+		</Unit>
+		<Unit filename="../../examples/http_client_proxy_example.cpp">
+			<Option target="http_client_proxy_example" />
+		</Unit>
+		<Unit filename="../../examples/interrupted_requests_example.cpp">
+			<Option target="interrupted_requests_example" />
+		</Unit>
+		<Unit filename="../../examples/redirect_handling_example.cpp">
+			<Option target="redirect_handling_example" />
+		</Unit>
+		<Unit filename="../../examples/simple_http_request_example.cpp">
+			<Option target="simple_http_request_example" />
+		</Unit>
+		<Unit filename="../../examples/threaded_request_processing_example.cpp">
+			<Option target="threaded_request_processing_example" />
+		</Unit>
+		<Unit filename="../../examples/websocket_client_lifecycle_test.cpp">
+			<Option target="websocket_client_lifecycle_test" />
+		</Unit>
+		<Unit filename="../../examples/websocket_echo_example.cpp">
+			<Option target="websocket_echo_example" />
+		</Unit>
+		<Unit filename="../../examples/websocket_independent_clients_example.cpp">
+			<Option target="websocket_independent_clients_example" />
+		</Unit>
+		<Unit filename="../../include/kurlyk.hpp" />
+		<Unit filename="../../include/parts/Enums.hpp" />
+		<Unit filename="../../include/parts/Http/Client.hpp" />
+		<Unit filename="../../include/parts/Http/Components/Cookie.hpp" />
+		<Unit filename="../../include/parts/Http/Components/Request.hpp" />
+		<Unit filename="../../include/parts/Http/Components/Response.hpp" />
+		<Unit filename="../../include/parts/Http/RequestManager.hpp" />
+		<Unit filename="../../include/parts/Http/RequestManager/MultiRequestHandler.hpp" />
+		<Unit filename="../../include/parts/Http/RequestManager/RateLimiter.hpp" />
+		<Unit filename="../../include/parts/Http/RequestManager/RequestContext.hpp" />
+		<Unit filename="../../include/parts/Http/RequestManager/RequestHandler.hpp" />
+		<Unit filename="../../include/parts/Http/Utils.hpp" />
+		<Unit filename="../../include/parts/NetworkWorker.hpp" />
+		<Unit filename="../../include/parts/Utils.hpp" />
+		<Unit filename="../../include/parts/Utils/CaseInsensitiveMultimap.hpp" />
+		<Unit filename="../../include/parts/Utils/CurlErrorCategory.hpp" />
+		<Unit filename="../../include/parts/Utils/EventQueue.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Client.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Client/BaseWebSocketClient.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Client/IWebSocketClient.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Client/IWebSocketSender.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Client/RateLimiter.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Client/SimpleWeb/SocketClient.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Client/SimpleWeb/WebSocketClientAdapter.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Client/SimpleWeb/Worker.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Components/Config.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Components/EventData.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Components/SendInfo.hpp" />
+		<Unit filename="../../include/parts/WebSocket/Manager.hpp" />
+		<Unit filename="../../libs/Simple-WebSocket-Server/client_ws.hpp" />
+		<Unit filename="../../libs/Simple-WebSocket-Server/client_wss.hpp" />
+		<Unit filename="../../libs/Simple-WebSocket-Server/crypto.hpp" />
+		<Unit filename="../../libs/Simple-WebSocket-Server/status_code.hpp" />
+		<Unit filename="../../libs/Simple-WebSocket-Server/utility.hpp" />
+		<Unit filename="../em-4/BaseObject.hpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="main.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="pch.hpp">
+			<Option compile="1" />
+			<Option weight="0" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="test.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="tg.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="ws-echo.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

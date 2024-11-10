@@ -242,6 +242,119 @@ namespace kurlyk {
             return m_client->get_remote_endpoint();
         }
 
+        /// \brief Sets the WebSocket server URL with optional query parameters.
+        /// \param host Hostname or IP address.
+        /// \param path Path for the request.
+        /// \param query Optional query parameters.
+        void set_url(const std::string& host, const std::string& path, const std::string& query = "") {
+            init_config();
+            return m_config->set_url(host, path, query);
+        }
+
+        /// \brief Sets the WebSocket server URL with specified query parameters.
+        /// \param url Full URL of the server.
+        /// \param query Query parameters as a dictionary.
+        void set_url(const std::string& url, const QueryParams& query) {
+            init_config();
+            return m_config->set_url(url, query);
+        }
+
+        /// \brief Sets the Accept-Encoding header with specified encodings.
+        /// \param identity Enables identity encoding.
+        /// \param deflate Enables deflate encoding.
+        /// \param gzip Enables gzip encoding.
+        /// \param brotli Enables brotli encoding.
+        void set_accept_encoding(bool identity = false, bool deflate = false, bool gzip = false, bool brotli = false) {
+            init_config();
+            return m_config->set_accept_encoding(identity, deflate, gzip, brotli);
+        }
+
+        /// \brief Sets the proxy server address.
+        /// \param ip Proxy server IP address.
+        /// \param port Proxy server port.
+        void set_proxy(const std::string& ip, int port) {
+            init_config();
+            return m_config->set_proxy(ip, port);
+        }
+
+        /// \brief Sets the proxy server address with authentication.
+        /// \param ip Proxy server IP address.
+        /// \param port Proxy server port.
+        /// \param username Proxy username.
+        /// \param password Proxy password.
+        /// \param type Type of proxy (default is HTTP).
+        void set_proxy(const std::string& ip, int port, const std::string& username, const std::string& password, ProxyType type = ProxyType::HTTP) {
+            init_config();
+            return m_config->set_proxy(ip, port, username, password, type);
+        }
+
+        /// \brief Configures proxy authentication credentials.
+        /// \param username Proxy username.
+        /// \param password Proxy password.
+        void set_proxy_auth(const std::string& username, const std::string& password) {
+            init_config();
+            return m_config->set_proxy_auth(username, password);
+        }
+
+        /// \brief Configures reconnection behavior.
+        /// \param reconnect Enables automatic reconnection.
+        /// \param reconnect_attempts Number of reconnection attempts (0 means infinite attempts).
+        /// \param reconnect_delay Delay in seconds between reconnection attempts.
+        void set_reconnect(bool reconnect, long reconnect_attempts = 0, long reconnect_delay = 0) {
+            init_config();
+            return m_config->set_reconnect(reconnect, reconnect_attempts, reconnect_delay);
+        }
+
+        /// \brief Sets the User-Agent header.
+        /// \param user_agent User-Agent string.
+        void set_user_agent(const std::string& user_agent) {
+            init_config();
+            return m_config->set_user_agent(user_agent);
+        }
+
+        /// \brief Sets the cookie data.
+        /// \param cookie Cookie data string.
+        void set_cookie(const std::string& cookie) {
+            init_config();
+            return m_config->set_cookie(cookie);
+        }
+
+        /// \brief Configures the idle timeout for the WebSocket connection.
+        /// \param idle_timeout Idle timeout in seconds (0 means no timeout).
+        void set_idle_timeout(long idle_timeout) {
+            init_config();
+            return m_config->set_idle_timeout(idle_timeout);
+        }
+
+        /// \brief Sets the timeout for WebSocket requests.
+        /// \param request_timeout Request timeout in seconds (0 means no timeout).
+        void set_request_timeout(long request_timeout) {
+            init_config();
+            return m_config->set_request_timeout(request_timeout);
+        }
+
+        /// \brief Sets the path to the CA certificate file.
+        /// \param ca_file Path to the CA certificate file.
+        void set_ca_file(const std::string& ca_file) {
+            init_config();
+            return m_config->set_ca_file(ca_file);
+        }
+
+        /// \brief Sets certificate verification and sets the CA certificate file.
+        /// \param verify_cert If true, enables server certificate verification.
+        /// \param ca_file Path to the CA certificate file.
+        void set_ca_file(bool verify_cert, const std::string& ca_file) {
+            init_config();
+            return m_config->set_ca_file(verify_cert, ca_file);
+        }
+
+        /// \brief Sets whether to verify the server’s certificate.
+        /// \param verify_cert If true, enables server certificate verification.
+        void set_verify_cert(bool verify_cert) {
+            init_config();
+            return m_config->set_verify_cert(verify_cert);
+        }
+
         /// \brief Adds a rate limit configuration to control the frequency of WebSocket messages.
         ///
         /// The first rate limit added will serve as the primary rate limit, applying to all WebSocket

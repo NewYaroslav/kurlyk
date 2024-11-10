@@ -81,7 +81,7 @@ namespace kurlyk {
         }
 
     private:
-# 		ifdef USE_STANDALONE_ASIO
+# 		ifdef ASIO_STANDALONE
         using work_guard_t = asio::executor_work_guard<asio::io_context::executor_type>;
 # 		else
         using work_guard_t = boost::asio::executor_work_guard<boost::asio::io_context::executor_type>;
@@ -104,8 +104,8 @@ namespace kurlyk {
         /// \brief Private constructor to prevent instantiation.
         SimpleWebSocketWorker() :
 				m_io_context(std::make_shared<SimpleWeb::io_context>()),
-#           ifdef USE_STANDALONE_ASIO
-			m_work_guard(asio::make_work_guard(*io_context)) {
+#           ifdef ASIO_STANDALONE
+			m_work_guard(asio::make_work_guard(*m_io_context)) {
 #           else
             m_work_guard(boost::asio::make_work_guard(*m_io_context)) {
 #           endif

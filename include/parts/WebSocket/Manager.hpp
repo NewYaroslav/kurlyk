@@ -100,9 +100,7 @@ namespace kurlyk {
         WebSocketManager() = default;
 
         /// \brief Private destructor to enforce singleton pattern.
-        ~WebSocketManager() {
-            KURLYK_PRINT << "~WebSocketManager()" << std::endl;
-        }
+        ~WebSocketManager() = default;
 
         /// \brief Deleted copy constructor to enforce the singleton pattern.
         WebSocketManager(const WebSocketManager&) = delete;

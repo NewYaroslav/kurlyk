@@ -11,8 +11,6 @@
 /// For more details on the Simple-Web-Server library, see:
 /// \see https://gitlab.com/eidheim/Simple-Web-Server
 
-// Simple-WebSocket-Server library
-// See https://gitlab.com/eidheim/Simple-Web-Server
 #include <client_ws.hpp>
 
 #ifdef ASIO_STANDALONE
@@ -58,8 +56,10 @@ namespace SimpleWeb {
                 context.use_private_key_file(private_key_file, asio::ssl::context::pem);
             }
 
-            if(verify_certificate)
-                context.set_verify_callback(asio::ssl::rfc2818_verification(host));
+            if(verify_certificate) {
+                //context.set_verify_callback(asio::ssl::rfc2818_verification(host));
+                context.set_verify_callback(asio::ssl::host_name_verification(host));
+            }
 
             if(verify_file.size() > 0) {
                 context.load_verify_file(verify_file);
@@ -68,10 +68,11 @@ namespace SimpleWeb {
                 add_root_certificates();
             }
 
-            if(verify_certificate)
+            if(verify_certificate) {
                 context.set_verify_mode(asio::ssl::verify_peer);
-            else
+            } else {
                 context.set_verify_mode(asio::ssl::verify_none);
+            }
         };
 
     private:
