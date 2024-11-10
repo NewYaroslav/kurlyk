@@ -3,7 +3,7 @@
 int main() {
     kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
 
-    client.event_handler() = [](std::unique_ptr<kurlyk::WebSocketEventData> event) {
+    client.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> event) {
         switch (event->event_type) {
             case kurlyk::WebSocketEventType::Open:
                 KURLYK_PRINT << "Connection opened" << std::endl;
@@ -49,7 +49,7 @@ int main() {
                 KURLYK_PRINT << "Error: " << event->error_code.message() << std::endl;
                 break;
         };
-    };
+    });
 
     KURLYK_PRINT << "Connecting..." << std::endl;
     client.connect();

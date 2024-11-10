@@ -15,8 +15,8 @@ int main() {
             kurlyk::process(); // Processes pending requests in synchronous mode
             std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Throttle to avoid busy-waiting
         }
-        // Reset and deinitialize the library
-        kurlyk::reset();
+        // Deinitialize the library
+        kurlyk::shutdown();
     });
 
     // Set up an HTTP client and configure requests

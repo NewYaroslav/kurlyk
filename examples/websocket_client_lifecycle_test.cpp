@@ -9,7 +9,7 @@ void test_connect_disconnect(int n) {
         // First client: connects and disconnects in quick succession, then exits scope
         {
             kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
-            client.event_handler() = [](std::unique_ptr<kurlyk::WebSocketEventData> event) {
+            client.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> event) {
                 switch (event->event_type) {
                     case kurlyk::WebSocketEventType::Open:
                         KURLYK_PRINT << "Client 1: Connection opened" << std::endl;
@@ -25,7 +25,7 @@ void test_connect_disconnect(int n) {
                         KURLYK_PRINT << "Client 1: Error: " << event->error_code.message() << std::endl;
                         break;
                 };
-            };
+            });
             for (int j = 0; j < 100; ++j) {
                 client.connect();
                 client.disconnect();
@@ -39,7 +39,7 @@ void test_connect_disconnect(int n) {
             kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
             const long rate_limit_id = client.add_rate_limit_rps(2);
             KURLYK_PRINT << "rate_limit_id " << rate_limit_id << std::endl;
-            client.event_handler() = [rate_limit_id](std::unique_ptr<kurlyk::WebSocketEventData> event) {
+            client.on_event([rate_limit_id](std::unique_ptr<kurlyk::WebSocketEventData> event) {
                 static int counter = 0;
                 switch (event->event_type) {
                     case kurlyk::WebSocketEventType::Open:
@@ -60,7 +60,7 @@ void test_connect_disconnect(int n) {
                         KURLYK_PRINT << "Client 2: Error: " << event->error_code.message() << std::endl;
                         break;
                 };
-            };
+            });
             for (int j = 0; j < 100; ++j) {
                 client.connect();
                 client.disconnect();

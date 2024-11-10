@@ -87,6 +87,12 @@ namespace kurlyk {
             });
         }
 
+        /// \brief Sets a callback for WebSocket events.
+        /// \param callback The function to be executed on each WebSocket event.
+        void on_event(std::function<void(std::unique_ptr<WebSocketEventData>)> callback) {
+            m_client->event_handler() = std::move(callback);
+        }
+
         /// \brief Accessor for the event handler function.
         /// \return A reference to the event handler callback function for WebSocket events.
         std::function<void(std::unique_ptr<WebSocketEventData>)>& event_handler() {

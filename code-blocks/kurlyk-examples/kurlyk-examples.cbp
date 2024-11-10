@@ -4,47 +4,48 @@
 	<Project>
 		<Option title="kurlyk-examples" />
 		<Option pch_mode="2" />
-		<Option compiler="mingw_64_7_3_0" />
+		<Option compiler="mingw_64_12_2_0" />
 		<Build>
 			<Target title="simple_http_request_example">
 				<Option output="simple_http_request_example" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64_7_3_0" />
+				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../libs/openssl_win64/lib/capi.lib" />
-					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
-					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
-					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
-					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
 					<Add library="ws2_32" />
 					<Add library="wsock32" />
 					<Add library="crypt32" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Linker>
@@ -53,41 +54,42 @@
 				<Option output="http_client_future_example" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64_7_3_0" />
+				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../libs/openssl_win64/lib/capi.lib" />
-					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
-					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
-					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
-					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
 					<Add library="ws2_32" />
 					<Add library="wsock32" />
 					<Add library="crypt32" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Linker>
@@ -96,41 +98,42 @@
 				<Option output="http_client_proxy_example" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64_7_3_0" />
+				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../libs/openssl_win64/lib/capi.lib" />
-					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
-					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
-					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
-					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
 					<Add library="ws2_32" />
 					<Add library="wsock32" />
 					<Add library="crypt32" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Linker>
@@ -139,41 +142,42 @@
 				<Option output="async_multi_request_example" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64_7_3_0" />
+				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../libs/openssl_win64/lib/capi.lib" />
-					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
-					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
-					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
-					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
 					<Add library="ws2_32" />
 					<Add library="wsock32" />
 					<Add library="crypt32" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Linker>
@@ -182,41 +186,42 @@
 				<Option output="redirect_handling_example" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64_7_3_0" />
+				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../libs/openssl_win64/lib/capi.lib" />
-					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
-					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
-					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
-					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
 					<Add library="ws2_32" />
 					<Add library="wsock32" />
 					<Add library="crypt32" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Linker>
@@ -225,41 +230,42 @@
 				<Option output="delayed_request_example" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64_7_3_0" />
+				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../libs/openssl_win64/lib/capi.lib" />
-					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
-					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
-					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
-					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
 					<Add library="ws2_32" />
 					<Add library="wsock32" />
 					<Add library="crypt32" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Linker>
@@ -268,41 +274,42 @@
 				<Option output="threaded_request_processing_example" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64_7_3_0" />
+				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../libs/openssl_win64/lib/capi.lib" />
-					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
-					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
-					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
-					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
 					<Add library="ws2_32" />
 					<Add library="wsock32" />
 					<Add library="crypt32" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Linker>
@@ -311,41 +318,42 @@
 				<Option output="interrupted_requests_example" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64_7_3_0" />
+				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../libs/openssl_win64/lib/capi.lib" />
-					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
-					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
-					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
-					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
 					<Add library="ws2_32" />
 					<Add library="wsock32" />
 					<Add library="crypt32" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Linker>
@@ -354,41 +362,42 @@
 				<Option output="websocket_echo_example" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64_7_3_0" />
+				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../libs/openssl_win64/lib/capi.lib" />
-					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
-					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
-					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
-					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
 					<Add library="ws2_32" />
 					<Add library="wsock32" />
 					<Add library="crypt32" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Linker>
@@ -397,41 +406,42 @@
 				<Option output="websocket_client_lifecycle_test" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64_7_3_0" />
+				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../libs/openssl_win64/lib/capi.lib" />
-					<Add library="../../libs/openssl_win64/lib/dasync.lib" />
-					<Add library="../../libs/openssl_win64/lib/libcrypto.lib" />
-					<Add library="../../libs/openssl_win64/lib/libssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/openssl.lib" />
-					<Add library="../../libs/openssl_win64/lib/ossltest.lib" />
-					<Add library="../../libs/openssl_win64/lib/padlock.lib" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.a" />
-					<Add library="../../libs/curl-7.60.0-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
 					<Add library="ws2_32" />
 					<Add library="wsock32" />
 					<Add library="crypt32" />
-					<Add directory="../../libs/openssl_win64/lib" />
-					<Add directory="../../libs/openssl_win64/include" />
-					<Add directory="../../libs/openssl_win64/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/bin" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/include" />
-					<Add directory="../../libs/curl-7.60.0-win64-mingw/lib" />
-					<Add directory="../../libs/boost_1_71_0/include/boost-1_71" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Linker>
@@ -555,21 +565,9 @@
 		<Unit filename="../em-4/BaseObject.hpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="main.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="pch.hpp">
 			<Option compile="1" />
 			<Option weight="0" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="test.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="tg.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="ws-echo.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Extensions>

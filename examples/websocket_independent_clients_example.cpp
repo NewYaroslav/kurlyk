@@ -11,7 +11,7 @@ void test_connect_disconnect(int n) {
             std::this_thread::sleep_for(std::chrono::seconds(2));
             kurlyk::WebSocketClient client1("wss://echo-websocket.fly.dev/");
             const long rate_limit_id = client1.add_rate_limit_rps(2);
-            client1.event_handler() = [rate_limit_id](std::unique_ptr<kurlyk::WebSocketEventData> event) {
+            client1.on_event([rate_limit_id](std::unique_ptr<kurlyk::WebSocketEventData> event) {
                 static int counter = 0;
                 switch (event->event_type) {
                     case kurlyk::WebSocketEventType::Open:
@@ -29,7 +29,7 @@ void test_connect_disconnect(int n) {
                         KURLYK_PRINT << "Client 1: Error: " << event->error_code.message() << std::endl;
                         break;
                 };
-            };
+            });
             KURLYK_PRINT << "Client 1: Connecting..." << std::endl;
             client1.connect_and_wait();
             std::this_thread::sleep_for(std::chrono::seconds(5)); // Дождаться приёма сообщения
@@ -42,7 +42,7 @@ void test_connect_disconnect(int n) {
         std::thread client2_thread([]() {
             kurlyk::WebSocketClient client2("wss://echo-websocket.fly.dev/");
             const long rate_limit_id = client2.add_rate_limit_rps(2);
-            client2.event_handler() = [rate_limit_id](std::unique_ptr<kurlyk::WebSocketEventData> event) {
+            client2.on_event([rate_limit_id](std::unique_ptr<kurlyk::WebSocketEventData> event) {
                 static int counter = 0;
                 switch (event->event_type) {
                     case kurlyk::WebSocketEventType::Open:
@@ -60,7 +60,7 @@ void test_connect_disconnect(int n) {
                         KURLYK_PRINT << "Client 2: Error: " << event->error_code.message() << std::endl;
                         break;
                 };
-            };
+            });
             KURLYK_PRINT << "Client 1: Connecting..." << std::endl;
             client2.connect_and_wait();
             std::this_thread::sleep_for(std::chrono::seconds(10)); // Подключён 10 секунд

@@ -1,25 +1,27 @@
 # kurlyk
 ![logo](docs/logo-mini.png)
 
-## Описание
+**C++ library for easy networking**
 
-**kurlyk** — это ещё одна библиотека, реализующая HTTP и WebSocket клиенты для C++. Она поддерживает асинхронное выполнение HTTP-запросов с ограничением скорости и повторными попытками, а также работу с WebSocket-соединениями.
+[README на русском](README-RU.md)
+
+## Описание
+**kurlyk** — это ещё одна библиотека, реализующая HTTP и WebSocket клиенты для C++. Построена как обертка над `curl` и `Simple-WebSocket-Server`, предоставляя упрощённый интерфейс для работы с HTTP и WebSocket в C++ приложениях. Она поддерживает асинхронное выполнение HTTP-запросов с ограничением скорости и повторными попытками, а также работу с WebSocket-соединениями.
 
 Если вам не подошли другие библиотеки, такие как *easyhttp-cpp, curl_request, curlpp-async, curlwrapper, curl-Easy-cpp, curlpp11, easycurl, curl-cpp-wrapper…* возможно, стоит попробовать `kurlyk`.
 
 ### Особенности
-
 - Асинхронное выполнение HTTP и WebSocket запросов
 - Поддержка ограничения скорости для предотвращения перегрузки сети
 - Автоматическое переподключение с настраиваемыми параметрами
 - Простота использования через интуитивно понятный интерфейс классов
+- Ориентация на использование в небольших приложениях
+- Поддержка С++11
 
 ## Примеры использования
-
 Примеры находятся в папке `examples`. Ниже приведены основные примеры использования библиотеки.
 
 ### Пример использования WebSocket клиента
-
 Этот пример показывает, как подключиться к WebSocket серверу, отправить сообщение и обработать различные события (открытие соединения, получение сообщения, закрытие соединения и ошибки).:
 
 ```cpp
@@ -32,7 +34,7 @@ int main() {
     kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
 
     // Настраиваем обработчик событий WebSocket
-    client.event_handler() = [](std::unique_ptr<kurlyk::WebSocketEventData> event) {
+    client.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> event) {
         switch (event->event_type) {
             case kurlyk::WebSocketEventType::Open:
                 KURLYK_PRINT << "Соединение установлено" << std::endl;
@@ -70,7 +72,7 @@ int main() {
                 KURLYK_PRINT << "Ошибка: " << event->error_code.message() << std::endl;
                 break;
         };
-    };
+    });
 
     // Подключаемся к серверу
     KURLYK_PRINT << "Подключение..." << std::endl;
@@ -78,9 +80,9 @@ int main() {
 
     // Ожидаем некоторое время для приёма сообщений
     std::this_thread::sleep_for(std::chrono::seconds(10));
-	
-	// Отправляем последнее сообщение через класс клиента
-	client.send_message("Пока!");
+    
+    // Отправляем последнее сообщение через класс клиента
+    client.send_message("Пока!");
 
     // Отключаемся от сервера
     KURLYK_PRINT << "Отключение..." << std::endl;
@@ -92,7 +94,6 @@ int main() {
 ```
 
 ### Примеры использования HTTP-клиента
-
 Эти примеры показывают, как использовать HTTP-клиент библиотеки kurlyk для выполнения различных запросов и обработки ответов.
 
 #### Пример 1: Выполнение GET и POST запросов с обработчиком ответов
@@ -203,17 +204,16 @@ int main() {
 ```
 
 ## Зависимости и установка
-
 Для работы библиотеки kurlyk в среде MinGW потребуются следующие зависимости:
 
 1. Для WebSocket:
 
-	- [Simple-WebSocket-Server](https://gitlab.com/eidheim/Simple-WebSocket-Server)
-	- Boost.Asio или [standalone Asio](https://github.com/chriskohlhoff/asio/tree/master)
-	- [OpenSSL](https://slproweb.com/products/Win32OpenSSL.html) (*LTS версия Win64 OpenSSL v3.0.15*)
-	
+    - [Simple-WebSocket-Server](https://gitlab.com/eidheim/Simple-WebSocket-Server)
+    - Boost.Asio или [standalone Asio](https://github.com/chriskohlhoff/asio/tree/master)
+    - [OpenSSL](https://slproweb.com/products/Win32OpenSSL.html) (*LTS версия Win64 OpenSSL v3.0.15*)
+    
 2. Для HTTP:
-	- [libcurl](https://curl.se/windows/)
+    - [libcurl](https://curl.se/windows/)
 
 Все зависимости также добавлены в проект в виде субмодулей, находящихся в папке `libs`.
 
