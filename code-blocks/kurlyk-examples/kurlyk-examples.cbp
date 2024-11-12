@@ -366,14 +366,13 @@
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++17" />
-					<Add option="-DASIO_STANDALONE" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
 					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
 					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
 					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
-					<Add directory="../../libs/asio-master/asio/include" />
+					<Add directory="../../lib/boost_1_71_0/include/boost-1_71" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Compiler>
@@ -397,7 +396,7 @@
 					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
 					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
 					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
-					<Add directory="../../libs/asio-master/asio/include" />
+					<Add directory="../../lib/boost_1_71_0/include/boost-1_71" />
 					<Add directory="../../libs/Simple-WebSocket-Server" />
 					<Add directory="../../include" />
 				</Linker>

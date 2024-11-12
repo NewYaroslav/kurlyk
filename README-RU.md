@@ -204,7 +204,7 @@ int main() {
 ```
 
 ## Зависимости и установка
-Для работы библиотеки kurlyk в среде MinGW потребуются следующие зависимости:
+Для работы библиотеки **kurlyk** в среде MinGW потребуются следующие зависимости:
 
 1. Для WebSocket:
 
@@ -239,12 +239,12 @@ ossltest.lib
 padlock.lib
 ```
 
-### Подключение standalone asio
+### Подключение Standalone Asio
 
 1. Добавьте в проект путь к asio (пример для [репозитория Asio](https://github.com/chriskohlhoff/asio/tree/master)):
 
 ```
-asio-master/asio/include
+asio/asio/include
 ```
 
 2. Задайте макрос `ASIO_STANDALONE` в параметрах проекта или перед подключением `kurlyk.hpp`:
@@ -253,6 +253,8 @@ asio-master/asio/include
 #define ASIO_STANDALONE
 #include <kurlyk.hpp>
 ```
+
+> **Примечание:** Для Boost.Asio указывать макрос `ASIO_STANDALONE` не нужно.
 
 ### Подключение curl
 
@@ -269,6 +271,24 @@ curl-8.11.0_1-win64-mingw/lib
 ```
 libcurl.a
 libcurl.dll.a
+```
+
+### Подключение Simple-WebSocket-Server
+
+Добавьте в проект путь к заголовочным файлам библиотеки:
+
+```
+Simple-WebSocket-Server
+```
+
+### Подключение остальных зависимостей
+
+Также добавьте следующие библиотеки в линкер:
+
+```
+ws2_32
+wsock32
+crypt32
 ```
 
 ### Подключение kurlyk

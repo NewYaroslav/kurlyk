@@ -204,7 +204,7 @@ int main() {
 ```
 
 ## Dependencies and Installation
-To work with the kurlyk library in MinGW, you will need the following dependencies:
+To work with the **kurlyk** library in MinGW, you will need the following dependencies:
 
 1. For WebSocket:
 
@@ -217,7 +217,7 @@ To work with the kurlyk library in MinGW, you will need the following dependenci
 
 All dependencies are also included as submodules in the `libs` folder.
 
-### Adding OpenSSL
+### OpenSSL Setup
 
 1. Add OpenSSL paths to the project (example for version *3.4.0*):
 
@@ -239,12 +239,12 @@ ossltest.lib
 padlock.lib
 ```
 
-### Adding standalone asio
+### Standalone Asio Setup
 
-1. Add the asio path to your project (example for [Asio repository](https://github.com/chriskohlhoff/asio/tree/master)):
+1. Add the path to Asio in your project (example for [Asio repository](https://github.com/chriskohlhoff/asio/tree/master)):
 
 ```
-asio-master/asio/include
+asio/asio/include
 ```
 
 2. Set the macro `ASIO_STANDALONE` in your project settings or before including `kurlyk.hpp`:
@@ -254,9 +254,11 @@ asio-master/asio/include
 #include <kurlyk.hpp>
 ```
 
-### Adding curl
+> **Note:** For Boost.Asio, you do not need to define the `ASIO_STANDALONE` macro.
 
-1. Add curl paths to your project (example for version *8.11.0*):
+### curl Setup
+
+1. Add the paths for `curl` in your project (example for version *8.11.0*):
 
 ```
 curl-8.11.0_1-win64-mingw/bin
@@ -264,13 +266,31 @@ curl-8.11.0_1-win64-mingw/include
 curl-8.11.0_1-win64-mingw/lib
 ```
 
-2. Link `curl` libraries from lib:
+2. Link the `curl` libraries from the `lib` folder:
 
 ```
 libcurl.a
 libcurl.dll.a
 ```
 
+### Simple-WebSocket-Server Setup
+
+Add the path to the Simple-WebSocket-Server headers in your project:
+
+```
+Simple-WebSocket-Server
+```
+
+### Linking Other Dependencies
+
+Additionally, link the following libraries in the linker:
+
+```
+ws2_32
+wsock32
+crypt32
+```
+	
 ### Adding kurlyk
 
 Add the path to the kurlyk header files:
