@@ -13,7 +13,7 @@
 				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++17" />
 					<Add option="-DASIO_STANDALONE" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
@@ -277,7 +277,7 @@
 				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++17" />
 					<Add option="-DASIO_STANDALONE" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
@@ -321,7 +321,7 @@
 				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++17" />
 					<Add option="-DASIO_STANDALONE" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
@@ -365,7 +365,7 @@
 				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++17" />
 					<Add option="-DASIO_STANDALONE" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
@@ -409,7 +409,7 @@
 				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++17" />
 					<Add option="-DASIO_STANDALONE" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
@@ -453,7 +453,7 @@
 				<Option compiler="mingw_64_12_2_0" />
 				<Compiler>
 					<Add option="-O3" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++17" />
 					<Add option="-DASIO_STANDALONE" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
 					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />

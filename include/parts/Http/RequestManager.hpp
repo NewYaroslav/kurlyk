@@ -33,7 +33,7 @@ namespace kurlyk {
             if (m_shutdown) return false;
             std::lock_guard<std::mutex> lock(m_pending_requests_mutex);
 #           if __cplusplus >= 201402L
-            m_pending_requests.push_back(std::make_unique<HttpRequestContext>(std::move(request_ptr), std::move(callback));
+            m_pending_requests.push_back(std::make_unique<HttpRequestContext>(std::move(request_ptr), std::move(callback)));
 #           else
             m_pending_requests.push_back(std::unique_ptr<HttpRequestContext>(
                 new HttpRequestContext(std::move(request_ptr), std::move(callback))));
