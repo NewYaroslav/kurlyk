@@ -108,6 +108,11 @@ namespace utils {
         key = header.substr(0, colon_pos);
         std::size_t end_pos = header.find_first_not_of(" ", start_pos);
         value = (end_pos != std::string::npos) ? header.substr(end_pos) : std::string();
+
+        // Trim newline characters from value
+        while (!value.empty() && (value.back() == '\r' || value.back() == '\n')) {
+            value.pop_back();
+        }
     }
 
 #   ifdef KURLYK_USE_CURL

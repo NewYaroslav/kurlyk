@@ -37,6 +37,15 @@ namespace kurlyk {
             return id;
         }
 
+        /// \brief Removes a rate limit with the specified ID.
+        /// This method allows the removal of an existing rate limit by its unique identifier.
+        /// \param limit_id The unique identifier of the rate limit to remove.
+        /// \return True if the rate limit was removed successfully, false if the ID was not found.
+        bool remove_limit(long limit_id) {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            return m_limits.erase(limit_id) > 0;
+        }
+
         /// \brief Checks if a request is allowed under the specified general and specific rate limits.
         /// This method checks both the general and specific rate limits without updating their counters
         /// unless the request is allowed under both limits. If the request is allowed, it updates the

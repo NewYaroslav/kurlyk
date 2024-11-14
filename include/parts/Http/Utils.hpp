@@ -34,6 +34,13 @@ namespace kurlyk {
         return HttpRequestManager::get_instance().create_rate_limit(requests_per_second, period_ms);
     }
 
+    /// \brief Removes an existing rate limit with the specified identifier.
+    /// \param limit_id The unique identifier of the rate limit to be removed.
+    /// \return True if the rate limit was successfully removed, or false if the rate limit ID was not found.
+    bool remove_limit(long limit_id) {
+        return HttpRequestManager::get_instance().remove_limit(limit_id);
+    }
+
     /// \brief Sends an HTTP request with callback.
     /// \param request_ptr The HTTP request object with the request details.
     /// \param callback The callback function to be called upon request completion.

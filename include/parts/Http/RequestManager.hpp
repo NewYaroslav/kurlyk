@@ -49,6 +49,13 @@ namespace kurlyk {
             return m_rate_limiter.create_limit(requests_per_period, period_ms);
         }
 
+        /// \brief Removes an existing rate limit with the specified identifier.
+        /// \param limit_id The unique identifier of the rate limit to be removed.
+        /// \return True if the rate limit was successfully removed, or false if the rate limit ID was not found.
+        bool remove_limit(long limit_id) {
+            return m_rate_limiter.remove_limit(limit_id);
+        }
+
         /// \brief Processes all requests in the manager.
         ///
         /// Executes pending, active, and retry-eligible failed requests.

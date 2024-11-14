@@ -7,3 +7,6 @@
 [submodule "libs/curl-8.11.0_1-win64-mingw"]
 	path = libs/curl-8.11.0_1-win64-mingw
 	url = https://github.com/NewYaroslav/curl-8.11.0_1-win64-mingw.git
+[submodule "libs/json"]
+	path = libs/json
+	url = https://github.com/nlohmann/json.git

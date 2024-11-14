@@ -231,7 +231,11 @@ namespace kurlyk {
 
         /// \brief Gets the full path to the CA certificate file.
         const char* get_ca_file_path() const {
+#           ifdef _WIN32
+            m_ca_file = utils::get_exe_path() + "\\curl-ca-bundle.crt";
+#           else
             m_ca_file = utils::get_exe_path() + "/curl-ca-bundle.crt";
+#           endif
             return m_ca_file.c_str();
         }
     };
