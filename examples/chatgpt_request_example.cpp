@@ -24,7 +24,7 @@ std::pair<std::string, std::string> load_api_credentials(const std::string& file
 }
 
 int main() {
-    kurlyk::init(true);
+    kurlyk::init(true); // Initialize the kurlyk library for async support
     try {
         // Load the API key and organization ID from the file
         auto [api_key, organization] = load_api_credentials("openai_api_key.txt");
@@ -45,9 +45,9 @@ int main() {
             {"max_tokens", 50}
         };
 
-        kurlyk::init(true);  // Initialize the kurlyk library for async support
+        std::string host = "https://neuroapi.host";
         kurlyk::HttpClient client;
-        client.set_host("https://api.openai.com");
+        client.set_host(host);
         client.set_rate_limit_rpm(3);
         client.set_retry_attempts(1, 5000);
         client.set_verbose(true);

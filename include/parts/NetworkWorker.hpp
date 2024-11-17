@@ -156,7 +156,10 @@ namespace kurlyk {
         std::list<std::function<void()>> m_tasks_list;                  ///< List of tasks queued for processing by the worker.
 
         /// \brief Private constructor to enforce singleton pattern.
-        NetworkWorker() = default;
+        NetworkWorker() {
+            utils::convert_user_agent_to_sec_ch_ua("");
+            utils::is_valid_email_id("");
+        }
 
         /// \brief Private destructor, ensuring the worker thread stops on destruction.
         ~NetworkWorker() {

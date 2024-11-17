@@ -47,6 +47,12 @@ namespace kurlyk {
             m_host = host;
         }
 
+        /// \brief Sets the default headers for HTTP requests.
+        /// \param headers The headers to be included with each request.
+        void set_headers(const kurlyk::Headers& headers) {
+            m_request.headers = headers;
+        }
+
         /// \brief Assigns an existing rate limit to the HTTP request.
         /// \param limit_id The unique identifier of the rate limit to assign.
         /// \param type Specifies the rate limit type (general or specific).
@@ -71,6 +77,16 @@ namespace kurlyk {
                 break;
             }
 		}
+
+		/// \brief Sets the rate limit ID for the HTTP request (alias for `assign_rate_limit_id`).
+        /// \param limit_id The unique identifier of the rate limit to assign.
+        /// \param type Specifies the rate limit type (general or specific).
+        /// \note This method is an alias for `assign_rate_limit_id`.
+        void set_rate_limit_id(
+                long limit_id,
+                RateLimitType type = RateLimitType::General) {
+            assign_rate_limit_id(limit_id, type);
+        }
 
         /// \brief Sets the rate limit for HTTP requests.
         /// \param requests_per_period The maximum number of requests allowed within the specified period.
@@ -130,6 +146,60 @@ namespace kurlyk {
                 bool gzip = false,
                 bool brotli = false) {
             m_request.set_accept_encoding(identity, deflate, gzip, brotli);
+        }
+
+        /// \brief Sets a custom Accept-Encoding header value.
+        /// \param value The custom value for the Accept-Encoding header.
+        void set_accept_encoding(const std::string& value) {
+            m_request.accept_encoding = value;
+        }
+
+        /// \brief Sets the Accept-Language header value.
+        /// \param value The language value to be sent with the Accept-Language header.
+        void set_accept_language(const std::string& value) {
+            m_request.headers.emplace("Accept-Language", value);
+        }
+
+        /// \brief Sets the Content-Type header value.
+        /// \param value The MIME type for the Content-Type header.
+        void set_content_type(const std::string& value) {
+            m_request.headers.emplace("Content-Type", value);
+        }
+
+        /// \brief Sets the Origin header value.
+        /// \param value The origin to be sent with the Origin header.
+        void set_origin(const std::string& value) {
+            m_request.headers.emplace("Origin", value);
+        }
+
+        /// \brief Sets the Referer header value.
+        /// \param value The referer URL to be sent with the Referer header.
+        void set_referer(const std::string& value) {
+            m_request.headers.emplace("Referer", value);
+        }
+
+        /// \brief Sets the Do Not Track (DNT) header value.
+        /// \param value If true, sets the DNT header to "1".
+        void set_dnt(const bool value) {
+            if (value) m_request.headers.emplace("dnt", "1");
+        }
+
+        /// \brief Configures whether to follow redirects automatically.
+        /// \param value If true, enables following HTTP redirects.
+        void set_follow_location(const bool value) {
+            m_request.follow_location = value;
+        }
+
+        /// \brief Configures whether to automatically set the Referer header on redirects.
+        /// \param value If true, enables automatically setting the Referer header during redirects.
+        void set_auto_referer(const bool value) {
+            m_request.auto_referer = value;
+        }
+
+        /// \brief Configures whether to use a tunneling proxy for HTTP requests.
+        /// \param value If true, enables tunneling through the proxy server. Tunneling proxies are typically used for HTTPS requests to securely forward traffic.
+        void set_proxy_tunnel(const bool value) {
+            m_request.proxy_tunnel = value;
         }
 
         /// \brief Sets the proxy server address.
@@ -246,7 +316,7 @@ namespace kurlyk {
 #           endif
             request_ptr->method = method;
             request_ptr->set_url(m_host, path, query);
-            request_ptr->headers = headers;
+            request_ptr->headers.insert(headers.begin(), headers.end());
             request_ptr->content = content;
             return request(std::move(request_ptr), std::move(callback));
 		}
@@ -275,7 +345,7 @@ namespace kurlyk {
 #           endif
             request_ptr->method = method;
             request_ptr->set_url(m_host, path, query);
-            request_ptr->headers = headers;
+            request_ptr->headers.insert(headers.begin(), headers.end());
             request_ptr->content = content;
 
             // Set the specific rate limit ID for this request
@@ -372,7 +442,7 @@ namespace kurlyk {
 #           endif
             request_ptr->method = method;
             request_ptr->set_url(m_host, path, query);
-            request_ptr->headers = headers;
+            request_ptr->headers.insert(headers.begin(), headers.end());
             request_ptr->content = content;
 
             auto promise = std::make_shared<std::promise<HttpResponsePtr>>();
@@ -413,7 +483,7 @@ namespace kurlyk {
 #           endif
             request_ptr->method = method;
             request_ptr->set_url(m_host, path, query);
-            request_ptr->headers = headers;
+            request_ptr->headers.insert(headers.begin(), headers.end());
             request_ptr->content = content;
 
             // Set the specific rate limit ID for this request

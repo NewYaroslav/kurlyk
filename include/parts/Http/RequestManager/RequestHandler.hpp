@@ -172,7 +172,7 @@ namespace kurlyk {
 
         /// \brief Appends custom headers to the request if provided.
         void set_custom_headers(const HttpRequest& request) {
-            if (request.user_agent.empty() && request.headers.count("User-Agent") == 0) {
+            if (!request.user_agent.empty() && request.headers.count("User-Agent") == 0) {
                 curl_easy_setopt(m_curl, CURLOPT_USERAGENT, request.user_agent.c_str());
             }
             if (!request.accept_encoding.empty() && request.headers.count("Accept-Encoding") == 0) {

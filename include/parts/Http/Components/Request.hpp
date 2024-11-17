@@ -117,6 +117,30 @@ namespace kurlyk {
             accept_encoding = std::move(encodings);
         }
 
+        /// \brief Sets the Accept-Language header value.
+        /// \param value The language value to be sent with the Accept-Language header.
+        void set_accept_language(const std::string& value) {
+            headers.emplace("Accept-Language", value);
+        }
+
+        /// \brief Sets the Content-Type header value.
+        /// \param value The MIME type for the Content-Type header.
+        void set_content_type(const std::string& value) {
+            headers.emplace("Content-Type", value);
+        }
+
+        /// \brief Sets the Origin header value.
+        /// \param value The origin to be sent with the Origin header.
+        void set_origin(const std::string& value) {
+            headers.emplace("Origin", value);
+        }
+
+        /// \brief Sets the Referer header value.
+        /// \param value The referer URL to be sent with the Referer header.
+        void set_referer(const std::string& value) {
+            headers.emplace("Referer", value);
+        }
+
         /// \brief Sets the proxy server address.
         /// \param ip Proxy server IP address.
         /// \param port Proxy server port.

@@ -11,6 +11,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <regex>
 
 #ifdef KURLYK_USE_CURL
 #include <curl/curl.h>
@@ -40,8 +41,6 @@
 
 namespace kurlyk {
 namespace utils {
-
-#   ifndef KURLYK_USE_CURL
 
     /// \brief Encodes a string using Percent Encoding according to RFC 3986.
     /// \param value The string to be encoded.
@@ -87,8 +86,6 @@ namespace utils {
 
         return result;
     }
-
-#   endif
 
     /// \brief Parses a header pair from a buffer.
     /// \param buffer The buffer containing the header.
@@ -427,6 +424,36 @@ namespace utils {
         }
 
         return true;
+    }
+
+    /// \brief Converts a User-Agent string to a sec-ch-ua header value.
+    /// \param user_agent The User-Agent string.
+    /// \return The generated sec-ch-ua header value.
+    std::string convert_user_agent_to_sec_ch_ua(const std::string& user_agent) {
+        // Regular expression to extract the browser name and version from User-Agent
+        static const std::regex browser_regex(R"(Chrome/(\d+)\.\d+\.\d+\.\d+)");
+        std::string version = "0";
+
+        // Match the User-Agent string to extract the Chrome version
+        std::smatch match;
+        if (std::regex_search(user_agent, match, browser_regex) && match.size() > 1) {
+            version = match[1].str(); // Extract version number
+        }
+
+        // Generate sec-ch-ua header
+        std::string sec_ch_ua = "\"Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"" + version + "\", \"Chromium\";v=\"" + version + "\"";
+        return sec_ch_ua;
+    }
+
+    /// \brief Validates an email address format.
+    /// \param str The email address to validate.
+    /// \return True if the email address format is valid, false otherwise.
+    bool is_valid_email_id(const std::string &str) {
+        // Regular expression to validate an email address format
+        static const std::regex email_regex(
+            R"(^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$)"
+        );
+        return std::regex_match(str, email_regex);
     }
 
     /// \brief Retrieves the directory of the executable file.
