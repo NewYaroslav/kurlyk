@@ -16,7 +16,7 @@ int main() {
 
     // Initialize the HTTP client
     kurlyk::HttpClient client("https://httpbin.org");
-    client.set_user_agent("kurlyk");
+    client.set_user_agent("KurlykClient/1.0");
     client.set_verbose(true);
 
     // Send the first GET request
@@ -40,7 +40,7 @@ int main() {
         });
 
     std::system("pause");
-
+    client.cancel_requests();
     kurlyk::deinit();
     return 0;
 }

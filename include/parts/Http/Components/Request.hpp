@@ -19,6 +19,7 @@ namespace kurlyk {
     /// for configuring these parameters and handling HTTP requests.
     class HttpRequest {
     public:
+        uint64_t request_id = 0;        ///< Unique identifier for the request (default is 0).
         Headers headers;                ///< HTTP request headers.
         std::string url;                ///< Full request URL.
         std::string method = "GET";     ///< HTTP request method (e.g., "GET", "POST").

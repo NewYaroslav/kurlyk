@@ -40,7 +40,7 @@ namespace kurlyk {
                 curl_slist_free_all(m_headers);
             }
             if (!m_callback_called && m_response && m_request_context) {
-                m_response->error_code = utils::make_error_code(CURLE_OK);
+                m_response->error_code = utils::make_error_code(CURLE_ABORTED_BY_CALLBACK);
                 m_response->status_code = 499; // Client closed request
                 m_response->ready = true;
                 m_request_context->callback(std::move(m_response));
@@ -96,10 +96,29 @@ namespace kurlyk {
         }
 
         /// \brief Retrieves the CURL handle associated with this request.
+        /// \return A pointer to the CURL handle used for this request, or nullptr if not initialized.
         CURL* get_curl() noexcept { return m_curl; }
 
         /// \brief Returns the unique pointer to the HttpRequestContext object.
+        /// \return A unique pointer to the HttpRequestContext object associated with this request.
         std::unique_ptr<HttpRequestContext> get_request_context() { return std::move(m_request_context); }
+
+        /// \brief Retrieves the unique ID of the HTTP request.
+        /// \return The unique ID of the HTTP request if the context exists, or 0 if no context is set.
+        uint64_t get_request_id() { return m_request_context ? m_request_context->request->request_id : 0; }
+
+        /// \brief Marks the request as cancelled.
+        void cancel() {
+            if (!m_callback_called) {
+                m_response->error_code = utils::make_error_code(CURLE_ABORTED_BY_CALLBACK);
+                m_response->status_code = 499; // Client closed request
+                m_response->ready = true;
+                if (m_request_context) {
+                    m_request_context->callback(std::move(m_response));
+                }
+                m_callback_called = true;
+            }
+        }
 
     private:
         std::unique_ptr<HttpRequestContext> m_request_context;  ///< Context for the current request.
@@ -238,7 +257,7 @@ namespace kurlyk {
 #           endif
             return m_ca_file.c_str();
         }
-    };
+    }; // HttpRequestHandler
 
 } // namespace kurlyk
 

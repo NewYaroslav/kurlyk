@@ -9,29 +9,32 @@
 
 namespace kurlyk {
 
-	/// \class HttpClient
+    /// \class HttpClient
     /// \brief A client class for making HTTP requests to a specific host.
-	/// This class provides methods to configure the client, including rate limiting, proxy settings, retry logic, and more.
-	class HttpClient {
-	public:
+    /// This class provides methods to configure the client, including rate limiting, proxy settings, retry logic, and more.
+    class HttpClient {
+    public:
 
         /// \brief Default constructor for HttpClient.
-		HttpClient() {
+        HttpClient() {
             ensure_initialized();
-		}
+            m_request.request_id = HttpRequestManager::get_instance().generate_request_id();
+        }
 
-		/// \brief Constructs an HttpClient with the specified host.
+        /// \brief Constructs an HttpClient with the specified host.
         /// \param host The base host URL for the HTTP client.
-		HttpClient(const std::string& host) :
+        HttpClient(const std::string& host) :
                 m_host(host) {
             ensure_initialized();
-		}
+            m_request.request_id = HttpRequestManager::get_instance().generate_request_id();
+        }
 
-		HttpClient(const HttpClient&) = delete;
+        HttpClient(const HttpClient&) = delete;
         void operator=(const HttpClient&) = delete;
 
-		/// \brief Destructor for HttpClient.
+        /// \brief Destructor for HttpClient.
         virtual ~HttpClient() {
+            cancel_requests();
             auto& instance = HttpRequestManager::get_instance();
             if (is_general_limit_owned) {
                 instance.remove_limit(m_request.general_rate_limit_id);
@@ -39,6 +42,18 @@ namespace kurlyk {
             if (is_specific_limit_owned) {
                 instance.remove_limit(m_request.specific_rate_limit_id);
             }
+        }
+
+        /// \brief Cancels the active request associated with this client and waits for its completion.
+        /// \note If no active request is associated or the ID is invalid, the method may have no effect.
+        void cancel_requests() {
+            auto promise = std::make_shared<std::promise<void>>();
+            auto future = promise->get_future();
+            HttpRequestManager::get_instance().cancel_request_by_id(m_request.request_id, [promise](){
+                promise->set_value();
+            });
+            NetworkWorker::get_instance().notify();
+            future.get();
         }
 
         /// \brief Sets the host URL for the HTTP client.
@@ -76,9 +91,9 @@ namespace kurlyk {
                 is_specific_limit_owned = false;
                 break;
             }
-		}
+        }
 
-		/// \brief Sets the rate limit ID for the HTTP request (alias for `assign_rate_limit_id`).
+        /// \brief Sets the rate limit ID for the HTTP request (alias for `assign_rate_limit_id`).
         /// \param limit_id The unique identifier of the rate limit to assign.
         /// \param type Specifies the rate limit type (general or specific).
         /// \note This method is an alias for `assign_rate_limit_id`.
@@ -92,7 +107,7 @@ namespace kurlyk {
         /// \param requests_per_period The maximum number of requests allowed within the specified period.
         /// \param period_ms The duration of the period in milliseconds.
         /// \param type The type of rate limit (either general or specific).
-		void set_rate_limit(
+        void set_rate_limit(
                 long requests_per_period,
                 long period_ms,
                 RateLimitType type = RateLimitType::General) {
@@ -113,7 +128,7 @@ namespace kurlyk {
                 is_specific_limit_owned = true;
                 break;
             }
-		}
+        }
 
         /// \brief Sets the rate limit based on requests per minute (RPM).
         /// \param requests_per_minute Maximum number of requests allowed per minute.
@@ -135,7 +150,7 @@ namespace kurlyk {
             return set_rate_limit(requests_per_second, period_ms, type);
         }
 
-		/// \brief Sets the Accept-Encoding header.
+        /// \brief Sets the Accept-Encoding header.
         /// \param identity Enable identity encoding.
         /// \param deflate Enable deflate encoding.
         /// \param gzip Enable gzip encoding.
@@ -302,7 +317,7 @@ namespace kurlyk {
         /// \param content The request body content.
         /// \param callback The callback function to be called when the request is completed.
         /// \return true if the request was successfully added to the RequestManager; false otherwise.
-		bool request(
+        bool request(
                 const std::string &method,
                 const std::string& path,
                 const QueryParams &query,
@@ -319,7 +334,7 @@ namespace kurlyk {
             request_ptr->headers.insert(headers.begin(), headers.end());
             request_ptr->content = content;
             return request(std::move(request_ptr), std::move(callback));
-		}
+        }
 
         /// \brief Sends an HTTP request with the specified method, path, parameters, and specific rate limit ID.
         /// \param method The HTTP method (e.g., "GET", "POST").
@@ -358,13 +373,13 @@ namespace kurlyk {
             return request(std::move(request_ptr), std::move(callback));
         }
 
-		/// \brief Sends a GET request.
+        /// \brief Sends a GET request.
         /// \param path The URL path for the request.
         /// \param query The query arguments.
         /// \param headers The HTTP headers.
         /// \param callback The callback function to be called when the request is completed.
         /// \return true if the request was successfully added to the RequestManager; false otherwise.
-		bool get(
+        bool get(
                 const std::string& path,
                 const QueryParams& query,
                 const Headers& headers,
@@ -565,7 +580,7 @@ namespace kurlyk {
             return request("POST", path, query, headers, content, specific_rate_limit_id);
         }
 
-	private:
+    private:
         HttpRequest m_request;  ///< The request object used for configuring and sending requests.
         std::string m_host;     ///< The base host URL for the HTTP client.
         bool is_general_limit_owned = false;
@@ -581,10 +596,10 @@ namespace kurlyk {
             const bool status = HttpRequestManager::get_instance().add_request(std::move(request_ptr), std::move(callback));
             NetworkWorker::get_instance().notify();
             return status;
-		}
+        }
 
         /// \brief Ensures that the network worker and request manager are initialized.
-		static void ensure_initialized() {
+        static void ensure_initialized() {
             static bool is_initialized = false;
             if (!is_initialized) {
                 is_initialized = true;
@@ -593,7 +608,7 @@ namespace kurlyk {
             }
         }
 
-	}; // HttpClient
+    }; // HttpClient
 
 }; // namespace kurlyk
 

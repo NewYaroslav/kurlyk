@@ -35,7 +35,6 @@ int main() {
     print_response(response);
 
     KURLYK_PRINT << "Delayed request completed." << std::endl;
-
     kurlyk::deinit();
     return 0;
 }

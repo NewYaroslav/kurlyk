@@ -193,11 +193,13 @@ int main() {
     kurlyk::init(true);
 
     // Asynchronous GET request using the standalone function
-    kurlyk::http_get("https://httpbin.org/ip", kurlyk::QueryParams(), kurlyk::Headers(),
+    uint64_t request_id = kurlyk::http_get("https://httpbin.org/ip", kurlyk::QueryParams(), kurlyk::Headers(),
         [](const kurlyk::HttpResponsePtr response) {
             print_response(response);
         });
 
+    std::system("pause");
+    kurlyk::cancel_request_by_id(request_id).wait();
     kurlyk::deinit();
     return 0;
 }
@@ -290,7 +292,7 @@ ws2_32
 wsock32
 crypt32
 ```
-	
+    
 ### Adding kurlyk
 
 Add the path to the kurlyk header files:

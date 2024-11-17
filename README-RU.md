@@ -193,11 +193,13 @@ int main() {
     kurlyk::init(true);
 
     // Асинхронный GET запрос с использованием standalone функции
-    kurlyk::http_get("https://httpbin.org/ip", kurlyk::QueryParams(), kurlyk::Headers(),
+    uint64_t request_id = kurlyk::http_get("https://httpbin.org/ip", kurlyk::QueryParams(), kurlyk::Headers(),
         [](const kurlyk::HttpResponsePtr response) {
             print_response(response);
         });
 
+	std::system("pause");
+    kurlyk::cancel_request_by_id(request_id).wait();
     kurlyk::deinit();
     return 0;
 }

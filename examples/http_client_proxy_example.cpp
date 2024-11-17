@@ -75,7 +75,7 @@ int main() {
     });
 
     std::system("pause");
-
+    client.cancel_requests();
     kurlyk::deinit();
     return 0;
 }

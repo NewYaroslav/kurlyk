@@ -18,15 +18,22 @@ int main() {
         << "----------------------------------------" << std::endl;
 
     KURLYK_PRINT << "Sending GET request using standalone function..." << std::endl;
-    std::future<kurlyk::HttpResponsePtr> future_response_func = kurlyk::http_get("https://httpbin.org/ip", kurlyk::QueryParams(), kurlyk::Headers());
+#   if __cplusplus >= 201703L
+    auto [request_id, future] = kurlyk::http_get("https://httpbin.org/ip", kurlyk::QueryParams(), kurlyk::Headers());
+#   else
+    auto func_result = kurlyk::http_get("https://httpbin.org/ip", kurlyk::QueryParams(), kurlyk::Headers());
+    uint64_t request_id = func_result.first;
+    auto future = std::move(func_result.second);
+#   endif
 
-    kurlyk::HttpResponsePtr response_func = future_response_func.get();
+    kurlyk::HttpResponsePtr response_func = future.get();
     KURLYK_PRINT
         << "Response from standalone function:" << std::endl
-        << "ready: " << response_func->ready << std::endl
-        << "content: " << response_func->content << std::endl
-        << "error_code: " << response_func->error_code << std::endl
-        << "status_code: " << response_func->status_code << std::endl
+        << "Request ID: " << request_id << std::endl
+        << "Ready: " << std::boolalpha << response_func->ready << std::endl
+        << "Content: " << response_func->content << std::endl
+        << "Error Code: " << response_func->error_code.message() << std::endl
+        << "Status Code: " << response_func->status_code << std::endl
         << "----------------------------------------" << std::endl;
 
     std::system("pause");

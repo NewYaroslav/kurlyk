@@ -671,6 +671,52 @@
 					<Add directory="../../include" />
 				</Linker>
 			</Target>
+			<Target title="cancel_http_requests">
+				<Option output="cancel_http_requests" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="mingw_64_12_2_0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-std=c++11" />
+					<Add option="-DASIO_STANDALONE" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../libs/json/include" />
+					<Add directory="../../include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/capi.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/dasync.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libcrypto.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/libssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/openssl.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/ossltest.lib" />
+					<Add library="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD/padlock.lib" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.a" />
+					<Add library="../../libs/curl-8.11.0_1-win64-mingw/lib/libcurl.dll.a" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+					<Add library="crypt32" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/include" />
+					<Add directory="../../libs/openssl-win64-v3.4.0/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/bin" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/include" />
+					<Add directory="../../libs/curl-8.11.0_1-win64-mingw/lib" />
+					<Add directory="../../libs/asio-master/asio/include" />
+					<Add directory="../../libs/Simple-WebSocket-Server" />
+					<Add directory="../../libs/json/include" />
+					<Add directory="../../include" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
@@ -681,6 +727,9 @@
 		</Unit>
 		<Unit filename="../../examples/bybit_funding_history_example.cpp">
 			<Option target="bybit_funding_history_example" />
+		</Unit>
+		<Unit filename="../../examples/cancel_http_requests.cpp">
+			<Option target="cancel_http_requests" />
 		</Unit>
 		<Unit filename="../../examples/chatgpt_request_example.cpp">
 			<Option target="chatgpt_request_example" />
@@ -764,6 +813,15 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Extensions>
+			<DoxyBlocks>
+				<comment_style block="2" line="2" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>

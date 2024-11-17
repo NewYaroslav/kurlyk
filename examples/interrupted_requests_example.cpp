@@ -34,9 +34,8 @@ int main() {
     }
 
     // Immediately deinitialize the library to interrupt requests
+    client.cancel_requests();
     kurlyk::deinit();
-
     KURLYK_PRINT << "Kurlyk library deinitialized. Waiting to see callback responses..." << std::endl;
-
     return 0;
 }

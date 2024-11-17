@@ -3,7 +3,7 @@
 #define _KURLYK_HTTP_UTILS_HPP_INCLUDED
 
 /// \file Utils.hpp
-/// \brief Contains utility functions for handling HTTP requests and rate limiting.
+/// \brief Contains utility functions for handling HTTP requests, rate limiting, and request cancellation.
 
 #include "RequestManager.hpp"
 #include <future>
@@ -39,6 +39,33 @@ namespace kurlyk {
     /// \return True if the rate limit was successfully removed, or false if the rate limit ID was not found.
     bool remove_limit(long limit_id) {
         return HttpRequestManager::get_instance().remove_limit(limit_id);
+    }
+
+    /// \brief Generates a new unique request ID.
+    /// \return A new unique request ID.
+    uint64_t generate_request_id() {
+        return HttpRequestManager::get_instance().generate_request_id();
+    }
+
+    /// \brief Cancels a request by its unique identifier.
+    /// \param request_id The unique identifier of the request to cancel.
+    /// \param callback An optional callback function to execute after cancellation.
+    void cancel_request_by_id(uint64_t request_id, std::function<void()> callback) {
+        HttpRequestManager::get_instance().cancel_request_by_id(request_id, std::move(callback));
+        NetworkWorker::get_instance().notify();
+    }
+
+    /// \brief Cancels a request by its unique identifier and returns a future.
+    /// \param request_id The unique identifier of the request to cancel.
+    /// \return A `std::future<void>` that becomes ready when the cancellation process is complete.
+    std::future<void> cancel_request_by_id(uint64_t request_id) {
+        auto promise = std::make_shared<std::promise<void>>();
+        auto future = promise->get_future();
+        HttpRequestManager::get_instance().cancel_request_by_id(request_id, [promise](){
+            promise->set_value();
+        });
+        NetworkWorker::get_instance().notify();
+        return future;
     }
 
     /// \brief Sends an HTTP request with callback.
@@ -84,26 +111,28 @@ namespace kurlyk {
     /// \param headers HTTP headers to include.
     /// \param content The body content for POST requests.
     /// \param callback Callback function to be executed upon request completion.
-    /// \return True if the request was successfully added to the manager, false otherwise.
-    bool http_request(
+    /// \return The unique identifier of the HTTP request if successfully added, or 0 on failure.
+    uint64_t http_request(
             const std::string &method,
             const std::string &url,
             const QueryParams &query,
             const Headers &headers,
             const std::string &content,
             HttpResponseCallback callback) {
-
 #       if __cplusplus >= 201402L
         auto request_ptr = std::make_unique<HttpRequest>();
 #       else
         auto request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest());
 #       endif
 
+        const uint64_t request_id = HttpRequestManager::get_instance().generate_request_id();
+        request_ptr->request_id = request_id;
         request_ptr->set_url(url, query);
         request_ptr->method  = method;
         request_ptr->headers = headers;
         request_ptr->content = content;
-        return http_request(std::move(request_ptr), std::move(callback));
+        if (http_request(std::move(request_ptr), std::move(callback))) return request_id;
+        return 0;
     }
 
     /// \brief Sends an HTTP request asynchronously with detailed parameters and returns a future.
@@ -112,8 +141,8 @@ namespace kurlyk {
     /// \param query Query parameters for the request.
     /// \param headers HTTP headers to include.
     /// \param content The body content for POST requests.
-    /// \return A future that will contain the HttpResponsePtr with the response details.
-    std::future<HttpResponsePtr> http_request(
+    /// \return A pair containing the unique request ID and a future with the response details.
+    std::pair<uint64_t, std::future<HttpResponsePtr>> http_request(
             const std::string &method,
             const std::string &url,
             const QueryParams &query,
@@ -126,6 +155,8 @@ namespace kurlyk {
         auto request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest());
 #       endif
 
+        const uint64_t request_id = HttpRequestManager::get_instance().generate_request_id();
+        request_ptr->request_id = request_id;
         request_ptr->set_url(url, query);
         request_ptr->method = method;
         request_ptr->headers = headers;
@@ -143,7 +174,7 @@ namespace kurlyk {
             promise->set_exception(std::make_exception_ptr(std::runtime_error("Failed to add request to HttpRequestManager")));
         }
 
-        return future;
+        return {request_id, std::move(future)};
     }
 
     /// \brief Sends an HTTP request with a specified host, path, and callback.
@@ -154,8 +185,8 @@ namespace kurlyk {
     /// \param headers HTTP headers to include.
     /// \param content The body content for POST requests.
     /// \param callback Callback function to be executed upon request completion.
-    /// \return True if the request was successfully added to the manager, false otherwise.
-    bool http_request(
+    /// \return The unique identifier of the HTTP request if successfully added, or 0 on failure.
+    uint64_t http_request(
             const std::string &method,
             const std::string &host,
             const std::string &path,
@@ -170,11 +201,14 @@ namespace kurlyk {
         auto request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest());
 #       endif
 
+        const uint64_t request_id = HttpRequestManager::get_instance().generate_request_id();
+        request_ptr->request_id = request_id;
         request_ptr->set_url(host, path, query);
         request_ptr->method  = method;
         request_ptr->headers = headers;
         request_ptr->content = content;
-        return http_request(std::move(request_ptr), std::move(callback));
+        if (http_request(std::move(request_ptr), std::move(callback))) return request_id;
+        return 0;
     }
 
     /// \brief Sends an asynchronous HTTP GET request with a callback.
@@ -182,8 +216,8 @@ namespace kurlyk {
     /// \param query Query parameters for the GET request.
     /// \param headers HTTP headers to include.
     /// \param callback Callback function to be executed upon request completion.
-    /// \return True if the request was successfully added to the manager, false otherwise.
-    bool http_get(
+    /// \return The unique identifier of the HTTP request if successfully added, or 0 on failure.
+    uint64_t http_get(
             const std::string &url,
             const QueryParams& query,
             const Headers& headers,
@@ -195,8 +229,8 @@ namespace kurlyk {
     /// \param url The full request URL.
     /// \param query Query parameters for the GET request.
     /// \param headers HTTP headers to include.
-    /// \return A future containing the HttpResponsePtr with the response details.
-    std::future<HttpResponsePtr> http_get(
+    /// \return A pair containing the unique request ID and a future with the response details.
+    std::pair<uint64_t, std::future<HttpResponsePtr>> http_get(
             const std::string& url,
             const QueryParams& query,
             const Headers& headers) {
@@ -207,11 +241,25 @@ namespace kurlyk {
         auto request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest());
 #       endif
 
+        const uint64_t request_id = HttpRequestManager::get_instance().generate_request_id();
+        request_ptr->request_id = request_id;
         request_ptr->set_url(url, query);
         request_ptr->method = "GET";
         request_ptr->headers = headers;
 
-        return http_request(std::move(request_ptr));
+        auto promise = std::make_shared<std::promise<HttpResponsePtr>>();
+        auto future = promise->get_future();
+
+        HttpResponseCallback callback = [promise](HttpResponsePtr response) {
+            if (!response->ready) return;
+            promise->set_value(std::move(response));
+        };
+
+        if (!http_request(std::move(request_ptr), std::move(callback))) {
+            promise->set_exception(std::make_exception_ptr(std::runtime_error("Failed to add request to HttpRequestManager")));
+        }
+
+        return {request_id, std::move(future)};
     }
 
     /// \brief Sends an asynchronous HTTP POST request with a callback.
@@ -220,8 +268,8 @@ namespace kurlyk {
     /// \param headers HTTP headers to include.
     /// \param content The body content for the POST request.
     /// \param callback Callback function to be executed upon request completion.
-    /// \return True if the request was successfully added to the manager, false otherwise.
-    bool http_post(
+    /// \return The unique identifier of the HTTP request if successfully added, or 0 on failure.
+    uint64_t http_post(
             const std::string &url,
             const QueryParams& query,
             const Headers& headers,
@@ -235,8 +283,8 @@ namespace kurlyk {
     /// \param query Query parameters for the POST request.
     /// \param headers HTTP headers to include.
     /// \param content The body content for the POST request.
-    /// \return A future containing the HttpResponsePtr with the response details.
-    std::future<HttpResponsePtr> http_post(
+    /// \return A pair containing the unique request ID and a future with the response details.
+    std::pair<uint64_t, std::future<HttpResponsePtr>> http_post(
             const std::string& url,
             const QueryParams& query,
             const Headers& headers,
@@ -248,12 +296,26 @@ namespace kurlyk {
         auto request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest());
 #       endif
 
+        const uint64_t request_id = HttpRequestManager::get_instance().generate_request_id();
+        request_ptr->request_id = request_id;
         request_ptr->set_url(url, query);
         request_ptr->method = "POST";
         request_ptr->headers = headers;
         request_ptr->content = content;
 
-        return http_request(std::move(request_ptr));
+        auto promise = std::make_shared<std::promise<HttpResponsePtr>>();
+        auto future = promise->get_future();
+
+        HttpResponseCallback callback = [promise](HttpResponsePtr response) {
+            if (!response->ready) return;
+            promise->set_value(std::move(response));
+        };
+
+        if (!http_request(std::move(request_ptr), std::move(callback))) {
+            promise->set_exception(std::make_exception_ptr(std::runtime_error("Failed to add request to HttpRequestManager")));
+        }
+
+        return {request_id, std::move(future)};
     }
 
 } // namespace kurlyk

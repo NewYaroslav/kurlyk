@@ -32,7 +32,7 @@ namespace kurlyk {
               callback(std::move(callback)),
               retry_attempt(0) {
         }
-    };
+    }; // HttpRequestContext
 
 } // namespace kurlyk
 

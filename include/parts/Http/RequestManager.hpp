@@ -31,7 +31,7 @@ namespace kurlyk {
                 std::unique_ptr<HttpRequest> request_ptr,
                 HttpResponseCallback callback) {
             if (m_shutdown) return false;
-            std::lock_guard<std::mutex> lock(m_pending_requests_mutex);
+            std::lock_guard<std::mutex> lock(m_mutex);
 #           if __cplusplus >= 201402L
             m_pending_requests.push_back(std::make_unique<HttpRequestContext>(std::move(request_ptr), std::move(callback)));
 #           else
@@ -56,6 +56,24 @@ namespace kurlyk {
             return m_rate_limiter.remove_limit(limit_id);
         }
 
+        /// \brief Generates a new unique request ID.
+        /// \return A new unique request ID.
+        uint64_t generate_request_id() {
+            return m_request_id_counter++;
+        }
+
+        /// \brief Cancels a request by its unique identifier.
+        /// \param request_id The unique identifier of the request to cancel.
+        /// \param callback An optional callback function to execute after cancellation.
+        void cancel_request_by_id(uint64_t request_id, std::function<void()> callback) {
+            if (m_shutdown) {
+                if (callback) callback();
+                return;
+            }
+            std::lock_guard<std::mutex> lock(m_mutex);
+            m_requests_to_cancel[request_id].push_back(std::move(callback));
+        }
+
         /// \brief Processes all requests in the manager.
         ///
         /// Executes pending, active, and retry-eligible failed requests.
@@ -63,38 +81,43 @@ namespace kurlyk {
             process_pending_requests();
             process_active_requests();
             process_retry_failed_requests();
+            process_cancel_requests();
         }
 
         /// \brief Shuts down the request manager, clearing all active and pending requests.
-        ///
         /// Stops request processing and releases all resources tied to active and pending requests.
         void shutdown() {
             m_shutdown = true;
             cleanup_pending_requests();
+            process_cancel_requests();
             m_active_request_batches.clear();
         }
 
         /// \brief Checks if there are active, pending, or failed requests.
         /// \return True if there are requests still being managed, otherwise false.
         const bool is_loaded() const {
-            std::lock_guard<std::mutex> lock(m_pending_requests_mutex);
+            std::lock_guard<std::mutex> lock(m_mutex);
             return
                 !m_pending_requests.empty() ||
                 !m_failed_requests.empty() ||
-                !m_active_request_batches.empty();
+                !m_active_request_batches.empty() ||
+                !m_requests_to_cancel.empty();
         }
 
     private:
-        mutable std::mutex                                  m_pending_requests_mutex; ///< Mutex to protect access to the pending requests list.
+        mutable std::mutex                                  m_mutex;                  ///< Mutex to protect access to the pending requests list and requests-to-cancel map.
         std::list<std::unique_ptr<HttpRequestContext>>      m_pending_requests;       ///< List of pending HTTP requests awaiting processing.
         std::list<std::unique_ptr<HttpRequestContext>>      m_failed_requests;        ///< List of failed HTTP requests for retrying.
         std::list<std::unique_ptr<HttpMultiRequestHandler>> m_active_request_batches; ///< List of currently active HTTP request batches.
+        using callback_list_t = std::list<std::function<void()>>;
+        std::unordered_map<uint64_t, callback_list_t>       m_requests_to_cancel;     ///< Map of request IDs to their associated cancellation callbacks.
         HttpRateLimiter                                     m_rate_limiter;           ///< Rate limiter for controlling request frequency.
+        std::atomic<uint64_t>                               m_request_id_counter = ATOMIC_VAR_INIT(1); ///< Atomic counter for unique request IDs.
         std::atomic<bool>                                   m_shutdown = ATOMIC_VAR_INIT(false); ///< Flag indicating if shutdown has been requested.
 
         /// \brief Processes all pending requests, moving valid requests to active batches or marking them as failed.
         void process_pending_requests() {
-            std::unique_lock<std::mutex> lock(m_pending_requests_mutex);
+            std::unique_lock<std::mutex> lock(m_mutex);
             if (m_pending_requests.empty()) return;
 
             std::list<std::unique_ptr<HttpRequestContext>> pending_request;
@@ -167,7 +190,7 @@ namespace kurlyk {
             }
         }
 
-         /// \brief Attempts to retry failed requests if their retry delay has passed.
+        /// \brief Attempts to retry failed requests if their retry delay has passed.
         void process_retry_failed_requests() {
             auto it = m_failed_requests.begin();
             while (it != m_failed_requests.end()) {
@@ -181,7 +204,7 @@ namespace kurlyk {
                 const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - request_context->start_time);
                 const auto& retry_delay_ms = request_context->request->retry_delay_ms;
                 if (duration.count() >= retry_delay_ms) {
-                    std::unique_lock<std::mutex> lock(m_pending_requests_mutex);
+                    std::unique_lock<std::mutex> lock(m_mutex);
                     m_pending_requests.push_back(std::move(request_context));
                     lock.unlock();
                     it = m_failed_requests.erase(it);
@@ -191,9 +214,42 @@ namespace kurlyk {
             }
         }
 
+        /// \brief Processes and cancels HTTP requests based on their IDs.
+        void process_cancel_requests() {
+            std::unique_lock<std::mutex> lock(m_mutex);
+            if (m_requests_to_cancel.empty()) return;
+            auto requests_to_cancel = std::move(m_requests_to_cancel);
+            m_requests_to_cancel.clear();
+            lock.unlock();
+
+            for (const auto &request_context : m_failed_requests) {
+                if (!requests_to_cancel.count(request_context->request->request_id)) continue;
+#                   if __cplusplus >= 201402L
+                auto response = std::make_unique<HttpResponse>();
+#                   else
+                auto response = std::unique_ptr<HttpResponse>(new HttpResponse());
+#                   endif
+                const long CANCELED_REQUEST_CODE = 499;
+                response->error_code = utils::make_error_code(CURLE_OK);
+                response->status_code = CANCELED_REQUEST_CODE;
+                response->ready = true;
+                request_context->callback(std::move(response));
+            }
+
+            for (const auto &handler  : m_active_request_batches) {
+                handler->cancel_request_by_id(requests_to_cancel);
+            }
+
+            for (const auto &request : requests_to_cancel) {
+                for (const auto &callback : request.second) {
+                    if (callback) callback();
+                }
+            }
+        }
+
         /// \brief Cleans up pending requests, marking each as failed and invoking its callback.
         void cleanup_pending_requests() {
-            std::unique_lock<std::mutex> lock(m_pending_requests_mutex);
+            std::unique_lock<std::mutex> lock(m_mutex);
             auto pending_requests = std::move(m_pending_requests);
             m_pending_requests.clear();
             lock.unlock();
@@ -204,9 +260,9 @@ namespace kurlyk {
 #               else
                 auto response = std::unique_ptr<HttpResponse>(new HttpResponse());
 #               endif
-                const long BAD_REQUEST = 400;
+                const long CANCELED_REQUEST_CODE = 499;
                 response->error_code = utils::make_error_code(CURLE_OK);
-                response->status_code = BAD_REQUEST;
+                response->status_code = CANCELED_REQUEST_CODE;
                 response->ready = true;
                 request_context->callback(std::move(response));
             }
@@ -216,9 +272,9 @@ namespace kurlyk {
 #               else
                 auto response = std::unique_ptr<HttpResponse>(new HttpResponse());
 #               endif
-                const long BAD_REQUEST = 400;
+                const long CANCELED_REQUEST_CODE = 499;
                 response->error_code = utils::make_error_code(CURLE_OK);
-                response->status_code = BAD_REQUEST;
+                response->status_code = CANCELED_REQUEST_CODE;
                 response->ready = true;
                 request_context->callback(std::move(response));
             }

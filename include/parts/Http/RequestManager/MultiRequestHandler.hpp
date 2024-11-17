@@ -65,6 +65,21 @@ namespace kurlyk {
             return std::move(m_failed_requests);
         }
 
+        /// \brief Cancels HTTP requests based on their unique IDs.
+        /// \param requests_to_cancel A map of request IDs to their corresponding cancellation callbacks.
+        void cancel_request_by_id(const std::unordered_map<uint64_t, std::list<std::function<void()>>>& requests_to_cancel) {
+            auto it = m_curl_to_handler_map.begin();
+            while (it != m_curl_to_handler_map.end()) {
+                if (!requests_to_cancel.count(it->second->get_request_id())) {
+                    it++;
+                    continue;
+                }
+                it->second->cancel(); // Cancel the request.
+                curl_multi_remove_handle(m_multi_handle, it->first);
+                it = m_curl_to_handler_map.erase(it);
+            }
+        }
+
     private:
         CURLM* m_multi_handle = nullptr; ///< libcurl multi handle.
         std::unordered_map<CURL*, std::unique_ptr<HttpRequestHandler>> m_curl_to_handler_map; ///< Map from CURL handles to request handlers.
@@ -85,7 +100,7 @@ namespace kurlyk {
             m_curl_to_handler_map.erase(curl);
         }
 
-    }; // class HttpMultiRequestHandler
+    }; // HttpMultiRequestHandler
 
 } // namespace kurlyk
 
