@@ -124,11 +124,11 @@ namespace kurlyk {
         /// \return A future containing the success status of the connection.
         std::future<bool> connect() {
             if (m_config) {
-        #       if __cplusplus >= 201402L
+#               if __cplusplus >= 201402L
                 auto config = std::make_unique<WebSocketConfig>(*m_config.get());
-        #       else
+#               else
                 auto config = std::unique_ptr<WebSocketConfig>(new WebSocketConfig(*m_config.get()));
-        #       endif
+#               endif
                 m_client->set_config(std::move(config), nullptr);
             }
             auto promise = std::make_shared<std::promise<bool>>();
@@ -294,6 +294,27 @@ namespace kurlyk {
             return m_config->set_proxy(ip, port, username, password, type);
         }
 
+        /// \brief Sets the proxy server address.
+        /// \param server Proxy address in <ip:port> format.
+        void set_proxy_server(const std::string& server) {
+            init_config();
+            return m_config->set_proxy_server(server);
+        }
+
+        /// \brief Sets the proxy authentication credentials.
+        /// \param auth Proxy authentication in <username:password> format.
+        void set_proxy_auth(const std::string& auth) {
+            init_config();
+            return m_config->set_proxy_auth(auth);
+        }
+
+        /// \brief Sets the proxy type.
+        /// \param type Type of proxy.
+        void set_proxy_type(ProxyType type) {
+            init_config();
+            return m_config->set_proxy_type(type);
+        }
+
         /// \brief Configures proxy authentication credentials.
         /// \param username Proxy username.
         /// \param password Proxy password.
@@ -316,6 +337,13 @@ namespace kurlyk {
         void set_user_agent(const std::string& user_agent) {
             init_config();
             return m_config->set_user_agent(user_agent);
+        }
+
+        /// \brief Sets the Accept-Language header.
+        /// \param accept_language Accept-Language string.
+        void set_accept_language(const std::string& accept_language) {
+            init_config();
+            return m_config->set_accept_language(accept_language);
         }
 
         /// \brief Sets the cookie data.

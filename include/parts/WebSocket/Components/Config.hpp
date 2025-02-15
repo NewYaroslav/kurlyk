@@ -87,6 +87,24 @@ namespace kurlyk {
             proxy_server = ip + ":" + std::to_string(port);
         }
 
+        /// \brief Sets the proxy server address.
+        /// \param server Proxy address in <ip:port> format.
+        void set_proxy_server(const std::string& server) {
+            proxy_server = server;
+        }
+
+        /// \brief Sets the proxy authentication credentials.
+        /// \param auth Proxy authentication in <username:password> format.
+        void set_proxy_auth(const std::string& auth) {
+            proxy_auth = auth;
+        }
+
+        /// \brief Sets the proxy type.
+        /// \param type Type of proxy.
+        void set_proxy_type(ProxyType type) {
+            proxy_type = type;
+        }
+
         /// \brief Sets the proxy server address with authentication.
         /// \param ip Proxy server IP address.
         /// \param port Proxy server port.
@@ -120,6 +138,12 @@ namespace kurlyk {
         /// \param user_agent User-Agent string.
         void set_user_agent(const std::string& user_agent) {
             this->user_agent = user_agent;
+        }
+
+        /// \brief Sets the Accept-Language header.
+        /// \param accept_language Accept-Language string.
+        void set_accept_language(const std::string& accept_language) {
+            this->headers.emplace("Accept-Language", accept_language);
         }
 
         /// \brief Sets the cookie data.
