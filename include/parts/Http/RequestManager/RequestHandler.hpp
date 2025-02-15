@@ -77,6 +77,11 @@ namespace kurlyk {
             m_response->error_code = utils::make_error_code(message->data.result);
             curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &m_response->status_code);
 
+            // If a timeout occurred, override the HTTP response code.
+            if (message->data.result == CURLE_OPERATION_TIMEDOUT) {
+                m_response->status_code = 499; // Client Closed Request
+            }
+
             const auto& valid_statuses = m_request_context->request->valid_statuses;
             long retry_attempts = m_request_context->request->retry_attempts;
             long& retry_attempt = m_request_context->retry_attempt;
