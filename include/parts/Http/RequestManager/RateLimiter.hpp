@@ -111,8 +111,7 @@ namespace kurlyk {
         /// \param limit_data Reference to the LimitData for the rate limit.
         /// \param now The current time point.
         /// \return True if the request is allowed, false otherwise.
-        bool check_limit(LimitData& limit_data, const time_point_t& no) {
-            auto now = std::chrono::steady_clock::now();
+        bool check_limit(LimitData& limit_data, const time_point_t& now) {
             auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(now - limit_data.start_time);
 
             // If period has elapsed, the count will reset upon update
