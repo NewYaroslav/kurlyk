@@ -39,8 +39,7 @@
 
 #define KURLYK_PRINT kurlyk::utils::ThreadSafePrintStream{}
 
-namespace kurlyk {
-namespace utils {
+namespace kurlyk::utils {
 
     /// \brief Encodes a string using Percent Encoding according to RFC 3986.
     /// \param value The string to be encoded.
@@ -456,10 +455,58 @@ namespace utils {
         return std::regex_match(str, email_regex);
     }
 
+    /// \brief Thread-safe stream class for printing to console from multiple threads.
+    class ThreadSafePrintStream : public std::ostringstream {
+    public:
+        ThreadSafePrintStream() = default;
+
+        ~ThreadSafePrintStream() {
+            get_instance().print(this->str());
+        }
+
+    private:
+        class PrintStream {
+        public:
+            void print(const std::string &str) {
+                std::lock_guard<std::mutex> guard(m_mutex_print);
+                std::cout << str;
+            }
+
+        private:
+            std::mutex m_mutex_print;
+        };
+
+        static PrintStream& get_instance() {
+            static PrintStream instance; // Lazy initialization
+            return instance;
+        }
+    };
+
+#   if defined(_WIN32) || defined(_WIN64)
+    /// \brief Converts a UTF-8 string to an ANSI string (Windows-specific).
+    /// \param utf8 The UTF-8 encoded string.
+    /// \return The converted ANSI string.
+    std::string utf8_to_ansi(const std::string& utf8) noexcept {
+        int n_len = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, NULL, 0);
+        if (n_len == 0) return {};
+
+        std::wstring wide_string(n_len + 1, L'\0');
+        MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, wide_string.data(), n_len);
+
+        n_len = WideCharToMultiByte(CP_ACP, 0, wide_string.c_str(), -1, NULL, 0, NULL, NULL);
+        if (n_len == 0) return {};
+
+        std::string ansi_string(n_len - 1, '\0');
+        WideCharToMultiByte(CP_ACP, 0, wide_string.c_str(), -1, ansi_string.data(), n_len, NULL, NULL);
+        return ansi_string;
+    }
+#   endif
+
+
     /// \brief Retrieves the directory of the executable file.
     /// \return A string containing the directory path of the executable.
-    std::string get_exe_path() {
-#       ifdef _WIN32
+    std::string get_exec_dir() {
+#       if defined(_WIN32) || defined(_WIN64)
         std::vector<wchar_t> buffer(MAX_PATH);
         HMODULE hModule = GetModuleHandle(NULL);
 
@@ -472,7 +519,10 @@ namespace utils {
             size = GetModuleFileNameW(hModule, buffer.data(), buffer.size());
         }
 
-        if (size == 0) throw std::runtime_error("Failed to get executable path.");
+        if (size == 0) {
+            throw std::runtime_error("Failed to get executable path.");
+        }
+
         std::wstring exe_path(buffer.begin(), buffer.begin() + size);
 
         // Обрезаем путь до директории (удаляем имя файла, оставляем только путь к папке)
@@ -501,37 +551,9 @@ namespace utils {
         }
 
         return exe_path;
-#   endif
+#       endif
     }
 
-    /// \brief Thread-safe stream class for printing to console from multiple threads.
-    class ThreadSafePrintStream : public std::ostringstream {
-    public:
-        ThreadSafePrintStream() = default;
-
-        ~ThreadSafePrintStream() {
-            get_instance().print(this->str());
-        }
-
-    private:
-        class PrintStream {
-        public:
-            void print(const std::string &str) {
-                std::lock_guard<std::mutex> guard(m_mutex_print);
-                std::cout << str;
-            }
-
-        private:
-            std::mutex m_mutex_print;
-        };
-
-        static PrintStream& get_instance() {
-            static PrintStream instance; // Lazy initialization
-            return instance;
-        }
-    };
-
-}; // namespace utils
-}; // namespace kurlyk
+}; // namespace kurlyk::utils
 
 #endif // _KURLYK_UTILIS_HPP_INCLUDED

@@ -19,8 +19,8 @@ namespace kurlyk {
         /// \brief Get the singleton instance of HttpRequestManager.
         /// \return Reference to the singleton instance.
         static HttpRequestManager& get_instance() {
-            static HttpRequestManager instance;
-            return instance;
+            static HttpRequestManager* instance = new HttpRequestManager();
+            return *instance;
         }
 
         /// \brief Adds a new HTTP request to the manager.

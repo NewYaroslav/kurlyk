@@ -28,8 +28,8 @@ namespace kurlyk {
         /// \brief Get the singleton instance of NetworkWorker.
         /// \return Reference to the singleton instance.
         static NetworkWorker& get_instance() {
-            static NetworkWorker instance;
-            return instance;
+            static NetworkWorker* instance = new NetworkWorker();
+            return *instance;
         }
 
         /// \brief Adds a task to the queue and notifies the worker thread.
@@ -206,9 +206,9 @@ namespace kurlyk {
             return RequestManager::get_instance().is_loaded() || has_pending_tasks();
 #           elif KURLYK_HTTP_SUPPORT == 0 && KURLYK_WEBSOCKET_SUPPORT == 1
             return WebSocketManager::get_instance().is_loaded() || has_pending_tasks();
-#else
+#           else
             return false;
-#endif
+#           endif
         }
 
     }; // NetworkWorker

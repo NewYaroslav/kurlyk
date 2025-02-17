@@ -19,8 +19,8 @@ namespace kurlyk {
         /// \brief Get the singleton instance of WebSocketManager.
         /// \return Reference to the singleton instance of WebSocketManager.
         static WebSocketManager& get_instance() {
-            static WebSocketManager instance;
-            return instance;
+            static WebSocketManager* instance = new WebSocketManager();
+            return *instance;
         }
 
         /// \brief Processes all active WebSocket clients managed by this instance.
