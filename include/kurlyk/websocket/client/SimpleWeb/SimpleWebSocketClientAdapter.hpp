@@ -114,7 +114,7 @@ namespace kurlyk {
                         WsClient::InMessage>();
                 }
             } catch(...) {
-                return false;
+				return false;
             }
 
             return true;
@@ -136,7 +136,7 @@ namespace kurlyk {
             if (!m_wss_connection && !m_ws_connection) {
                 lock.unlock();
                 if (!send_info->callback) return;
-                send_info->callback(std::make_error_code(std::errc::not_connected));
+                send_info->callback(utils::make_error_code(utils::ClientError::NotConnected));
                 return;
             }
             if (m_wss_connection) send_message(m_wss_connection, send_info);
@@ -150,7 +150,7 @@ namespace kurlyk {
             if (!m_wss_connection && !m_ws_connection) {
                 lock.unlock();
                 if (!send_info->callback) return;
-                send_info->callback(std::make_error_code(std::errc::not_connected));
+                send_info->callback(utils::make_error_code(utils::ClientError::NotConnected));
                 return;
             }
             if (m_wss_connection) send_close(m_wss_connection, send_info);

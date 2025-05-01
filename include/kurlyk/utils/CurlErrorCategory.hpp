@@ -5,9 +5,6 @@
 /// \file CurlErrorCategory.hpp
 /// \brief Defines the CurlErrorCategory class for handling CURL error codes.
 
-#include <system_error>
-#include <curl/curl.h>
-
 namespace kurlyk::utils {
 
     /// \class CurlErrorCategory

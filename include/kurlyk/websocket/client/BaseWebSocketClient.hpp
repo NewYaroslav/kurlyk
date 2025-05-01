@@ -382,13 +382,13 @@ namespace kurlyk {
             switch (event.event_type) {
             case FsmEvent::RequestConnect:
                 if (!m_config) {
-                    handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                    handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                     if (event.callback) event.callback(false);
                     m_fsm_state = FsmState::STOPPED;
                     break;
                 }
                 if (!init_websocket()) {
-                    handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                    handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                     if (event.callback) event.callback(false);
                     m_fsm_state = FsmState::STOPPED;
                     break;
@@ -461,7 +461,7 @@ namespace kurlyk {
 
                 m_config = std::move(event.config_data);
                 if (!m_config) {
-                    handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                    handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                     if (event.callback) event.callback(false);
                     m_fsm_state = FsmState::STOPPED;
                     break;
@@ -470,7 +470,7 @@ namespace kurlyk {
 
                 m_reconnect_attempt = 0;
                 if (!init_websocket()) {
-                    handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                    handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                     if (event.callback) event.callback(false);
                     m_fsm_state = FsmState::STOPPED;
                     break;
@@ -529,7 +529,7 @@ namespace kurlyk {
 
                     m_config = std::move(event.config_data);
                     if (!m_config) {
-                        handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                        handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                         if (event.callback) event.callback(false);
                         m_fsm_state = FsmState::STOPPED;
                         break;
@@ -538,7 +538,7 @@ namespace kurlyk {
 
                     m_reconnect_attempt = 0;
                     if (!init_websocket()) {
-                        handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                        handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                         if (event.callback) event.callback(false);
                         m_fsm_state = FsmState::STOPPED;
                         break;
@@ -573,7 +573,7 @@ namespace kurlyk {
                 case FsmEvent::UpdateConfig:
                     m_config = std::move(event.config_data);
                     if (!m_config) {
-                        handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                        handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                         if (event.callback) event.callback(false);
                         m_fsm_state = FsmState::STOPPED;
                         break;
@@ -582,7 +582,7 @@ namespace kurlyk {
 
                     m_reconnect_attempt = 0;
                     if (!init_websocket()) {
-                        handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                        handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                         if (event.callback) event.callback(false);
                         m_fsm_state = FsmState::STOPPED;
                         break;
@@ -602,7 +602,7 @@ namespace kurlyk {
             }
 
             if (!m_config) {
-                handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                 m_fsm_state = FsmState::STOPPED;
                 return;
             }
@@ -619,7 +619,7 @@ namespace kurlyk {
                 auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - m_close_time);
                 if (duration.count() >= m_config->reconnect_delay) {
                     if (!init_websocket()) {
-                        handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                        handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                         m_fsm_state = FsmState::STOPPED;
                         return;
                     }
@@ -641,13 +641,13 @@ namespace kurlyk {
             switch (event.event_type) {
             case FsmEvent::RequestConnect:
                 if (!m_config) {
-                    handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                    handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                     if (event.callback) event.callback(false);
                     m_fsm_state = FsmState::STOPPED;
                     break;
                 }
                 if (!init_websocket()) {
-                    handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                    handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                     if (event.callback) event.callback(false);
                     m_fsm_state = FsmState::STOPPED;
                     break;
@@ -659,7 +659,7 @@ namespace kurlyk {
             case FsmEvent::UpdateConfig:
                 m_config = std::move(event.config_data);
                 if (!m_config) {
-                    handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                    handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                     if (event.callback) event.callback(false);
                     m_fsm_state = FsmState::STOPPED;
                     break;
@@ -668,7 +668,7 @@ namespace kurlyk {
 
                 m_reconnect_attempt = 0;
                 if (!init_websocket()) {
-                    handle_error_event(std::make_error_code(std::errc::operation_not_permitted));
+                    handle_error_event(utils::make_error_code(utils::ClientError::InvalidConfiguration));
                     if (event.callback) event.callback(false);
                     m_fsm_state = FsmState::STOPPED;
                     break;

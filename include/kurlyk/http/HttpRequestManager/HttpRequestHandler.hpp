@@ -35,7 +35,7 @@ namespace kurlyk {
                 curl_slist_free_all(m_headers);
             }
             if (!m_callback_called && m_response && m_request_context) {
-                m_response->error_code = utils::make_error_code(CURLE_ABORTED_BY_CALLBACK);
+                m_response->error_code = utils::make_error_code(utils::ClientError::AbortedDuringDestruction);
                 m_response->status_code = 499; // Client closed request
                 m_response->ready = true;
                 m_request_context->callback(std::move(m_response));
@@ -69,7 +69,7 @@ namespace kurlyk {
             if (!m_response) return true;
 
             m_response->error_message = std::string(m_error_buffer, std::strlen(m_error_buffer));
-            m_response->error_code = utils::make_error_code(message->data.result);
+			// m_response->error_code = utils::make_error_code(message->data.result);
             curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &m_response->status_code);
 
             // If a timeout occurred, override the HTTP response code.
@@ -82,14 +82,22 @@ namespace kurlyk {
                 m_response->status_code = 451; // Unavailable For Legal Reasons
             }
 
+			if (message->data.result != CURLE_OK) {
+				m_response->error_code = utils::make_error_code(message->data.result);
+			} else if (m_response->status_code >= 400) {
+				m_response->error_code = utils::make_http_error(m_response->status_code);
+			} else {
+				m_response->error_code = {};
+			}
+
             const auto& valid_statuses = m_request_context->request->valid_statuses;
             long retry_attempts = m_request_context->request->retry_attempts;
             long& retry_attempt = m_request_context->retry_attempt;
             ++retry_attempt;
 
             m_response->retry_attempt = retry_attempt;
-            if (!retry_attempts || 
-				valid_statuses.count(m_response->status_code) || 
+            if (!retry_attempts ||
+				valid_statuses.count(m_response->status_code) ||
 				retry_attempt >= retry_attempts) {
                 m_response->ready = true;
                 m_request_context->callback(std::move(m_response));
@@ -117,7 +125,7 @@ namespace kurlyk {
         /// \brief Marks the request as cancelled.
         void cancel() {
             if (!m_callback_called) {
-                m_response->error_code = utils::make_error_code(CURLE_ABORTED_BY_CALLBACK);
+                m_response->error_code = utils::make_error_code(utils::ClientError::CancelledByUser);
                 m_response->status_code = 499; // Client closed request
                 m_response->ready = true;
                 if (m_request_context) {

@@ -13,11 +13,19 @@
 #include <algorithm>
 #include <regex>
 #include <cctype>
+#include <system_error>
 
 #ifdef KURLYK_USE_CURL
 #include <curl/curl.h>
 #include "utils/CurlErrorCategory.hpp"
 #endif
+
+#ifdef KURLYK_WEBSOCKET_SUPPORT
+#include "utils/WebSocketErrorCategory.hpp"
+#endif
+
+#include "utils/ClientErrorCategory.hpp"
+#include "utils/HttpErrorCategory.hpp"
 
 #include "utils/EventQueue.hpp"
 #include "utils/CaseInsensitiveMultimap.hpp"
