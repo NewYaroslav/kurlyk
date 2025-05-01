@@ -44,7 +44,7 @@ int main() {
         std::cout << "sec-ch-ua header: " << sec_ch_ua << "\n";
 
         // Example 8: Get executable path
-        std::string exe_path = kurlyk::utils::get_exe_path();
+        std::string exe_path = kurlyk::utils::get_exec_dir();
         std::cout << "Executable path: " << exe_path << "\n";
 
     } catch (const std::exception& e) {

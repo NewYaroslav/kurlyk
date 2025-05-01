@@ -14,18 +14,18 @@ void test_connect_disconnect(int n) {
             client1.on_event([rate_limit_id](std::unique_ptr<kurlyk::WebSocketEventData> event) {
                 static int counter = 0;
                 switch (event->event_type) {
-                    case kurlyk::WebSocketEventType::Open:
+                    case kurlyk::WebSocketEventType::WS_OPEN:
                         KURLYK_PRINT << "Client 1: Connection opened" << std::endl;
                         event->sender->send_message("Client 1 says hello!", rate_limit_id);
                         break;
-                    case kurlyk::WebSocketEventType::Message:
+                    case kurlyk::WebSocketEventType::WS_MESSAGE:
                         KURLYK_PRINT << "Client 1: Message received: " << event->message << std::endl;
                         event->sender->send_message("Client 1 message #" + std::to_string(counter++), rate_limit_id);
                         break;
-                    case kurlyk::WebSocketEventType::Close:
+                    case kurlyk::WebSocketEventType::WS_CLOSE:
                         KURLYK_PRINT << "Client 1: Connection closed with status: " << event->status_code << std::endl;
                         break;
-                    case kurlyk::WebSocketEventType::Error:
+                    case kurlyk::WebSocketEventType::WS_ERROR:
                         KURLYK_PRINT << "Client 1: Error: " << event->error_code.message() << std::endl;
                         break;
                 };
@@ -45,18 +45,18 @@ void test_connect_disconnect(int n) {
             client2.on_event([rate_limit_id](std::unique_ptr<kurlyk::WebSocketEventData> event) {
                 static int counter = 0;
                 switch (event->event_type) {
-                    case kurlyk::WebSocketEventType::Open:
+                    case kurlyk::WebSocketEventType::WS_OPEN:
                         KURLYK_PRINT << "Client 2: Connection opened" << std::endl;
                         event->sender->send_message("Client 2 says hello!", rate_limit_id);
                         break;
-                    case kurlyk::WebSocketEventType::Message:
+                    case kurlyk::WebSocketEventType::WS_MESSAGE:
                         KURLYK_PRINT << "Client 2: Message received: " << event->message << std::endl;
                         event->sender->send_message("Client 2 message #" + std::to_string(counter++), rate_limit_id);
                         break;
-                    case kurlyk::WebSocketEventType::Close:
+                    case kurlyk::WebSocketEventType::WS_CLOSE:
                         KURLYK_PRINT << "Client 2: Connection closed with status: " << event->status_code << std::endl;
                         break;
-                    case kurlyk::WebSocketEventType::Error:
+                    case kurlyk::WebSocketEventType::WS_ERROR:
                         KURLYK_PRINT << "Client 2: Error: " << event->error_code.message() << std::endl;
                         break;
                 };

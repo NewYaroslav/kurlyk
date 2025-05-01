@@ -6,11 +6,13 @@
 [README на русском](README-RU.md)
 
 ## Description
+
 **kurlyk** is another library implementing HTTP and WebSocket clients for C++. Built as a wrapper around `curl` and `Simple-WebSocket-Server`, it provides a simplified interface for working with HTTP and WebSocket connections in C++ applications. The library supports asynchronous HTTP requests with rate limiting and retry mechanisms, as well as WebSocket connectivity.
 
 If you’re not satisfied with other libraries like *easyhttp-cpp, curl_request, curlpp-async, curlwrapper, curl-Easy-cpp, curlpp11, easycurl, curl-cpp-wrapper…* then you might want to give `kurlyk` a try.
 
 ### Features
+
 - Asynchronous HTTP and WebSocket requests
 - Rate limiting support to prevent network overload
 - Automatic reconnection with customizable parameters
@@ -19,9 +21,11 @@ If you’re not satisfied with other libraries like *easyhttp-cpp, curl_request,
 - Supports C++11
 
 ## Usage Examples
+
 Examples are located in the `examples` folder. Below are some basic usage examples.
 
 ### WebSocket Client Example
+
 This example shows how to connect to a WebSocket server, send a message, and handle various events (connection open, message received, connection close, and error):
 
 ```cpp
@@ -36,7 +40,7 @@ int main() {
     // Set up WebSocket event handler
     client.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> event) {
         switch (event->event_type) {
-            case kurlyk::WebSocketEventType::Open:
+            case kurlyk::WebSocketEventType::WS_OPEN:
                 KURLYK_PRINT << "Connection established" << std::endl;
 
                 // Output HTTP version and headers
@@ -56,19 +60,19 @@ int main() {
                 });
                 break;
 
-            case kurlyk::WebSocketEventType::Message:
+            case kurlyk::WebSocketEventType::WS_MESSAGE:
                 KURLYK_PRINT << "Message received: " << event->message << std::endl;
 
                 // Send a response
                 event->sender->send_message("Hello again!");
                 break;
 
-            case kurlyk::WebSocketEventType::Close:
+            case kurlyk::WebSocketEventType::WS_CLOSE:
                 KURLYK_PRINT << "Connection closed: " << event->message
                              << "; Status code: " << event->status_code << std::endl;
                 break;
 
-            case kurlyk::WebSocketEventType::Error:
+            case kurlyk::WebSocketEventType::WS_ERROR:
                 KURLYK_PRINT << "Error: " << event->error_code.message() << std::endl;
                 break;
         };
@@ -94,6 +98,7 @@ int main() {
 ```
 
 ### HTTP Client Examples
+
 These examples demonstrate how to use the kurlyk HTTP client to perform different requests and handle responses.
 
 #### Example 1: Performing GET and POST requests with response handlers
@@ -137,7 +142,6 @@ int main() {
 
 ```cpp
 #include <kurlyk.hpp>
-#include <future>
 #include <iostream>
 
 int main() {

@@ -5,6 +5,21 @@
 /// \file kurlyk.hpp
 /// \brief Main header file for the Kurlyk library, providing HTTP and WebSocket support.
 
+/// \def KURLYK_AUTO_INIT
+/// \brief Enables automatic registration of managers during static initialization.
+/// Define to 0 before including kurlyk headers to disable automatic registration.
+#ifndef KURLYK_AUTO_INIT
+#   define KURLYK_AUTO_INIT 1
+#endif
+
+/// \def KURLYK_AUTO_INIT_USE_ASYNC
+/// \brief Determines whether the NetworkWorker runs in a background thread during automatic initialization.
+/// Set to 1 to enable asynchronous execution, or 0 to require manual processing (synchronous mode).
+/// Ignored if KURLYK_AUTO_INIT is not enabled.
+#ifndef KURLYK_AUTO_INIT_USE_ASYNC
+#   define KURLYK_AUTO_INIT_USE_ASYNC 1
+#endif
+
 /// \def KURLYK_HTTP_SUPPORT
 /// \brief Enables HTTP request support in the Kurlyk library.
 /// Set to 1 to enable, or 0 to disable HTTP functionality.
@@ -19,6 +34,12 @@
 #   define KURLYK_WEBSOCKET_SUPPORT 1
 #endif
 
+/// \def KURLYK_ENABLE_JSON
+/// \brief Enables JSON serialization support for enums and types.
+#ifndef KURLYK_ENABLE_JSON
+#   define KURLYK_ENABLE_JSON 0
+#endif
+
 #ifdef __EMSCRIPTEN__
 #   define KURLYK_USE_EMSCRIPTEN    ///< Defines the use of Emscripten-specific WebSocket handling.
 #else
@@ -26,47 +47,21 @@
 #   define KURLYK_USE_SIMPLEWEB     ///< Enables the use of Simple-WebSocket-Server for WebSocket support on non-Emscripten platforms.
 #endif
 
-#include "parts/NetworkWorker.hpp"
+#include "kurlyk/core.hpp"
 
 #if KURLYK_HTTP_SUPPORT
-#include "parts/Http/Client.hpp"
-#include "parts/Http/Utils.hpp"
+#include "kurlyk/http.hpp"
 #endif
 
 #if KURLYK_WEBSOCKET_SUPPORT
-#include "parts/WebSocket/Client.hpp"
+#include "kurlyk/websocket.hpp"
 #endif
+
+#include "kurlyk/startup.hpp"
 
 /// \namespace kurlyk
 /// \brief Primary namespace for the Kurlyk library, encompassing initialization, request management, and utility functions.
 namespace kurlyk {
-
-    /// \brief Initializes the Kurlyk library, setting up necessary managers and the network worker.
-    /// \param use_async If true, enables asynchronous processing for requests.
-    /// Call this function before using the library to ensure all components are initialized.
-    void init(const bool use_async = true) {
-        HttpRequestManager::get_instance();
-        WebSocketManager::get_instance();
-        NetworkWorker::get_instance().start(use_async);
-    }
-
-    /// \brief Deinitializes the Kurlyk library, stopping the network worker and releasing resources.
-    /// Call this function to clean up resources before exiting the application.
-    void deinit() {
-        NetworkWorker::get_instance().stop();
-    }
-
-    /// \brief Processes pending requests (used in synchronous mode).
-    /// This function should be called periodically if the library is used in synchronous mode.
-    void process() {
-        NetworkWorker::get_instance().process();
-    }
-
-    /// \brief Shuts down all network operations, resetting the state of the network worker and clearing pending requests.
-    /// Use this function to stop all network operations and prepare the library for shutdown.
-    void shutdown() {
-        NetworkWorker::get_instance().shutdown();
-    }
 
 } // namespace kurlyk
 

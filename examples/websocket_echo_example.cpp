@@ -5,7 +5,7 @@ int main() {
 
     client.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> event) {
         switch (event->event_type) {
-            case kurlyk::WebSocketEventType::Open:
+            case kurlyk::WebSocketEventType::WS_OPEN:
                 KURLYK_PRINT << "Connection opened" << std::endl;
 
                 // Output HTTP version
@@ -27,7 +27,7 @@ int main() {
                 });
                 break;
 
-            case kurlyk::WebSocketEventType::Message:
+            case kurlyk::WebSocketEventType::WS_MESSAGE:
                 KURLYK_PRINT << "Message received: " << event->message << std::endl;
 
                 // Send a response
@@ -40,12 +40,12 @@ int main() {
                 });
                 break;
 
-            case kurlyk::WebSocketEventType::Close:
+            case kurlyk::WebSocketEventType::WS_CLOSE:
                 KURLYK_PRINT << "Connection closed: " << event->message
                              << "; Status code: " << event->status_code << std::endl;
                 break;
 
-            case kurlyk::WebSocketEventType::Error:
+            case kurlyk::WebSocketEventType::WS_ERROR:
                 KURLYK_PRINT << "Error: " << event->error_code.message() << std::endl;
                 break;
         };
