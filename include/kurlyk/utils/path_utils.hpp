@@ -45,9 +45,7 @@ namespace kurlyk::utils {
         char result[PATH_MAX];
         ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
 
-        if (count == -1) {
-            throw std::runtime_error("Failed to get executable path.");
-        }
+        if (count == -1) throw std::runtime_error("Failed to get executable path.");
 
         std::string exe_path(result, count);
 

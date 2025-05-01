@@ -77,13 +77,20 @@ namespace kurlyk {
                 m_response->status_code = 499; // Client Closed Request
             }
 
+            if (m_response->status_code == 0 &&
+                message->data.result != CURLE_OK) {
+                m_response->status_code = 451; // Unavailable For Legal Reasons
+            }
+
             const auto& valid_statuses = m_request_context->request->valid_statuses;
             long retry_attempts = m_request_context->request->retry_attempts;
             long& retry_attempt = m_request_context->retry_attempt;
             ++retry_attempt;
 
             m_response->retry_attempt = retry_attempt;
-            if (!retry_attempts || valid_statuses.count(m_response->status_code) || retry_attempt >= retry_attempts) {
+            if (!retry_attempts || 
+				valid_statuses.count(m_response->status_code) || 
+				retry_attempt >= retry_attempts) {
                 m_response->ready = true;
                 m_request_context->callback(std::move(m_response));
                 m_callback_called = true;
