@@ -69,7 +69,7 @@ namespace kurlyk {
             if (!m_response) return true;
 
             m_response->error_message = std::string(m_error_buffer, std::strlen(m_error_buffer));
-			// m_response->error_code = utils::make_error_code(message->data.result);
+            // m_response->error_code = utils::make_error_code(message->data.result);
             curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &m_response->status_code);
 
             // If a timeout occurred, override the HTTP response code.
@@ -82,13 +82,13 @@ namespace kurlyk {
                 m_response->status_code = 451; // Unavailable For Legal Reasons
             }
 
-			if (message->data.result != CURLE_OK) {
-				m_response->error_code = utils::make_error_code(message->data.result);
-			} else if (m_response->status_code >= 400) {
-				m_response->error_code = utils::make_http_error(m_response->status_code);
-			} else {
-				m_response->error_code = {};
-			}
+            if (message->data.result != CURLE_OK) {
+                m_response->error_code = utils::make_error_code(message->data.result);
+            } else if (m_response->status_code >= 400) {
+                m_response->error_code = utils::make_http_error(m_response->status_code);
+            } else {
+                m_response->error_code = {};
+            }
 
             const auto& valid_statuses = m_request_context->request->valid_statuses;
             long retry_attempts = m_request_context->request->retry_attempts;
@@ -97,8 +97,9 @@ namespace kurlyk {
 
             m_response->retry_attempt = retry_attempt;
             if (!retry_attempts ||
-				valid_statuses.count(m_response->status_code) ||
-				retry_attempt >= retry_attempts) {
+                valid_statuses.count(m_response->status_code) ||
+                retry_attempt >= retry_attempts) {
+                fill_response_timings();
                 m_response->ready = true;
                 m_request_context->callback(std::move(m_response));
                 m_callback_called = true;
@@ -154,6 +155,9 @@ namespace kurlyk {
             curl_easy_setopt(m_curl, CURLOPT_URL, request->url.c_str());
             curl_easy_setopt(m_curl, CURLOPT_NOSIGNAL, 1L); // Disable signals for thread safety.
             curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, request->method.c_str());
+            if (request->head_only) {
+                curl_easy_setopt(m_curl, CURLOPT_NOBODY, 1L);
+            }
             curl_easy_setopt(m_curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
 
             set_ssl_options(*request);
@@ -164,6 +168,15 @@ namespace kurlyk {
             curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, &m_response->content);
             curl_easy_setopt(m_curl, CURLOPT_HEADERDATA, &m_response->headers);
             curl_easy_setopt(m_curl, CURLOPT_HEADERFUNCTION, parse_http_response_header);
+        }
+        
+        void fill_response_timings() {
+            curl_easy_getinfo(m_curl, CURLINFO_NAMELOOKUP_TIME,    &m_response->namelookup_time);
+            curl_easy_getinfo(m_curl, CURLINFO_CONNECT_TIME,       &m_response->connect_time);
+            curl_easy_getinfo(m_curl, CURLINFO_APPCONNECT_TIME,    &m_response->appconnect_time);
+            curl_easy_getinfo(m_curl, CURLINFO_PRETRANSFER_TIME,   &m_response->pretransfer_time);
+            curl_easy_getinfo(m_curl, CURLINFO_STARTTRANSFER_TIME, &m_response->starttransfer_time);
+            curl_easy_getinfo(m_curl, CURLINFO_TOTAL_TIME,         &m_response->total_time);
         }
 
         /// \brief Sets SSL options such as cert, key, and CA file.
@@ -254,7 +267,8 @@ namespace kurlyk {
 
         /// \brief Sets request body content for applicable HTTP methods.
         void set_request_body(const HttpRequest& request) {
-            if (utils::case_insensitive_equal(request.method, "POST") ||
+            if (request.head_only) return;
+			if (utils::case_insensitive_equal(request.method, "POST") ||
                 utils::case_insensitive_equal(request.method, "PUT") ||
                 utils::case_insensitive_equal(request.method, "PATCH") ||
                 utils::case_insensitive_equal(request.method, "DELETE")) {

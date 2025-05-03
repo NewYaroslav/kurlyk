@@ -15,43 +15,44 @@ namespace kurlyk {
     /// for configuring these parameters and handling HTTP requests.
     class HttpRequest {
     public:
-        uint64_t request_id = 0;        ///< Unique identifier for the request (default is 0).
-        Headers headers;                ///< HTTP request headers.
-        std::string url;                ///< Full request URL.
-        std::string method = "GET";     ///< HTTP request method (e.g., "GET", "POST").
-        std::string content;            ///< Data payload for the request.
-        std::string user_agent;         ///< User-Agent header.
-        std::string accept_encoding;    ///< Accept-Encoding header.
-        std::string cookie_file;        ///< Path to the cookie file; if empty, cookies are not saved.
-        std::string cookie;             ///< Cookie data as a string.
-        std::string cert_file;          ///< Path to the client certificate file.
-        std::string key_file;           ///< Path to the private key for the client certificate.
-        std::string ca_file;            ///< Path to the CA certificate file.
-        std::string ca_path;            ///< Path to a directory containing CA certificates.
-        std::string proxy_server;       ///< Proxy address in <ip:port> format.
-        std::string proxy_auth;         ///< Proxy authentication in <username:password> format.
+        uint64_t request_id = 0;         ///< Unique identifier for the request (default is 0).
+        Headers headers;                 ///< HTTP request headers.
+        std::string url;                 ///< Full request URL.
+        std::string method = "GET";      ///< HTTP request method (e.g., "GET", "POST").
+        std::string content;             ///< Data payload for the request.
+        std::string user_agent;          ///< User-Agent header.
+        std::string accept_encoding;     ///< Accept-Encoding header.
+        std::string cookie_file;         ///< Path to the cookie file; if empty, cookies are not saved.
+        std::string cookie;              ///< Cookie data as a string.
+        std::string cert_file;           ///< Path to the client certificate file.
+        std::string key_file;            ///< Path to the private key for the client certificate.
+        std::string ca_file;             ///< Path to the CA certificate file.
+        std::string ca_path;             ///< Path to a directory containing CA certificates.
+        std::string proxy_server;        ///< Proxy address in <ip:port> format.
+        std::string proxy_auth;          ///< Proxy authentication in <username:password> format.
         ProxyType proxy_type = ProxyType::PROXY_HTTP; ///< Proxy type (e.g., HTTP, SOCKS5).
-        bool proxy_tunnel = true;       ///< Enable proxy tunneling.
-        std::string interface_name;     ///< Network interface name to use for the request.
-        bool use_interface = false;     ///< Enable the specified network interface.
+        bool proxy_tunnel  = true;       ///< Enable proxy tunneling.
+        std::string interface_name;      ///< Network interface name to use for the request.
+        bool use_interface = false;      ///< Enable the specified network interface.
 
-        bool follow_location = true;    ///< Automatically follow HTTP redirects.
-        long max_redirects = 10;        ///< Maximum allowed redirects.
-        bool auto_referer = false;      ///< Automatically set Referer header.
+        bool follow_location = true;     ///< Automatically follow HTTP redirects.
+        long max_redirects   = 10;       ///< Maximum allowed redirects.
+        bool auto_referer    = false;    ///< Automatically set Referer header.
+        bool head_only       = false;    ///< If true, sends the request without a response body (HEAD-like behavior).
 
-        long timeout = 30;              ///< Request timeout in seconds.
-        long connect_timeout = 10;      ///< Connection timeout in seconds.
-        long general_rate_limit_id = 0; ///< ID for general rate limiting.
+        long timeout         = 30;       ///< Request timeout in seconds.
+        long connect_timeout = 10;       ///< Connection timeout in seconds.
+        long general_rate_limit_id  = 0; ///< ID for general rate limiting.
         long specific_rate_limit_id = 0; ///< ID for specific rate limiting.
         std::set<long> valid_statuses = {200}; ///< Set of valid HTTP response status codes.
-        long retry_attempts = 0;        ///< Number of retry attempts in case of failure.
-        long retry_delay_ms = 0;        ///< Delay between retry attempts in milliseconds.
+        long retry_attempts = 0;         ///< Number of retry attempts in case of failure.
+        long retry_delay_ms = 0;         ///< Delay between retry attempts in milliseconds.
 
-        bool clear_cookie_file = false; ///< Flag to clear the cookie file at the start of the request.
+        bool clear_cookie_file = false;  ///< Flag to clear the cookie file at the start of the request.
 
         // Debug parameters
-        bool verbose = false;           ///< Enable verbose output (CURLOPT_VERBOSE).
-        bool debug_header = false;      ///< Include headers in debug output (CURLOPT_HEADER).
+        bool verbose = false;            ///< Enable verbose output (CURLOPT_VERBOSE).
+        bool debug_header = false;       ///< Include headers in debug output (CURLOPT_HEADER).
 
         /// \brief Sets the request URL with host, path, and optional query parameters.
         /// \param host Hostname or IP address.

@@ -199,21 +199,28 @@ namespace kurlyk {
 
         /// \brief Configures whether to follow redirects automatically.
         /// \param value If true, enables following HTTP redirects.
-        void set_follow_location(const bool value) {
+        void set_follow_location(bool value) {
             m_request.follow_location = value;
         }
 
         /// \brief Configures whether to automatically set the Referer header on redirects.
         /// \param value If true, enables automatically setting the Referer header during redirects.
-        void set_auto_referer(const bool value) {
+        void set_auto_referer(bool value) {
             m_request.auto_referer = value;
         }
 
         /// \brief Configures whether to use a tunneling proxy for HTTP requests.
         /// \param value If true, enables tunneling through the proxy server. Tunneling proxies are typically used for HTTPS requests to securely forward traffic.
-        void set_proxy_tunnel(const bool value) {
+        void set_proxy_tunnel(bool value) {
             m_request.proxy_tunnel = value;
         }
+		
+		/// \brief Configures whether to send only the HTTP headers (HEAD request).
+        /// \param value If true, the request will not download the response body (uses CURLOPT_NOBODY internally).
+        /// Useful for measuring latency or checking resource availability without downloading content.
+		void set_head_only(bool value) {
+			m_request.head_only = value;
+		}
 
         /// \brief Sets the proxy server address.
         /// \param ip Proxy server IP address.
