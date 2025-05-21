@@ -282,6 +282,23 @@ namespace kurlyk {
             m_request.set_retry_attempts(retry_attempts, retry_delay_ms);
         }
 
+		/// \brief Adds a valid HTTP status code to the request.
+		/// \param status The HTTP status code to allow.
+		void add_valid_status(long status) {
+			m_request.add_valid_status(status);
+		}
+
+		/// \brief Replaces all valid HTTP status codes for the request.
+		/// \param statuses The set of HTTP status codes to allow.
+		void set_valid_statuses(const std::set<long>& statuses) {
+			m_request.set_valid_statuses(statuses);
+		}
+
+		/// \brief Clears the set of valid HTTP status codes for the request.
+		void clear_valid_statuses() {
+			m_request.clear_valid_statuses();
+		}
+
         /// \brief Sets the User-Agent header.
         /// \param user_agent User-Agent string.
         void set_user_agent(const std::string& user_agent) {

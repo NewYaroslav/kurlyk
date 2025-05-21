@@ -84,7 +84,8 @@ namespace kurlyk {
 
             if (message->data.result != CURLE_OK) {
                 m_response->error_code = utils::make_error_code(message->data.result);
-            } else if (m_response->status_code >= 400) {
+            } else 
+            if (m_response->status_code >= 400) {
                 m_response->error_code = utils::make_http_error(m_response->status_code);
             } else {
                 m_response->error_code = {};
@@ -268,7 +269,7 @@ namespace kurlyk {
         /// \brief Sets request body content for applicable HTTP methods.
         void set_request_body(const HttpRequest& request) {
             if (request.head_only) return;
-			if (utils::case_insensitive_equal(request.method, "POST") ||
+            if (utils::case_insensitive_equal(request.method, "POST") ||
                 utils::case_insensitive_equal(request.method, "PUT") ||
                 utils::case_insensitive_equal(request.method, "PATCH") ||
                 utils::case_insensitive_equal(request.method, "DELETE")) {

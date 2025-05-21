@@ -11,7 +11,7 @@ namespace kurlyk {
     /// \param requests_per_period Maximum number of requests allowed within the specified period.
     /// \param period_ms Time period in milliseconds for the rate limit.
     /// \return A unique identifier for the created rate limit.
-    long create_rate_limit(const long& requests_per_period, const long& period_ms) {
+    long create_rate_limit(long requests_per_period, long period_ms) {
         return HttpRequestManager::get_instance().create_rate_limit(requests_per_period, period_ms);
     }
 
