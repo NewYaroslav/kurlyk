@@ -1,0 +1,49 @@
+/*!
+\mainpage Kurlyk Library
+
+\section intro_sec Introduction
+
+Kurlyk is a library designed for making HTTP requests easy and efficient. It abstracts the complexity of handling asynchronous HTTP operations and provides a simple interface for developers.
+
+\section features_sec Features
+
+- Asynchronous and synchronous HTTP requests.
+- Rate limiting to control the number of requests over time.
+- Simple API for GET and POST requests.
+- Easy integration with existing C++ projects.
+
+\section usage_sec Usage
+
+\code{.cpp}
+#include <kurlyk.hpp>
+#include <iostream>
+
+int main() {
+    kurlyk::init(true);
+
+    // Asynchronous GET request using the standalone function
+    uint64_t request_id = kurlyk::http_get("https://httpbin.org/ip", kurlyk::QueryParams(), kurlyk::Headers(),
+        [](const kurlyk::HttpResponsePtr response) {
+            print_response(response);
+        });
+
+	std::system("pause");
+	kurlyk::cancel_request_by_id(request_id).wait();
+    kurlyk::deinit();
+    return 0;
+}
+\endcode
+
+\section install_sec Installation
+
+To use the Kurlyk Library in your project, include the header file `kurlyk/kurlyk.hpp` in your source code. Ensure that your project is set up to compile with standards from C++11 to C++17.
+
+\section repo_sec Repository
+
+[Kurlyk Library GitHub repository](https://github.com/NewYaroslav/kurlyk).
+
+\section license_sec License
+
+This library is licensed under the MIT License. See the LICENSE file for more details.
+*/
+
