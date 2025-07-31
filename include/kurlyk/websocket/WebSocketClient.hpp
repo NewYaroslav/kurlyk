@@ -23,6 +23,7 @@ namespace kurlyk {
 
         /// \brief Constructor with configuration.
         /// \param config A unique pointer to a WebSocketConfig object.
+        /// \param callback Callback invoked when configuration is completed.
         WebSocketClient(std::unique_ptr<WebSocketConfig> config, std::function<void(bool)> callback = nullptr) {
             ensure_initialized();
             m_client = WebSocketManager::get_instance().create_client();

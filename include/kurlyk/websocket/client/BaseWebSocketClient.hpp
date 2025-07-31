@@ -185,12 +185,12 @@ namespace kurlyk {
         virtual void deinit_websocket() = 0;
 
         /// \brief Sends a WebSocket message.
-        /// \param message Reference to WebSocketSendInfo containing message details.
-        virtual void send_message(std::shared_ptr<WebSocketSendInfo>&) = 0;
+        /// \param send_info Reference to WebSocketSendInfo containing message details.
+        virtual void send_message(std::shared_ptr<WebSocketSendInfo>& send_info) = 0;
 
         /// \brief Sends a close request.
-        /// \param message Reference to WebSocketSendInfo containing close details.
-        virtual void send_close(std::shared_ptr<WebSocketSendInfo>&) = 0;
+        /// \param send_info Reference to WebSocketSendInfo containing close details.
+        virtual void send_close(std::shared_ptr<WebSocketSendInfo>& send_info) = 0;
 
         /// \brief Creates a generic WebSocket event.
         /// \return Unique pointer to the created WebSocketEventData.
