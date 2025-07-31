@@ -28,6 +28,8 @@ namespace kurlyk {
               callback(std::move(callback)),
               retry_attempt(0) {
         }
+        
+        HttpRequestContext() = default;
     }; // HttpRequestContext
 
 } // namespace kurlyk

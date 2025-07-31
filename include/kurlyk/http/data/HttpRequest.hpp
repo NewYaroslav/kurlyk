@@ -278,6 +278,9 @@ namespace kurlyk {
         }
 
     }; // HttpRequest
+	
+	/// \brief A unique pointer to an HttpRequest object for memory management.
+    using HttpRequestPtr = std::unique_ptr<HttpRequest>;
 
 }; // namespace kurlyk
 

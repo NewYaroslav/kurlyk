@@ -114,7 +114,7 @@ namespace kurlyk {
                         WsClient::InMessage>();
                 }
             } catch(...) {
-				return false;
+                return false;
             }
 
             return true;

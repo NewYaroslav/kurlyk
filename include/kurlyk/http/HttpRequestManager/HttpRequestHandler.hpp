@@ -13,9 +13,9 @@ namespace kurlyk {
     public:
 
         /// \brief Constructs an HttpRequestHandler with the specified request context.
-        /// \param request_context Unique pointer to the HttpRequestContext object.
-        explicit HttpRequestHandler(std::unique_ptr<HttpRequestContext> request_context)
-            : m_request_context(std::move(request_context)) {
+        /// \param context Unique pointer to the HttpRequestContext object.
+        explicit HttpRequestHandler(std::unique_ptr<HttpRequestContext> context)
+            : m_request_context(std::move(context)) {
             std::fill(m_error_buffer, m_error_buffer + CURL_ERROR_SIZE, '\0');
 #           if __cplusplus >= 201402L
             m_response = std::make_unique<HttpResponse>();
@@ -169,6 +169,7 @@ namespace kurlyk {
             curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, &m_response->content);
             curl_easy_setopt(m_curl, CURLOPT_HEADERDATA, &m_response->headers);
             curl_easy_setopt(m_curl, CURLOPT_HEADERFUNCTION, parse_http_response_header);
+            curl_easy_setopt(m_curl, CURLOPT_PRIVATE, this);
         }
         
         void fill_response_timings() {

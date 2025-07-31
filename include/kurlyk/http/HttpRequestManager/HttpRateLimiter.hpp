@@ -87,6 +87,59 @@ namespace kurlyk {
             return false;
         }
 
+        /// \brief Calculates the delay until the next request is allowed under the specified rate limits.
+        ///
+        /// Computes the maximum wait time between the general and specific limits.
+        /// Ensures that a request is only allowed when **all** applicable limits permit it.
+        ///
+        /// \tparam Duration Duration type (e.g., std::chrono::milliseconds, std::chrono::microseconds).
+        /// \param general_rate_limit_id ID of the general rate limit.
+        /// \param specific_rate_limit_id ID of the specific rate limit.
+        /// \return Duration to wait before the request is safe to perform. Zero if already allowed by both limits.
+        template<typename Duration = std::chrono::milliseconds>
+        Duration time_until_next_allowed(long general_rate_limit_id, long specific_rate_limit_id) {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            auto now = std::chrono::steady_clock::now();
+            Duration max_delay{0};
+
+            auto it = m_limits.find(general_rate_limit_id);
+            if (it != m_limits.end()) {
+                max_delay = std::max(max_delay, time_until_limit_allows<Duration>(it->second, now));
+            }
+
+            it = m_limits.find(specific_rate_limit_id);
+            if (it != m_limits.end()) {
+                max_delay = std::max(max_delay, time_until_limit_allows<Duration>(it->second, now));
+            }
+
+            return max_delay;
+        }
+
+        /// \brief Finds the shortest delay among all active rate limits.
+        ///
+        /// Returns the minimum duration until any of the rate limits allows a request.
+        /// If all limits are currently available, returns zero.
+        ///
+        /// \tparam Duration The chrono duration type (e.g., std::chrono::milliseconds, std::chrono::microseconds).
+        /// \return The shortest wait duration among all limits. Zero if no wait is required.
+        template<typename Duration = std::chrono::milliseconds>
+        Duration time_until_any_limit_allows() {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            auto now = std::chrono::steady_clock::now();
+
+            Duration min_delay = Duration::max();
+
+            for (const auto& pair : m_limits) {
+                const auto& limit = pair.second;
+                Duration delay = time_until_limit_allows<Duration>(limit, now);
+                if (delay.count() > 0 && delay < min_delay) {
+                    min_delay = delay;
+                }
+            }
+
+            return (min_delay == Duration::max()) ? Duration{0} : min_delay;
+        }
+
     private:
         using time_point_t = std::chrono::steady_clock::time_point;
 
@@ -136,6 +189,27 @@ namespace kurlyk {
             }
 
             ++limit_data.count;
+        }
+
+        /// \brief Calculates the delay required before a request is allowed under a single rate limit.
+        ///
+        /// If the request exceeds the allowed number within the configured period, returns the remaining time
+        /// until the rate limit resets. Otherwise returns zero. The time unit is determined by the template argument.
+        ///
+        /// \tparam Duration Duration type (e.g., std::chrono::milliseconds, std::chrono::microseconds).
+        /// \param limit_data Internal data for the rate limit being evaluated.
+        /// \param now Current timestamp to compare against the rate period start time.
+        /// \return Duration to wait until the rate limit allows a request. Zero if already allowed.
+        template<typename Duration>
+        Duration time_until_limit_allows(const LimitData& limit_data, const time_point_t& now) const {
+            if (limit_data.requests_per_period == 0) return Duration{0};
+            auto elapsed = std::chrono::duration_cast<Duration>(now - limit_data.start_time);
+            auto period_duration = std::chrono::duration_cast<Duration>(std::chrono::milliseconds(limit_data.period_ms));
+            if (elapsed >= period_duration ||
+                limit_data.count < limit_data.requests_per_period) {
+                return Duration{0};
+            }
+            return period_duration - elapsed;
         }
     }; // HttpRateLimiter
 

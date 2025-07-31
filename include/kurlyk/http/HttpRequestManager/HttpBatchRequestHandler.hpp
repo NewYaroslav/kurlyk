@@ -2,38 +2,40 @@
 #ifndef _KURLYK_HTTP_MULTI_REQUEST_HANDLER_HPP_INCLUDED
 #define _KURLYK_HTTP_MULTI_REQUEST_HANDLER_HPP_INCLUDED
 
-/// \file HttpMultiRequestHandler.hpp
+/// \file HttpBatchRequestHandler.hpp
 /// \brief Manages multiple asynchronous HTTP requests using libcurl's multi interface.
 
 namespace kurlyk {
 
-    /// \class HttpMultiRequestHandler
+    /// \class HttpBatchRequestHandler
     /// \brief Handles multiple asynchronous HTTP requests using libcurl's multi interface.
-    class HttpMultiRequestHandler {
+    class HttpBatchRequestHandler {
     public:
 
         /// \brief Constructs a handler for managing multiple HTTP requests asynchronously.
         /// \param request_list List of unique pointers to HttpRequestContext objects.
-        explicit HttpMultiRequestHandler(std::list<std::unique_ptr<HttpRequestContext>>& request_list)
+        explicit HttpBatchRequestHandler(std::vector<std::unique_ptr<HttpRequestContext>>& context_list)
             : m_multi_handle(curl_multi_init()) {
-            for (auto& request : request_list) {
+            for (auto& context : context_list) {
 #               if __cplusplus >= 201402L
-                auto request_handler = std::make_unique<HttpRequestHandler>(std::move(request));
+                auto handler = std::make_unique<HttpRequestHandler>(std::move(context));
 #               else
-                auto request_handler = std::unique_ptr<HttpRequestHandler>(new HttpRequestHandler(std::move(request)));
+                auto handler = std::unique_ptr<HttpRequestHandler>(new HttpRequestHandler(std::move(context)));
 #               endif
-                CURL* curl = request_handler->get_curl();
+                CURL* curl = handler->get_curl();
                 if (!curl) continue;
 
                 curl_multi_add_handle(m_multi_handle, curl);
-                m_curl_to_handler_map[curl] = std::move(request_handler);
+                m_handlers.push_back(std::move(handler));
             }
         }
 
         /// \brief Cleans up the multi handle and removes all request handles.
-        ~HttpMultiRequestHandler() {
-            for (auto& entry : m_curl_to_handler_map) {
-                curl_multi_remove_handle(m_multi_handle, entry.first);
+        ~HttpBatchRequestHandler() {
+            for (auto& handler : m_handlers) {
+                CURL* curl = handler->get_curl();
+                if (!curl) continue;
+                curl_multi_remove_handle(m_multi_handle, curl);
             }
             curl_multi_cleanup(m_multi_handle);
         }
@@ -47,11 +49,14 @@ namespace kurlyk {
 
             int pending_messages;
             while (CURLMsg* message = curl_multi_info_read(m_multi_handle, &pending_messages)) {
-                if (message->msg == CURLMSG_DONE) {
-                    handle_completed_request(message);
-                }
+                if (message->msg != CURLMSG_DONE) continue;
+                handle_completed_request(message);
             }
-            return (still_running == 0);
+            if (still_running == 0) {
+                m_handlers.clear();
+                return true;
+            }
+            return false;
         }
 
         /// \brief Extracts the list of failed requests.
@@ -61,41 +66,43 @@ namespace kurlyk {
         }
 
         /// \brief Cancels HTTP requests based on their unique IDs.
-        /// \param requests_to_cancel A map of request IDs to their corresponding cancellation callbacks.
-        void cancel_request_by_id(const std::unordered_map<uint64_t, std::list<std::function<void()>>>& requests_to_cancel) {
-            auto it = m_curl_to_handler_map.begin();
-            while (it != m_curl_to_handler_map.end()) {
-                if (!requests_to_cancel.count(it->second->get_request_id())) {
-                    it++;
+        /// \param to_cancel A map of request IDs to their corresponding cancellation callbacks.
+        void cancel_request_by_id(const std::unordered_map<uint64_t, std::list<std::function<void()>>>& to_cancel) {
+            auto it = m_handlers.begin();
+            while (it != m_handlers.end()) {
+                uint64_t id = (*it)->get_request_id();
+                if (!to_cancel.count(id)) {
+                    ++it;
                     continue;
                 }
-                it->second->cancel(); // Cancel the request.
-                curl_multi_remove_handle(m_multi_handle, it->first);
-                it = m_curl_to_handler_map.erase(it);
+                curl_multi_remove_handle(m_multi_handle, (*it)->get_curl());
+                (*it)->cancel(); // Cancel the request.
+                it = m_handlers.erase(it);
             }
         }
 
     private:
         CURLM* m_multi_handle = nullptr; ///< libcurl multi handle.
-        std::unordered_map<CURL*, std::unique_ptr<HttpRequestHandler>> m_curl_to_handler_map; ///< Map from CURL handles to request handlers.
-        std::list<std::unique_ptr<HttpRequestContext>> m_failed_requests; ///< List of failed request contexts.
+        std::vector<std::unique_ptr<HttpRequestHandler>> m_handlers; // CURL handles
+        std::list<std::unique_ptr<HttpRequestContext>>   m_failed_requests; ///< List of failed request contexts.
 
         /// \brief Handles the completion of a single request.
         /// \param message CURLMsg structure containing the result of the completed request.
         void handle_completed_request(CURLMsg* message) {
             CURL* curl = message->easy_handle;
-            auto it = m_curl_to_handler_map.find(curl);
-            if (it == m_curl_to_handler_map.end()) return;
 
-            if (!it->second->handle_curl_message(message)) {
-                m_failed_requests.push_back(it->second->get_request_context());
+            void* ptr = nullptr;
+            curl_easy_getinfo(curl, CURLINFO_PRIVATE, &ptr);
+            auto* handler = static_cast<HttpRequestHandler*>(ptr);
+            if (!handler) return;
+
+            if (!handler->handle_curl_message(message)) {
+                m_failed_requests.push_back(handler->get_request_context());
             }
-
             curl_multi_remove_handle(m_multi_handle, curl);
-            m_curl_to_handler_map.erase(curl);
         }
 
-    }; // HttpMultiRequestHandler
+    }; // HttpBatchRequestHandler
 
 } // namespace kurlyk
 

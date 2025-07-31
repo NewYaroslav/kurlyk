@@ -26,8 +26,8 @@ int main() {
         print_response(response);
     });
 
-    std::system("pause");
-
+    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
+    std::cin.get();
     kurlyk::deinit();
     return 0;
 }
