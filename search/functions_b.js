@@ -1,7 +1,0 @@
-var searchData=
-[
-  ['name_0',['name',['../classkurlyk_1_1utils_1_1ClientErrorCategory.html#a3e2be65a104157b71d4722b9194e8b5e',1,'kurlyk::utils::ClientErrorCategory::name()'],['../classkurlyk_1_1utils_1_1CurlErrorCategory.html#a10eb84def098d76f8d4e6fc93a99d4c6',1,'kurlyk::utils::CurlErrorCategory::name()'],['../classkurlyk_1_1utils_1_1HttpErrorCategory.html#ae25cf842187ff643317e80d28201924e',1,'kurlyk::utils::HttpErrorCategory::name()'],['../classkurlyk_1_1utils_1_1WebSocketErrorCategory.html#a45e1b8d5c2736a24d360e89f1178c7c6',1,'kurlyk::utils::WebSocketErrorCategory::name()']]],
-  ['networkworker_1',['NetworkWorker',['../classkurlyk_1_1core_1_1NetworkWorker.html#ad3f0812494737a2f4a82bb460c8db832',1,'kurlyk::core::NetworkWorker::NetworkWorker()'],['../classkurlyk_1_1core_1_1NetworkWorker.html#a599591e4b2846487d55933f1cddb4222',1,'kurlyk::core::NetworkWorker::NetworkWorker(const NetworkWorker &amp;)=delete']]],
-  ['notify_2',['notify',['../classkurlyk_1_1core_1_1NetworkWorker.html#a05248e914a6f70ffc8cb678835c86c91',1,'kurlyk::core::NetworkWorker::notify()'],['../classkurlyk_1_1SimpleWebSocketWorker.html#a48abba3f46ca7b77cc63e3dc7ffc3300',1,'kurlyk::SimpleWebSocketWorker::notify()']]],
-  ['notify_5fhandler_3',['notify_handler',['../classkurlyk_1_1BaseWebSocketClient.html#ad5e79383d31d19f5073bf36de03f7c13',1,'kurlyk::BaseWebSocketClient::notify_handler()'],['../classkurlyk_1_1IWebSocketClient.html#aaea92a3933f7c9432f25c7d163184d6a',1,'kurlyk::IWebSocketClient::notify_handler()']]]
-];

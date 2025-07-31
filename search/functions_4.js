@@ -1,9 +1,0 @@
-var searchData=
-[
-  ['emscriptenwebsocketclientadapter_0',['EmscriptenWebSocketClientAdapter',['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#ae96cc9d2966e1c720ca3bcaed65fbc54',1,'kurlyk::EmscriptenWebSocketClientAdapter::EmscriptenWebSocketClientAdapter()'],['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#acb2fdcbbc7949a3c995c6848b2aa0a5d',1,'kurlyk::EmscriptenWebSocketClientAdapter::EmscriptenWebSocketClientAdapter(const EmscriptenWebSocketClientAdapter &amp;)=delete']]],
-  ['endpoint_5fto_5fstring_1',['endpoint_to_string',['../classkurlyk_1_1SimpleWebSocketClientAdapter.html#af50f6e16d010954ad39098b13b6432bc',1,'kurlyk::SimpleWebSocketClientAdapter']]],
-  ['ensure_5finitialized_2',['ensure_initialized',['../classkurlyk_1_1HttpClient.html#abe625e7963f88025e3791576852c45b3',1,'kurlyk::HttpClient::ensure_initialized()'],['../classkurlyk_1_1WebSocketClient.html#a281cdc161df951e785a5546d37bbcffe',1,'kurlyk::WebSocketClient::ensure_initialized()']]],
-  ['event_5fhandler_3',['event_handler',['../classkurlyk_1_1BaseWebSocketClient.html#aa6f9848bb02ceea14710fe1c69dc0710',1,'kurlyk::BaseWebSocketClient::event_handler()'],['../classkurlyk_1_1IWebSocketClient.html#ae592a54f76b61d8b7b8feaa212cd410f',1,'kurlyk::IWebSocketClient::event_handler()'],['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#a77762a8c0c8340d06a9efe2a98609718',1,'kurlyk::EmscriptenWebSocketClientAdapter::event_handler()'],['../classkurlyk_1_1WebSocketClient.html#a04f2f27771049e9dd92fa18885643436',1,'kurlyk::WebSocketClient::event_handler()']]],
-  ['extract_5ffailed_5frequests_4',['extract_failed_requests',['../classkurlyk_1_1HttpBatchRequestHandler.html#a9e6e9f0b803d803ec583ac384eca4a36',1,'kurlyk::HttpBatchRequestHandler']]],
-  ['extract_5fprotocol_5',['extract_protocol',['../namespacekurlyk_1_1utils.html#a40cc3ded41234758b6cd5451ac1592f5',1,'kurlyk::utils']]]
-];
