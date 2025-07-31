@@ -311,7 +311,7 @@ kurlyk/include
 In progress.
 
 ## License
-This library is distributed under the MIT license. See the [LICENSE](https://github.com/NewYaroslav/log-it-cpp/blob/main/LICENSE) file in the repository for details.
+This library is distributed under the MIT license. See the [LICENSE](LICENSE) file in the repository for details.
 
 ## Support
 If you have questions or issues using the library, you can refer to the documentation or ask a question in the GitHub Issues section.
