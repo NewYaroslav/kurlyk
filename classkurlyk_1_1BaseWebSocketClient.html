@@ -256,12 +256,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a66314968c4cc1ea22a6028d22725c6df" id="r_a66314968c4cc1ea22a6028d22725c6df"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66314968c4cc1ea22a6028d22725c6df">deinit_websocket</a> ()=0</td></tr>
 <tr class="memdesc:a66314968c4cc1ea22a6028d22725c6df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the WebSocket connection. Must be implemented in derived classes.  <br /></td></tr>
 <tr class="separator:a66314968c4cc1ea22a6028d22725c6df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a480696da08a26d67a69a3a5e78a367f4" id="r_a480696da08a26d67a69a3a5e78a367f4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a480696da08a26d67a69a3a5e78a367f4">send_message</a> (std::shared_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html">WebSocketSendInfo</a> &gt; &amp;)=0</td></tr>
-<tr class="memdesc:a480696da08a26d67a69a3a5e78a367f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a WebSocket message.  <br /></td></tr>
-<tr class="separator:a480696da08a26d67a69a3a5e78a367f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa35353f783ba6d306dd36df9ad11a4a" id="r_aaa35353f783ba6d306dd36df9ad11a4a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa35353f783ba6d306dd36df9ad11a4a">send_close</a> (std::shared_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html">WebSocketSendInfo</a> &gt; &amp;)=0</td></tr>
-<tr class="memdesc:aaa35353f783ba6d306dd36df9ad11a4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a close request.  <br /></td></tr>
-<tr class="separator:aaa35353f783ba6d306dd36df9ad11a4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82fe9d0f094e0d6909efce0ba393d9d7" id="r_a82fe9d0f094e0d6909efce0ba393d9d7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82fe9d0f094e0d6909efce0ba393d9d7">send_message</a> (std::shared_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html">WebSocketSendInfo</a> &gt; &amp;send_info)=0</td></tr>
+<tr class="memdesc:a82fe9d0f094e0d6909efce0ba393d9d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a WebSocket message.  <br /></td></tr>
+<tr class="separator:a82fe9d0f094e0d6909efce0ba393d9d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade0804c9b5b9ebb9a94339c2bedc3ac3" id="r_ade0804c9b5b9ebb9a94339c2bedc3ac3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade0804c9b5b9ebb9a94339c2bedc3ac3">send_close</a> (std::shared_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html">WebSocketSendInfo</a> &gt; &amp;send_info)=0</td></tr>
+<tr class="memdesc:ade0804c9b5b9ebb9a94339c2bedc3ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a close request.  <br /></td></tr>
+<tr class="separator:ade0804c9b5b9ebb9a94339c2bedc3ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c4ec8d44887285d2eb7066b2ecb7257" id="r_a1c4ec8d44887285d2eb7066b2ecb7257"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketEventData.html">WebSocketEventData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c4ec8d44887285d2eb7066b2ecb7257">create_websocket_event</a> ()</td></tr>
 <tr class="memdesc:a1c4ec8d44887285d2eb7066b2ecb7257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a generic WebSocket event.  <br /></td></tr>
 <tr class="separator:a1c4ec8d44887285d2eb7066b2ecb7257"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1604,8 +1604,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aaa35353f783ba6d306dd36df9ad11a4a" name="aaa35353f783ba6d306dd36df9ad11a4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa35353f783ba6d306dd36df9ad11a4a">&#9670;&#160;</a></span>send_close() <span class="overload">[2/2]</span></h2>
+<a id="ade0804c9b5b9ebb9a94339c2bedc3ac3" name="ade0804c9b5b9ebb9a94339c2bedc3ac3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade0804c9b5b9ebb9a94339c2bedc3ac3">&#9670;&#160;</a></span>send_close() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1616,7 +1616,7 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">virtual void kurlyk::BaseWebSocketClient::send_close </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html">WebSocketSendInfo</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html">WebSocketSendInfo</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>send_info</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1630,7 +1630,7 @@ Private Attributes</h2></td></tr>
 <p>Sends a close request. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">message</td><td>Reference to <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html" title="Holds information for sending a WebSocket message, including rate limiting, close status,...">WebSocketSendInfo</a> containing close details. </td></tr>
+    <tr><td class="paramname">send_info</td><td>Reference to <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html" title="Holds information for sending a WebSocket message, including rate limiting, close status,...">WebSocketSendInfo</a> containing close details. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1686,8 +1686,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a480696da08a26d67a69a3a5e78a367f4" name="a480696da08a26d67a69a3a5e78a367f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a480696da08a26d67a69a3a5e78a367f4">&#9670;&#160;</a></span>send_message() <span class="overload">[2/2]</span></h2>
+<a id="a82fe9d0f094e0d6909efce0ba393d9d7" name="a82fe9d0f094e0d6909efce0ba393d9d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82fe9d0f094e0d6909efce0ba393d9d7">&#9670;&#160;</a></span>send_message() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1698,7 +1698,7 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">virtual void kurlyk::BaseWebSocketClient::send_message </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html">WebSocketSendInfo</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html">WebSocketSendInfo</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>send_info</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1712,7 +1712,7 @@ Private Attributes</h2></td></tr>
 <p>Sends a WebSocket message. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">message</td><td>Reference to <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html" title="Holds information for sending a WebSocket message, including rate limiting, close status,...">WebSocketSendInfo</a> containing message details. </td></tr>
+    <tr><td class="paramname">send_info</td><td>Reference to <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html" title="Holds information for sending a WebSocket message, including rate limiting, close status,...">WebSocketSendInfo</a> containing message details. </td></tr>
   </table>
   </dd>
 </dl>

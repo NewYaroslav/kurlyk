@@ -63,7 +63,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AutoInitializer_8hpp.html",
-"classkurlyk_1_1BaseWebSocketClient.html#ad14518b9ad14309b3af910e4d47838a8a4f910578af6af830b7ba847f1be6289a",
+"classkurlyk_1_1BaseWebSocketClient.html#ad14518b9ad14309b3af910e4d47838a8a714bf4050ed2c6155702085e2566f598",
 "classkurlyk_1_1HttpClient.html#a45a65204701d67904029b265590036a0",
 "classkurlyk_1_1HttpRequestContext.html#aec2cc66513008fd16c7e7635629534c0",
 "classkurlyk_1_1SimpleWebSocketWorker.html#a1b8542c999058d19cd149e979efb35ca",
