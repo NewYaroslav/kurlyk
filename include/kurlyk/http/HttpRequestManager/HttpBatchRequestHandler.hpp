@@ -13,7 +13,7 @@ namespace kurlyk {
     public:
 
         /// \brief Constructs a handler for managing multiple HTTP requests asynchronously.
-        /// \param request_list List of unique pointers to HttpRequestContext objects.
+        /// \param context_list List of unique pointers to HttpRequestContext objects.
         explicit HttpBatchRequestHandler(std::vector<std::unique_ptr<HttpRequestContext>>& context_list)
             : m_multi_handle(curl_multi_init()) {
             for (auto& context : context_list) {

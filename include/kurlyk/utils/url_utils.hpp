@@ -121,7 +121,7 @@ namespace kurlyk::utils {
 
     /// \brief Validates if a URL is correctly formatted.
     /// \param url The URL string to validate.
-    /// \param protocols A vector of valid protocol schemes.
+    /// \param protocol A vector of valid protocol schemes.
     /// \return True if the URL is valid, otherwise false.
     bool is_valid_url(const std::string& url, const std::vector<std::string>& protocol) {
         size_t scheme_end = url.find("://");
