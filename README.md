@@ -307,6 +307,20 @@ kurlyk/include
 
 **kurlyk** is a header-only library, so you only need to include it with `#include <kurlyk.hpp>` to start using it.
 
+## Configuration Macros
+
+Define these macros before including `kurlyk.hpp` to fine‑tune the library:
+
+- `KURLYK_AUTO_INIT` (default `1`) – automatically registers managers during
+  static initialization.
+- `KURLYK_AUTO_INIT_USE_ASYNC` (default `1`) – when auto init is enabled,
+  starts the network worker thread in the background. Set to `0` for manual
+  processing.
+- `KURLYK_HTTP_SUPPORT` and `KURLYK_WEBSOCKET_SUPPORT` (default `1`) – enable
+  or disable the HTTP and WebSocket parts of the library.
+- `KURLYK_ENABLE_JSON` (default `0`) – adds JSON serialization helpers for
+  some types.
+
 ## Documentation
 In progress.
 
