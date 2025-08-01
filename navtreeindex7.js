@@ -1,5 +1,6 @@
 var NAVTREEINDEX7 =
 {
+"structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#ae9ec79dd64358a00c62c286bfaf4a689":[1,0,2,3,0,11],
 "structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#ae9ec79dd64358a00c62c286bfaf4a689":[2,0,1,3,0,11],
 "structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#aed4ecd72f0560e3e95b34f7b0c9022c4":[1,0,2,3,0,9],
 "structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#aed4ecd72f0560e3e95b34f7b0c9022c4":[2,0,1,3,0,9],

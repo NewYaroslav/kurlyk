@@ -30,6 +30,7 @@ var NAVTREEINDEX6 =
 "http__utils_8hpp_source.html":[3,0,2,0,4,7],
 "index.html":[],
 "index.html":[0],
+"index.html#config_sec":[0,3,0],
 "index.html#features_sec":[0,1],
 "index.html#install_sec":[0,3],
 "index.html#intro_sec":[0,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX6 =
 "structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#aa677094420891931b48dac5c698a8cf6":[1,0,2,3,0,7],
 "structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#aa677094420891931b48dac5c698a8cf6":[2,0,1,3,0,7],
 "structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#ae84d2fe04ed8eda186fceb8e9971d912":[1,0,2,3,0,3],
-"structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#ae84d2fe04ed8eda186fceb8e9971d912":[2,0,1,3,0,3],
-"structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#ae9ec79dd64358a00c62c286bfaf4a689":[1,0,2,3,0,11]
+"structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#ae84d2fe04ed8eda186fceb8e9971d912":[2,0,1,3,0,3]
 };
