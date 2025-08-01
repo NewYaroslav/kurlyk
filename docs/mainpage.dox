@@ -3,40 +3,68 @@
 
 \section intro_sec Introduction
 
-Kurlyk is a library designed for making HTTP requests easy and efficient. It abstracts the complexity of handling asynchronous HTTP operations and provides a simple interface for developers.
+Kurlyk is a header-only C++ library that currently wraps **libcurl** and
+**Simple-WebSocket-Server** to provide convenient HTTP and WebSocket clients.
+Its core is backend-agnostic, so alternative implementations can be plugged in
+if needed—planned support includes an Emscripten backend. The library hides
+much of the networking boilerplate and offers an easy way to issue asynchronous
+requests, process WebSocket events and apply rate limiting.
 
 \section features_sec Features
 
-- Asynchronous and synchronous HTTP requests.
-- Rate limiting to control the number of requests over time.
-- Simple API for GET and POST requests.
-- Easy integration with existing C++ projects.
+- HTTP and WebSocket clients with a common, class-based API.
+- Asynchronous or synchronous execution via a background worker.
+- Rate limiting for both HTTP requests and WebSocket messages.
+- Automatic reconnection logic for WebSocket connections.
+- Proxy support, configurable timeouts and custom headers.
+- Header-only design, works with C++11 and newer.
 
 \section usage_sec Usage
 
 \code{.cpp}
 #include <kurlyk.hpp>
 #include <iostream>
+#include <thread>
 
 int main() {
-    kurlyk::init(true);
+    kurlyk::init(true); // start worker thread
 
-    // Asynchronous GET request using the standalone function
-    uint64_t request_id = kurlyk::http_get("https://httpbin.org/ip", kurlyk::QueryParams(), kurlyk::Headers(),
-        [](const kurlyk::HttpResponsePtr response) {
-            print_response(response);
-        });
+    kurlyk::HttpClient http("https://httpbin.org");
+    http.get("/ip", {}, {}, [](kurlyk::HttpResponsePtr res) {
+        std::cout << "Status: " << res->status_code << "\n" << res->content << std::endl;
+    });
 
-	std::system("pause");
-	kurlyk::cancel_request_by_id(request_id).wait();
+    kurlyk::WebSocketClient ws("wss://echo-websocket.fly.dev/");
+    ws.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> e) {
+        if (e->event_type == kurlyk::WebSocketEventType::WS_MESSAGE)
+            std::cout << "Message: " << e->message << std::endl;
+    });
+    ws.connect_and_wait();
+    ws.send_message("Hello!");
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    ws.disconnect_and_wait();
+
     kurlyk::deinit();
-    return 0;
 }
 \endcode
 
 \section install_sec Installation
 
-To use the Kurlyk Library in your project, include the header file `kurlyk/kurlyk.hpp` in your source code. Ensure that your project is set up to compile with standards from C++11 to C++17.
+Add the `include` directory to your compiler search path and include
+`<kurlyk.hpp>` in your sources.  The repository contains third party
+dependencies used by the examples, but for your own project you need
+`libcurl`, `OpenSSL` and either Boost.Asio or standalone Asio together
+with **Simple-WebSocket-Server**.  Kurlyk itself is header-only and works
+with C++11 or later.
+
+\subsection config_sec Configuration Macros
+Several macros can be defined before including the library to tailor the
+build:
+- `KURLYK_HTTP_SUPPORT` and `KURLYK_WEBSOCKET_SUPPORT` toggle the HTTP or
+  WebSocket parts of the library.
+- `KURLYK_AUTO_INIT` controls automatic manager registration during static
+  initialization, while `KURLYK_AUTO_INIT_USE_ASYNC` runs the worker thread
+  in the background when auto init is enabled.
 
 \section repo_sec Repository
 
