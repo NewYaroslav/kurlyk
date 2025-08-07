@@ -26,15 +26,19 @@ namespace kurlyk::core {
             return *instance;
         }
 
-        /// \brief
-        /// \param handler
+        /// \brief Registers a callback for handling network errors.
+        /// \param handler Function invoked when an error is dispatched.
         void add_error_handler(ErrorHandler handler) {
             std::lock_guard<std::mutex> lock(m_error_handlers_mutex);
             m_error_handlers.push_back(std::move(handler));
         }
 
-        /// \brief
-        /// \param
+        /// \brief Dispatches an exception to all registered error handlers.
+        /// \param e   The thrown exception.
+        /// \param msg Additional context message.
+        /// \param file Source file where the error occurred.
+        /// \param line Line number where the error occurred.
+        /// \param func Function name where the error occurred.
         void handle_error(
                 const std::exception& e,
                 const char* msg,
@@ -207,10 +211,10 @@ namespace kurlyk::core {
         bool                        m_is_worker_started = false;        ///< Flag indicating if the worker thread is started.
         mutable std::mutex          m_tasks_list_mutex;                 ///< Mutex for protecting access to the task list.
         std::list<std::function<void()>> m_tasks_list;                  ///< List of tasks queued for processing by the worker.
-        mutable std::mutex          m_managers_mutex;                   ///<
-        std::vector<INetworkTaskManager*> m_managers;                   ///<
-        std::mutex                  m_error_handlers_mutex;             ///<
-        std::vector<ErrorHandler>   m_error_handlers;                   ///<
+        mutable std::mutex          m_managers_mutex;                   ///< Mutex protecting access to registered managers.
+        std::vector<INetworkTaskManager*> m_managers;                   ///< List of registered network task managers.
+        std::mutex                  m_error_handlers_mutex;             ///< Mutex guarding the error handler list.
+        std::vector<ErrorHandler>   m_error_handlers;                   ///< Collection of registered error handlers.
 
 
         /// \brief Private constructor to enforce singleton pattern.

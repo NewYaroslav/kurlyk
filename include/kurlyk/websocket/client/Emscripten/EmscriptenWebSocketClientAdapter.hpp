@@ -187,30 +187,30 @@ namespace kurlyk {
 
         /// \brief State for the WebSocket connection.
         enum class WebSocketState {
-            START,              ///< Инициализация
-            CONNECTING,         ///< Ожидание подключения
-            WORKING,            ///< Работа в процессе
-            DISCONNECTING,      ///< Ожидание отключения
-            STOPPED             ///< Остановка
+            START,              ///< Initialization.
+            CONNECTING,         ///< Waiting for connection establishment.
+            WORKING,            ///< Connection is active.
+            DISCONNECTING,      ///< Waiting for disconnection.
+            STOPPED             ///< Connection stopped.
         } m_ws_state = WebSocketState::START;
 
-        /// \brief
+        /// \brief Finite state machine states controlling client workflow.
         enum class FsmState {
-            INIT,               ///< Инициализация
-            CONNECTING,         ///< Ожидание подключения
-            WORKING,            ///< Работа в процессе
-            RECONNECTING,       ///< Попытка переподключения
-            STOPPED             ///< Остановка
+            INIT,               ///< Initialization.
+            CONNECTING,         ///< Waiting for connection.
+            WORKING,            ///< Connection active.
+            RECONNECTING,       ///< Attempting reconnection.
+            STOPPED             ///< Stopped.
         } m_fsm_state = FsmState::INIT;
 
         /// \brief Represents events in the finite state machine.
         enum class FsmEvent {
-            RequestConnect,     ///< Запрос на подключение
-            RequestDisconnect,  ///< Запрос на отключение
-            ConnectionOpened,   ///< Соединение открыто
-            ConnectionClosed,   ///< Соединение закрыто
-            ConnectionError,    ///< Ошибка соединения
-            UpdateConfig
+            RequestConnect,     ///< Request to connect.
+            RequestDisconnect,  ///< Request to disconnect.
+            ConnectionOpened,   ///< Connection opened.
+            ConnectionClosed,   ///< Connection closed.
+            ConnectionError,    ///< Connection error occurred.
+            UpdateConfig        ///< Configuration update requested.
         };
 
         std::function<void(std::unique_ptr<WebSocketEventData>)> m_on_event;

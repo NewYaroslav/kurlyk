@@ -16,7 +16,7 @@ namespace kurlyk {
         std::error_code error_code;         ///< Error code indicating issues with the response, if any.
         std::string     error_message;      ///< Error message detailing the issue, if any.
         long            status_code = 0;    ///< HTTP status code of the response (e.g., 200, 404).
-        long            retry_attempt = 0;  ///<
+        long            retry_attempt = 0;  ///< Number of retry attempts performed for this request.
         bool            ready = false;      ///< Indicates if the response is ready to be processed.
         
         // --- Timing metrics (all values in seconds) ---
