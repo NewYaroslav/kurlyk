@@ -148,7 +148,7 @@ $(function(){initNavTree('websocket__client__lifecycle__test_8cpp_source.html','
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            client.<a class="code hl_function" href="classkurlyk_1_1WebSocketClient.html#afab67bb2191abba99da7330c425c3135">connect</a>();</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        } <span class="comment">// Client 1 exits scope here</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="comment">// Second client: connects, stays connected for 10 seconds, then exits scope</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="comment">// Second client: connects, stays connected for 60 seconds, then exits scope</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        {</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            <a class="code hl_class" href="classkurlyk_1_1WebSocketClient.html">kurlyk::WebSocketClient</a> client(<span class="stringliteral">&quot;wss://echo-websocket.fly.dev/&quot;</span>);</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            <span class="keyword">const</span> <span class="keywordtype">long</span> rate_limit_id = client.<a class="code hl_function" href="classkurlyk_1_1WebSocketClient.html#aacafc55bfa3eeeacf7baf100d1a72ebc">add_rate_limit_rps</a>(2);</div>
@@ -184,7 +184,7 @@ $(function(){initNavTree('websocket__client__lifecycle__test_8cpp_source.html','
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            std::this_thread::sleep_for(std::chrono::seconds(60));</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <a class="code hl_define" href="print__utils_8hpp.html#a34942c7a2be1abc6f4c74f9502fc218b">KURLYK_PRINT</a> &lt;&lt; <span class="stringliteral">&quot;Client 2: Disconnecting...&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            client.<a class="code hl_function" href="classkurlyk_1_1WebSocketClient.html#a8f5774a0e9892592e6dcf3f10fd2cf69">disconnect_and_wait</a>();</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        } <span class="comment">// Client 2 exits scope after 10 seconds</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        } <span class="comment">// Client 2 exits scope after 60 seconds</span></div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    }</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>}</div>
 </div>

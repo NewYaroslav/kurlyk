@@ -190,7 +190,7 @@ $(function(){initNavTree('async__multi__request__example_8cpp_source.html',''); 
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    std::thread async_thread(<a class="code hl_function" href="async__multi__request__example_8cpp.html#af2ec63a88160b4be9d1f2912de5293ca">handle_async_responses</a>, std::ref(futures));</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    async_thread.join(); <span class="comment">// Wait for the async thread to complete</span></div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="comment">//std::system(&quot;pause&quot;);</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="comment">// std::cin.get();</span></div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <a class="code hl_define" href="print__utils_8hpp.html#a34942c7a2be1abc6f4c74f9502fc218b">KURLYK_PRINT</a> &lt;&lt; <span class="stringliteral">&quot;All requests completed.&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <a class="code hl_function" href="namespacekurlyk.html#a874abdd250d6f1c6c8433dd28dc22418">kurlyk::deinit</a>();</div>
