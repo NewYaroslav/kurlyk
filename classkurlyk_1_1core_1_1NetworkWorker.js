@@ -1,10 +1,14 @@
 var classkurlyk_1_1core_1_1NetworkWorker =
 [
+    [ "ErrorHandler", "classkurlyk_1_1core_1_1NetworkWorker.html#adb3a3f6ee021097470f74ec38fdfdfb9", null ],
     [ "NetworkWorker", "classkurlyk_1_1core_1_1NetworkWorker.html#ad3f0812494737a2f4a82bb460c8db832", null ],
     [ "~NetworkWorker", "classkurlyk_1_1core_1_1NetworkWorker.html#abb2b3a00d293db5c7c9ddf4182516d48", null ],
     [ "NetworkWorker", "classkurlyk_1_1core_1_1NetworkWorker.html#a599591e4b2846487d55933f1cddb4222", null ],
+    [ "add_error_handler", "classkurlyk_1_1core_1_1NetworkWorker.html#aad79c399cd0400e504429df0ab9b03d2", null ],
     [ "add_task", "classkurlyk_1_1core_1_1NetworkWorker.html#a3aaf9e4b556c1696075611b20dddd1c1", null ],
     [ "get_instance", "classkurlyk_1_1core_1_1NetworkWorker.html#a39d958eab38ba3076e43b0e72cc7b29a", null ],
+    [ "handle_error", "classkurlyk_1_1core_1_1NetworkWorker.html#a57ed914c2e94943bf48b59b2fc582079", null ],
+    [ "handle_error", "classkurlyk_1_1core_1_1NetworkWorker.html#a6371b46b732d5f1208ca92f87b7b3819", null ],
     [ "has_pending_tasks", "classkurlyk_1_1core_1_1NetworkWorker.html#aa3723ca939c54949dcc365a9c7afc0ff", null ],
     [ "is_loaded", "classkurlyk_1_1core_1_1NetworkWorker.html#a3132fc5004942530f49170193a776abf", null ],
     [ "notify", "classkurlyk_1_1core_1_1NetworkWorker.html#a05248e914a6f70ffc8cb678835c86c91", null ],
@@ -15,6 +19,8 @@ var classkurlyk_1_1core_1_1NetworkWorker =
     [ "shutdown", "classkurlyk_1_1core_1_1NetworkWorker.html#abf2796d312fdeb0024771c4f95ad28cf", null ],
     [ "start", "classkurlyk_1_1core_1_1NetworkWorker.html#a9d413f2d133d0928fe43a0f3a85ecbac", null ],
     [ "stop", "classkurlyk_1_1core_1_1NetworkWorker.html#a013924d8f046915f31b66097ce0156ba", null ],
+    [ "m_error_handlers", "classkurlyk_1_1core_1_1NetworkWorker.html#aec46ee5392921f305d009064cc3ead3c", null ],
+    [ "m_error_handlers_mutex", "classkurlyk_1_1core_1_1NetworkWorker.html#ad9cfc9c7d807134e7eb8fdc907f07878", null ],
     [ "m_future", "classkurlyk_1_1core_1_1NetworkWorker.html#a831cb2e64d4af46292c4ad30415ac27e", null ],
     [ "m_is_worker_started", "classkurlyk_1_1core_1_1NetworkWorker.html#a2509769245f89a76777cd635cdd8a359", null ],
     [ "m_is_worker_started_mutex", "classkurlyk_1_1core_1_1NetworkWorker.html#ad08056bd53e46f3ebc9f1eaf1b51f194", null ],

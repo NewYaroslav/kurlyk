@@ -43,7 +43,7 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
-        [ "Variables", "functions_vars.html", null ],
+        [ "Variables", "functions_vars.html", "functions_vars" ],
         [ "Typedefs", "functions_type.html", null ],
         [ "Enumerations", "functions_enum.html", null ]
       ] ]
@@ -65,11 +65,11 @@ var NAVTREEINDEX =
 "AutoInitializer_8hpp.html",
 "classkurlyk_1_1BaseWebSocketClient.html#ad14518b9ad14309b3af910e4d47838a8a714bf4050ed2c6155702085e2566f598",
 "classkurlyk_1_1HttpClient.html#a45a65204701d67904029b265590036a0",
-"classkurlyk_1_1HttpRequestContext.html#aec2cc66513008fd16c7e7635629534c0",
-"classkurlyk_1_1SimpleWebSocketWorker.html#a1b8542c999058d19cd149e979efb35ca",
-"classkurlyk_1_1WebSocketManager.html#a99c87279d9c9187d7b9ae75228c60177",
-"globals.html",
-"structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#ae9ec79dd64358a00c62c286bfaf4a689"
+"classkurlyk_1_1HttpRequestContext.html#a8cbca53ab56680e6a7c3d4924ce30363",
+"classkurlyk_1_1SimpleWebSocketWorker.html",
+"classkurlyk_1_1WebSocketManager.html#a8ec506304fc4077bff4ae307af8f6ecf",
+"functions_h.html",
+"structcryptox_1_1ProxyConfig.html#a6cf8d7e9886c594f9ca7ac1b2282d0e0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

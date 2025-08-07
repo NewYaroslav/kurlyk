@@ -23,6 +23,8 @@ var classkurlyk_1_1HttpClient =
     [ "request", "classkurlyk_1_1HttpClient.html#a265431517b95bb62157f98da4ca72c78", null ],
     [ "request", "classkurlyk_1_1HttpClient.html#aebfcd2e64ed5ac9ef6ef0090cae347e4", null ],
     [ "request", "classkurlyk_1_1HttpClient.html#a08102fd7b30d8ac39af4c2510d8e13b5", null ],
+    [ "safe_set_response", "classkurlyk_1_1HttpClient.html#a79e0c5ff34a54b0cc3496c1c0cfeb10a", null ],
+    [ "safe_submit_request", "classkurlyk_1_1HttpClient.html#a761315176a00d4091ccc17f88dbc682c", null ],
     [ "set_accept_encoding", "classkurlyk_1_1HttpClient.html#af22949acecaf07f9acd53afe982a1b1d", null ],
     [ "set_accept_encoding", "classkurlyk_1_1HttpClient.html#a9f07d0164b920fb183f47d1a88ee02b8", null ],
     [ "set_accept_language", "classkurlyk_1_1HttpClient.html#a245c77da11a3e85829dce2bd8921fd3f", null ],

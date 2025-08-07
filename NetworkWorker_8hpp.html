@@ -139,6 +139,8 @@ Namespaces</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:a0fe1002ff42634905d327eff41cbf52d" id="r_a0fe1002ff42634905d327eff41cbf52d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0fe1002ff42634905d327eff41cbf52d">_KURLYK_NETWORK_WORKER_HPP_INCLUDED</a></td></tr>
 <tr class="separator:a0fe1002ff42634905d327eff41cbf52d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac330ad06da14f6e3d438f370fcd8d8fc" id="r_ac330ad06da14f6e3d438f370fcd8d8fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac330ad06da14f6e3d438f370fcd8d8fc">KURLYK_HANDLE_ERROR</a>(e,  msg)</td></tr>
+<tr class="separator:ac330ad06da14f6e3d438f370fcd8d8fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manages and processes network tasks such as HTTP requests and WebSocket events in a separate thread. </p>
@@ -158,6 +160,32 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00003">3</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ac330ad06da14f6e3d438f370fcd8d8fc" name="ac330ad06da14f6e3d438f370fcd8d8fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac330ad06da14f6e3d438f370fcd8d8fc">&#9670;&#160;</a></span>KURLYK_HANDLE_ERROR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define KURLYK_HANDLE_ERROR</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>msg</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    <a class="code hl_function" href="classkurlyk_1_1core_1_1NetworkWorker.html#a39d958eab38ba3076e43b0e72cc7b29a">::kurlyk::core::NetworkWorker::get_instance</a>().<a class="code hl_function" href="classkurlyk_1_1core_1_1NetworkWorker.html#a57ed914c2e94943bf48b59b2fc582079">handle_error</a>((e), (msg), __FILE__, __LINE__, __FUNCTION__)</div>
+<div class="ttc" id="aclasskurlyk_1_1core_1_1NetworkWorker_html_a39d958eab38ba3076e43b0e72cc7b29a"><div class="ttname"><a href="classkurlyk_1_1core_1_1NetworkWorker.html#a39d958eab38ba3076e43b0e72cc7b29a">kurlyk::core::NetworkWorker::get_instance</a></div><div class="ttdeci">static NetworkWorker &amp; get_instance()</div><div class="ttdoc">Get the singleton instance of NetworkWorker.</div><div class="ttdef"><b>Definition</b> <a href="NetworkWorker_8hpp_source.html#l00024">NetworkWorker.hpp:24</a></div></div>
+<div class="ttc" id="aclasskurlyk_1_1core_1_1NetworkWorker_html_a57ed914c2e94943bf48b59b2fc582079"><div class="ttname"><a href="classkurlyk_1_1core_1_1NetworkWorker.html#a57ed914c2e94943bf48b59b2fc582079">kurlyk::core::NetworkWorker::handle_error</a></div><div class="ttdeci">void handle_error(const std::exception &amp;e, const char *msg, const char *file, int line, const char *func)</div><div class="ttdef"><b>Definition</b> <a href="NetworkWorker_8hpp_source.html#l00038">NetworkWorker.hpp:38</a></div></div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00008">8</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>

@@ -51,6 +51,7 @@ var namespacekurlyk =
       [ "WS_CLOSE", "namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47aa1513ec98e85afa6e2cb65179c844353", null ],
       [ "WS_ERROR", "namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47a47a9efd7685631369812dfd807399607", null ]
     ] ],
+    [ "add_error_handler", "namespacekurlyk.html#a64d2036466fbdb6ed5a4f5708c4861e0", null ],
     [ "cancel_request_by_id", "namespacekurlyk.html#a9d19df9f93548f37b62a698c256544ea", null ],
     [ "cancel_request_by_id", "namespacekurlyk.html#af4e359b92f64aabd5129cc30b1c5f715", null ],
     [ "create_rate_limit", "namespacekurlyk.html#aeb07f74e95b281c14503060afd67763b", null ],
