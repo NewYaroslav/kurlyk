@@ -49,7 +49,7 @@ namespace kurlyk {
     /// \param callback An optional callback function to execute after cancellation.
     void cancel_request_by_id(uint64_t request_id, std::function<void()> callback) {
         HttpRequestManager::get_instance().cancel_request_by_id(request_id, std::move(callback));
-        core::NetworkWorker::get_instance().notify();
+        ::kurlyk::core::NetworkWorker::get_instance().notify();
     }
 
     /// \brief Cancels a request by its unique identifier and returns a future.
@@ -59,9 +59,21 @@ namespace kurlyk {
         auto promise = std::make_shared<std::promise<void>>();
         auto future = promise->get_future();
         HttpRequestManager::get_instance().cancel_request_by_id(request_id, [promise](){
-            promise->set_value();
+            try {
+                promise->set_value();
+            } catch (const std::future_error& e) {
+                if (e.code() == std::make_error_condition(std::future_errc::promise_already_satisfied)) {
+                    KURLYK_HANDLE_ERROR(e, "Promise already satisfied in HttpClient::request callback");
+                } else {
+                    KURLYK_HANDLE_ERROR(e, "Future error in HttpClient::request callback");
+                }
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "Unhandled exception in HttpClient::request callback");
+            } catch (...) {
+                // Unknown fatal error in request callback
+            }
         });
-        core::NetworkWorker::get_instance().notify();
+        ::kurlyk::core::NetworkWorker::get_instance().notify();
         return future;
     }
 
@@ -73,7 +85,7 @@ namespace kurlyk {
             std::unique_ptr<HttpRequest> request_ptr,
             HttpResponseCallback callback) {
         const bool status = HttpRequestManager::get_instance().add_request(std::move(request_ptr), std::move(callback));
-        core::NetworkWorker::get_instance().notify();
+        ::kurlyk::core::NetworkWorker::get_instance().notify();
         return status;
     }
 
@@ -87,16 +99,31 @@ namespace kurlyk {
         auto future = promise->get_future();
 
         HttpResponseCallback callback = [promise](HttpResponsePtr response) {
-            if (!response->ready) return;
-            promise->set_value(std::move(response));
+            if (!response || !response->ready) return;
+            try {
+                promise->set_value(std::move(response));
+            } catch (const std::future_error& e) {
+                if (e.code() == std::make_error_condition(std::future_errc::promise_already_satisfied)) {
+                    KURLYK_HANDLE_ERROR(e, "Promise already satisfied in HttpClient::request callback");
+                } else {
+                    KURLYK_HANDLE_ERROR(e, "Future error in HttpClient::request callback");
+                }
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "Unhandled exception in HttpClient::request callback");
+            } catch (...) {
+                // Unknown fatal error in request callback
+            }
         };
 
         const bool status = HttpRequestManager::get_instance().add_request(std::move(request_ptr), std::move(callback));
         if (!status) {
-            promise->set_exception(std::make_exception_ptr(
-                std::runtime_error("Failed to add request to RequestManager")));
+            try {
+                promise->set_exception(std::make_exception_ptr(
+                    std::runtime_error(
+                        "Failed to add request to RequestManager")));
+            } catch (...) {}
         }
-        core::NetworkWorker::get_instance().notify();
+        ::kurlyk::core::NetworkWorker::get_instance().notify();
 
         return future;
     }
@@ -163,12 +190,28 @@ namespace kurlyk {
         auto future = promise->get_future();
 
         HttpResponseCallback callback = [promise](HttpResponsePtr response) {
-            if (!response->ready) return;
-            promise->set_value(std::move(response));
+            if (!response || !response->ready) return;
+            try {
+                promise->set_value(std::move(response));
+            } catch (const std::future_error& e) {
+                if (e.code() == std::make_error_condition(std::future_errc::promise_already_satisfied)) {
+                    KURLYK_HANDLE_ERROR(e, "Promise already satisfied in HttpClient::request callback");
+                } else {
+                    KURLYK_HANDLE_ERROR(e, "Future error in HttpClient::request callback");
+                }
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "Unhandled exception in HttpClient::request callback");
+            } catch (...) {
+                // Unknown fatal error in request callback
+            }
         };
 
         if (!http_request(std::move(request_ptr), std::move(callback))) {
-            promise->set_exception(std::make_exception_ptr(std::runtime_error("Failed to add request to HttpRequestManager")));
+            try {
+                promise->set_exception(std::make_exception_ptr(
+                    std::runtime_error(
+                        "Failed to add request to HttpRequestManager")));
+            } catch (...) {}
         }
 
         return {request_id, std::move(future)};
@@ -248,12 +291,28 @@ namespace kurlyk {
         auto future = promise->get_future();
 
         HttpResponseCallback callback = [promise](HttpResponsePtr response) {
-            if (!response->ready) return;
-            promise->set_value(std::move(response));
+            if (!response || !response->ready) return;
+            try {
+                promise->set_value(std::move(response));
+            } catch (const std::future_error& e) {
+                if (e.code() == std::make_error_condition(std::future_errc::promise_already_satisfied)) {
+                    KURLYK_HANDLE_ERROR(e, "Promise already satisfied in HttpClient::request callback");
+                } else {
+                    KURLYK_HANDLE_ERROR(e, "Future error in HttpClient::request callback");
+                }
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "Unhandled exception in HttpClient::request callback");
+            } catch (...) {
+                // Unknown fatal error in request callback
+            }
         };
 
         if (!http_request(std::move(request_ptr), std::move(callback))) {
-            promise->set_exception(std::make_exception_ptr(std::runtime_error("Failed to add request to HttpRequestManager")));
+            try {
+                promise->set_exception(std::make_exception_ptr(
+                    std::runtime_error(
+                        "Failed to add request to HttpRequestManager")));
+            } catch (...) {}
         }
 
         return {request_id, std::move(future)};
@@ -304,12 +363,28 @@ namespace kurlyk {
         auto future = promise->get_future();
 
         HttpResponseCallback callback = [promise](HttpResponsePtr response) {
-            if (!response->ready) return;
-            promise->set_value(std::move(response));
+            if (!response || !response->ready) return;
+            try {
+                promise->set_value(std::move(response));
+            } catch (const std::future_error& e) {
+                if (e.code() == std::make_error_condition(std::future_errc::promise_already_satisfied)) {
+                    KURLYK_HANDLE_ERROR(e, "Promise already satisfied in HttpClient::request callback");
+                } else {
+                    KURLYK_HANDLE_ERROR(e, "Future error in HttpClient::request callback");
+                }
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "Unhandled exception in HttpClient::request callback");
+            } catch (...) {
+                // Unknown fatal error in request callback
+            }
         };
 
         if (!http_request(std::move(request_ptr), std::move(callback))) {
-            promise->set_exception(std::make_exception_ptr(std::runtime_error("Failed to add request to HttpRequestManager")));
+            try {
+                promise->set_exception(std::make_exception_ptr(
+                    std::runtime_error(
+                        "Failed to add request to HttpRequestManager")));
+            } catch (...) {}
         }
 
         return {request_id, std::move(future)};

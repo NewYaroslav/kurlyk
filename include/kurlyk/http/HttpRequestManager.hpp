@@ -220,6 +220,7 @@ namespace kurlyk {
         void process_cancel_requests() {
             std::unique_lock<std::mutex> lock(m_mutex);
             if (m_requests_to_cancel.empty()) return;
+
             auto requests_to_cancel = std::move(m_requests_to_cancel);
             m_requests_to_cancel.clear();
             lock.unlock();
@@ -237,6 +238,11 @@ namespace kurlyk {
                 response->ready = true;
                 request_context->callback(std::move(response));
             }
+
+            m_failed_requests.remove_if([&](const std::unique_ptr<HttpRequestContext>& ctx) {
+                return ctx && ctx->request && requests_to_cancel.count(ctx->request->request_id) > 0;
+            });
+
 
             for (const auto &handler : m_active_request_batches) {
                 handler->cancel_request_by_id(requests_to_cancel);

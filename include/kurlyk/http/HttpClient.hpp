@@ -48,10 +48,26 @@ namespace kurlyk {
             auto promise = std::make_shared<std::promise<void>>();
             auto future = promise->get_future();
             HttpRequestManager::get_instance().cancel_request_by_id(m_request.request_id, [promise](){
-                promise->set_value();
+                try {
+                    promise->set_value();
+                } catch (const std::future_error& e) {
+                    if (e.code() == std::make_error_condition(std::future_errc::promise_already_satisfied)) {
+                        KURLYK_HANDLE_ERROR(e, "Promise already satisfied in HttpClient::request callback");
+                    } else {
+                        KURLYK_HANDLE_ERROR(e, "Future error in HttpClient::request callback");
+                    }
+                } catch (const std::exception& e) {
+                    KURLYK_HANDLE_ERROR(e, "Unhandled exception in HttpClient::request callback");
+                } catch (...) {
+                    // Unknown fatal error in request callback
+                }
             });
             core::NetworkWorker::get_instance().notify();
-            future.get();
+            try {
+                future.get();
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "cancel_requests() future.get() failed");
+            }
         }
 
         /// \brief Sets the host URL for the HTTP client.
@@ -214,13 +230,13 @@ namespace kurlyk {
         void set_proxy_tunnel(bool value) {
             m_request.proxy_tunnel = value;
         }
-		
-		/// \brief Configures whether to send only the HTTP headers (HEAD request).
+
+        /// \brief Configures whether to send only the HTTP headers (HEAD request).
         /// \param value If true, the request will not download the response body (uses CURLOPT_NOBODY internally).
         /// Useful for measuring latency or checking resource availability without downloading content.
-		void set_head_only(bool value) {
-			m_request.head_only = value;
-		}
+        void set_head_only(bool value) {
+            m_request.head_only = value;
+        }
 
         /// \brief Sets the proxy server address.
         /// \param ip Proxy server IP address.
@@ -282,22 +298,22 @@ namespace kurlyk {
             m_request.set_retry_attempts(retry_attempts, retry_delay_ms);
         }
 
-		/// \brief Adds a valid HTTP status code to the request.
-		/// \param status The HTTP status code to allow.
-		void add_valid_status(long status) {
-			m_request.add_valid_status(status);
-		}
+        /// \brief Adds a valid HTTP status code to the request.
+        /// \param status The HTTP status code to allow.
+        void add_valid_status(long status) {
+            m_request.add_valid_status(status);
+        }
 
-		/// \brief Replaces all valid HTTP status codes for the request.
-		/// \param statuses The set of HTTP status codes to allow.
-		void set_valid_statuses(const std::set<long>& statuses) {
-			m_request.set_valid_statuses(statuses);
-		}
+        /// \brief Replaces all valid HTTP status codes for the request.
+        /// \param statuses The set of HTTP status codes to allow.
+        void set_valid_statuses(const std::set<long>& statuses) {
+            m_request.set_valid_statuses(statuses);
+        }
 
-		/// \brief Clears the set of valid HTTP status codes for the request.
-		void clear_valid_statuses() {
-			m_request.clear_valid_statuses();
-		}
+        /// \brief Clears the set of valid HTTP status codes for the request.
+        void clear_valid_statuses() {
+            m_request.clear_valid_statuses();
+        }
 
         /// \brief Sets the User-Agent header.
         /// \param user_agent User-Agent string.
@@ -508,14 +524,11 @@ namespace kurlyk {
             auto future = promise->get_future();
 
             HttpResponseCallback callback = [promise](HttpResponsePtr response) {
-                if (!response->ready) return;
-                promise->set_value(std::move(response));
+                safe_set_response(promise, std::move(response));
             };
 
-            if (!request(std::move(request_ptr), std::move(callback))) {
-                promise->set_exception(std::make_exception_ptr(
-                    std::runtime_error("Failed to add request to RequestManager")));
-            }
+            safe_submit_request(
+                promise, std::move(request_ptr), std::move(callback));
 
             return future;
         }
@@ -556,14 +569,11 @@ namespace kurlyk {
             auto future = promise->get_future();
 
             HttpResponseCallback callback = [promise](HttpResponsePtr response) {
-                if (!response->ready) return;
-                promise->set_value(std::move(response));
+                safe_set_response(promise, std::move(response));
             };
 
-            if (!request(std::move(request_ptr), std::move(callback))) {
-                promise->set_exception(std::make_exception_ptr(
-                    std::runtime_error("Failed to add request to RequestManager")));
-            }
+            safe_submit_request(
+                promise, std::move(request_ptr), std::move(callback));
 
             return future;
         }
@@ -640,6 +650,60 @@ namespace kurlyk {
             const bool status = HttpRequestManager::get_instance().add_request(std::move(request_ptr), std::move(callback));
             core::NetworkWorker::get_instance().notify();
             return status;
+        }
+
+        /// \brief
+        /// \param
+        /// \param
+        static void safe_set_response(
+                std::shared_ptr<std::promise<HttpResponsePtr>> promise,
+                HttpResponsePtr response) {
+            if (!response || !response->ready) return;
+            try {
+                promise->set_value(std::move(response));
+            } catch (const std::future_error& e) {
+                if (e.code() == std::make_error_condition(std::future_errc::promise_already_satisfied)) {
+                    KURLYK_HANDLE_ERROR(e, "Promise already satisfied in HttpClient::request callback");
+                } else {
+                    KURLYK_HANDLE_ERROR(e, "Future error in HttpClient::request callback");
+                }
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "Unhandled exception in HttpClient::request callback");
+            } catch (...) {
+                // Unknown fatal error in request callback
+            }
+        }
+
+        /// \brief
+        /// \param
+        /// \param
+        /// \param
+        void safe_submit_request(
+                std::shared_ptr<std::promise<HttpResponsePtr>> promise,
+                std::unique_ptr<HttpRequest> request_ptr,
+                HttpResponseCallback callback) {
+            bool exception_set = false;
+            try {
+                if (!request(std::move(request_ptr), std::move(callback))) {
+                    promise->set_exception(std::make_exception_ptr(
+                        std::runtime_error("Failed to add request to RequestManager")));
+                    exception_set = true;
+                }
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "Exception while submitting request");
+                if (!exception_set) {
+                    try {
+                        promise->set_exception(std::current_exception());
+                    } catch (...) {} // fallback
+                }
+            } catch (...) {
+                // Unknown fatal error while submitting request
+                if (!exception_set) {
+                    try {
+                        promise->set_exception(std::current_exception());
+                    } catch (...) {} // fallback
+                }
+            }
         }
 
         /// \brief Ensures that the network worker and request manager are initialized.

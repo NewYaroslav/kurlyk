@@ -211,23 +211,23 @@ namespace kurlyk {
             this->retry_attempts = retry_attempts;
             this->retry_delay_ms = retry_delay_ms;
         }
-		
-		/// \brief Adds a single valid HTTP status code.
-		/// \param status The HTTP status code to add to the set of valid statuses.
-		void add_valid_status(long status) {
-			valid_statuses.insert(status);
-		}
+        
+        /// \brief Adds a single valid HTTP status code.
+        /// \param status The HTTP status code to add to the set of valid statuses.
+        void add_valid_status(long status) {
+            valid_statuses.insert(status);
+        }
 
-		/// \brief Sets the valid HTTP status codes, replacing any existing values.
-		/// \param statuses The new set of valid HTTP status codes.
+        /// \brief Sets the valid HTTP status codes, replacing any existing values.
+        /// \param statuses The new set of valid HTTP status codes.
         void set_valid_statuses(const std::set<long>& statuses) {
-			valid_statuses = statuses;
-		}
+            valid_statuses = statuses;
+        }
 
-		/// \brief Clears all valid status codes.
-		void clear_valid_statuses() {
-			valid_statuses.clear();
-		}
+        /// \brief Clears all valid status codes.
+        void clear_valid_statuses() {
+            valid_statuses.clear();
+        }
 
         /// \brief Sets the User-Agent header.
         /// \param user_agent User-Agent string.
@@ -278,8 +278,8 @@ namespace kurlyk {
         }
 
     }; // HttpRequest
-	
-	/// \brief A unique pointer to an HttpRequest object for memory management.
+    
+    /// \brief A unique pointer to an HttpRequest object for memory management.
     using HttpRequestPtr = std::unique_ptr<HttpRequest>;
 
 }; // namespace kurlyk

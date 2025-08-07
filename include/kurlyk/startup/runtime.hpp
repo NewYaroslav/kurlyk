@@ -7,7 +7,7 @@
 
 namespace kurlyk {
 
-	/// \brief Initializes the Kurlyk library, setting up necessary managers and the network worker.
+    /// \brief Initializes the Kurlyk library, setting up necessary managers and the network worker.
     /// \param use_async If true, enables asynchronous processing for requests.
     /// Call this function before using the library to ensure all components are initialized.
     inline void init(const bool use_async = true) {
@@ -33,10 +33,16 @@ namespace kurlyk {
         core::NetworkWorker::get_instance().process();
     }
 
-	/// \brief Shuts down all network operations, resetting the state of the network worker and clearing pending requests.
+    /// \brief Shuts down all network operations, resetting the state of the network worker and clearing pending requests.
     /// Use this function to stop all network operations and prepare the library for shutdown.
     inline void shutdown() {
         core::NetworkWorker::get_instance().shutdown();
+    }
+
+    /// \brief
+    /// \param
+    inline void add_error_handler(::kurlyk::core::NetworkWorker::ErrorHandler handler) {
+        ::kurlyk::core::NetworkWorker::get_instance().add_error_handler(std::move(handler));
     }
 
 } // namespace kurlyk

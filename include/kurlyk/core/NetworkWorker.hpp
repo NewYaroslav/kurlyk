@@ -5,6 +5,9 @@
 /// \file NetworkWorker.hpp
 /// \brief Manages and processes network tasks such as HTTP requests and WebSocket events in a separate thread.
 
+#define KURLYK_HANDLE_ERROR(e, msg) \
+    ::kurlyk::core::NetworkWorker::get_instance().handle_error((e), (msg), __FILE__, __LINE__, __FUNCTION__)
+
 namespace kurlyk::core {
 
     /// \class NetworkWorker
@@ -14,12 +17,68 @@ namespace kurlyk::core {
     /// It supports adding tasks to a queue, notifying and starting the worker thread, and handling graceful shutdown.
     class NetworkWorker {
     public:
+        using ErrorHandler = std::function<void(const std::exception&, const char*, const char*, int, const char*)>;
 
         /// \brief Get the singleton instance of NetworkWorker.
         /// \return Reference to the singleton instance.
         static NetworkWorker& get_instance() {
             static NetworkWorker* instance = new NetworkWorker();
             return *instance;
+        }
+
+        /// \brief
+        /// \param handler
+        void add_error_handler(ErrorHandler handler) {
+            std::lock_guard<std::mutex> lock(m_error_handlers_mutex);
+            m_error_handlers.push_back(std::move(handler));
+        }
+
+        /// \brief
+        /// \param
+        void handle_error(
+                const std::exception& e,
+                const char* msg,
+                const char* file,
+                int line,
+                const char* func) {
+
+            std::unique_lock<std::mutex> lock(m_error_handlers_mutex);
+            if (m_error_handlers.empty()) return;
+            std::vector<ErrorHandler> handlers = m_error_handlers;
+            lock.unlock();
+
+            for (const auto& handler : handlers) {
+                try {
+                    handler(e, msg, file, line, func);
+                } catch (...) {
+                    // Never let handler crash the system
+                }
+            }
+        }
+
+        /// \brief Handles an exception captured as exception_ptr.
+        /// \param eptr The captured exception.
+        /// \param msg Custom message for context.
+        /// \param file File where the error occurred.
+        /// \param line Line number where the error occurred.
+        /// \param func Function name where the error occurred.
+        void handle_error(
+                std::exception_ptr eptr,
+                const char* msg,
+                const char* file,
+                int line,
+                const char* func) {
+
+            if (!eptr) return;
+
+            try {
+                std::rethrow_exception(eptr);
+            } catch (const std::exception& e) {
+                handle_error(e, msg, file, line, func);
+            } catch (...) {
+                const std::runtime_error unknown("Unknown non-std::exception");
+                handle_error(unknown, msg, file, line, func);
+            }
         }
 
         /// \brief Adds a task to the queue and notifies the worker thread.
@@ -123,7 +182,9 @@ namespace kurlyk::core {
             try {
                 m_future.wait();
                 m_future.get();
-            } catch(...) {};
+            } catch(...) {
+                KURLYK_HANDLE_ERROR(std::current_exception(), "Exception during NetworkWorker shutdown");
+            };
         }
 
         /// \brief Shuts down the worker, clearing all active requests and pending tasks.
@@ -146,8 +207,11 @@ namespace kurlyk::core {
         bool                        m_is_worker_started = false;        ///< Flag indicating if the worker thread is started.
         mutable std::mutex          m_tasks_list_mutex;                 ///< Mutex for protecting access to the task list.
         std::list<std::function<void()>> m_tasks_list;                  ///< List of tasks queued for processing by the worker.
-        mutable std::mutex          m_managers_mutex;
-        std::vector<INetworkTaskManager*> m_managers;
+        mutable std::mutex          m_managers_mutex;                   ///<
+        std::vector<INetworkTaskManager*> m_managers;                   ///<
+        std::mutex                  m_error_handlers_mutex;             ///<
+        std::vector<ErrorHandler>   m_error_handlers;                   ///<
+
 
         /// \brief Private constructor to enforce singleton pattern.
         NetworkWorker() {

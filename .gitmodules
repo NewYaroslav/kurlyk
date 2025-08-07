@@ -16,3 +16,6 @@
 [submodule ".github/doxygen-awesome-css"]
 	path = .github/doxygen-awesome-css
 	url = https://github.com/jothepro/doxygen-awesome-css.git
+[submodule "libs/asio"]
+	path = libs/asio
+	url = https://github.com/chriskohlhoff/asio.git
