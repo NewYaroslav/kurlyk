@@ -61,9 +61,9 @@ void test_connect_disconnect(int n) {
                         break;
                 };
             });
-            KURLYK_PRINT << "Client 1: Connecting..." << std::endl;
+            KURLYK_PRINT << "Client 2: Connecting..." << std::endl;
             client2.connect_and_wait();
-            std::this_thread::sleep_for(std::chrono::seconds(10)); // Подключён 10 секунд
+            std::this_thread::sleep_for(std::chrono::seconds(10)); // Остаётся подключённым 10 секунд
             KURLYK_PRINT << "Client 2: Disconnecting..." << std::endl;
             client2.disconnect_and_wait();
             KURLYK_PRINT << "Client 2: End" << std::endl;

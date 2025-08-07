@@ -24,7 +24,7 @@ int main() {
     client.set_retry_attempts(3, 1000);    // 3 retry attempts, 1-second delay between retries
     client.set_rate_limit(5, 1000);        // Rate limit: 5 requests per second
     // Configure the maximum number of redirects
-    int redirect_count = 15;  // For example, try 5 redirects
+    int redirect_count = 15;  // Allow up to 15 redirects
     client.set_max_redirects(redirect_count);
 
     // Redirect handling - GET request with redirections
@@ -34,7 +34,7 @@ int main() {
            print_response(response);
        });
 
-    std::system("pause");
+    std::cin.get();
     client.cancel_requests();
     kurlyk::deinit();
     return 0;

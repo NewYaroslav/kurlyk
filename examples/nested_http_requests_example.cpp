@@ -1,4 +1,5 @@
 #include <kurlyk.hpp>
+#include <iostream>
 
 // Helper function to print the response details
 void print_response(const kurlyk::HttpResponsePtr& response) {
@@ -39,7 +40,7 @@ int main() {
             }
         });
 
-    std::system("pause");
+    std::cin.get();
     client.cancel_requests();
     kurlyk::deinit();
     return 0;

@@ -74,7 +74,7 @@ int main() {
         print_response(response);
     });
 
-    std::system("pause");
+    std::cin.get();
     client.cancel_requests();
     kurlyk::deinit();
     return 0;
