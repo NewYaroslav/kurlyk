@@ -637,8 +637,8 @@ namespace kurlyk {
     private:
         HttpRequest m_request;  ///< The request object used for configuring and sending requests.
         std::string m_host;     ///< The base host URL for the HTTP client.
-        bool is_general_limit_owned = false;
-        bool is_specific_limit_owned = false;
+        bool is_general_limit_owned = false; ///< Flag indicating if the client owns the general rate limit.
+        bool is_specific_limit_owned = false; ///< Flag indicating if the client owns the specific rate limit.
 
         /// \brief Adds the request to the request manager and notifies the worker to process it.
         /// \param request_ptr The HTTP request to be sent.
@@ -652,9 +652,9 @@ namespace kurlyk {
             return status;
         }
 
-        /// \brief
-        /// \param
-        /// \param
+        /// \brief Safely sets the response value on the given promise.
+        /// \param promise Promise that receives the HTTP response.
+        /// \param response Completed HTTP response to forward to the caller.
         static void safe_set_response(
                 std::shared_ptr<std::promise<HttpResponsePtr>> promise,
                 HttpResponsePtr response) {
@@ -674,10 +674,10 @@ namespace kurlyk {
             }
         }
 
-        /// \brief
-        /// \param
-        /// \param
-        /// \param
+        /// \brief Submits a request and propagates any failure to the provided promise.
+        /// \param promise Promise to signal upon success or failure.
+        /// \param request_ptr Prepared HTTP request to enqueue.
+        /// \param callback Callback executed when the request completes.
         void safe_submit_request(
                 std::shared_ptr<std::promise<HttpResponsePtr>> promise,
                 std::unique_ptr<HttpRequest> request_ptr,

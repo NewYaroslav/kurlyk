@@ -43,7 +43,7 @@ namespace kurlyk {
         /// \param reconnect Enables automatic reconnection if true.
         /// \param verify_cert If true, verifies the server’s certificate and hostname according to RFC 2818.
         /// \param ca_file Path to the Root CA certificate file.
-        /// \param rpm Запросы в минуту (RPM)
+        /// \param rpm Requests per minute (RPM).
         WebSocketClient(
                 const std::string& url,
                 const Headers& headers = Headers(),

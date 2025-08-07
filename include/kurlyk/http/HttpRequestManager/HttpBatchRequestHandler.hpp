@@ -83,7 +83,7 @@ namespace kurlyk {
 
     private:
         CURLM* m_multi_handle = nullptr; ///< libcurl multi handle.
-        std::vector<std::unique_ptr<HttpRequestHandler>> m_handlers; // CURL handles
+        std::vector<std::unique_ptr<HttpRequestHandler>> m_handlers; ///< Collection of active request handlers.
         std::list<std::unique_ptr<HttpRequestContext>>   m_failed_requests; ///< List of failed request contexts.
 
         /// \brief Handles the completion of a single request.

@@ -39,8 +39,8 @@ namespace kurlyk {
         core::NetworkWorker::get_instance().shutdown();
     }
 
-    /// \brief
-    /// \param
+    /// \brief Registers a global error handler for the network worker.
+    /// \param handler Callback invoked when an error is reported.
     inline void add_error_handler(::kurlyk::core::NetworkWorker::ErrorHandler handler) {
         ::kurlyk::core::NetworkWorker::get_instance().add_error_handler(std::move(handler));
     }
