@@ -295,11 +295,13 @@ Private Member Functions</h2></td></tr>
 <tr class="memdesc:a08102fd7b30d8ac39af4c2510d8e13b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the request to the request manager and notifies the worker to process it.  <br /></td></tr>
 <tr class="separator:a08102fd7b30d8ac39af4c2510d8e13b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a761315176a00d4091ccc17f88dbc682c" id="r_a761315176a00d4091ccc17f88dbc682c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a761315176a00d4091ccc17f88dbc682c">safe_submit_request</a> (std::shared_ptr&lt; std::promise&lt; <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> &gt; &gt; promise, std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1HttpRequest.html">HttpRequest</a> &gt; request_ptr, <a class="el" href="namespacekurlyk.html#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
+<tr class="memdesc:a761315176a00d4091ccc17f88dbc682c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submits a request and propagates any failure to the provided promise.  <br /></td></tr>
 <tr class="separator:a761315176a00d4091ccc17f88dbc682c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
 <tr class="memitem:a79e0c5ff34a54b0cc3496c1c0cfeb10a" id="r_a79e0c5ff34a54b0cc3496c1c0cfeb10a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79e0c5ff34a54b0cc3496c1c0cfeb10a">safe_set_response</a> (std::shared_ptr&lt; std::promise&lt; <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> &gt; &gt; promise, <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> response)</td></tr>
+<tr class="memdesc:a79e0c5ff34a54b0cc3496c1c0cfeb10a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safely sets the response value on the given promise.  <br /></td></tr>
 <tr class="separator:a79e0c5ff34a54b0cc3496c1c0cfeb10a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe625e7963f88025e3791576852c45b3" id="r_abe625e7963f88025e3791576852c45b3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe625e7963f88025e3791576852c45b3">ensure_initialized</a> ()</td></tr>
 <tr class="memdesc:abe625e7963f88025e3791576852c45b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ensures that the network worker and request manager are initialized.  <br /></td></tr>
@@ -314,8 +316,10 @@ Private Attributes</h2></td></tr>
 <tr class="memdesc:a289cef53a557204be15c42a0ecece402"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base host URL for the HTTP client.  <br /></td></tr>
 <tr class="separator:a289cef53a557204be15c42a0ecece402"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7de7695e3d6df4388a6a44bd80100ea2" id="r_a7de7695e3d6df4388a6a44bd80100ea2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7de7695e3d6df4388a6a44bd80100ea2">is_general_limit_owned</a> = false</td></tr>
+<tr class="memdesc:a7de7695e3d6df4388a6a44bd80100ea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating if the client owns the general rate limit.  <br /></td></tr>
 <tr class="separator:a7de7695e3d6df4388a6a44bd80100ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae495d59de79d376eb0a6951961b43730" id="r_ae495d59de79d376eb0a6951961b43730"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae495d59de79d376eb0a6951961b43730">is_specific_limit_owned</a> = false</td></tr>
+<tr class="memdesc:ae495d59de79d376eb0a6951961b43730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating if the client owns the specific rate limit.  <br /></td></tr>
 <tr class="separator:ae495d59de79d376eb0a6951961b43730"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -1406,13 +1410,15 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Safely sets the response value on the given promise. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">promise</td><td>Promise that receives the HTTP response. </td></tr>
+    <tr><td class="paramname">response</td><td>Completed HTTP response to forward to the caller. </td></tr>
   </table>
   </dd>
 </dl>
-<p>param </p>
 
 <p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00658">658</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
@@ -1449,15 +1455,13 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Submits a request and propagates any failure to the provided promise. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>param </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">promise</td><td>Promise to signal upon success or failure. </td></tr>
+    <tr><td class="paramname">request_ptr</td><td>Prepared HTTP request to enqueue. </td></tr>
+    <tr><td class="paramname">callback</td><td>Callback executed when the request completes. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2765,6 +2769,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Flag indicating if the client owns the general rate limit. </p>
+
 <p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00640">640</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
@@ -2788,6 +2794,8 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Flag indicating if the client owns the specific rate limit. </p>
 
 <p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00641">641</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 

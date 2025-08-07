@@ -195,6 +195,7 @@ Private Types</h2></td></tr>
 &#160;&#160;<a class="el" href="#addc863707fa6f03603297732a1207a0fa09d4d696b4e935115b9313e3c412509a">STOPPED</a>
 <br />
  }</td></tr>
+<tr class="memdesc:addc863707fa6f03603297732a1207a0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finite state machine states controlling client workflow.  <a href="#addc863707fa6f03603297732a1207a0f">More...</a><br /></td></tr>
 <tr class="separator:addc863707fa6f03603297732a1207a0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee6b756d1774e1256c8234637b377b80" id="r_aee6b756d1774e1256c8234637b377b80"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee6b756d1774e1256c8234637b377b80">FsmEvent</a> { <br />
 &#160;&#160;<a class="el" href="#aee6b756d1774e1256c8234637b377b80a4f910578af6af830b7ba847f1be6289a">RequestConnect</a>
@@ -406,17 +407,18 @@ Private Attributes</h2></td></tr>
 
 <p>Represents events in the finite state machine. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80a4f910578af6af830b7ba847f1be6289a" name="aee6b756d1774e1256c8234637b377b80a4f910578af6af830b7ba847f1be6289a"></a>RequestConnect&#160;</td><td class="fielddoc"><p>Запрос на подключение </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80a4f910578af6af830b7ba847f1be6289a" name="aee6b756d1774e1256c8234637b377b80a4f910578af6af830b7ba847f1be6289a"></a>RequestConnect&#160;</td><td class="fielddoc"><p>Request to connect. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80ab49c39bf7c3be897ef4314ea4d073bcb" name="aee6b756d1774e1256c8234637b377b80ab49c39bf7c3be897ef4314ea4d073bcb"></a>RequestDisconnect&#160;</td><td class="fielddoc"><p>Запрос на отключение </p>
+<tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80ab49c39bf7c3be897ef4314ea4d073bcb" name="aee6b756d1774e1256c8234637b377b80ab49c39bf7c3be897ef4314ea4d073bcb"></a>RequestDisconnect&#160;</td><td class="fielddoc"><p>Request to disconnect. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80adce7299940d6b112b5da0090e02a3bca" name="aee6b756d1774e1256c8234637b377b80adce7299940d6b112b5da0090e02a3bca"></a>ConnectionOpened&#160;</td><td class="fielddoc"><p>Соединение открыто </p>
+<tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80adce7299940d6b112b5da0090e02a3bca" name="aee6b756d1774e1256c8234637b377b80adce7299940d6b112b5da0090e02a3bca"></a>ConnectionOpened&#160;</td><td class="fielddoc"><p>Connection opened. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80a318ec526e76502a583acd94f49817cf2" name="aee6b756d1774e1256c8234637b377b80a318ec526e76502a583acd94f49817cf2"></a>ConnectionClosed&#160;</td><td class="fielddoc"><p>Соединение закрыто </p>
+<tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80a318ec526e76502a583acd94f49817cf2" name="aee6b756d1774e1256c8234637b377b80a318ec526e76502a583acd94f49817cf2"></a>ConnectionClosed&#160;</td><td class="fielddoc"><p>Connection closed. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80a094a6f6b0868122a9dd008cb91c083e4" name="aee6b756d1774e1256c8234637b377b80a094a6f6b0868122a9dd008cb91c083e4"></a>ConnectionError&#160;</td><td class="fielddoc"><p>Ошибка соединения </p>
+<tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80a094a6f6b0868122a9dd008cb91c083e4" name="aee6b756d1774e1256c8234637b377b80a094a6f6b0868122a9dd008cb91c083e4"></a>ConnectionError&#160;</td><td class="fielddoc"><p>Connection error occurred. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80a211c2a2ab375fd483c7efe00eb62d2f3" name="aee6b756d1774e1256c8234637b377b80a211c2a2ab375fd483c7efe00eb62d2f3"></a>UpdateConfig&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aee6b756d1774e1256c8234637b377b80a211c2a2ab375fd483c7efe00eb62d2f3" name="aee6b756d1774e1256c8234637b377b80a211c2a2ab375fd483c7efe00eb62d2f3"></a>UpdateConfig&#160;</td><td class="fielddoc"><p>Configuration update requested. </p>
+</td></tr>
 </table>
 
 <p class="definition">Definition at line <a class="el" href="EmscriptenWebSocketClientAdapter_8hpp_source.html#l00207">207</a> of file <a class="el" href="EmscriptenWebSocketClientAdapter_8hpp_source.html">EmscriptenWebSocketClientAdapter.hpp</a>.</p>
@@ -442,16 +444,18 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Finite state machine states controlling client workflow. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="addc863707fa6f03603297732a1207a0fafaee4ca3c30ee18148ce3ada37466498" name="addc863707fa6f03603297732a1207a0fafaee4ca3c30ee18148ce3ada37466498"></a>INIT&#160;</td><td class="fielddoc"><p>Инициализация </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="addc863707fa6f03603297732a1207a0fafaee4ca3c30ee18148ce3ada37466498" name="addc863707fa6f03603297732a1207a0fafaee4ca3c30ee18148ce3ada37466498"></a>INIT&#160;</td><td class="fielddoc"><p>Initialization. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="addc863707fa6f03603297732a1207a0fa9a14f95e151eec641316e7c784ce832d" name="addc863707fa6f03603297732a1207a0fa9a14f95e151eec641316e7c784ce832d"></a>CONNECTING&#160;</td><td class="fielddoc"><p>Ожидание подключения </p>
+<tr><td class="fieldname"><a id="addc863707fa6f03603297732a1207a0fa9a14f95e151eec641316e7c784ce832d" name="addc863707fa6f03603297732a1207a0fa9a14f95e151eec641316e7c784ce832d"></a>CONNECTING&#160;</td><td class="fielddoc"><p>Waiting for connection. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="addc863707fa6f03603297732a1207a0fa89d036f09443b696bc2590c1e1fc159d" name="addc863707fa6f03603297732a1207a0fa89d036f09443b696bc2590c1e1fc159d"></a>WORKING&#160;</td><td class="fielddoc"><p>Работа в процессе </p>
+<tr><td class="fieldname"><a id="addc863707fa6f03603297732a1207a0fa89d036f09443b696bc2590c1e1fc159d" name="addc863707fa6f03603297732a1207a0fa89d036f09443b696bc2590c1e1fc159d"></a>WORKING&#160;</td><td class="fielddoc"><p>Connection active. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="addc863707fa6f03603297732a1207a0fadb972eb9aae14fd469f2a622acb2148d" name="addc863707fa6f03603297732a1207a0fadb972eb9aae14fd469f2a622acb2148d"></a>RECONNECTING&#160;</td><td class="fielddoc"><p>Попытка переподключения </p>
+<tr><td class="fieldname"><a id="addc863707fa6f03603297732a1207a0fadb972eb9aae14fd469f2a622acb2148d" name="addc863707fa6f03603297732a1207a0fadb972eb9aae14fd469f2a622acb2148d"></a>RECONNECTING&#160;</td><td class="fielddoc"><p>Attempting reconnection. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="addc863707fa6f03603297732a1207a0fa09d4d696b4e935115b9313e3c412509a" name="addc863707fa6f03603297732a1207a0fa09d4d696b4e935115b9313e3c412509a"></a>STOPPED&#160;</td><td class="fielddoc"><p>Остановка </p>
+<tr><td class="fieldname"><a id="addc863707fa6f03603297732a1207a0fa09d4d696b4e935115b9313e3c412509a" name="addc863707fa6f03603297732a1207a0fa09d4d696b4e935115b9313e3c412509a"></a>STOPPED&#160;</td><td class="fielddoc"><p>Stopped. </p>
 </td></tr>
 </table>
 
@@ -481,15 +485,15 @@ Private Attributes</h2></td></tr>
 
 <p>State for the WebSocket connection. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac86656570c4abc56d1fcd03e8826fd54ab078ffd28db767c502ac367053f6e0ac" name="ac86656570c4abc56d1fcd03e8826fd54ab078ffd28db767c502ac367053f6e0ac"></a>START&#160;</td><td class="fielddoc"><p>Инициализация </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac86656570c4abc56d1fcd03e8826fd54ab078ffd28db767c502ac367053f6e0ac" name="ac86656570c4abc56d1fcd03e8826fd54ab078ffd28db767c502ac367053f6e0ac"></a>START&#160;</td><td class="fielddoc"><p>Initialization. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ac86656570c4abc56d1fcd03e8826fd54a9a14f95e151eec641316e7c784ce832d" name="ac86656570c4abc56d1fcd03e8826fd54a9a14f95e151eec641316e7c784ce832d"></a>CONNECTING&#160;</td><td class="fielddoc"><p>Ожидание подключения </p>
+<tr><td class="fieldname"><a id="ac86656570c4abc56d1fcd03e8826fd54a9a14f95e151eec641316e7c784ce832d" name="ac86656570c4abc56d1fcd03e8826fd54a9a14f95e151eec641316e7c784ce832d"></a>CONNECTING&#160;</td><td class="fielddoc"><p>Waiting for connection establishment. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ac86656570c4abc56d1fcd03e8826fd54a89d036f09443b696bc2590c1e1fc159d" name="ac86656570c4abc56d1fcd03e8826fd54a89d036f09443b696bc2590c1e1fc159d"></a>WORKING&#160;</td><td class="fielddoc"><p>Работа в процессе </p>
+<tr><td class="fieldname"><a id="ac86656570c4abc56d1fcd03e8826fd54a89d036f09443b696bc2590c1e1fc159d" name="ac86656570c4abc56d1fcd03e8826fd54a89d036f09443b696bc2590c1e1fc159d"></a>WORKING&#160;</td><td class="fielddoc"><p>Connection is active. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ac86656570c4abc56d1fcd03e8826fd54aad793e31fab5703fc5b990cf40f8a585" name="ac86656570c4abc56d1fcd03e8826fd54aad793e31fab5703fc5b990cf40f8a585"></a>DISCONNECTING&#160;</td><td class="fielddoc"><p>Ожидание отключения </p>
+<tr><td class="fieldname"><a id="ac86656570c4abc56d1fcd03e8826fd54aad793e31fab5703fc5b990cf40f8a585" name="ac86656570c4abc56d1fcd03e8826fd54aad793e31fab5703fc5b990cf40f8a585"></a>DISCONNECTING&#160;</td><td class="fielddoc"><p>Waiting for disconnection. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ac86656570c4abc56d1fcd03e8826fd54a09d4d696b4e935115b9313e3c412509a" name="ac86656570c4abc56d1fcd03e8826fd54a09d4d696b4e935115b9313e3c412509a"></a>STOPPED&#160;</td><td class="fielddoc"><p>Остановка </p>
+<tr><td class="fieldname"><a id="ac86656570c4abc56d1fcd03e8826fd54a09d4d696b4e935115b9313e3c412509a" name="ac86656570c4abc56d1fcd03e8826fd54a09d4d696b4e935115b9313e3c412509a"></a>STOPPED&#160;</td><td class="fielddoc"><p>Connection stopped. </p>
 </td></tr>
 </table>
 
