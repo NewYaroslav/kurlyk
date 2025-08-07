@@ -34,7 +34,7 @@ void test_connect_disconnect(int n) {
             client.connect();
         } // Client 1 exits scope here
 
-        // Second client: connects, stays connected for 10 seconds, then exits scope
+        // Second client: connects, stays connected for 60 seconds, then exits scope
         {
             kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
             const long rate_limit_id = client.add_rate_limit_rps(2);
@@ -70,7 +70,7 @@ void test_connect_disconnect(int n) {
             std::this_thread::sleep_for(std::chrono::seconds(60));
             KURLYK_PRINT << "Client 2: Disconnecting..." << std::endl;
             client.disconnect_and_wait();
-        } // Client 2 exits scope after 10 seconds
+        } // Client 2 exits scope after 60 seconds
     }
 }
 

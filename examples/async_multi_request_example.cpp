@@ -72,7 +72,7 @@ int main() {
     std::thread async_thread(handle_async_responses, std::ref(futures));
     async_thread.join(); // Wait for the async thread to complete
 
-    //std::system("pause");
+    // std::cin.get();
     KURLYK_PRINT << "All requests completed." << std::endl;
 
     kurlyk::deinit();
