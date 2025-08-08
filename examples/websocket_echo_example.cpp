@@ -8,10 +8,10 @@ int main() {
             case kurlyk::WebSocketEventType::WS_OPEN:
                 KURLYK_PRINT << "Connection opened" << std::endl;
 
-                // Output HTTP version
+                // Log HTTP version
                 KURLYK_PRINT << "HTTP Version: " << event->sender->get_http_version() << std::endl;
 
-                // Output headers
+                // Log headers
                 KURLYK_PRINT << "Headers:" << std::endl;
                 for (const auto& header : event->sender->get_headers()) {
                     KURLYK_PRINT << header.first << ": " << header.second << std::endl;
