@@ -158,6 +158,28 @@ Usage</h1>
 <div class="ttc" id="anamespacekurlyk_html_a3edebba92661af6dfefe442ba4ee09f4"><div class="ttname"><a href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">kurlyk::HttpResponsePtr</a></div><div class="ttdeci">std::unique_ptr&lt; HttpResponse &gt; HttpResponsePtr</div><div class="ttdoc">A unique pointer to an HttpResponse object for memory management.</div><div class="ttdef"><b>Definition</b> <a href="HttpResponse_8hpp_source.html#l00032">HttpResponse.hpp:32</a></div></div>
 <div class="ttc" id="anamespacekurlyk_html_a5f6eb950ad463a77162efedc98f73d47a4e6ae54ccee152b37e36834f56f4e5c9"><div class="ttname"><a href="namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47a4e6ae54ccee152b37e36834f56f4e5c9">kurlyk::WebSocketEventType::WS_MESSAGE</a></div><div class="ttdeci">@ WS_MESSAGE</div><div class="ttdoc">Message received.</div><div class="ttdef"><b>Definition</b> <a href="enums_8hpp_source.html#l00033">enums.hpp:33</a></div></div>
 <div class="ttc" id="anamespacekurlyk_html_a874abdd250d6f1c6c8433dd28dc22418"><div class="ttname"><a href="namespacekurlyk.html#a874abdd250d6f1c6c8433dd28dc22418">kurlyk::deinit</a></div><div class="ttdeci">void deinit()</div><div class="ttdoc">Deinitializes the Kurlyk library, stopping the network worker and releasing resources.</div><div class="ttdef"><b>Definition</b> <a href="runtime_8hpp_source.html#l00026">runtime.hpp:26</a></div></div>
+</div><!-- fragment --><h1><a class="anchor" id="error_sec"></a>
+Error Handling</h1>
+<p>The library centralizes exception reporting through the <code>core::NetworkWorker</code>. Applications may register callbacks with <code><a class="el" href="namespacekurlyk.html#a64d2036466fbdb6ed5a4f5708c4861e0" title="Registers a global error handler for the network worker.">kurlyk::add_error_handler</a></code> to intercept errors raised inside Kurlyk and forward them to a logging system or metrics collector.</p>
+<p>Handlers use the <code><a class="el" href="classkurlyk_1_1core_1_1NetworkWorker.html#adb3a3f6ee021097470f74ec38fdfdfb9">kurlyk::core::NetworkWorker::ErrorHandler</a></code> signature:</p>
+<div class="fragment"><div class="line"><span class="keyword">using </span>ErrorHandler = std::function&lt;</div>
+<div class="line">    void(<span class="keyword">const</span> std::exception&amp;,</div>
+<div class="line">         <span class="keyword">const</span> <span class="keywordtype">char</span>* msg,</div>
+<div class="line">         <span class="keyword">const</span> <span class="keywordtype">char</span>* file,</div>
+<div class="line">         <span class="keywordtype">int</span> line,</div>
+<div class="line">         <span class="keyword">const</span> <span class="keywordtype">char</span>* func)&gt;;</div>
+</div><!-- fragment --><p>Whenever an internal operation encounters an exception and invokes <code>KURLYK_HANDLE_ERROR</code>, all registered handlers receive the exception, an optional message, source file, line and function. This allows detailed logging of issues without terminating the program.</p>
+<div class="fragment"><div class="line"><a class="code hl_function" href="namespacekurlyk.html#a64d2036466fbdb6ed5a4f5708c4861e0">kurlyk::add_error_handler</a>([](<span class="keyword">const</span> std::exception&amp; ex,</div>
+<div class="line">                             <span class="keyword">const</span> <span class="keywordtype">char</span>* msg,</div>
+<div class="line">                             <span class="keyword">const</span> <span class="keywordtype">char</span>* file,</div>
+<div class="line">                             <span class="keywordtype">int</span> line,</div>
+<div class="line">                             <span class="keyword">const</span> <span class="keywordtype">char</span>* func) {</div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Kurlyk error: &quot;</span> &lt;&lt; msg</div>
+<div class="line">              &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; ex.what() &lt;&lt; <span class="stringliteral">&quot;) at &quot;</span></div>
+<div class="line">              &lt;&lt; file &lt;&lt; <span class="charliteral">&#39;:&#39;</span> &lt;&lt; line</div>
+<div class="line">              &lt;&lt; <span class="stringliteral">&quot; in &quot;</span> &lt;&lt; func &lt;&lt; std::endl;</div>
+<div class="line">});</div>
+<div class="ttc" id="anamespacekurlyk_html_a64d2036466fbdb6ed5a4f5708c4861e0"><div class="ttname"><a href="namespacekurlyk.html#a64d2036466fbdb6ed5a4f5708c4861e0">kurlyk::add_error_handler</a></div><div class="ttdeci">void add_error_handler(::kurlyk::core::NetworkWorker::ErrorHandler handler)</div><div class="ttdoc">Registers a global error handler for the network worker.</div><div class="ttdef"><b>Definition</b> <a href="runtime_8hpp_source.html#l00044">runtime.hpp:44</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="install_sec"></a>
 Installation</h1>
 <p>Add the <code>include</code> directory to your compiler search path and include <code>&lt;<a class="el" href="kurlyk_8hpp.html" title="Main header file for the Kurlyk library, providing HTTP and WebSocket support.">kurlyk.hpp</a>&gt;</code> in your sources. The repository contains third party dependencies used by the examples, but for your own project you need <code>libcurl</code>, <code>OpenSSL</code> and either Boost.Asio or standalone Asio together with <b>Simple-WebSocket-Server</b>. Kurlyk itself is header-only and works with C++11 or later.</p>

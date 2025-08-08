@@ -1,5 +1,6 @@
 var NAVTREEINDEX7 =
 {
+"structcryptox_1_1ProxyConfig.html#a6cf8d7e9886c594f9ca7ac1b2282d0e0":[1,0,1,0,0],
 "structcryptox_1_1ProxyConfig.html#a6cf8d7e9886c594f9ca7ac1b2282d0e0":[2,0,0,0,0],
 "structcryptox_1_1ProxyConfig.html#a8cef1f073b2bf56c10536055ead2c557":[1,0,1,0,9],
 "structcryptox_1_1ProxyConfig.html#a8cef1f073b2bf56c10536055ead2c557":[2,0,0,0,9],

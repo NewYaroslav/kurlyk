@@ -64,12 +64,13 @@ var NAVTREEINDEX6 =
 "http__utils_8hpp_source.html":[3,0,2,0,4,7],
 "index.html":[],
 "index.html":[0],
-"index.html#config_sec":[0,3,0],
+"index.html#config_sec":[0,4,0],
+"index.html#error_sec":[0,3],
 "index.html#features_sec":[0,1],
-"index.html#install_sec":[0,3],
+"index.html#install_sec":[0,4],
 "index.html#intro_sec":[0,0],
-"index.html#license_sec":[0,5],
-"index.html#repo_sec":[0,4],
+"index.html#license_sec":[0,6],
+"index.html#repo_sec":[0,5],
 "index.html#usage_sec":[0,2],
 "interrupted__requests__example_8cpp.html":[3,0,1,7],
 "interrupted__requests__example_8cpp.html#a0ad8a964b158ea0d0e264baa97823ff2":[3,0,1,7,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX6 =
 "structcryptox_1_1ProxyConfig.html#a688e34f6d618231c1c3ab06acd6c6b23":[1,0,1,0,12],
 "structcryptox_1_1ProxyConfig.html#a688e34f6d618231c1c3ab06acd6c6b23":[2,0,0,0,12],
 "structcryptox_1_1ProxyConfig.html#a6989ba8750f29708690904a8166942b5":[1,0,1,0,13],
-"structcryptox_1_1ProxyConfig.html#a6989ba8750f29708690904a8166942b5":[2,0,0,0,13],
-"structcryptox_1_1ProxyConfig.html#a6cf8d7e9886c594f9ca7ac1b2282d0e0":[1,0,1,0,0]
+"structcryptox_1_1ProxyConfig.html#a6989ba8750f29708690904a8166942b5":[2,0,0,0,13]
 };
