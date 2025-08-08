@@ -60,6 +60,6 @@ int main() {
     KURLYK_PRINT << "Disconnecting..." << std::endl;
     client.disconnect_and_wait();
 
-    KURLYK_PRINT << "End" << std::endl;
+    KURLYK_PRINT << "Program finished." << std::endl;
     return 0;
 }

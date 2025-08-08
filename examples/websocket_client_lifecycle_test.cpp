@@ -38,7 +38,7 @@ void test_connect_disconnect(int n) {
         {
             kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
             const long rate_limit_id = client.add_rate_limit_rps(2);
-            KURLYK_PRINT << "rate_limit_id " << rate_limit_id << std::endl;
+            KURLYK_PRINT << "Assigned rate limit ID: " << rate_limit_id << std::endl;
             client.on_event([rate_limit_id](std::unique_ptr<kurlyk::WebSocketEventData> event) {
                 static int counter = 0;
                 switch (event->event_type) {

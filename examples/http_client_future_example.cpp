@@ -36,6 +36,7 @@ int main() {
         << "Status Code: " << response_func->status_code << std::endl
         << "----------------------------------------" << std::endl;
 
+    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
     std::cin.get();
 
     kurlyk::deinit();

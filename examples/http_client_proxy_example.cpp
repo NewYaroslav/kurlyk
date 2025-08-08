@@ -74,6 +74,7 @@ int main() {
         print_response(response);
     });
 
+    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
     std::cin.get();
     client.cancel_requests();
     kurlyk::deinit();

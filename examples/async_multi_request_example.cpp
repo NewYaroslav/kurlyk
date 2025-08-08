@@ -23,7 +23,7 @@ void handle_async_responses(std::vector<std::future<kurlyk::HttpResponsePtr>>& f
             print_response(response);
         }
     } catch(...) {
-        KURLYK_PRINT << "Error." << std::endl;
+        KURLYK_PRINT << "Error while retrieving async responses." << std::endl;
         throw;
     }
     KURLYK_PRINT << "All async requests completed in separate thread." << std::endl;
