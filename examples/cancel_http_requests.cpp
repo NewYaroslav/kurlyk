@@ -26,7 +26,7 @@ int main() {
                      << "\n  Exception: " << ex.what()
                      << "\n  Function: " << func
                      << "\n  File: " << file
-                     << "\n  Line: " << line;
+                     << "\n  Line: " << line << std::endl;
     });
 
     // Sending a GET request using the first function (callback-based)
@@ -80,7 +80,7 @@ int main() {
     // ---
 
     for (int n = 0; n < 10; ++n) {
-        KURLYK_PRINT << "N #" << n << "\n";
+        KURLYK_PRINT << "Iteration " << n << std::endl;
 
         uint32_t limit_id = kurlyk::create_rate_limit_rps(2);
 
@@ -97,7 +97,7 @@ int main() {
             client->set_connect_timeout(5);
             client->set_retry_attempts(3, 1000);
 
-            KURLYK_PRINT << "Client #" << i << "\n";
+            KURLYK_PRINT << "Client #" << i << std::endl;
 
             for (int j = 0; j < num_req; ++j) {
                 if (j % 3 == 0) {
@@ -118,7 +118,7 @@ int main() {
 
             auto& client = clients[i];
 
-            KURLYK_PRINT << "Client #" << i << " using HEAD request\n";
+            KURLYK_PRINT << "Client #" << i << " using HEAD request" << std::endl;
             client->set_head_only(true);
             futures.emplace_back(client->get("/delay/2", kurlyk::QueryParams(), kurlyk::Headers()));
             client->set_head_only(false);
@@ -140,7 +140,7 @@ int main() {
             }
         }
 
-        KURLYK_PRINT << "Result:\n";
+        KURLYK_PRINT << "Results:" << std::endl;
         for (int i = 0; i < num_clients; ++i) {
             try {
                 auto response = futures[i].get();
@@ -157,7 +157,7 @@ int main() {
         kurlyk::remove_limit(limit_id);
     }
 
-    KURLYK_PRINT << "Exit?\n";
+    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
     std::cin.get();
 
     kurlyk::deinit();

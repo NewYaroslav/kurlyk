@@ -52,21 +52,22 @@ int main() {
         client.set_retry_attempts(1, 5000);
         client.set_verbose(true);
 
-        std::cout << "request_body: " << request_body.dump(4) << std::endl;
+        KURLYK_PRINT << "Request body: " << request_body.dump(4) << std::endl;
 
         // Send the POST request with JSON body
         auto future = client.post("/v1/chat/completions", {}, headers, request_body.dump());
 
         auto response = future.get();
         if (response->ready && response->status_code == 200) {
-            std::cout << "Response from ChatGPT: " << response->content << std::endl;
+            KURLYK_PRINT << "Response from ChatGPT: " << response->content << std::endl;
         } else {
-            std::cerr << "Error: " << response->status_code << "\n" << response->error_code.message() << std::endl;
-            std::cout << "Response: " << response->content << std::endl;
+            KURLYK_PRINT << "Error: " << response->status_code
+                         << " - " << response->error_code.message() << std::endl;
+            KURLYK_PRINT << "Response: " << response->content << std::endl;
         }
 
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        KURLYK_PRINT << "Error: " << e.what() << std::endl;
     }
 
     kurlyk::deinit();  // Deinitialize the kurlyk library

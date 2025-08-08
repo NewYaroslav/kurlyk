@@ -35,7 +35,7 @@ void test_connect_disconnect(int n) {
             std::this_thread::sleep_for(std::chrono::seconds(5)); // Дождаться приёма сообщения
             KURLYK_PRINT << "Client 1: Disconnecting..." << std::endl;
             client1.disconnect_and_wait();
-            KURLYK_PRINT << "Client 1: End" << std::endl;
+            KURLYK_PRINT << "Client 1: Session ended." << std::endl;
         });
 
         // Второй клиент: подключается, остаётся подключённым, периодически отправляет сообщения.
@@ -66,7 +66,7 @@ void test_connect_disconnect(int n) {
             std::this_thread::sleep_for(std::chrono::seconds(10)); // Остаётся подключённым 10 секунд
             KURLYK_PRINT << "Client 2: Disconnecting..." << std::endl;
             client2.disconnect_and_wait();
-            KURLYK_PRINT << "Client 2: End" << std::endl;
+            KURLYK_PRINT << "Client 2: Session ended." << std::endl;
         });
 
         // Подождать завершения работы потоков клиентов перед повторной итерацией
@@ -79,6 +79,6 @@ void test_connect_disconnect(int n) {
 int main() {
     int repeat_count = 3; // Количество повторов цикла подключения/отключения
     test_connect_disconnect(repeat_count);
-    KURLYK_PRINT << "End" << std::endl;
+    KURLYK_PRINT << "All iterations completed." << std::endl;
     return 0;
 }

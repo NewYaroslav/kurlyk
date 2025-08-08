@@ -28,12 +28,13 @@ int main() {
     client.set_max_redirects(redirect_count);
 
     // Redirect handling - GET request with redirections
-    std::cout << "Sending GET request to /absolute-redirect/" << redirect_count << "..." << std::endl;
+    KURLYK_PRINT << "Sending GET request to /absolute-redirect/" << redirect_count << "..." << std::endl;
     client.get("/absolute-redirect/" + std::to_string(redirect_count), kurlyk::QueryParams(), kurlyk::Headers(),
        [](const kurlyk::HttpResponsePtr response) {
            print_response(response);
        });
 
+    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
     std::cin.get();
     client.cancel_requests();
     kurlyk::deinit();
