@@ -1,7 +1,7 @@
 #include <kurlyk.hpp>
 #include <iostream>
 
-// Helper function to print the response details
+// Thread-safe logging of response details
 void print_response(const kurlyk::HttpResponsePtr& response) {
     KURLYK_PRINT << "Headers:" << std::endl;
     for (const auto& header : response->headers) {
