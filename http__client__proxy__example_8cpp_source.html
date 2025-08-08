@@ -179,11 +179,12 @@ $(function(){initNavTree('http__client__proxy__example_8cpp_source.html',''); in
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <a class="code hl_function" href="http__client__proxy__example_8cpp.html#a0ad8a964b158ea0d0e264baa97823ff2">print_response</a>(response);</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    });</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    std::cin.get();</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    client.<a class="code hl_function" href="classkurlyk_1_1HttpClient.html#afb4ce908011ef698c1a11f86c2a31bb3">cancel_requests</a>();</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <a class="code hl_function" href="namespacekurlyk.html#a874abdd250d6f1c6c8433dd28dc22418">kurlyk::deinit</a>();</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>}</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <a class="code hl_define" href="print__utils_8hpp.html#a34942c7a2be1abc6f4c74f9502fc218b">KURLYK_PRINT</a> &lt;&lt; <span class="stringliteral">&quot;Press Enter to exit...&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    std::cin.get();</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    client.<a class="code hl_function" href="classkurlyk_1_1HttpClient.html#afb4ce908011ef698c1a11f86c2a31bb3">cancel_requests</a>();</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <a class="code hl_function" href="namespacekurlyk.html#a874abdd250d6f1c6c8433dd28dc22418">kurlyk::deinit</a>();</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>}</div>
 </div>
 <div class="ttc" id="aclasskurlyk_1_1HttpClient_html"><div class="ttname"><a href="classkurlyk_1_1HttpClient.html">kurlyk::HttpClient</a></div><div class="ttdoc">A client class for making HTTP requests to a specific host.</div><div class="ttdef"><b>Definition</b> <a href="HttpClient_8hpp_source.html#l00013">HttpClient.hpp:13</a></div></div>
 <div class="ttc" id="aclasskurlyk_1_1HttpClient_html_a722efe4941695dadaf576c85ac57ac95"><div class="ttname"><a href="classkurlyk_1_1HttpClient.html#a722efe4941695dadaf576c85ac57ac95">kurlyk::HttpClient::set_proxy</a></div><div class="ttdeci">void set_proxy(const std::string &amp;ip, int port, ProxyType type=ProxyType::PROXY_HTTP)</div><div class="ttdoc">Sets the proxy server address.</div><div class="ttdef"><b>Definition</b> <a href="HttpClient_8hpp_source.html#l00245">HttpClient.hpp:245</a></div></div>

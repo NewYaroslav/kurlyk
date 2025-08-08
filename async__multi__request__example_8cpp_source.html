@@ -139,7 +139,7 @@ $(function(){initNavTree('async__multi__request__example_8cpp_source.html',''); 
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            <a class="code hl_function" href="async__multi__request__example_8cpp.html#a0ad8a964b158ea0d0e264baa97823ff2">print_response</a>(response);</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        }</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    } <span class="keywordflow">catch</span>(...) {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <a class="code hl_define" href="print__utils_8hpp.html#a34942c7a2be1abc6f4c74f9502fc218b">KURLYK_PRINT</a> &lt;&lt; <span class="stringliteral">&quot;Error.&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <a class="code hl_define" href="print__utils_8hpp.html#a34942c7a2be1abc6f4c74f9502fc218b">KURLYK_PRINT</a> &lt;&lt; <span class="stringliteral">&quot;Error while retrieving async responses.&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordflow">throw</span>;</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    }</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <a class="code hl_define" href="print__utils_8hpp.html#a34942c7a2be1abc6f4c74f9502fc218b">KURLYK_PRINT</a> &lt;&lt; <span class="stringliteral">&quot;All async requests completed in separate thread.&quot;</span> &lt;&lt; std::endl;</div>

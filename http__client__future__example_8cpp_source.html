@@ -150,11 +150,12 @@ $(function(){initNavTree('http__client__future__example_8cpp_source.html',''); i
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        &lt;&lt; <span class="stringliteral">&quot;Status Code: &quot;</span> &lt;&lt; response_func-&gt;status_code &lt;&lt; std::endl</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        &lt;&lt; <span class="stringliteral">&quot;----------------------------------------&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    std::cin.get();</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <a class="code hl_function" href="namespacekurlyk.html#a874abdd250d6f1c6c8433dd28dc22418">kurlyk::deinit</a>();</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>}</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_define" href="print__utils_8hpp.html#a34942c7a2be1abc6f4c74f9502fc218b">KURLYK_PRINT</a> &lt;&lt; <span class="stringliteral">&quot;Press Enter to exit...&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    std::cin.get();</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <a class="code hl_function" href="namespacekurlyk.html#a874abdd250d6f1c6c8433dd28dc22418">kurlyk::deinit</a>();</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
 </div>
 <div class="ttc" id="aclasskurlyk_1_1HttpClient_html"><div class="ttname"><a href="classkurlyk_1_1HttpClient.html">kurlyk::HttpClient</a></div><div class="ttdoc">A client class for making HTTP requests to a specific host.</div><div class="ttdef"><b>Definition</b> <a href="HttpClient_8hpp_source.html#l00013">HttpClient.hpp:13</a></div></div>
 <div class="ttc" id="aclasskurlyk_1_1HttpClient_html_ac6d8512b08797877f0a946ff838b41b2"><div class="ttname"><a href="classkurlyk_1_1HttpClient.html#ac6d8512b08797877f0a946ff838b41b2">kurlyk::HttpClient::get</a></div><div class="ttdeci">bool get(const std::string &amp;path, const QueryParams &amp;query, const Headers &amp;headers, HttpResponseCallback callback)</div><div class="ttdoc">Sends a GET request.</div><div class="ttdef"><b>Definition</b> <a href="HttpClient_8hpp_source.html#l00442">HttpClient.hpp:442</a></div></div>
