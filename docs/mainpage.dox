@@ -48,6 +48,42 @@ int main() {
 }
 \endcode
 
+\section error_sec Error Handling
+
+The library centralizes exception reporting through the
+`core::NetworkWorker`. Applications may register callbacks with
+`kurlyk::add_error_handler` to intercept errors raised inside Kurlyk and
+forward them to a logging system or metrics collector.
+
+Handlers use the `kurlyk::core::NetworkWorker::ErrorHandler` signature:
+
+\code{.cpp}
+using ErrorHandler = std::function<
+    void(const std::exception&,
+         const char* msg,
+         const char* file,
+         int line,
+         const char* func)>;
+\endcode
+
+Whenever an internal operation encounters an exception and invokes
+`KURLYK_HANDLE_ERROR`, all registered handlers receive the exception, an
+optional message, source file, line and function. This allows detailed
+logging of issues without terminating the program.
+
+\code{.cpp}
+kurlyk::add_error_handler([](const std::exception& ex,
+                             const char* msg,
+                             const char* file,
+                             int line,
+                             const char* func) {
+    std::cerr << "Kurlyk error: " << msg
+              << " (" << ex.what() << ") at "
+              << file << ':' << line
+              << " in " << func << std::endl;
+});
+\endcode
+
 \section install_sec Installation
 
 Add the `include` directory to your compiler search path and include
