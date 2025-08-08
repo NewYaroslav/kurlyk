@@ -69,7 +69,7 @@ var NAVTREEINDEX =
 "classkurlyk_1_1SimpleWebSocketWorker.html",
 "classkurlyk_1_1WebSocketManager.html#a8ec506304fc4077bff4ae307af8f6ecf",
 "functions_h.html",
-"structcryptox_1_1ProxyConfig.html#a6cf8d7e9886c594f9ca7ac1b2282d0e0"
+"structcryptox_1_1ProxyConfig.html#a651cd6933edab889da366b18224942e3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

@@ -1,5 +1,11 @@
 var NAVTREEINDEX7 =
 {
+"structcryptox_1_1ProxyConfig.html#a651cd6933edab889da366b18224942e3":[1,0,1,0,1],
+"structcryptox_1_1ProxyConfig.html#a651cd6933edab889da366b18224942e3":[2,0,0,0,1],
+"structcryptox_1_1ProxyConfig.html#a688e34f6d618231c1c3ab06acd6c6b23":[1,0,1,0,12],
+"structcryptox_1_1ProxyConfig.html#a688e34f6d618231c1c3ab06acd6c6b23":[2,0,0,0,12],
+"structcryptox_1_1ProxyConfig.html#a6989ba8750f29708690904a8166942b5":[1,0,1,0,13],
+"structcryptox_1_1ProxyConfig.html#a6989ba8750f29708690904a8166942b5":[2,0,0,0,13],
 "structcryptox_1_1ProxyConfig.html#a6cf8d7e9886c594f9ca7ac1b2282d0e0":[1,0,1,0,0],
 "structcryptox_1_1ProxyConfig.html#a6cf8d7e9886c594f9ca7ac1b2282d0e0":[2,0,0,0,0],
 "structcryptox_1_1ProxyConfig.html#a8cef1f073b2bf56c10536055ead2c557":[1,0,1,0,9],

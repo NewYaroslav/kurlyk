@@ -11,6 +11,7 @@ var searchData=
   ['use_5finterface_8',['use_interface',['../classkurlyk_1_1HttpRequest.html#a4d90fae6a6ee0887f84482572eb70c5f',1,'kurlyk::HttpRequest']]],
   ['user_5fagent_9',['user_agent',['../classkurlyk_1_1HttpRequest.html#a11d0d33609eb065490d13f5d3c487d34',1,'kurlyk::HttpRequest::user_agent'],['../classkurlyk_1_1WebSocketConfig.html#a55048b506fde5020ca7da67fb064a13c',1,'kurlyk::WebSocketConfig::user_agent']]],
   ['user_5fagent_5futils_2ehpp_10',['user_agent_utils.hpp',['../user__agent__utils_8hpp.html',1,'']]],
-  ['utility_5ffunctions_5fexample_2ecpp_11',['utility_functions_example.cpp',['../utility__functions__example_8cpp.html',1,'']]],
-  ['utils_2ehpp_12',['utils.hpp',['../http_2utils_8hpp.html',1,'(Global Namespace)'],['../utils_8hpp.html',1,'(Global Namespace)']]]
+  ['using_20a_20proxy_11',['Using a proxy',['../index.html#http_proxy',1,'']]],
+  ['utility_5ffunctions_5fexample_2ecpp_12',['utility_functions_example.cpp',['../utility__functions__example_8cpp.html',1,'']]],
+  ['utils_2ehpp_13',['utils.hpp',['../http_2utils_8hpp.html',1,'(Global Namespace)'],['../utils_8hpp.html',1,'(Global Namespace)']]]
 ];
