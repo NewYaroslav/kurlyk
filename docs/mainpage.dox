@@ -17,35 +17,83 @@ requests, process WebSocket events and apply rate limiting.
 - Rate limiting for both HTTP requests and WebSocket messages.
 - Automatic reconnection logic for WebSocket connections.
 - Proxy support, configurable timeouts and custom headers.
+- Retry logic and ability to cancel outstanding requests.
+- Standalone helper functions for one-off HTTP calls.
 - Header-only design, works with C++11 and newer.
 
 \section usage_sec Usage
 
+By default Kurlyk initializes itself before `main` and shuts down
+automatically thanks to an internal `startup::AutoInitializer`. It registers
+`HttpRequestManager` and `WebSocketManager` with the `core::NetworkWorker` and
+starts the worker thread using the `KURLYK_AUTO_INIT_USE_ASYNC` setting. A
+shutdown happens when the program exits, so you can usually skip explicit
+`kurlyk::init()` and `kurlyk::deinit()` calls.
+
+Manual control is still possible by disabling automatic startup:
+
 \code{.cpp}
+#define KURLYK_AUTO_INIT 0        // opt out of AutoInitializer
 #include <kurlyk.hpp>
-#include <iostream>
-#include <thread>
-
 int main() {
-    kurlyk::init(true); // start worker thread
-
-    kurlyk::HttpClient http("https://httpbin.org");
-    http.get("/ip", {}, {}, [](kurlyk::HttpResponsePtr res) {
-        std::cout << "Status: " << res->status_code << "\n" << res->content << std::endl;
-    });
-
-    kurlyk::WebSocketClient ws("wss://echo-websocket.fly.dev/");
-    ws.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> e) {
-        if (e->event_type == kurlyk::WebSocketEventType::WS_MESSAGE)
-            std::cout << "Message: " << e->message << std::endl;
-    });
-    ws.connect_and_wait();
-    ws.send_message("Hello!");
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    ws.disconnect_and_wait();
-
-    kurlyk::deinit();
+    kurlyk::init(true);           // start worker thread explicitly
+    // ... use HTTP or WebSocket clients ...
+    kurlyk::deinit();             // stop the worker (or kurlyk::shutdown())
 }
+\endcode
+
+\subsection http_sec HTTP Client
+
+\subsubsection http_basic Basic GET request
+\code{.cpp}
+kurlyk::HttpClient http("https://httpbin.org");
+http.get("/ip", {}, {}, [](kurlyk::HttpResponsePtr res) {
+    std::cout << res->content << std::endl;
+});
+\endcode
+
+\subsubsection http_proxy Using a proxy
+\code{.cpp}
+kurlyk::HttpClient client("https://httpbin.org");
+client.set_proxy("127.0.0.1", 8080, "user", "pass", kurlyk::ProxyType::HTTP);
+client.get("/ip", {}, {}, [](kurlyk::HttpResponsePtr res) {
+    std::cout << res->content << std::endl;
+});
+\endcode
+
+\subsubsection http_ping Measuring latency
+\code{.cpp}
+#include <chrono>
+kurlyk::HttpClient client("https://httpbin.org");
+auto start = std::chrono::steady_clock::now();
+client.get("/ip", {}, {}, [start](kurlyk::HttpResponsePtr res) {
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now() - start);
+    std::cout << "Ping: " << ms.count() << " ms" << std::endl;
+});
+\endcode
+
+\subsubsection http_variants Calling HTTP requests
+Requests can be issued with callbacks, futures or standalone functions:
+\code{.cpp}
+kurlyk::HttpClient cli("https://httpbin.org");
+auto fut = cli.get("/ip", {}, {});
+auto resp = fut.get();
+
+auto [id, future] = kurlyk::http_get("https://httpbin.org/ip", {}, {});
+auto resp2 = future.get();
+\endcode
+
+\subsection ws_sec WebSocket Client
+\code{.cpp}
+kurlyk::WebSocketClient ws("wss://echo-websocket.fly.dev/");
+ws.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> e) {
+    if (e->event_type == kurlyk::WebSocketEventType::WS_MESSAGE)
+        std::cout << "Message: " << e->message << std::endl;
+});
+ws.connect_and_wait();
+ws.send_message("Hello!");
+ws.disconnect_and_wait();
 \endcode
 
 \section error_sec Error Handling
@@ -110,4 +158,3 @@ build:
 
 This library is licensed under the MIT License. See the LICENSE file for more details.
 */
-
