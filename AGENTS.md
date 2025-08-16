@@ -80,3 +80,68 @@ Follow the [Conventional Commits](https://www.conventionalcommits.org/) style:
 
 Format: `type(scope): short description` where the scope is optional. Keep messages short and imperative.
 
+## Code Style: Naming Conventions
+
+### Variable naming
+
+- Always use the `m_` prefix for class fields (e.g., `m_event_hub`, `m_task_manager`).
+- Optional `p_` and `str_` prefixes may be used when a function or method has more than five variables or arguments of different types. Otherwise, omit these prefixes.
+- Boolean variables start with `is`, `has`, `use`, `enable`, or for class fields, `m_is_`, `m_has_`, etc. (e.g., `is_connected`, `m_is_active`).
+- Do not use the prefixes `b_`, `n_`, or `f_`.
+
+### Doxygen comments
+
+- All code comments and Doxygen annotations must be in English.
+- Prepend functions and classes with `/// \\brief`.
+- Do not start descriptions with `The`.
+
+### File names
+
+- Use `CamelCase` if the file contains only one class (e.g., `TradeManager.hpp`).
+- Use `snake_case` if the file contains multiple classes, utilities, or helper structures (e.g., `trade_utils.hpp`, `market_event_listener.hpp`).
+
+### Entity names
+
+- Class, struct, and enum names use `CamelCase`.
+- Method names use `snake_case`.
+
+### Method naming
+
+- Methods are named using `snake_case`.
+- Getter methods may omit the `get_` prefix when they simply return a reference or value, expose an internal object, or behave like a property (e.g., `size()`, `empty()`).
+- Use `get_` when the method performs computations or when omitting it would be misleading.
+
+## System Map
+
+- `include/` – public headers.
+- `include/kurlyk/core` – core infrastructure with `NetworkWorker` and base interfaces.
+- `include/kurlyk/http` – HTTP client and request management.
+- `include/kurlyk/websocket` – WebSocket client and connection manager.
+- `include/kurlyk/types` – shared types such as enums and proxy configs.
+- `include/kurlyk/utils` – helper utilities and error categories.
+- `include/kurlyk/startup` – optional auto-initialization helpers.
+- `examples/` – usage examples built against bundled or system libs.
+- `docs/` – generated and hand-written documentation.
+
+```mermaid
+graph TD
+    include["include/"] --> core["core"]
+    include --> http["http"]
+    include --> websocket["websocket"]
+    include --> types["types"]
+    include --> utils["utils"]
+    include --> startup["startup"]
+    examples["examples/"]
+    docs["docs/"]
+```
+
+## Architectural Patterns & Invariants
+
+- Header-only design keeps all functionality in headers; no compiled library.
+- `core::NetworkWorker` processes tasks on a single background thread; avoid blocking it.
+- HTTP and WebSocket managers apply rate limits and retries consistently.
+- Error dispatch flows through `NetworkWorker`; maintain exception safety.
+- Public APIs rely on value semantics and RAII.
+- Configuration is compile-time via macros with minimal defaults.
+- Code remains portable across C++11/17 compilers and network stacks.
+
