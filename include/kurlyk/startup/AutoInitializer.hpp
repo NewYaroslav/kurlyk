@@ -43,7 +43,7 @@ namespace kurlyk::startup {
 #       endif
     };
 	
-	inline kurlyk::startup::AutoInitializer _kurlyk_auto_initializer;
+	inline AutoInitializer _kurlyk_auto_initializer;
 
 } // namespace kurlyk::startup
 
