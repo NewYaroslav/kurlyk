@@ -38,7 +38,7 @@ namespace kurlyk::utils {
     /// \param query The multimap containing query fields and values.
     /// \param prefix Optional prefix for the query string.
     /// \return The encoded query string.
-    std::string to_query_string(
+    inline std::string to_query_string(
             const QueryParams &query,
             const std::string &prefix = std::string()) noexcept {
         if (query.empty()) return std::string();
@@ -73,7 +73,7 @@ namespace kurlyk::utils {
     /// \param query The multimap containing query fields and values.
     /// \param prefix Optional prefix for the query string.
     /// \return The encoded query string.
-    std::string to_query_string(
+    inline std::string to_query_string(
             const QueryParams &query,
             const std::string &prefix = std::string()) noexcept {
         std::string result(prefix);
@@ -95,7 +95,7 @@ namespace kurlyk::utils {
     /// \brief Converts a CaseInsensitiveMultimap to a string format suitable for HTTP Cookie headers.
     /// \param cookies The multimap containing key-value pairs.
     /// \return A string formatted as a Cookie header.
-    std::string to_cookie_string(const CaseInsensitiveMultimap& cookies) {
+    inline std::string to_cookie_string(const CaseInsensitiveMultimap& cookies) {
         std::string result;
 
         for (auto it = cookies.begin(); it != cookies.end(); ++it) {
@@ -111,7 +111,7 @@ namespace kurlyk::utils {
     /// \brief Converts a CaseInsensitiveMultimap to a string format suitable for HTTP Cookie headers.
     /// \param cookies The multimap containing key-value pairs.
     /// \return A string formatted as a Cookie header.
-    std::string to_cookie_string(const Cookies& cookies) {
+    inline std::string to_cookie_string(const Cookies& cookies) {
         std::string result;
 
         for (auto it = cookies.begin(); it != cookies.end(); ++it) {
@@ -135,7 +135,7 @@ namespace kurlyk::utils {
     /// \brief Parses a cookie string into a Cookies object.
     /// \param cookie The cookie string to parse.
     /// \return A Cookies object containing parsed cookies.
-    Cookies parse_cookie(std::string cookie) {
+    inline Cookies parse_cookie(std::string cookie) {
         Cookies cookies;
         std::vector<std::string> list_fragment;
         cookie += ";";
