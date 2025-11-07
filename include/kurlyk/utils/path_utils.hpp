@@ -13,7 +13,7 @@ namespace kurlyk::utils {
 
     /// \brief Retrieves the directory of the executable file.
     /// \return A string containing the directory path of the executable.
-    std::string get_exec_dir() {
+    inline std::string get_exec_dir() {
 #       if defined(_WIN32)
         std::vector<wchar_t> buffer(MAX_PATH);
         HMODULE hModule = GetModuleHandle(NULL);

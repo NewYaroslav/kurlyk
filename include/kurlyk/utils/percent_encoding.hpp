@@ -14,7 +14,7 @@ namespace kurlyk::utils {
     /// \brief Encodes a string using Percent Encoding according to RFC 3986.
     /// \param value The string to be encoded.
     /// \return The percent-encoded string.
-    std::string percent_encode(const std::string &value) noexcept {
+    inline std::string percent_encode(const std::string &value) noexcept {
         static const char hex_chars[] = "0123456789ABCDEF";
 
         std::string result;
@@ -36,7 +36,7 @@ namespace kurlyk::utils {
     /// \brief Decodes a Percent-Encoded string.
     /// \param value The percent-encoded string to be decoded.
     /// \return The decoded string.
-    std::string percent_decode(const std::string &value) noexcept {
+    inline std::string percent_decode(const std::string &value) noexcept {
         std::string result;
         result.reserve(value.size() / 3 + (value.size() % 3)); // Reserve minimum required size
 

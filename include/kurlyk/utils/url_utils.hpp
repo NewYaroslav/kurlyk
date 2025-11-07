@@ -24,7 +24,7 @@ namespace kurlyk::utils {
     /// \brief Removes the first occurrence of "wss://" or "ws://" from the given URL.
     /// \param url The URL from which to remove the substring.
     /// \return std::string The modified URL with the first occurrence of "wss://" or "ws://" removed.
-    std::string remove_ws_prefix(const std::string& url) {
+    inline std::string remove_ws_prefix(const std::string& url) {
         const std::string wss_prefix = "wss://";
         const std::string ws_prefix = "ws://";
 
@@ -52,14 +52,14 @@ namespace kurlyk::utils {
     /// \param url The URL string to check.
     /// \param scheme The scheme (e.g., "http") to check.
     /// \return True if the URL starts with the specified scheme, otherwise false.
-    bool is_valid_scheme(const std::string& url, const std::string& scheme) {
+    inline bool is_valid_scheme(const std::string& url, const std::string& scheme) {
         return url.compare(0, scheme.length(), scheme) == 0;
     }
 	
     /// \brief Validates if a domain name is correctly formatted.
     /// \param domain The domain string to validate.
     /// \return True if the domain is valid, otherwise false.
-    bool is_valid_domain(const std::string& domain) {
+    inline bool is_valid_domain(const std::string& domain) {
         size_t dot_pos = domain.find('.');
 
         if (dot_pos == std::string::npos ||
@@ -86,7 +86,7 @@ namespace kurlyk::utils {
     /// \brief Checks if a path is correctly formatted.
     /// \param path The path string to validate.
     /// \return True if the path is valid, otherwise false.
-    bool is_valid_path(const std::string& path) {
+    inline bool is_valid_path(const std::string& path) {
         if (path.empty() || path[0] != '/') return false;
         for (char ch : path) {
             if (!isalnum(ch) && ch != '/' && ch != '-' && ch != '_') {
@@ -99,7 +99,7 @@ namespace kurlyk::utils {
     /// \brief Validates if a query string is correctly formatted.
     /// \param query The query string to validate.
     /// \return True if the query string is valid, otherwise false.
-    bool is_valid_query(const std::string& query) {
+    inline bool is_valid_query(const std::string& query) {
         if (query.empty() || query[0] != '?') {
             return false;
         }
@@ -123,7 +123,7 @@ namespace kurlyk::utils {
     /// \param url The URL string to validate.
     /// \param protocol A vector of valid protocol schemes.
     /// \return True if the URL is valid, otherwise false.
-    bool is_valid_url(const std::string& url, const std::vector<std::string>& protocol) {
+    inline bool is_valid_url(const std::string& url, const std::vector<std::string>& protocol) {
         size_t scheme_end = url.find("://");
         if (scheme_end == std::string::npos) {
             return false;
