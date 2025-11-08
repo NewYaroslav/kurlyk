@@ -16,10 +16,29 @@ jobs:
           
       - name: Build Singltons ODR header
         run: |
-          g++ -std=c++17 -I ../../include -I ../../libs/curl-8.11.0_1-win64-mingw/include -c get_singletons_a.cpp
-          g++ -std=c++17 -I ../../include -I ../../libs/curl-8.11.0_1-win64-mingw/include -c get_singletons_b.cpp
-          g++ -std=c++17 -I ../../include -I ../../libs/curl-8.11.0_1-win64-mingw/include -c get_singletons_main.cpp
-          g++ get_singletons_a.o get_singletons_b.o get_singletons_main.o -o app_singletons
+          g++ -std=c++17 -I ../../include 
+                         -I ../../libs/curl-8.11.0_1-win64-mingw/include \
+                         -I ../../libs/openssl-win64-v3.4.0/include \
+                         -I ../../libs/Simple-WebSocket-Server \
+                         -I ../../libs/asio/asio/include \
+                         -c get_singletons_a.cpp
+          g++ -std=c++17 -I ../../include 
+                         -I ../../libs/curl-8.11.0_1-win64-mingw/include \
+                         -I ../../libs/openssl-win64-v3.4.0/include \
+                         -I ../../libs/Simple-WebSocket-Server \
+                         -I ../../libs/asio/asio/include \
+                         -c get_singletons_b.cpp
+          g++ -std=c++17 -I ../../include 
+                         -I ../../libs/curl-8.11.0_1-win64-mingw/include \
+                         -I ../../libs/openssl-win64-v3.4.0/include \
+                         -I ../../libs/Simple-WebSocket-Server \
+                         -I ../../libs/asio/asio/include \
+                         -c get_singletons_main.cpp
+          g++ get_singletons_a.o get_singletons_b.o get_singletons_main.o \
+                         -L ../../libs/curl-8.11.0_1-win64-mingw/lib \
+                         -L ../../libs/openssl-win64-v3.4.0/lib \
+                         -lcurl -lssl -lcrypto -lws2_32 -lcrypt32 -lbcrypt \
+                         -o test.exe
           
       - name: Run Singltons ODR header
         run: ./app_singletons
