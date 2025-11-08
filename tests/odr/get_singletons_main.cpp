@@ -1,5 +1,5 @@
 #include <iostream>
-#include <kurlyk/core/NetworkWorker.hpp>
+#include <kurlyk.hpp>
 
 extern "C" kurlyk::core::NetworkWorker* get_net_worker_a();
 extern "C" kurlyk::core::NetworkWorker* get_net_worker_b();

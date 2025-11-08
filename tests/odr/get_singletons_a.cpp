@@ -1,4 +1,4 @@
-#include <kurlyk/core/NetworkWorker.hpp>
+#include <kurlyk.hpp>
 #include <memory>
 
 extern "C" kurlyk::core::NetworkWorker* get_net_worker_a() { 
