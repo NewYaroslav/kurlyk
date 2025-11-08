@@ -4,6 +4,8 @@
 
 /// \file utils.hpp
 /// \brief Contains utility functions for handling HTTP requests, rate limiting, and request cancellation.
+/// \details These helpers are defined `inline` so including this header in multiple translation units
+///          does not violate the One Definition Rule.
 
 namespace kurlyk {
 
@@ -11,14 +13,14 @@ namespace kurlyk {
     /// \param requests_per_period Maximum number of requests allowed within the specified period.
     /// \param period_ms Time period in milliseconds for the rate limit.
     /// \return A unique identifier for the created rate limit.
-    long create_rate_limit(long requests_per_period, long period_ms) {
+    inline long create_rate_limit(long requests_per_period, long period_ms) {
         return HttpRequestManager::get_instance().create_rate_limit(requests_per_period, period_ms);
     }
 
     /// \brief Creates a rate limit based on Requests Per Minute (RPM).
     /// \param requests_per_minute Maximum number of requests allowed per minute.
     /// \return A unique identifier for the created rate limit.
-    long create_rate_limit_rpm(long requests_per_minute) {
+    inline long create_rate_limit_rpm(long requests_per_minute) {
         long period_ms = 60000; // 1 minute in milliseconds
         return HttpRequestManager::get_instance().create_rate_limit(requests_per_minute, period_ms);
     }
@@ -26,7 +28,7 @@ namespace kurlyk {
     /// \brief Creates a rate limit based on Requests Per Second (RPS).
     /// \param requests_per_second Maximum number of requests allowed per second.
     /// \return A unique identifier for the created rate limit.
-    long create_rate_limit_rps(long requests_per_second) {
+    inline long create_rate_limit_rps(long requests_per_second) {
         long period_ms = 1000; // 1 second in milliseconds
         return HttpRequestManager::get_instance().create_rate_limit(requests_per_second, period_ms);
     }
@@ -34,20 +36,20 @@ namespace kurlyk {
     /// \brief Removes an existing rate limit with the specified identifier.
     /// \param limit_id The unique identifier of the rate limit to be removed.
     /// \return True if the rate limit was successfully removed, or false if the rate limit ID was not found.
-    bool remove_limit(long limit_id) {
+    inline bool remove_limit(long limit_id) {
         return HttpRequestManager::get_instance().remove_limit(limit_id);
     }
 
     /// \brief Generates a new unique request ID.
     /// \return A new unique request ID.
-    uint64_t generate_request_id() {
+    inline uint64_t generate_request_id() {
         return HttpRequestManager::get_instance().generate_request_id();
     }
 
     /// \brief Cancels a request by its unique identifier.
     /// \param request_id The unique identifier of the request to cancel.
     /// \param callback An optional callback function to execute after cancellation.
-    void cancel_request_by_id(uint64_t request_id, std::function<void()> callback) {
+    inline void cancel_request_by_id(uint64_t request_id, std::function<void()> callback) {
         HttpRequestManager::get_instance().cancel_request_by_id(request_id, std::move(callback));
         ::kurlyk::core::NetworkWorker::get_instance().notify();
     }
@@ -55,7 +57,7 @@ namespace kurlyk {
     /// \brief Cancels a request by its unique identifier and returns a future.
     /// \param request_id The unique identifier of the request to cancel.
     /// \return A `std::future<void>` that becomes ready when the cancellation process is complete.
-    std::future<void> cancel_request_by_id(uint64_t request_id) {
+    inline std::future<void> cancel_request_by_id(uint64_t request_id) {
         auto promise = std::make_shared<std::promise<void>>();
         auto future = promise->get_future();
         HttpRequestManager::get_instance().cancel_request_by_id(request_id, [promise](){
@@ -81,7 +83,7 @@ namespace kurlyk {
     /// \param request_ptr The HTTP request object with the request details.
     /// \param callback The callback function to be called upon request completion.
     /// \return True if the request was successfully added to the manager, false otherwise.
-    bool http_request(
+    inline bool http_request(
             std::unique_ptr<HttpRequest> request_ptr,
             HttpResponseCallback callback) {
         const bool status = HttpRequestManager::get_instance().add_request(std::move(request_ptr), std::move(callback));
@@ -92,7 +94,7 @@ namespace kurlyk {
     /// \brief Sends an HTTP request asynchronously and returns a future with the response.
     /// \param request_ptr The HTTP request object with the request details.
     /// \return A future containing the HttpResponsePtr with the response details.
-    std::future<HttpResponsePtr> http_request(
+    inline std::future<HttpResponsePtr> http_request(
             std::unique_ptr<HttpRequest> request_ptr) {
 
         auto promise = std::make_shared<std::promise<HttpResponsePtr>>();
@@ -136,7 +138,7 @@ namespace kurlyk {
     /// \param content The body content for POST requests.
     /// \param callback Callback function to be executed upon request completion.
     /// \return The unique identifier of the HTTP request if successfully added, or 0 on failure.
-    uint64_t http_request(
+    inline uint64_t http_request(
             const std::string &method,
             const std::string &url,
             const QueryParams &query,
@@ -166,7 +168,7 @@ namespace kurlyk {
     /// \param headers HTTP headers to include.
     /// \param content The body content for POST requests.
     /// \return A pair containing the unique request ID and a future with the response details.
-    std::pair<uint64_t, std::future<HttpResponsePtr>> http_request(
+    inline std::pair<uint64_t, std::future<HttpResponsePtr>> http_request(
             const std::string &method,
             const std::string &url,
             const QueryParams &query,
@@ -226,7 +228,7 @@ namespace kurlyk {
     /// \param content The body content for POST requests.
     /// \param callback Callback function to be executed upon request completion.
     /// \return The unique identifier of the HTTP request if successfully added, or 0 on failure.
-    uint64_t http_request(
+    inline uint64_t http_request(
             const std::string &method,
             const std::string &host,
             const std::string &path,
@@ -257,7 +259,7 @@ namespace kurlyk {
     /// \param headers HTTP headers to include.
     /// \param callback Callback function to be executed upon request completion.
     /// \return The unique identifier of the HTTP request if successfully added, or 0 on failure.
-    uint64_t http_get(
+    inline uint64_t http_get(
             const std::string &url,
             const QueryParams& query,
             const Headers& headers,
@@ -270,7 +272,7 @@ namespace kurlyk {
     /// \param query Query parameters for the GET request.
     /// \param headers HTTP headers to include.
     /// \return A pair containing the unique request ID and a future with the response details.
-    std::pair<uint64_t, std::future<HttpResponsePtr>> http_get(
+    inline std::pair<uint64_t, std::future<HttpResponsePtr>> http_get(
             const std::string& url,
             const QueryParams& query,
             const Headers& headers) {
@@ -325,7 +327,7 @@ namespace kurlyk {
     /// \param content The body content for the POST request.
     /// \param callback Callback function to be executed upon request completion.
     /// \return The unique identifier of the HTTP request if successfully added, or 0 on failure.
-    uint64_t http_post(
+    inline uint64_t http_post(
             const std::string &url,
             const QueryParams& query,
             const Headers& headers,
@@ -340,7 +342,7 @@ namespace kurlyk {
     /// \param headers HTTP headers to include.
     /// \param content The body content for the POST request.
     /// \return A pair containing the unique request ID and a future with the response details.
-    std::pair<uint64_t, std::future<HttpResponsePtr>> http_post(
+    inline std::pair<uint64_t, std::future<HttpResponsePtr>> http_post(
             const std::string& url,
             const QueryParams& query,
             const Headers& headers,
