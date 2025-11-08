@@ -1,0 +1,30 @@
+name: ODR checks
+
+on:
+  push
+
+jobs:
+  odr:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests/odr
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+          
+      - name: Build Singltons ODR header
+        run: |
+          g++ -std=c++17 -I ../../include -c get_singletons_a.cpp
+          g++ -std=c++17 -I ../../include -c get_singletons_b.cpp
+          g++ -std=c++17 -I ../../include -c get_singletons_main.cpp
+          g++ get_singletons_a.o get_singletons_b.o get_singletons_main.o -o app_singletons
+          
+      - name: Run Singltons ODR header
+        run: ./app_singletons
