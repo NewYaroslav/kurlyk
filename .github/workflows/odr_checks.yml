@@ -5,7 +5,7 @@ on:
 
 jobs:
   odr:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     defaults:
       run:
         working-directory: tests/odr
@@ -21,9 +21,9 @@ jobs:
           
       - name: Build Singltons ODR header
         run: |
-          g++ -std=c++17 -I ../../include -c get_singletons_a.cpp
-          g++ -std=c++17 -I ../../include -c get_singletons_b.cpp
-          g++ -std=c++17 -I ../../include -c get_singletons_main.cpp
+          g++ -std=c++17 -I ../../include -I ../../libs/curl-8.11.0_1-win64-mingw/include -c get_singletons_a.cpp
+          g++ -std=c++17 -I ../../include -I ../../libs/curl-8.11.0_1-win64-mingw/include -c get_singletons_b.cpp
+          g++ -std=c++17 -I ../../include -I ../../libs/curl-8.11.0_1-win64-mingw/include -c get_singletons_main.cpp
           g++ get_singletons_a.o get_singletons_b.o get_singletons_main.o -o app_singletons
           
       - name: Run Singltons ODR header
