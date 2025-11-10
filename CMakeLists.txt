@@ -74,7 +74,10 @@ FetchContent_Declare(simple_ws_server
 	GIT_REPOSITORY https://gitlab.com/eidheim/Simple-WebSocket-Server.git
 	GIT_TAG 7bb2867b9d50ff559c60b99178fd46531daa2c7e
 )
-FetchContent_MakeAvailable(simple_ws_server)
+FetchContent_Populate(simple_ws_server)
+add_library(simple_ws_headers INTERFACE)
+target_include_directories(simple_ws_headers INTERFACE "${simple_ws_server_SOURCE_DIR}")
+target_compile_definitions(simple_ws_headers INTERFACE ASIO_STANDALONE)
 
 FetchContent_Declare(simple_server
 	GIT_REPOSITORY https://gitlab.com/eidheim/Simple-Web-Server.git
@@ -93,7 +96,7 @@ target_link_libraries(kurlyk INTERFACE
 	openssl_ossltest
 	openssl_padlock
 	asio
-	simple-websocket-server
+	simple_ws_headers
 	simple-web-server
 	ws2_32
 	crypt32
