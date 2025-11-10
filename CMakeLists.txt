@@ -84,7 +84,7 @@ FetchContent_Declare(simple_server
 	GIT_TAG 187f798d54a9c6cee742f2eb2c54e9ba26f5a385
 )
 FetchContent_Populate(simple_server)
-add_library(simple_server_headers INTERFACE)
+add_library(simple_headers INTERFACE)
 target_include_directories(simple_headers INTERFACE "${simple_server_SOURCE_DIR}")
 target_compile_definitions(simple_headers INTERFACE ASIO_STANDALONE)
 
@@ -100,7 +100,7 @@ target_link_libraries(kurlyk INTERFACE
 	openssl_padlock
 	asio
 	simple_ws_headers
-	simple-web-server
+	simple_headers
 	ws2_32
 	crypt32
 	wsock32
