@@ -83,7 +83,10 @@ FetchContent_Declare(simple_server
 	GIT_REPOSITORY https://gitlab.com/eidheim/Simple-Web-Server.git
 	GIT_TAG 187f798d54a9c6cee742f2eb2c54e9ba26f5a385
 )
-FetchContent_MakeAvailable(simple_server)
+FetchContent_Populate(simple_server)
+add_library(simple_server_headers INTERFACE)
+target_include_directories(simple_headers INTERFACE "${simple_server_SOURCE_DIR}")
+target_compile_definitions(simple_headers INTERFACE ASIO_STANDALONE)
 
 # линкуем к либе
 target_link_libraries(kurlyk INTERFACE
