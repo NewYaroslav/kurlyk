@@ -17,33 +17,27 @@ jobs:
       - name: Build Singltons ODR header
         shell: bash
         run: |
-          g++ -std=c++17 -DCURL_STATICLIB \
+          g++ -std=c++17 -DCURL_STATICLIB -DASIO_STANDALONE \
                          -I ../../include \
                          -I ../../libs/curl-8.11.0_1-win64-mingw/include \
-                         -I ../../libs/curl-8.11.0_1-win64-mingw/bin \
                          -I ../../libs/openssl-win64-v3.4.0/include \
                          -I ../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD \
-                         -I ../../libs/openssl-win64-v3.4.0/bin \
                          -I ../../libs/Simple-WebSocket-Server \
                          -I ../../libs/asio/asio/include \
                          -c get_singletons_a.cpp
-          g++ -std=c++17 -DCURL_STATICLIB \
+          g++ -std=c++17 -DCURL_STATICLIB -DASIO_STANDALONE \
                          -I ../../include \
                          -I ../../libs/curl-8.11.0_1-win64-mingw/include \
-                         -I ../../libs/curl-8.11.0_1-win64-mingw/bin \
                          -I ../../libs/openssl-win64-v3.4.0/include \
                          -I ../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD \
-                         -I ../../libs/openssl-win64-v3.4.0/bin \
                          -I ../../libs/Simple-WebSocket-Server \
                          -I ../../libs/asio/asio/include \
                          -c get_singletons_b.cpp
-          g++ -std=c++17 -DCURL_STATICLIB \
+          g++ -std=c++17 -DCURL_STATICLIB -DASIO_STANDALONE \
                          -I ../../include \
                          -I ../../libs/curl-8.11.0_1-win64-mingw/include \
-                         -I ../../libs/curl-8.11.0_1-win64-mingw/bin \
                          -I ../../libs/openssl-win64-v3.4.0/include \
                          -I ../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD \
-                         -I ../../libs/openssl-win64-v3.4.0/bin \
                          -I ../../libs/Simple-WebSocket-Server \
                          -I ../../libs/asio/asio/include \
                          -c get_singletons_main.cpp -o get_singletons_main.o
