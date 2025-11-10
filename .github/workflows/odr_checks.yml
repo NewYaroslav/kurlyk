@@ -22,13 +22,13 @@ jobs:
                          -I ../../libs/openssl-win64-v3.4.0/include \
                          -I ../../libs/Simple-WebSocket-Server \
                          -I ../../libs/asio/asio/include \
-                         -c get_singletons_a.cpp -o get_singletons_a.cpp
+                         -c get_singletons_a.cpp
           g++ -std=c++17 -I ../../include 
                          -I ../../libs/curl-8.11.0_1-win64-mingw/include \
                          -I ../../libs/openssl-win64-v3.4.0/include \
                          -I ../../libs/Simple-WebSocket-Server \
                          -I ../../libs/asio/asio/include \
-                         -c get_singletons_b.cpp -o get_singletons_b.cpp
+                         -c get_singletons_b.cpp
           g++ -std=c++17 -I ../../include 
                          -I ../../libs/curl-8.11.0_1-win64-mingw/include \
                          -I ../../libs/openssl-win64-v3.4.0/include \
