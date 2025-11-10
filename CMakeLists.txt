@@ -68,6 +68,8 @@ target_include_directories(asio INTERFACE "${ASIO_ROOT}/asio/include")
 target_compile_definitions(asio INTERFACE ASIO_STANDALONE)
 
 #web server and websocket server
+set(USE_STANDALONE_ASIO ON CACHE BOOL "Use standalone Asio in SWS" FORCE)
+
 FetchContent_Declare(simple_ws_server
 	GIT_REPOSITORY https://gitlab.com/eidheim/Simple-WebSocket-Server.git
 	GIT_TAG 7bb2867b9d50ff559c60b99178fd46531daa2c7e
