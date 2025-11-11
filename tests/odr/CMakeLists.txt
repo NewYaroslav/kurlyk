@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(app_singletons LANGUAGES CXX)
 
-add_library(kurlyk INTERFACE)
+add_subdirectory(../.. kurlyk EXCLUDE_FROM_ALL)
 
 add_executable(src_files
 	get_singletons_a.cpp
