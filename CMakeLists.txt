@@ -4,9 +4,9 @@ include(FetchContent)
 project(kurlyk LANGUAGES CXX)
 
 # Пути к сабмодулям на гитхабе
-set(CURL_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/third_party/curl-8.11.0_1-win64-mingw" CACHE PATH "")
-set(OPENSSL_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/third_party/openssl-win64-v3.4.0" CACHE PATH "")
-set(ASIO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/third_party/asio" CACHE PATH "")
+set(CURL_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/libs/curl-8.11.0_1-win64-mingw" CACHE PATH "")
+set(OPENSSL_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/libs/openssl-win64-v3.4.0" CACHE PATH "")
+set(ASIO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/libs/asio" CACHE PATH "")
 
 # Делаем нашу либу таргетом
 add_library(kurlyk INTERFACE)
