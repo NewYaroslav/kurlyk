@@ -8,6 +8,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
           
       - name: Build Singltons ODR header
         shell: bash
