@@ -6,47 +6,13 @@ on:
 jobs:
   odr:
     runs-on: windows-latest
-    defaults:
-      run:
-        working-directory: tests/odr
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
+      
+      
           
       - name: Build Singltons ODR header
         shell: bash
-        run: |
-          g++ -std=c++17 -DCURL_STATICLIB -DASIO_STANDALONE \
-                         -I ../../include \
-                         -I ../../libs/curl-8.11.0_1-win64-mingw/include \
-                         -I ../../libs/openssl-win64-v3.4.0/include \
-                         -I ../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD \
-                         -I ../../libs/Simple-WebSocket-Server \
-                         -I ../../libs/asio/asio/include \
-                         -c get_singletons_a.cpp
-          g++ -std=c++17 -DCURL_STATICLIB -DASIO_STANDALONE \
-                         -I ../../include \
-                         -I ../../libs/curl-8.11.0_1-win64-mingw/include \
-                         -I ../../libs/openssl-win64-v3.4.0/include \
-                         -I ../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD \
-                         -I ../../libs/Simple-WebSocket-Server \
-                         -I ../../libs/asio/asio/include \
-                         -c get_singletons_b.cpp
-          g++ -std=c++17 -DCURL_STATICLIB -DASIO_STANDALONE \
-                         -I ../../include \
-                         -I ../../libs/curl-8.11.0_1-win64-mingw/include \
-                         -I ../../libs/openssl-win64-v3.4.0/include \
-                         -I ../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD \
-                         -I ../../libs/Simple-WebSocket-Server \
-                         -I ../../libs/asio/asio/include \
-                         -c get_singletons_main.cpp -o get_singletons_main.o
-          g++ get_singletons_a.o get_singletons_b.o get_singletons_main.o \
-                         -L ../../libs/curl-8.11.0_1-win64-mingw/lib \
-                         -L ../../libs/openssl-win64-v3.4.0/lib/VC/x64/MD \
-                         -lcurl -lcapi -ldasync -lcrypto -lssl -lopenssl \
-                         -lossltest -lpadlock -lws2_32 -lcrypt32 -lwsock32 \
-                         -o test.exe
-          
-      - name: Run Singltons ODR header
-        run: ./app_singletons
+        run: cmake -S . -B build
+             cmake --build build
+         
