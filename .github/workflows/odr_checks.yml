@@ -8,11 +8,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      
-      
           
       - name: Build Singltons ODR header
         shell: bash
-        run: cmake -S . -B build
-             cmake --build build
+        run: |
+          cmake -S tests/odr -B build
+          cmake --build build
          
