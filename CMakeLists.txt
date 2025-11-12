@@ -50,11 +50,6 @@ set_target_properties(openssl_libssl PROPERTIES
 	IMPORTED_LOCATION "${OPENSSL_ROOT}/bin/libssl-3-x64.dll"
 )
 	
-add_library(openssl_openssl SHARED IMPORTED GLOBAL)
-set_target_properties(openssl_openssl PROPERTIES 
-	IMPORTED_LOCATION "${OPENSSL_ROOT}/lib/VC/x64/MD/openssl.lib"
-)
-	
 add_library(openssl_ossltest SHARED IMPORTED GLOBAL)
 set_target_properties(openssl_ossltest PROPERTIES  
 	IMPORTED_IMPLIB "${OPENSSL_ROOT}/lib/VC/x64/MD/ossltest.lib"
