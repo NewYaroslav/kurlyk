@@ -10,3 +10,5 @@ add_executable(src_files
 )
 
 target_link_libraries(src_files PRIVATE kurlyk)
+
+message(STATUS "exe: $<TARGET_FILE:src_files>")
