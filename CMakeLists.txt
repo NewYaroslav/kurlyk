@@ -17,8 +17,8 @@ target_include_directories(kurlyk INTERFACE
 # libcurl
 add_library(libcurl_static STATIC IMPORTED GLOBAL)
 set_target_properties(libcurl_static PROPERTIES 
-	IMPORTED_IMPLIB "${CURL_ROOT}/lib/libcurl.dll.a"
-	IMPORTED_LOCATION "${CURL_ROOT}/bin/libcurl-x64.dll"
+	IMPORTED_IMPLIB "${CURL_ROOT}/lib/libcurl.a"
+	IMPORTED_LOCATION "${CURL_ROOT}/lib/libcurl.dll.a""
 	INTERFACE_INCLUDE_DIRECTORIES "${CURL_ROOT}/include"
 )
 target_compile_definitions(libcurl_static INTERFACE CURL_STATICLIB)
