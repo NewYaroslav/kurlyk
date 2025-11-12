@@ -103,7 +103,6 @@ target_link_libraries(kurlyk INTERFACE
     openssl_dasync
     openssl_libcrypto
 	openssl_libssl
-	openssl_openssl
 	openssl_ossltest
 	openssl_padlock
 	asio
