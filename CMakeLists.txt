@@ -66,7 +66,6 @@ target_link_libraries(openssl_capi INTERFACE openssl_common)
 target_link_libraries(openssl_dasync INTERFACE openssl_common)
 target_link_libraries(openssl_libcrypto INTERFACE openssl_common)
 target_link_libraries(openssl_libssl INTERFACE openssl_common)
-target_link_libraries(openssl_openssl INTERFACE openssl_common)
 target_link_libraries(openssl_ossltest INTERFACE openssl_common)
 target_link_libraries(openssl_padlock INTERFACE openssl_common)
 
