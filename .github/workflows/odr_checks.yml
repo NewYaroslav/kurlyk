@@ -20,4 +20,8 @@ jobs:
         run: cmake --build build
         
       - name: Run Singltons ODR header
-        run: ./build/Debug/src_files.exe
+        shell: pwsh
+        run: |
+          dir build -r | Out-Host
+          & .\build\Debug\src_files.exe
+          "EXIT=$LASTEXITCODE" | Out-Host
