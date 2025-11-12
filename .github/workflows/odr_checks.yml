@@ -11,9 +11,11 @@ jobs:
         with:
           submodules: recursive
           
+      - name: Configure Singltons ODR header
+        shell: bash
+        run: cmake -S tests/odr -B build -DCMAKE_CXX_STANDARD=17
+          
       - name: Build Singltons ODR header
         shell: bash
-        run: |
-          cmake -S tests/odr -B build -DCMAKE_CXX_STANDARD=17
-          cmake --build build
+        run: cmake --build build
          
