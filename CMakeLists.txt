@@ -17,8 +17,8 @@ target_include_directories(kurlyk INTERFACE
 # libcurl
 add_library(libcurl_static STATIC IMPORTED GLOBAL)
 set_target_properties(libcurl_static PROPERTIES 
-	IMPORTED_IMPLIB "${CURL_ROOT}/lib/libcurl.a"
-	IMPORTED_LOCATION "${CURL_ROOT}/lib/libcurl.dll.a"
+	IMPORTED_IMPLIB "${CURL_ROOT}/lib/libcurl.dll.a"
+	IMPORTED_LOCATION "${CURL_ROOT}/bin/libcurl-x64.dll"
 	INTERFACE_INCLUDE_DIRECTORIES "${CURL_ROOT}/include"
 )
 target_compile_definitions(libcurl_static INTERFACE CURL_STATICLIB)
@@ -28,32 +28,45 @@ add_library(openssl_common INTERFACE)
 target_include_directories(openssl_common INTERFACE "${OPENSSL_ROOT}/include")
 
 add_library(openssl_capi STATIC IMPORTED GLOBAL)
-set_target_properties(openssl_capi PROPERTIES IMPORTED_LOCATION 
-	"${OPENSSL_ROOT}/lib/VC/x64/MD/capi.lib")
+set_target_properties(openssl_capi PROPERTIES 
+	IMPORTED_IMPLIB "${OPENSSL_ROOT}/lib/VC/x64/MD/capi.lib"
+	IMPORTED_LOCATION "${OPENSSL_ROOT}/bin/capi.dll"
+)
 
 add_library(openssl_dasync STATIC IMPORTED GLOBAL)
-set_target_properties(openssl_dasync PROPERTIES IMPORTED_LOCATION 
-	"${OPENSSL_ROOT}/lib/VC/x64/MD/dasync.lib")
+set_target_properties(openssl_dasync PROPERTIES 
+	IMPORTED_IMPLIB "${OPENSSL_ROOT}/lib/VC/x64/MD/dasync.lib"
+	IMPORTED_LOCATION "${OPENSSL_ROOT}/bin/dasync.dll"
+)
 	
 add_library(openssl_libcrypto STATIC IMPORTED GLOBAL)
-set_target_properties(openssl_libcrypto PROPERTIES IMPORTED_LOCATION 
-	"${OPENSSL_ROOT}/lib/VC/x64/MD/libcrypto.lib")
+set_target_properties(openssl_libcrypto PROPERTIES 
+	IMPORTED_IMPLIB "${OPENSSL_ROOT}/lib/VC/x64/MD/libcrypto.lib"
+	IMPORTED_LOCATION "${OPENSSL_ROOT}/bin/libcrypto-3-x64.dll"
+)
 	
 add_library(openssl_libssl STATIC IMPORTED GLOBAL)
-set_target_properties(openssl_libssl PROPERTIES IMPORTED_LOCATION 
-	"${OPENSSL_ROOT}/lib/VC/x64/MD/libssl.lib")
+set_target_properties(openssl_libssl PROPERTIES 
+	IMPORTED_IMPLIB "${OPENSSL_ROOT}/lib/VC/x64/MD/libssl.lib"
+	IMPORTED_LOCATION "${OPENSSL_ROOT}/bin/libssl-3-x64.dll"
+)
 	
 add_library(openssl_openssl STATIC IMPORTED GLOBAL)
-set_target_properties(openssl_openssl PROPERTIES IMPORTED_LOCATION 
-	"${OPENSSL_ROOT}/lib/VC/x64/MD/openssl.lib")
+set_target_properties(openssl_openssl PROPERTIES 
+	IMPORTED_LOCATION "${OPENSSL_ROOT}/lib/VC/x64/MD/openssl.lib"
+)
 	
 add_library(openssl_ossltest STATIC IMPORTED GLOBAL)
-set_target_properties(openssl_ossltest PROPERTIES IMPORTED_LOCATION 
-	"${OPENSSL_ROOT}/lib/VC/x64/MD/ossltest.lib")
+set_target_properties(openssl_ossltest PROPERTIES  
+	IMPORTED_IMPLIB "${OPENSSL_ROOT}/lib/VC/x64/MD/ossltest.lib"
+	IMPORTED_LOCATION "${OPENSSL_ROOT}/lib/bin/ossltest.dll"
+)
 	
 add_library(openssl_padlock STATIC IMPORTED GLOBAL)
-set_target_properties(openssl_padlock PROPERTIES IMPORTED_LOCATION 
-	"${OPENSSL_ROOT}/lib/VC/x64/MD/padlock.lib")
+set_target_properties(openssl_padlock PROPERTIES  
+	IMPORTED_IMPLIB "${OPENSSL_ROOT}/lib/VC/x64/MD/padlock.lib"
+	IMPORTED_LOCATION "${OPENSSL_ROOT}/lib/bin/padlock.dll"
+)
 	
 target_link_libraries(openssl_capi INTERFACE openssl_common)
 target_link_libraries(openssl_dasync INTERFACE openssl_common)
