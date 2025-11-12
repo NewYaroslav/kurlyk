@@ -59,13 +59,13 @@ set_target_properties(openssl_openssl PROPERTIES
 add_library(openssl_ossltest STATIC IMPORTED GLOBAL)
 set_target_properties(openssl_ossltest PROPERTIES  
 	IMPORTED_IMPLIB "${OPENSSL_ROOT}/lib/VC/x64/MD/ossltest.lib"
-	IMPORTED_LOCATION "${OPENSSL_ROOT}/lib/bin/ossltest.dll"
+	IMPORTED_LOCATION "${OPENSSL_ROOT}/bin/ossltest.dll"
 )
 	
 add_library(openssl_padlock STATIC IMPORTED GLOBAL)
 set_target_properties(openssl_padlock PROPERTIES  
 	IMPORTED_IMPLIB "${OPENSSL_ROOT}/lib/VC/x64/MD/padlock.lib"
-	IMPORTED_LOCATION "${OPENSSL_ROOT}/lib/bin/padlock.dll"
+	IMPORTED_LOCATION "${OPENSSL_ROOT}/bin/padlock.dll"
 )
 	
 target_link_libraries(openssl_capi INTERFACE openssl_common)
