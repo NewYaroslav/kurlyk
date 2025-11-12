@@ -18,4 +18,6 @@ jobs:
       - name: Build Singltons ODR header
         shell: bash
         run: cmake --build build
-         
+        
+      - name: Run Singltons ODR header
+        run: ./build/Debug/src_files.exe
