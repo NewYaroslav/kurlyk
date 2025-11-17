@@ -4,9 +4,9 @@ curl/8.11.1
 asio/1.34.2
 
 [options]
-curl:with_ssl=openssl
-curl:shared=False
-openssl:shared=False
+curl/*:with_ssl=openssl
+curl/*:shared=False
+openssl/*:shared=False
 
 [generators]
 CMakeDeps
