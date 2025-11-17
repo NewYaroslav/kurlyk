@@ -38,9 +38,13 @@ jobs:
         shell: msys2 {0}
         run: ~/.venv/bin/conan profile detect --force
 
+      - name: Update Conan remote to center2
+        shell: msys2 {0}
+        run: ~/.venv/bin/conan remote update conancenter https://center2.conan.io
+        
       - name: Conan install
         shell: msys2 {0}
-        run: ~/.venv/bin/conan install . --output-folder=build --build=missing
+        run:  ~/.venv/bin/conan install . --output-folder=build --build=missing --profile=tests/conan/profiles/mingw
 
       - name: Configure CMake (use Conan toolchain)
         shell: msys2 {0}
