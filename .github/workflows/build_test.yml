@@ -8,10 +8,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
           
       - uses: msys2/setup-msys2@v2
         with:
@@ -21,17 +17,13 @@ jobs:
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-make
-            python-pip
+            python-conan
           
       - uses: actions/cache@v4
         with:
-          path: C:\Users\runneradmin\.conan2
+          path: C:\msys64\home\runneradmin\.conan2
           key: conan2-${{ runner.os }}-${{ hashFiles('conanfile.*') }}
           restore-keys: conan2-${{ runner.os }}-
-          
-      - name: Install Conan
-        shell: msys2 {0}
-        run: pip install --upgrade pip conan
         
       - name: Detect profile (gcc/MinGW)
         shell: msys2 {0}
