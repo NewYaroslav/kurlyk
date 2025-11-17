@@ -1,11 +1,11 @@
 [requires]
 openssl/3.4.3
-curl/8.11.1
+libcurl/8.15.0
 asio/1.34.2
 
 [options]
-curl/*:with_ssl=openssl
-curl/*:shared=False
+libcurl/*:with_ssl=openssl
+libcurl/*:shared=False
 openssl/*:shared=False
 
 [generators]

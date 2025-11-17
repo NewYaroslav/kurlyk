@@ -13,7 +13,7 @@ target_include_directories(kurlyk INTERFACE
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL 3.4.3 EXACT REQUIRED)
 message(STATUS "Found OpenSSL ${OpenSSL_VERSION}")
-find_package(CURL 8.11.0 EXACT REQUIRED)
+find_package(CURL 8.15.0 EXACT REQUIRED)
 message(STATUS "Found CURL ${CURL_VERSION_STRING}")
 
 #пока так, потом исправить
