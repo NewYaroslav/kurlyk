@@ -17,21 +17,30 @@ jobs:
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-make
-            python-conan
+            python
+            python-pip
           
       - uses: actions/cache@v4
         with:
           path: C:\msys64\home\runneradmin\.conan2
           key: conan2-${{ runner.os }}-${{ hashFiles('conanfile.*') }}
           restore-keys: conan2-${{ runner.os }}-
+          
+      - name: Install Conan (venv)
+        shell: msys2 {0}
+        run: |
+          python -m venv ~/.venv
+          source ~/.venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install "conan==2.7.1"
         
-      - name: Detect profile (gcc/MinGW)
+      - name: Detect profile
         shell: msys2 {0}
-        run: conan profile detect --force
+        run: ~/.venv/bin/conan profile detect --force
 
-      - name: Conan install (deps -> build/)
+      - name: Conan install
         shell: msys2 {0}
-        run: conan install . --output-folder=build --build=missing
+        run: ~/.venv/bin/conan install . --output-folder=build --build=missing
 
       - name: Configure CMake (use Conan toolchain)
         shell: msys2 {0}
