@@ -44,7 +44,7 @@ jobs:
         
       - name: Conan install
         shell: msys2 {0}
-        run:  ~/.venv/bin/conan install . --output-folder=build --build=missing --profile=tests/conan/profiles/mingw
+        run:  ~/.venv/bin/conan install . --output-folder=build --build=missing --profile=tests/conan/profiles
 
       - name: Configure CMake (use Conan toolchain)
         shell: msys2 {0}
