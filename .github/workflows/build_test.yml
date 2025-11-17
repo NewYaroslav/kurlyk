@@ -40,7 +40,7 @@ jobs:
 
       - name: Update Conan remote to center2
         shell: msys2 {0}
-        run: ~/.venv/bin/conan remote update conancenter https://center2.conan.io
+        run: ~/.venv/bin/conan remote update conancenter --url https://center2.conan.io
         
       - name: Conan install
         shell: msys2 {0}
