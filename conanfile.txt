@@ -1,5 +1,5 @@
 [requires]
-openssl/3.4.0
+openssl/3.4.3
 curl/8.11.1
 asio/1.34.2
 
