@@ -8,8 +8,10 @@ libcurl/*:with_ssl=openssl
 libcurl/*:shared=False
 openssl/*:shared=False
 openssl/*:no_apps=True
+openssl/*:no_dso=True
 openssl/*:no_dgram=True
 openssl/*:no_module=True
+openssl/*:no_engine=True
 
 [generators]
 CMakeDeps
