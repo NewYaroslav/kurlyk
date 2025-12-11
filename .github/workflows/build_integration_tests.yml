@@ -4,52 +4,95 @@ on:
   push
   
 jobs:
-  mingw-fallback:
+  build-test:
     runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: "MinGW, fallback all, no preload"
+            folder: "MinGW_fallback"
+            generator: "MinGW Makefiles"
+            use_fallback_openssl: "ON"
+            use_fallback_curl: "ON"
+            use_fallback_asio: "ON"
+            use_fallback_simple_server: "ON"
+            use_fallback_simple_ws_server: "ON"
+            test_preload_deps: "OFF"
+            openssl_shared: "ON"
+            curl_shared: "ON"
+
+          - name: "MSVC, all shared, fallback all, no preload"
+            folder: "MSVC_shared_fallback"
+            generator: "Visual Studio 17 2022"
+            use_fallback_openssl: "ON"
+            use_fallback_curl: "ON"
+            use_fallback_asio: "ON"
+            use_fallback_simple_server: "ON"
+            use_fallback_simple_ws_server: "ON"
+            test_preload_deps: "OFF"
+            openssl_shared: "ON"
+            curl_shared: "ON"
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         
       - name: Install MinGW
+        if: matrix.generator == 'MinGW Makefiles'
         shell: pwsh
         run: |
           choco install mingw --no-progress
-          
-      - name: Check MinGW GCC
-        shell: pwsh
-        run: |
           gcc --version
           
-      - name: Configure with CMake (MinGW + fallbacks)
+      - name: Set up MSVC environment
+        if: matrix.generator == 'Visual Studio 17 2022'
+        uses: ilammy/msvc-dev-cmd@v1
+          
+      - name: Configure
         shell: pwsh
         run: |
+          $buildDir = "build-${{ matrix.folder }}"
+          Write-Host "Build dir: $buildDir"
           cmake -S tests/integration `
-                -B build-mingw `
-                -G "MinGW Makefiles" `
-                -DUSE_FALLBACK_OPENSSL=ON `
-                -DUSE_FALLBACK_CURL=ON `
-                -DUSE_FALLBACK_ASIO=ON `
-                -DUSE_FALLBACK_SIMPLE_SERVER=ON `
-                -DUSE_FALLBACK_SIMPLE_WS_SERVER=ON `
-                -DTEST_PRELOAD_DEPS=OFF `
+                -B $buildDir `
+                -G "${{ matrix.generator }}" `
+                -DUSE_FALLBACK_OPENSSL=${{ matrix.use_fallback_openssl }} `
+                -DUSE_FALLBACK_CURL=${{ matrix.use_fallback_curl }} `
+                -DUSE_FALLBACK_ASIO=${{ matrix.use_fallback_asio }} `
+                -DUSE_FALLBACK_SIMPLE_SERVER=${{ matrix.use_fallback_simple_server }} `
+                -DUSE_FALLBACK_SIMPLE_WS_SERVER=${{ matrix.use_fallback_simple_ws_server }} `
+                -DTEST_PRELOAD_DEPS=${{ matrix.test_preload_deps }} `
+                -DOPENSSL_SHARED=${{ matrix.openssl_shared }} `
+                -DCURL_SHARED=${{ matrix.curl_shared }} `
                 -DCMAKE_CXX_STANDARD=17 `
-                -DCMAKE_CXX_STANDARD_REQUIRED=ON
+                -DCMAKE_CXX_STANDARD_REQUIRED=ON `
+                -Wno-dev
                 
       - name: Build
         shell: pwsh
         run: |
-          cmake --build build-mingw
+          $buildDir = "build-${{ matrix.folder }}"
+          cmake --build $buildDir --config Release
           
       - name: Run integr_test.exe
         shell: pwsh
         run: |
-          $exe = "build-mingw\\integr_test.exe"
+          $buildDir = "build-${{ matrix.folder }}"
+          if ("${{ matrix.generator }}" -eq "Visual Studio 17 2022") {
+            $exe = "$buildDir\Release\integr_test.exe"
+          } else {
+            $exe = "$buildDir\integr_test.exe"
+          }
+
+          Write-Host "Looking for exe: $exe"
           if (-not (Test-Path $exe)) {
-            Write-Error "Executable not found: $exe"
+            Write-Error "EXE not found: $exe"
             exit 1
           }
-          Write-Host "Running EXE: $exe"
+
+          Write-Host "Running: $exe"
           & $exe
           
         
