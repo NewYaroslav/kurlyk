@@ -1,0 +1,55 @@
+name: Integration Tests
+
+on:
+  push
+  
+jobs:
+  mingw-fallback:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Install MinGW
+        shell: pwsh
+        run: |
+          choco install mingw --no-progress
+          
+      - name: Check MinGW GCC
+        shell: pwsh
+        run: |
+          gcc --version
+          
+      - name: Configure with CMake (MinGW + fallbacks)
+        shell: pwsh
+        run: |
+          cmake -S tests/integration `
+                -B build-mingw `
+                -G "MinGW Makefiles" `
+                -DUSE_FALLBACK_OPENSSL=ON `
+                -DUSE_FALLBACK_CURL=ON `
+                -DUSE_FALLBACK_ASIO=ON `
+                -DUSE_FALLBACK_SIMPLE_SERVER=ON `
+                -DUSE_FALLBACK_SIMPLE_WS_SERVER=ON `
+                -DTEST_PRELOAD_DEPS=OFF `
+                -DCMAKE_CXX_STANDARD=17 `
+                -DCMAKE_CXX_STANDARD_REQUIRED=ON
+                
+      - name: Build
+        shell: pwsh
+        run: |
+          cmake --build build-mingw
+          
+      - name: Run integr_test.exe
+        shell: pwsh
+        run: |
+          $exe = "build-mingw\\integr_test.exe"
+          if (-not (Test-Path $exe)) {
+            Write-Error "Executable not found: $exe"
+            exit 1
+          }
+          Write-Host "Running EXE: $exe"
+          & $exe
+          
+        
