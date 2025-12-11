@@ -42,7 +42,7 @@ namespace SimpleWeb {
                      const std::string &certification_file = std::string(), const std::string &private_key_file = std::string(),
                      const std::string &verify_file = std::string())
             : SocketClientBase<WSS>::SocketClientBase(server_port_path, 443),
-#           if defined(ASIO_STANDALONE) && (ASIO_VERSION >= 101300 || BOOST_ASIO_VERSION >= 101300)
+#           if (defined(ASIO_STANDALONE) && ASIO_VERSION >= 103300) || BOOST_ASIO_VERSION >= 103300
                 context(asio::ssl::context::tls_client) {
             // Disabling TLS 1.0 and 1.1 (see RFC 8996)
             context.set_options(asio::ssl::context::no_tlsv1);
@@ -57,7 +57,7 @@ namespace SimpleWeb {
             }
 
             if(verify_certificate) {
-#               if defined(ASIO_STANDALONE) && (ASIO_VERSION >= 101300 || BOOST_ASIO_VERSION >= 101300)
+#				if (defined(ASIO_STANDALONE) && ASIO_VERSION >= 103300) || BOOST_ASIO_VERSION >= 103300
                 context.set_verify_callback(asio::ssl::host_name_verification(host));
 #               else
                 context.set_verify_callback(asio::ssl::rfc2818_verification(host));

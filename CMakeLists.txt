@@ -1,7 +1,16 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.21)
 project(kurlyk LANGUAGES CXX)
+# options
 
-include(FetchContent)
+option(USE_STANDALONE_ASIO "Use Asio standalone instead of Boost.Asio" ON)
+
+option(USE_FALLBACK_OPENSSL "Use fallback for OpenSSL" OFF)
+option(USE_FALLBACK_CURL "Use fallback for libcurl" OFF)
+option(USE_FALLBACK_ASIO "Use fallback for asio" OFF)
+option(USE_FALLBACK_SIMPLE_SERVER "Use fallback for simple web server" OFF)
+option(USE_FALLBACK_SIMPLE_WS_SERVER "Use fallback for simple websocket server" OFF)
+option(OPENSSL_SHARED "For falllback option: OpenSSL shared" ON)
+option(CURL_SHARED "For falllback option: libcurl shared" ON)
 
 # Our header-only library
 add_library(kurlyk INTERFACE)
@@ -10,43 +19,42 @@ target_include_directories(kurlyk INTERFACE
 )
 
 # Deps
-set(OPENSSL_USE_STATIC_LIBS TRUE)
-find_package(OpenSSL 3.4.3 EXACT REQUIRED)
-message(STATUS "Found OpenSSL ${OpenSSL_VERSION}")
-find_package(CURL 8.15.0 EXACT REQUIRED)
-message(STATUS "Found CURL ${CURL_VERSION_STRING}")
+#openssl
+include(cmake/deps/openssl.cmake)
+use_or_fetch_openssl(kurlyk)
 
-#пока так, потом исправить
-find_package(Boost 1.88 COMPONENTS asio)
-if (Boost_FOUND)
-	target_link_libraries(kurlyk INTERFACE Boost::asio)
-	set(USE_STANDALONE_ASIO OFF CACHE BOOL "Use standalone Asio in SWS" FORCE)
-else()
-	find_package(asio 1.34.2 EXACT REQUIRED)
-	set(USE_STANDALONE_ASIO ON CACHE BOOL "Use standalone Asio in SWS" FORCE)
-	message(STATUS "Found asio ${asio_VERSION} at: ${asio_DIR}")
-	target_link_libraries(kurlyk INTERFACE asio::asio)
+#curl
+include(cmake/deps/curl.cmake)
+use_or_fetch_curl(kurlyk)
+
+#asio
+include(cmake/deps/asio.cmake)
+use_or_fetch_asio(kurlyk)
+
+if (DEFINED USE_OPENSSL AND NOT USE_OPENSSL)
+    message(FATAL_ERROR
+        "kurlyk requires Simple-Web-Server to be built with OpenSSL (USE_OPENSSL=ON), but the variable USE_OPENSSL is currently OFF!"
+    )
 endif()
 
-FetchContent_Declare(simple_ws_server
-	GIT_REPOSITORY https://gitlab.com/eidheim/Simple-WebSocket-Server.git
-	GIT_TAG 7bb2867b9d50ff559c60b99178fd46531daa2c7e
-)
-FetchContent_MakeAvailable(simple_ws_server)
+if (NOT DEFINED USE_OPENSSL)
+    set(USE_OPENSSL ON CACHE BOOL "Use OpenSSL in Simple-Web-Server")
+endif()
 
-FetchContent_Declare(simple_server
-	GIT_REPOSITORY https://gitlab.com/eidheim/Simple-Web-Server.git
-	GIT_TAG 187f798d54a9c6cee742f2eb2c54e9ba26f5a385
-)
-FetchContent_MakeAvailable(simple_server)
+# simple web
+include(cmake/deps/simple_server.cmake)
+use_or_fetch_simple_server(kurlyk)
 
-target_link_libraries(kurlyk INTERFACE 
-	OpenSSL::SSL 
-	OpenSSL::Crypto
-	CURL::libcurl
-	simple-websocket-server
-	simple-web-server
-	ws2_32
-	crypt32
-	wsock32
-)
+# simple web-socket server
+include(cmake/deps/simple_ws_server.cmake)
+use_or_fetch_simple_ws_server(kurlyk)
+
+# зависимости от винды
+if (WIN32)
+	include(cmake/deps/win_deps.cmake)
+elseif(APPLE)
+	message(FATAL_ERROR "This option for MacOS is not supported yet.")
+else()
+	message(FATAL_ERROR "This option for Linux is not supported yet.")
+endif()
+use_os_deps(kurlyk)
