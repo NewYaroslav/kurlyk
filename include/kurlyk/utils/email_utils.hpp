@@ -10,7 +10,7 @@ namespace kurlyk::utils {
     /// \brief Validates an email address format.
     /// \param str The email address to validate.
     /// \return True if the email address format is valid, false otherwise.
-    bool is_valid_email_id(const std::string &str) {
+    inline bool is_valid_email_id(const std::string &str) {
         // Regular expression to validate an email address format
         static const std::regex email_regex(
             R"(^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$)"

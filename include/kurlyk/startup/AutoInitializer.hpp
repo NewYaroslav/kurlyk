@@ -42,11 +42,9 @@ namespace kurlyk::startup {
         WebSocketManager*   m_ws = nullptr;
 #       endif
     };
+	
+	inline AutoInitializer _kurlyk_auto_initializer;
 
 } // namespace kurlyk::startup
-
-namespace {
-    static kurlyk::startup::AutoInitializer _kurlyk_auto_initializer;
-}
 
 #endif // _KURLYK_STARTUP_AUTO_INITIALIZER_HPP_INCLUDED

@@ -10,7 +10,7 @@ namespace kurlyk::utils {
     /// \brief Removes the first occurrence of "https://" or "http://" from the given URL.
     /// \param url The URL from which to remove the substring.
     /// \return std::string The modified URL with the first occurrence of "https://" or "http://" removed.
-    std::string remove_http_prefix(const std::string& url) {
+    inline std::string remove_http_prefix(const std::string& url) {
         const std::string https_prefix = "https://";
         const std::string http_prefix = "http://";
 

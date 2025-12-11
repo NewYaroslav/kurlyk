@@ -10,7 +10,7 @@ namespace kurlyk::utils {
     /// \brief Converts a User-Agent string to a sec-ch-ua header value.
     /// \param user_agent The User-Agent string.
     /// \return The generated sec-ch-ua header value.
-    std::string convert_user_agent_to_sec_ch_ua(const std::string& user_agent) {
+    inline std::string convert_user_agent_to_sec_ch_ua(const std::string& user_agent) {
         // Regular expression to extract the browser name and version from User-Agent
         static const std::regex browser_regex(R"(Chrome/(\d+)\.\d+\.\d+\.\d+)");
         std::string version = "0";
