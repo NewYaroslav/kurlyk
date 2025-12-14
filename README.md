@@ -343,9 +343,11 @@ kurlyk/include
 ## Initialization specifics
 
 **C++11/14**
+
 When using C++11 or C++14, manual initialization is required. The function `kurlyk::init()` must be called **exactly once** before using the library. Before program termination, `kurlyk::deinit()` must be called **also once**. Failure to follow this rule results in undefined behavior (UB).
 
-**C++17 (if automatic initialization enabled)**
+**C++17+ (if automatic initialization enabled)**
+
 Starting from C++17, thread-safe automatic initialization is supported. By default, the library initializes itself automatically, and explicit calls to `kurlyk::init()` and `kurlyk::deinit()` are not required. 
 Automatic initialization behavior can be controlled via configuration macros: `KURLYK_AUTO_INIT` and `KURLYK_AUTO_INIT_USE_ASYNC` (see [Configuration Macros](#configuration-macros) ).
 
