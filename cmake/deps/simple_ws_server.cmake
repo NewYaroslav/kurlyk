@@ -6,7 +6,7 @@ function(use_or_fetch_simple_ws_server out_target)
 		return()
 	endif()
 	
-	if(USE_FALLBACK_SIMPLE_WS_SERVER)
+	if(KURLYK_USE_FALLBACK_SIMPLE_WS_SERVER)
 		include(cmake/deps/fallbacks/load_simple_ws_server.cmake)
 		load_simple_ws_server(${out_target})
 		return()

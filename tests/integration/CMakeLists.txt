@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.21)
 project(integration_test LANGUAGES CXX)
 
 #test options
-option(TEST_PRELOAD_DEPS "Preload deps before adding my kurlyk lib" OFF)
+option(KURLYK_TEST_PRELOAD_DEPS "Preload deps before adding kurlyk lib" OFF)
 
 add_executable(integr_test
 	get_singletons_a.cpp
@@ -15,7 +15,7 @@ list(APPEND CMAKE_MODULE_PATH
 	"${CMAKE_CURRENT_LIST_DIR}/../../cmake"
 )
 
-if(TEST_PRELOAD_DEPS)
+if(KURLYK_TEST_PRELOAD_DEPS)
 message(STATUS "Start preload simple-ws-server, asio, OpenSSl")
 #simple-ws-server
 	include(fallbacks/load_simple_ws_server)
@@ -42,9 +42,6 @@ message(STATUS "Start preload simple-ws-server, asio, OpenSSl")
 endif()
 
 add_subdirectory(../.. build)
-
-# временно
-#target_compile_features(integr_test PUBLIC cxx_std_17)
 
 target_link_libraries(integr_test PRIVATE kurlyk)
 

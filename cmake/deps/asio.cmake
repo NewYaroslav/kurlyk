@@ -51,7 +51,7 @@ function(use_or_fetch_asio out_target)
 		endif()
 
 # if consumer set fallback option on
-		if(USE_FALLBACK_ASIO)
+		if(KURLYK_USE_FALLBACK_ASIO)
 			include(cmake/deps/fallbacks/load_asio.cmake)
 			load_asio(${out_target})
 			return()
