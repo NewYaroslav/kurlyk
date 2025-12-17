@@ -1,7 +1,7 @@
 function(use_or_fetch_asio out_target)
 
 	
-	if (NOT USE_STANDALONE_ASIO)
+	if (NOT KURLYK_USE_STANDALONE_ASIO)
 # Boost library
 # if target Boost already exist
 		if (TARGET Boost::boost)
@@ -13,11 +13,11 @@ function(use_or_fetch_asio out_target)
 # if consumer has package
 		find_package(Boost 1.88 QUIET)
 		if (Boost_FOUND AND TARGET Boost::boost)
-			message(STATUS "Asio: using Boost::asio (USE_STANDALONE_ASIO=OFF)")
+			message(STATUS "Asio: using Boost::asio (KURLYK_USE_STANDALONE_ASIO=OFF)")
 			target_link_libraries(${out_target} INTERFACE Boost::boost)
 			return()
 		endif()
-		message(FATAL_ERROR "Macros USE_STANDALONE_ASIO is OFF, but Boost.Asio not found!!!")
+		message(FATAL_ERROR "Macros KURLYK_USE_STANDALONE_ASIO is OFF, but Boost.Asio not found!!!")
 		
 		
 	else()
@@ -44,7 +44,7 @@ function(use_or_fetch_asio out_target)
 # if consumer has package
 		find_package(asio 1.34.2 QUIET)
 		if (asio_FOUND AND TARGET asio::asio)
-			message(STATUS "Asio: using standalone asio::asio (USE_STANDALONE_ASIO=ON)")
+			message(STATUS "Asio: using standalone asio::asio (KURLYK_USE_STANDALONE_ASIO=ON)")
 			target_link_libraries(${out_target} INTERFACE asio::asio)
 			target_compile_definitions(${out_target} INTERFACE ASIO_STANDALONE)
 			return()

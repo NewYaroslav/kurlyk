@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 project(kurlyk LANGUAGES CXX)
 # options
 
-option(USE_STANDALONE_ASIO "Use Asio standalone instead of Boost.Asio" ON)
+option(KURLYK_USE_STANDALONE_ASIO "Use Asio standalone instead of Boost.Asio" ON)
 
 option(KURLYK_USE_FALLBACK_OPENSSL "Use fallback for OpenSSL" OFF)
 option(KURLYK_USE_FALLBACK_CURL "Use fallback for libcurl" OFF)
