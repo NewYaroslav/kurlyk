@@ -28,5 +28,8 @@ int main() {
 	std::cout << "There's only AutoInitializer, singlton works correctly" << std::endl;
 	
 	std::cout << "before return\n";
+	
+	kurlyk::shutdown();
+	
     return 0;
 }
