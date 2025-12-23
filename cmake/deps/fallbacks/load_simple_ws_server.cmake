@@ -1,5 +1,9 @@
 function(load_simple_ws_server target)
-
+	
+	if(NOT DEFINED USE_STANDALONE_ASIO)
+		set(USE_STANDALONE_ASIO ${KURLYK_USE_STANDALONE_ASIO}
+		  CACHE BOOL "Synchronization for Simple-WebSocket-Server" FORCE)
+	endif()
 	include(FetchContent)
 	FetchContent_Declare(simple_ws_server
 		GIT_REPOSITORY https://gitlab.com/eidheim/Simple-WebSocket-Server.git

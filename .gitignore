@@ -1,4 +1,3 @@
 /.venv/
-/tests/odr/
 /build/
 /tests/**/build*/

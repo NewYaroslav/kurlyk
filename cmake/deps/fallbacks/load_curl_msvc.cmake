@@ -11,7 +11,7 @@ function(load_curl target)
 	endif()
 	
 	
-	if(CURL_SHARED)
+	if(KURLYK_CURL_SHARED)
 		#Fallback: FetchContent
 		# load for shared msvc version
 		# temporarily the same repo as for mingw

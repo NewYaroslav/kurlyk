@@ -11,7 +11,7 @@ function(load_openssl target)
 		FetchContent_Populate(openssl_dep)
 	endif()
 	
-	if(OPENSSL_SHARED)
+	if(KURLYK_OPENSSL_SHARED)
 		# load for shared msvc version
 		# temporarily the same repo as for mingw
 		message(STATUS "OpenSSL: using fallback (MSVC SHARED) from remote repository")

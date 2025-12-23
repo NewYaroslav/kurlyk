@@ -210,6 +210,15 @@ int main() {
 ```
 
 ## Dependencies and Installation
+
+### Supported compiler toolchains
+
+- **MSVC**
+- **MinGW (GCC)**
+
+MSVC support is currently considered unstable. The confirmed working configuration is **C++17** with **Visual Studio 2022 (generator: Visual Studio 17 2022)**.
+
+### Dependencies
 To work with the **kurlyk** library in MinGW, you will need the following dependencies:
 
 1. For WebSocket:
@@ -297,6 +306,30 @@ wsock32
 crypt32
 ```
     
+### Dependency resolution and fallbacks
+
+The project provides a fallback mechanism for third-party dependencies. If a required dependency is not available on the system, it can be automatically downloaded and built as part of the project.
+Fallback availability depends on the selected compiler toolchain and the linkage type (static or shared). The supported combinations are shown in the table below.
+
+| Dependency | MinGW (Shared) | MinGW (Static) | MSVC (Shared) | MSVC (Static) |
+|------------|---------------|---------------|---------------|---------------|
+| OpenSSL    | ✓             | ✓             | ✓             | ✓             |
+| curl       | ✓             | ✓             | ✓             | ✗             |
+
+Asio and Simple-WebSocket-Server are header-only libraries and suitable for all specified configuration types.
+
+### CMake options
+
+The following CMake options control the fallback mechanism:
+- `KURLYK_USE_FALLBACK_OPENSSL` — enable OpenSSL fallback
+- `KURLYK_USE_FALLBACK_CURL` — enable libcurl fallback
+- `KURLYK_USE_FALLBACK_ASIO` — enable Asio fallback
+- `KURLYK_USE_FALLBACK_SIMPLE_WS_SERVER` — enable Simple-Web-Server fallback
+
+The following options affect fallback linkage and are used **only when the corresponding fallback is enabled**:
+- `KURLYK_OPENSSL_SHARED` — load OpenSSL as a shared library
+- `KURLYK_CURL_SHARED` — load libcurl as a shared library
+
 ### Adding kurlyk
 
 Add the path to the kurlyk header files:
@@ -306,6 +339,17 @@ kurlyk/include
 ```
 
 **kurlyk** is a header-only library, so you only need to include it with `#include <kurlyk.hpp>` to start using it.
+
+## Initialization specifics
+
+**C++11/14**
+
+When using C++11 or C++14, manual initialization is required. The function `kurlyk::init()` must be called **exactly once** before using the library. Before program termination, `kurlyk::deinit()` must be called **also once**. Failure to follow this rule results in undefined behavior (UB).
+
+**C++17+ (if automatic initialization enabled)**
+
+Starting from C++17, thread-safe automatic initialization is supported. By default, the library initializes itself automatically, and explicit calls to `kurlyk::init()` and `kurlyk::deinit()` are not required. 
+Automatic initialization behavior can be controlled via configuration macros: `KURLYK_AUTO_INIT` and `KURLYK_AUTO_INIT_USE_ASYNC` (see [Configuration Macros](#configuration-macros) ).
 
 ## Configuration Macros
 

@@ -27,7 +27,7 @@ function(use_or_fetch_openssl out_target)
 	
 	
 	# if consumer use fallback-option
-	if (USE_FALLBACK_OPENSSL)
+	if (KURLYK_USE_FALLBACK_OPENSSL)
 		if (WIN32)
 			if(MSVC)
 				include(cmake/deps/fallbacks/load_openssl_msvc.cmake)

@@ -1,6 +1,6 @@
 function(load_curl target)
 #MINGW
-	if(CURL_SHARED)
+	if(KURLYK_CURL_SHARED)
 		#Fallback: FetchContent
 		message(STATUS "CURL: using fallback curl (MinGW SHARED) from remote repository")
 		include(FetchContent)

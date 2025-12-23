@@ -1,6 +1,6 @@
 function(load_openssl target)
 #MINGW
-	if(OPENSSL_SHARED)
+	if(KURLYK_OPENSSL_SHARED)
 		# load for shared mingw version
 		#Fallback: FetchContent
 		message(STATUS "OpenSSL: using fallback (MinGW SHARED) from remote repository")
