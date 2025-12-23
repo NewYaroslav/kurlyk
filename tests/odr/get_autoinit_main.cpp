@@ -1,3 +1,4 @@
+#define KURLYK_AUTO_INIT_USE_ASYNC 0
 #include <iostream>
 #include <kurlyk.hpp>
 
@@ -28,8 +29,5 @@ int main() {
 	std::cout << "There's only AutoInitializer, singlton works correctly" << std::endl;
 	
 	std::cout << "before return\n";
-	
-	kurlyk::shutdown();
-	
     return 0;
 }
