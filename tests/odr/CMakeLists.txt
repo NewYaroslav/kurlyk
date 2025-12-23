@@ -32,6 +32,7 @@ add_subdirectory(../.. build)
 target_compile_features(src_files PUBLIC cxx_std_17)
 target_compile_features(odr_autoinit PUBLIC cxx_std_17)
 target_compile_definitions(odr_autoinit PRIVATE KURLYK_AUTO_INIT=1)
+target_compile_definitions(odr_autoinit PRIVATE KURLYK_AUTO_INIT_USE_ASYNC=0)
 
 target_link_libraries(src_files PRIVATE kurlyk)
 target_link_libraries(odr_autoinit PRIVATE kurlyk)
