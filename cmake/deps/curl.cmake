@@ -20,7 +20,7 @@ function(use_or_fetch_curl out_target)
 	
 	
 	# if consumer use fallback-option
-	if(USE_FALLBACK_CURL)
+	if(KURLYK_USE_FALLBACK_CURL)
 		if (WIN32)
 			if(MSVC)
 				include(cmake/deps/fallbacks/load_curl_msvc.cmake)

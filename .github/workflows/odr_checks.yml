@@ -1,0 +1,40 @@
+name: ODR checks
+
+on:
+  push
+
+jobs:
+  odr:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install MinGW
+        shell: pwsh
+        run: |
+          choco install mingw --no-progress
+          $mingw = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin"
+          $env:PATH = "$mingw;$env:PATH"
+          gcc --version
+          
+      - name: Configure Singltons ODR header
+        shell: pwsh
+        run: cmake -S tests/odr -B build -G "MinGW Makefiles" -Wno-dev -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
+          
+      - name: Build Singltons ODR header
+        shell: pwsh
+        run: cmake --build build
+        
+      - name: Run Singletons ODR test 1
+        shell: pwsh
+        run: |
+          $exe = "build\src_files.exe"
+          & $exe
+          "EXIT=$LASTEXITCODE" | Out-Host
+          
+      - name: Run Singltons ODR test 2
+        shell: pwsh
+        run: |
+          $exe = "build\odr_autoinit.exe"
+          & $exe
+          "EXIT=$LASTEXITCODE" | Out-Host
