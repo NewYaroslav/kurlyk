@@ -15,7 +15,7 @@
 #include "websocket.hpp"
 #endif
 
-#if defined(KURLYK_AUTO_INIT)
+#if KURLYK_AUTO_INIT
 #include "startup/AutoInitializer.hpp"
 #endif
 

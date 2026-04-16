@@ -1,3 +1,6 @@
 /.venv/
 /build/
+/build-*/
+/header_smoke
+/header_smoke.exe
 /tests/**/build*/

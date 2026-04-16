@@ -20,7 +20,7 @@
 #include "utils/CurlErrorCategory.hpp"
 #endif
 
-#ifdef KURLYK_WEBSOCKET_SUPPORT
+#if KURLYK_WEBSOCKET_SUPPORT
 #include "utils/WebSocketErrorCategory.hpp"
 #endif
 

@@ -1,0 +1,163 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, stable, wip/raw-development ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        std: [11, 17]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - run: git submodule update --init --recursive
+      - name: Build smoke test
+        run: c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++${{ matrix.std }} -o header_smoke
+      - name: Run smoke test
+        run: ./header_smoke
+
+  macos:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        std: [11, 17]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - run: git submodule update --init --recursive
+      - name: Build smoke test
+        run: clang++ tests/smoke/header_smoke.cpp -Iinclude -std=c++${{ matrix.std }} -o header_smoke
+      - name: Run smoke test
+        run: ./header_smoke
+
+  windows:
+    name: ${{ matrix.suite }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: mingw-integration
+            generator: MinGW Makefiles
+            preload_deps: OFF
+            openssl_shared: ON
+            curl_shared: ON
+          - suite: msvc-integration
+            generator: Visual Studio 17 2022
+            preload_deps: ON
+            openssl_shared: ON
+            curl_shared: ON
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - run: git submodule update --init --recursive
+
+      - name: Install MinGW
+        if: matrix.generator == 'MinGW Makefiles'
+        shell: pwsh
+        run: |
+          choco install mingw --no-progress
+          $mingw = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin"
+          Add-Content $env:GITHUB_PATH $mingw
+          & "$mingw\gcc.exe" --version
+
+      - name: Set up MSVC
+        if: matrix.generator == 'Visual Studio 17 2022'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure
+        shell: pwsh
+        run: |
+          cmake -S tests/integration `
+                -B build-${{ matrix.suite }} `
+                -G "${{ matrix.generator }}" `
+                -DKURLYK_USE_FALLBACK_OPENSSL=ON `
+                -DKURLYK_USE_FALLBACK_CURL=ON `
+                -DKURLYK_USE_FALLBACK_ASIO=ON `
+                -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON `
+                -DKURLYK_TEST_PRELOAD_DEPS=${{ matrix.preload_deps }} `
+                -DKURLYK_OPENSSL_SHARED=${{ matrix.openssl_shared }} `
+                -DKURLYK_CURL_SHARED=${{ matrix.curl_shared }} `
+                -DCMAKE_CXX_STANDARD=17 `
+                -DCMAKE_CXX_STANDARD_REQUIRED=ON `
+                -Wno-dev
+
+      - name: Build
+        run: cmake --build build-${{ matrix.suite }} --config Release
+
+      - name: Run integration test
+        shell: pwsh
+        run: |
+          if ("${{ matrix.generator }}" -eq "Visual Studio 17 2022") {
+            $exe = "build-${{ matrix.suite }}\Release\integr_test.exe"
+          } else {
+            $exe = "build-${{ matrix.suite }}\integr_test.exe"
+          }
+          if (-not (Test-Path $exe)) {
+            Write-Error "Executable not found: $exe"
+            exit 1
+          }
+          & $exe
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ matrix.suite }}
+          path: |
+            build-${{ matrix.suite }}/CMakeFiles/CMakeOutput.log
+            build-${{ matrix.suite }}/Testing/Temporary/LastTest.log
+          if-no-files-found: ignore
+
+  windows-extras:
+    name: ${{ matrix.suite }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [odr]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - run: git submodule update --init --recursive
+
+      - name: Install MinGW
+        shell: pwsh
+        run: |
+          choco install mingw --no-progress
+          $mingw = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin"
+          Add-Content $env:GITHUB_PATH $mingw
+          & "$mingw\gcc.exe" --version
+
+      - name: Configure ODR checks
+        run: cmake -S tests/odr -B build-odr -G "MinGW Makefiles" -Wno-dev -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
+
+      - name: Build ODR checks
+        run: cmake --build build-odr
+
+      - name: Run singleton ODR check
+        run: .\build-odr\src_files.exe
+
+      - name: Run auto-init ODR check
+        run: .\build-odr\odr_autoinit.exe
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ matrix.suite }}
+          path: |
+            build-odr/CMakeFiles/CMakeOutput.log
+            build-odr/Testing/Temporary/LastTest.log
+          if-no-files-found: ignore

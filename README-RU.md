@@ -3,6 +3,13 @@
 
 **C++ library for easy networking**
 
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)
+![C++ Standard](https://img.shields.io/badge/C++-11--17-orange)
+![CI Windows](https://img.shields.io/github/actions/workflow/status/NewYaroslav/kurlyk/ci.yml?branch=main&label=Windows&logo=windows)
+![CI Linux](https://img.shields.io/github/actions/workflow/status/NewYaroslav/kurlyk/ci.yml?branch=main&label=Linux&logo=linux)
+![CI macOS](https://img.shields.io/github/actions/workflow/status/NewYaroslav/kurlyk/ci.yml?branch=main&label=macOS&logo=apple)
+
 [Do you speak English?](README.md)
 
 ## Описание
@@ -14,11 +21,22 @@
 ### Особенности
 
 - Асинхронное выполнение HTTP и WebSocket запросов
+- Фоновый worker или синхронная обработка
 - Поддержка ограничения скорости для предотвращения перегрузки сети
 - Автоматическое переподключение с настраиваемыми параметрами
+- Прокси, пользовательские заголовки, cookie и таймауты
 - Простота использования через интуитивно понятный интерфейс классов
 - Ориентация на использование в небольших приложениях
-- Поддержка С++11
+- Поддержка C++11 и более новых toolchains
+
+### CI-покрытие
+
+| Платформа | Что проверяется |
+|-----------|-----------------|
+| Windows | Integration-сборки MinGW и MSVC с fallback-зависимостями. |
+| Windows extras | ODR-проверки singleton и auto-init заголовков. |
+| Linux | C++11/C++17 header smoke test с отключенными HTTP/WebSocket. |
+| macOS | C++11/C++17 header smoke test с отключенными HTTP/WebSocket. |
 
 ## Примеры использования
 
@@ -26,10 +44,12 @@
 
 ### Пример использования WebSocket клиента
 
-Этот пример показывает, как подключиться к WebSocket серверу, отправить сообщение и обработать различные события (открытие соединения, получение сообщения, закрытие соединения и ошибки).:
+Этот пример показывает, как подключиться к WebSocket серверу, отправить сообщение и обработать различные события (открытие соединения, получение сообщения, закрытие соединения и ошибки). Здесь используется автоинициализация C++17 по умолчанию; для C++11/14 задайте `KURLYK_AUTO_INIT=0` и вызовите `kurlyk::init()` / `kurlyk::deinit()` вручную.
 
 ```cpp
 #include <kurlyk.hpp>
+#include <thread>
+#include <chrono>
 
 int main() {
     // Создаём клиент WebSocket с указанным URL сервера
@@ -41,14 +61,12 @@ int main() {
             case kurlyk::WebSocketEventType::WS_OPEN:
                 KURLYK_PRINT << "Соединение установлено" << std::endl;
 
-                // Выводим HTTP версию и заголовки
                 KURLYK_PRINT << "HTTP версия: " << event->sender->get_http_version() << std::endl;
                 KURLYK_PRINT << "Заголовки:" << std::endl;
                 for (const auto& header : event->sender->get_headers()) {
                     KURLYK_PRINT << header.first << ": " << header.second << std::endl;
                 }
 
-                // Отправляем сообщение
                 event->sender->send_message("Привет, WebSocket!", 0, [](const std::error_code& ec) {
                     if (ec) {
                         KURLYK_PRINT << "Ошибка отправки сообщения: " << ec.message() << std::endl;
@@ -60,8 +78,6 @@ int main() {
 
             case kurlyk::WebSocketEventType::WS_MESSAGE:
                 KURLYK_PRINT << "Получено сообщение: " << event->message << std::endl;
-
-                // Отправляем ответ
                 event->sender->send_message("Привет снова!");
                 break;
 
@@ -73,20 +89,14 @@ int main() {
             case kurlyk::WebSocketEventType::WS_ERROR:
                 KURLYK_PRINT << "Ошибка: " << event->error_code.message() << std::endl;
                 break;
-        };
+        }
     });
 
-    // Подключаемся к серверу
     KURLYK_PRINT << "Подключение..." << std::endl;
     client.connect();
 
-    // Ожидаем некоторое время для приёма сообщений
     std::this_thread::sleep_for(std::chrono::seconds(10));
-    
-    // Отправляем последнее сообщение через класс клиента
-    client.send_message("Пока!");
 
-    // Отключаемся от сервера
     KURLYK_PRINT << "Отключение..." << std::endl;
     client.disconnect_and_wait();
 
@@ -97,40 +107,50 @@ int main() {
 
 ### Примеры использования HTTP-клиента
 
-Эти примеры показывают, как использовать HTTP-клиент библиотеки kurlyk для выполнения различных запросов и обработки ответов.
+Эти примеры показывают, как использовать HTTP-клиент библиотеки kurlyk для выполнения различных запросов и обработки ответов. В них отключена автоинициализация, потому что `kurlyk::init()` и `kurlyk::deinit()` вызываются вручную.
+
+#### Общий helper для примеров
+
+```cpp
+#define KURLYK_AUTO_INIT 0
+#include <kurlyk.hpp>
+#include <iostream>
+
+void print_response(const kurlyk::HttpResponsePtr& response) {
+    if (!response) {
+        KURLYK_PRINT << "response is null" << std::endl;
+        return;
+    }
+
+    KURLYK_PRINT
+        << "ready: " << std::boolalpha << response->ready << std::endl
+        << "response: " << response->content << std::endl
+        << "error_code: " << response->error_code.message() << std::endl
+        << "status_code: " << response->status_code << std::endl
+        << "----------------------------------------" << std::endl;
+}
+```
 
 #### Пример 1: Выполнение GET и POST запросов с обработчиком ответов
 
 ```cpp
-#include <kurlyk.hpp>
-#include <iostream>
-
-// Функция для вывода информации об ответе
-void print_response(const kurlyk::HttpResponsePtr& response) {
-    KURLYK_PRINT
-        << "ready: " << response->ready << std::endl
-        << "response: " << response->content << std::endl
-        << "error_code: " << response->error_code << std::endl
-        << "status_code: " << response->status_code << std::endl
-        << "----------------------------------------" << std::endl;
-}
-
 int main() {
     kurlyk::init(true);
     kurlyk::HttpClient client("https://httpbin.org");
 
-    // Отправка GET запроса с обработчиком
     client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers(),
         [](const kurlyk::HttpResponsePtr response) {
             print_response(response);
         });
 
-    // Отправка POST запроса с обработчиком
-    client.post("/post", kurlyk::QueryParams(), {{"Content-Type", "application/json"}}, "{\"text\":\"Sample POST Content\"}",
+    client.post("/post", kurlyk::QueryParams(), {{"Content-Type", "application/json"}},
+        "{\"text\":\"Sample POST Content\"}",
         [](const kurlyk::HttpResponsePtr response) {
             print_response(response);
         });
 
+    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
+    std::cin.get();
     kurlyk::deinit();
     return 0;
 }
@@ -139,22 +159,16 @@ int main() {
 #### Пример 2: Выполнение GET и POST запросов с std::future
 
 ```cpp
-#include <kurlyk.hpp>
-#include <iostream>
-
 int main() {
     kurlyk::init(true);
     kurlyk::HttpClient client("https://httpbin.org");
 
-    // Асинхронный GET запрос
     auto future_response = client.get("/get", kurlyk::QueryParams{{"param", "value"}}, kurlyk::Headers());
-    kurlyk::HttpResponsePtr response = future_response.get();
-    print_response(response);
+    print_response(future_response.get());
 
-    // Асинхронный POST запрос
-    auto future_post = client.post("/post", kurlyk::QueryParams(), kurlyk::Headers{{"Header", "Value"}}, "Async POST Content");
-    kurlyk::HttpResponsePtr post_response = future_post.get();
-    print_response(post_response);
+    auto future_post = client.post("/post", kurlyk::QueryParams(),
+        kurlyk::Headers{{"Header", "Value"}}, "Async POST Content");
+    print_response(future_post.get());
 
     kurlyk::deinit();
     return 0;
@@ -164,44 +178,62 @@ int main() {
 #### Пример 3: Настройка прокси и отправка GET запроса
 
 ```cpp
-#include <kurlyk.hpp>
-#include <iostream>
-
 int main() {
     kurlyk::init(true);
     kurlyk::HttpClient client("https://httpbin.org");
 
-    // Устанавливаем параметры прокси
     client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::HTTP);
 
-    // Отправка GET запроса через прокси
     client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers(),
         [](const kurlyk::HttpResponsePtr response) {
             print_response(response);
         });
 
+    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
+    std::cin.get();
     kurlyk::deinit();
     return 0;
 }
 ```
 
-#### Пример 4: GET запрос с использованием http_get функции
+#### Пример 4: GET запрос с callback overload `http_get`
 
 ```cpp
-#include <kurlyk.hpp>
-#include <iostream>
-
 int main() {
     kurlyk::init(true);
 
-    // Асинхронный GET запрос с использованием standalone функции
-    uint64_t request_id = kurlyk::http_get("https://httpbin.org/ip", kurlyk::QueryParams(), kurlyk::Headers(),
+    const uint64_t request_id = kurlyk::http_get(
+        "https://httpbin.org/ip",
+        kurlyk::QueryParams(),
+        kurlyk::Headers(),
         [](const kurlyk::HttpResponsePtr response) {
             print_response(response);
         });
 
-	std::system("pause");
+    KURLYK_PRINT << "Request id: " << request_id << std::endl;
+    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
+    std::cin.get();
+
     kurlyk::cancel_request_by_id(request_id).wait();
+    kurlyk::deinit();
+    return 0;
+}
+```
+
+#### Пример 5: GET запрос с future overload `http_get`
+
+```cpp
+int main() {
+    kurlyk::init(true);
+
+    auto result = kurlyk::http_get(
+        "https://httpbin.org/ip",
+        kurlyk::QueryParams(),
+        kurlyk::Headers());
+
+    KURLYK_PRINT << "Request id: " << result.first << std::endl;
+    print_response(result.second.get());
+
     kurlyk::deinit();
     return 0;
 }
@@ -214,7 +246,7 @@ int main() {
 - **MSVC**
 - **MinGW (GCC)**
 
-Сборка под MSVC пока нестабильна; подтверждённая конфигурация: **C++17** с **Visual Studio 2022 (generator: Visual Studio 17 2022)**. 
+Сборка под MSVC пока нестабильна; подтверждённая конфигурация: **C++17** с **Visual Studio 2022 (generator: Visual Studio 17 2022)**.
 
 ### Зависимости
 
@@ -225,7 +257,7 @@ int main() {
     - [Simple-WebSocket-Server](https://gitlab.com/eidheim/Simple-WebSocket-Server)
     - Boost.Asio или [standalone Asio](https://github.com/chriskohlhoff/asio/tree/master)
     - [OpenSSL](https://slproweb.com/products/Win32OpenSSL.html) (*LTS версия Win64 OpenSSL v3.0.15*)
-    
+
 2. Для HTTP:
     - [libcurl](https://curl.se/windows/)
 
@@ -311,21 +343,23 @@ crypt32
 
 | Dependency | MinGW (Shared) | MinGW (Static) | MSVC (Shared) | MSVC (Static) |
 |------------|---------------|---------------|---------------|---------------|
-| OpenSSL    | ✓             | ✓             | ✓             | ✓             |
-| curl       | ✓             | ✓             | ✓             | ✗             |
+| OpenSSL    | yes           | yes           | yes           | yes           |
+| curl       | yes           | yes           | yes           | no            |
 
-Asio и Simple-WebSocket-Server - header-only библиотеки и подходят для всех указанных вариантов сборок.
+Asio и Simple-WebSocket-Server — header-only библиотеки и подходят для всех указанных вариантов сборок.
 
-#### Опции CMake
-Следующие опции позволят настроить сборку `kurlyk` для загрузки отсутствующих зависимостей:
-- `KURLYK_USE_FALLBACK_OPENSSL` - загрузка OpenSSL
-- `KURLYK_USE_FALLBACK_CURL` - загрузка curl
-- `KURLYK_USE_FALLBACK_ASIO` - загрузка Asio
-- `KURLYK_USE_FALLBACK_SIMPLE_WS_SERVER` - загрузка Simple-WebSocket-Server
+#### Опции CMake fallback
 
-Следующие опции влияют исключительно на fallback и **только если соответствующий включен**:
-- `KURLYK_OPENSSL_SHARED` - определяет загрузку OpenSSL в варианте SHARED
-- `KURLYK_CURL_SHARED` - определяет загрузку curl в варианте SHARED
+Следующие опции позволяют настроить сборку `kurlyk` для загрузки отсутствующих зависимостей:
+
+| Опция | Описание |
+|-------|----------|
+| `KURLYK_USE_FALLBACK_OPENSSL` | Включает fallback OpenSSL. |
+| `KURLYK_USE_FALLBACK_CURL` | Включает fallback libcurl. |
+| `KURLYK_USE_FALLBACK_ASIO` | Включает fallback Asio. |
+| `KURLYK_USE_FALLBACK_SIMPLE_WS_SERVER` | Включает fallback Simple-WebSocket-Server. |
+| `KURLYK_OPENSSL_SHARED` | Загружает OpenSSL как shared library, если fallback включён. |
+| `KURLYK_CURL_SHARED` | Загружает libcurl как shared library, если fallback включён. |
 
 ### Подключение kurlyk
 
@@ -341,30 +375,88 @@ kurlyk/include
 
 **C++11/14**
 
-Перед первым использованием вызовите `kurlyk::init()` **ровно один раз**. Перед завершением программы вызовите `kurlyk::shutdown()` **также один раз**. Повторные вызовы `kurlyk::init()` и `kurlyk::shutdown()` **не поддерживаются** и могут приводить к неопределённому поведению.
+При использовании C++11 или C++14 отключите автоматическую инициализацию и инициализируйте библиотеку вручную:
+
+```cpp
+#define KURLYK_AUTO_INIT 0
+#include <kurlyk.hpp>
+
+int main() {
+    kurlyk::init(true);
+    // ваш сетевой код
+    kurlyk::deinit();
+}
+```
+
+Перед первым использованием вызовите `kurlyk::init()` **ровно один раз**. Перед завершением программы вызовите `kurlyk::deinit()` **также один раз**.
 
 **C++17+ (если включена автоинициализация при сборке с соответствующими макросами)**
 
-Начиная с С++17 доступна потокобезопасная автоматическая инициализация. В этом случае `kurlyk::init()` и `kurlyk::shutdown()` вызывать не требуется. Режим управляется макросами сборки: `KURLYK_AUTO_INIT` и `KURLYK_AUTO_INIT_USE_ASYNC`. См. [Конфигурационные макросы](#конфигурационные-макросы).
+Начиная с С++17 доступна потокобезопасная автоматическая инициализация. В этом случае `kurlyk::init()` и `kurlyk::deinit()` вызывать не требуется. Режим управляется макросами сборки: `KURLYK_AUTO_INIT` и `KURLYK_AUTO_INIT_USE_ASYNC`. См. [Конфигурационные макросы](#конфигурационные-макросы).
+
+`kurlyk::shutdown()` также доступен, когда нужен полный shutdown/reset менеджеров. Для обычного ручного жизненного цикла используйте пару `init()` / `deinit()`.
 
 ## Конфигурационные макросы
 
-Перед подключением `kurlyk.hpp` можно определить следующие макросы для тонкой
-настройки библиотеки:
+Перед подключением `kurlyk.hpp` можно определить следующие макросы для тонкой настройки библиотеки:
 
-- `KURLYK_AUTO_INIT` (по умолчанию `1`) — автоматическая регистрация менеджеров
-  во время статической инициализации.
-- `KURLYK_AUTO_INIT_USE_ASYNC` (по умолчанию `1`) — при включённом auto init
-  запускает сетевой поток в фоне. Установите `0`, если требуется выполнять
-  обработку вручную.
-- `KURLYK_HTTP_SUPPORT` и `KURLYK_WEBSOCKET_SUPPORT` (по умолчанию `1`) —
-  включают или отключают соответствующие подсистемы.
-- `KURLYK_ENABLE_JSON` (по умолчанию `0`) — добавляет вспомогательные функции
-  для JSON-сериализации некоторых типов.
- 
+| Макрос | По умолчанию | Описание |
+|--------|--------------|----------|
+| `KURLYK_AUTO_INIT` | `1` | Автоматическая регистрация менеджеров во время статической инициализации. |
+| `KURLYK_AUTO_INIT_USE_ASYNC` | `1` | При включённом auto init запускает сетевой поток в фоне. Установите `0`, если требуется выполнять обработку вручную. |
+| `KURLYK_HTTP_SUPPORT` | `1` | Включает или отключает HTTP-подсистему. |
+| `KURLYK_WEBSOCKET_SUPPORT` | `1` | Включает или отключает WebSocket-подсистему. |
+| `KURLYK_ENABLE_JSON` | `0` | Добавляет вспомогательные функции для JSON-сериализации некоторых типов. |
+| `KURLYK_USE_JSON` | undefined | Включает enum-to-JSON helpers в `type_utils.hpp`; обычно используется вместе с `KURLYK_ENABLE_JSON`. |
+
+## Структура репозитория
+
+| Путь | Назначение |
+|------|------------|
+| `include/` | Публичная header-only библиотека. |
+| `include/kurlyk/core` | Core-инфраструктура с `NetworkWorker` и базовыми интерфейсами. |
+| `include/kurlyk/http` | HTTP client и request management. |
+| `include/kurlyk/websocket` | WebSocket client и connection management. |
+| `include/kurlyk/types` | Общие enum, cookie, proxy config и helpers. |
+| `include/kurlyk/utils` | Encoding, URL, HTTP, path и error helpers. |
+| `tests/integration` | Windows dependency и integration build checks. |
+| `tests/odr` | Header-only ODR checks. |
+| `tests/smoke` | Portable header smoke checks. |
+| `examples/` | Примеры использования. |
+
+## Тесты
+
+Запуск Windows integration suite:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tests/integration/run_integration_tests.ps1
+```
+
+Запуск ODR suite:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tests/odr/run_odr_tests.ps1
+```
+
+Ручная сборка portable smoke test:
+
+```bash
+c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++11 -o header_smoke
+./header_smoke
+
+c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++17 -o header_smoke
+./header_smoke
+```
+
 ## Документация
 
-В процессе написания. 
+Генерация Doxygen:
+
+```bash
+doxygen Doxyfile
+```
+
+Опубликованная документация: <https://newyaroslav.github.io/kurlyk/>.
 
 ## Лицензия
 
@@ -374,8 +466,6 @@ kurlyk/include
 
 Если у вас возникли вопросы или проблемы при использовании библиотеки, вы можете обратиться к документации или оставить вопрос в разделе Issues на GitHub.
 
-
 Одним словом, **kurlyk!**
 
 ![logo](docs/logo-mini-end.png)
-

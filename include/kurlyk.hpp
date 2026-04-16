@@ -43,8 +43,12 @@
 #ifdef __EMSCRIPTEN__
 #   define KURLYK_USE_EMSCRIPTEN    ///< Defines the use of Emscripten-specific WebSocket handling.
 #else
-#   define KURLYK_USE_CURL          ///< Enables the use of libcurl for HTTP support on non-Emscripten platforms.
-#   define KURLYK_USE_SIMPLEWEB     ///< Enables the use of Simple-WebSocket-Server for WebSocket support on non-Emscripten platforms.
+#   if KURLYK_HTTP_SUPPORT
+#       define KURLYK_USE_CURL      ///< Enables the use of libcurl for HTTP support on non-Emscripten platforms.
+#   endif
+#   if KURLYK_WEBSOCKET_SUPPORT
+#       define KURLYK_USE_SIMPLEWEB ///< Enables the use of Simple-WebSocket-Server for WebSocket support on non-Emscripten platforms.
+#   endif
 #endif
 
 #include "kurlyk/core.hpp"
