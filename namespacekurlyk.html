@@ -239,7 +239,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a26e256217e0559cd0459aa81ad54eb6f" id="r_a26e256217e0559cd0459aa81ad54eb6f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a26e256217e0559cd0459aa81ad54eb6f">init</a> (const bool use_async=true)</td></tr>
 <tr class="memdesc:a26e256217e0559cd0459aa81ad54eb6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the Kurlyk library, setting up necessary managers and the network worker.  <br /></td></tr>
 <tr class="memitem:a874abdd250d6f1c6c8433dd28dc22418" id="r_a874abdd250d6f1c6c8433dd28dc22418"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a874abdd250d6f1c6c8433dd28dc22418">deinit</a> ()</td></tr>
-<tr class="memdesc:a874abdd250d6f1c6c8433dd28dc22418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the Kurlyk library, stopping the network worker and releasing resources.  <br /></td></tr>
+<tr class="memdesc:a874abdd250d6f1c6c8433dd28dc22418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the Kurlyk library, stopping async processing or cleaning up synchronous state.  <br /></td></tr>
 <tr class="memitem:acb3c4a47343ed818b4579d9ad5c918bf" id="r_acb3c4a47343ed818b4579d9ad5c918bf"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acb3c4a47343ed818b4579d9ad5c918bf">process</a> ()</td></tr>
 <tr class="memdesc:acb3c4a47343ed818b4579d9ad5c918bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes pending requests (used in synchronous mode).  <br /></td></tr>
 <tr class="memitem:a3b37e9b3d22d6b803c8885bbd47ad56e" id="r_a3b37e9b3d22d6b803c8885bbd47ad56e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3b37e9b3d22d6b803c8885bbd47ad56e">shutdown</a> ()</td></tr>
@@ -777,8 +777,8 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Deinitializes the Kurlyk library, stopping the network worker and releasing resources. </p>
-<p>Call this function to clean up resources before exiting the application. </p>
+<p>Deinitializes the Kurlyk library, stopping async processing or cleaning up synchronous state. </p>
+<p>Call this function after manual init(true) or init(false) before exiting the application. </p>
 
 <p class="definition">Definition at line <a class="el" href="runtime_8hpp_source.html#l00026">26</a> of file <a class="el" href="runtime_8hpp_source.html">runtime.hpp</a>.</p>
 
