@@ -38,7 +38,7 @@ Manual control is still possible by disabling automatic startup:
 int main() {
     kurlyk::init(true);           // start worker thread explicitly
     // ... use HTTP or WebSocket clients ...
-    kurlyk::deinit();             // stop the worker (or kurlyk::shutdown())
+    kurlyk::deinit();             // stop async processing or clean up sync state
 }
 \endcode
 

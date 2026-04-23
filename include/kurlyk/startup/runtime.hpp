@@ -21,8 +21,8 @@ namespace kurlyk {
         instance.start(use_async);
     }
 
-    /// \brief Deinitializes the Kurlyk library, stopping the network worker and releasing resources.
-    /// Call this function to clean up resources before exiting the application.
+    /// \brief Deinitializes the Kurlyk library, stopping async processing or cleaning up synchronous state.
+    /// Call this function after manual init(true) or init(false) before exiting the application.
     inline void deinit() {
         core::NetworkWorker::get_instance().stop();
     }

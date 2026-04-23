@@ -180,8 +180,17 @@ namespace kurlyk::core {
         ///
         /// Signals the worker thread to stop and waits for it to complete all tasks before fully shutting down.
         void stop() {
-            if (!m_future.valid()) return;
-            m_shutdown = true;
+            {
+                std::lock_guard<std::mutex> locker(m_is_worker_started_mutex);
+                if (!m_is_worker_started && !m_future.valid()) return;
+            }
+
+            const bool was_shutdown = m_shutdown.exchange(true);
+            if (!m_future.valid()) {
+                if (!was_shutdown) shutdown();
+                return;
+            }
+
             notify();
             try {
                 m_future.wait();

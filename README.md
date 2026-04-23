@@ -396,7 +396,7 @@ Call `kurlyk::init()` **exactly once** before using the library and `kurlyk::dei
 Starting from C++17, thread-safe automatic initialization is supported. By default, the library initializes itself automatically, and explicit calls to `kurlyk::init()` and `kurlyk::deinit()` are not required.
 Automatic initialization behavior can be controlled via configuration macros: `KURLYK_AUTO_INIT` and `KURLYK_AUTO_INIT_USE_ASYNC` (see [Configuration Macros](#configuration-macros)).
 
-`kurlyk::shutdown()` is also available when you need a full manager shutdown/reset path. For normal manual lifetime management, use the `init()` / `deinit()` pair.
+`kurlyk::deinit()` is the normal cleanup call for both asynchronous `init(true)` and synchronous `init(false)` modes. `kurlyk::shutdown()` remains available for explicit manager cleanup/reset scenarios, but normal manual lifetime management should use the `init()` / `deinit()` pair.
 
 ## Configuration Macros
 

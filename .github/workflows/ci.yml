@@ -210,6 +210,10 @@ jobs:
         shell: msys2 {0}
         run: ./build-odr/odr_autoinit.exe
 
+      - name: Run synchronous lifecycle check
+        shell: msys2 {0}
+        run: ./build-odr/lifecycle_sync.exe
+
       - name: Upload logs
         if: failure()
         uses: actions/upload-artifact@v4

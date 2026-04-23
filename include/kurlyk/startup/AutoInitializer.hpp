@@ -29,9 +29,9 @@ namespace kurlyk::startup {
             instance.start(KURLYK_AUTO_INIT_USE_ASYNC);
         }
 
-        /// \brief Shuts down the NetworkWorker before program termination.
+        /// \brief Stops the NetworkWorker before program termination.
         ~AutoInitializer() {
-            core::NetworkWorker::get_instance().shutdown();
+            core::NetworkWorker::get_instance().stop();
         }
 
     private:
