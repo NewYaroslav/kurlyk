@@ -47,7 +47,7 @@ jobs:
       matrix:
         include:
           - suite: mingw-integration
-            generator: MinGW Makefiles
+            generator: Ninja
             preload_deps: OFF
             openssl_shared: ON
             curl_shared: ON
@@ -62,20 +62,51 @@ jobs:
           submodules: true
       - run: git submodule update --init --recursive
 
-      - name: Install MinGW
-        if: matrix.generator == 'MinGW Makefiles'
-        shell: pwsh
+      - name: Set up MSYS2
+        if: matrix.suite == 'mingw-integration'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+
+      - name: Verify MinGW toolchain
+        if: matrix.suite == 'mingw-integration'
+        shell: msys2 {0}
         run: |
-          choco install mingw --no-progress
-          $mingw = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin"
-          Add-Content $env:GITHUB_PATH $mingw
-          & "$mingw\gcc.exe" --version
+          gcc --version
+          cmake --version
+          ninja --version
 
       - name: Set up MSVC
         if: matrix.generator == 'Visual Studio 17 2022'
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Configure
+      - name: Configure MinGW integration
+        if: matrix.suite == 'mingw-integration'
+        shell: msys2 {0}
+        run: |
+          cmake -S tests/integration \
+                -B build-${{ matrix.suite }} \
+                -G "${{ matrix.generator }}" \
+                -DCMAKE_C_COMPILER=gcc \
+                -DCMAKE_CXX_COMPILER=g++ \
+                -DKURLYK_USE_FALLBACK_OPENSSL=ON \
+                -DKURLYK_USE_FALLBACK_CURL=ON \
+                -DKURLYK_USE_FALLBACK_ASIO=ON \
+                -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON \
+                -DKURLYK_TEST_PRELOAD_DEPS=${{ matrix.preload_deps }} \
+                -DKURLYK_OPENSSL_SHARED=${{ matrix.openssl_shared }} \
+                -DKURLYK_CURL_SHARED=${{ matrix.curl_shared }} \
+                -DCMAKE_CXX_STANDARD=17 \
+                -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+                -Wno-dev
+
+      - name: Configure MSVC integration
+        if: matrix.suite == 'msvc-integration'
         shell: pwsh
         run: |
           cmake -S tests/integration `
@@ -92,17 +123,25 @@ jobs:
                 -DCMAKE_CXX_STANDARD_REQUIRED=ON `
                 -Wno-dev
 
-      - name: Build
+      - name: Build MinGW integration
+        if: matrix.suite == 'mingw-integration'
+        shell: msys2 {0}
+        run: cmake --build build-${{ matrix.suite }}
+
+      - name: Build MSVC integration
+        if: matrix.suite == 'msvc-integration'
         run: cmake --build build-${{ matrix.suite }} --config Release
 
-      - name: Run integration test
+      - name: Run MinGW integration test
+        if: matrix.suite == 'mingw-integration'
+        shell: msys2 {0}
+        run: ./build-${{ matrix.suite }}/integr_test.exe
+
+      - name: Run MSVC integration test
+        if: matrix.suite == 'msvc-integration'
         shell: pwsh
         run: |
-          if ("${{ matrix.generator }}" -eq "Visual Studio 17 2022") {
-            $exe = "build-${{ matrix.suite }}\Release\integr_test.exe"
-          } else {
-            $exe = "build-${{ matrix.suite }}\integr_test.exe"
-          }
+          $exe = "build-${{ matrix.suite }}\Release\integr_test.exe"
           if (-not (Test-Path $exe)) {
             Write-Error "Executable not found: $exe"
             exit 1
@@ -132,25 +171,44 @@ jobs:
           submodules: true
       - run: git submodule update --init --recursive
 
-      - name: Install MinGW
-        shell: pwsh
+      - name: Set up MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+
+      - name: Verify MinGW toolchain
+        shell: msys2 {0}
         run: |
-          choco install mingw --no-progress
-          $mingw = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin"
-          Add-Content $env:GITHUB_PATH $mingw
-          & "$mingw\gcc.exe" --version
+          gcc --version
+          cmake --version
+          ninja --version
 
       - name: Configure ODR checks
-        run: cmake -S tests/odr -B build-odr -G "MinGW Makefiles" -Wno-dev -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
+        shell: msys2 {0}
+        run: |
+          cmake -S tests/odr \
+                -B build-odr \
+                -G Ninja \
+                -DCMAKE_C_COMPILER=gcc \
+                -DCMAKE_CXX_COMPILER=g++ \
+                -Wno-dev
 
       - name: Build ODR checks
+        shell: msys2 {0}
         run: cmake --build build-odr
 
       - name: Run singleton ODR check
-        run: .\build-odr\src_files.exe
+        shell: msys2 {0}
+        run: ./build-odr/src_files.exe
 
       - name: Run auto-init ODR check
-        run: .\build-odr\odr_autoinit.exe
+        shell: msys2 {0}
+        run: ./build-odr/odr_autoinit.exe
 
       - name: Upload logs
         if: failure()
