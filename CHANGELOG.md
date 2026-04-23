@@ -2,68 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 
-## 2025-12-11
-### Added
-- Added CMakeLists and CMake helper functions for dependency integration and fallback resolution
-### Fixed
-- Resolved One Definition Rule issues
+## [v1.0.2] - 2026-04-23
+- Added CMake build integration with fallback dependency helpers for OpenSSL, libcurl, Asio, and Simple-WebSocket-Server.
+- Added CI coverage for Linux and macOS smoke builds, Windows integration builds, and ODR regression tests.
+- Switched Windows MinGW CI jobs from Chocolatey MinGW path assumptions to MSYS2 UCRT64 with Ninja.
+- Added integration and ODR tests that verify singleton ownership across translation units and auto-initialization behavior.
+- Fixed lifecycle cleanup so `deinit()` cleans up both asynchronous `init(true)` and synchronous `init(false)` modes.
+- Updated auto-initialization cleanup to stop the `NetworkWorker` instead of only resetting managers.
+- Added synchronous lifecycle regression coverage for repeated `deinit()` calls after `init(false)`.
+- Refreshed README and README-RU usage, initialization, dependency, and configuration macro documentation.
+- Added architecture documentation and expanded Doxygen mainpage guidance for startup, error handling, and manual lifecycle usage.
+- Cleaned up public include compatibility around startup and utility headers while preserving the header-only API surface.
+- Updated examples and comments for clearer console output, manual lifecycle handling, and non-pausing execution.
+- Updated the Asio submodule to `asio-1-36-0`.
 
-## 2025-08-08
-### Changed
-- Clarified console output messages
-### Fixed
-- Fixed hang during cancel_requests
-### Added
-- Added error tracing system via KURLYK_HANDLE_ERROR
+## [v1.0.1] - 2025-08-16
+- Documented automatic initialization behavior on the Doxygen mainpage.
+- Clarified example console output and refreshed example comments.
+- Added error handler overview and documented centralized `KURLYK_HANDLE_ERROR` tracing.
+- Documented configuration macros and corrected related Doxygen comments.
+- Replaced example pause calls with `std::cin.get()` and improved usage comments.
+- Fixed a hang during `cancel_requests()` and added error tracing dispatch through `NetworkWorker`.
+- Improved the Doxygen main page structure and configuration macro coverage.
+- Refined README configuration macro documentation.
+- Added architecture and system-map guidance for contributors.
 
-## 2025-07-31
-### Changed
-- Reorganized include structure and filenames 
-### Added
-- Added custom CSS theme and updated Doxygen settings
-
-## 2025-05-21
-### Added
-- Added support for custom valid HTTP status codes in requests
-
-## 2025-05-03
-### Added
-- Added CURL timing metrics (DNS, connect, SSL, etc.) and support for HEAD requests via head_only flag
-
-## 2025-05-01
-### Added
-- Added extended error handling system with ClientError, WebSocketError, and HttpError categories
-### Fixed
-- Set status 451 for blocked sites with no HTTP response
-### Changed
-- Global project reorganization and header structure overhaul
-
-## 2025-02-17
-### Fixed
-- Fixed support Cyrillic characters in file paths
-
-## 2025-02-15
-### Added
-- Added methods for proxy configuration and `Accept-Language` handling
-- Added feature: return HTTP status 499 on timeout
-### Fixed
-- Fixed rate limiter to use the provided time argument in `check_limit`
-
-## 2024-11-17
-### Added
-- Add support for canceling HTTP requests by ID
-- Added setters to `HttpClient` and `HttpRequest`
-- Added generation of `sec-ch-ua` from a standard User-Agent
-- Added email validation utility
-### Fixed
-- Fix bug with User-Agent setup
-
-## 2024-11-14
-### Added
-- Added ability to remove request limits
-- Examples added
-
-## 2024-11-12
-### Fixed
-- Fixed compatibility issues with Boost
-- Fixed compilation errors for C++17
+## [v1.0.0] - 2024-11-12
+- Initial public release with header-only HTTP and WebSocket clients built on libcurl and Simple-WebSocket-Server.
+- Added asynchronous HTTP request processing, callbacks, futures, retries, cancellation by request ID, and rate limiting.
+- Added WebSocket client support with events, sending helpers, reconnection logic, proxy configuration, and timeout settings.
+- Added proxy configuration, custom headers, `Accept-Language`, User-Agent helpers, and `sec-ch-ua` generation.
+- Added HTTP timing metrics, HEAD request support, custom valid status codes, and timeout status handling.
+- Added client, HTTP, curl, and WebSocket error categories with centralized error reporting.
+- Added URL, path, encoding, email, percent-encoding, HTTP parsing, and case-insensitive header utilities.
+- Added examples for simple HTTP requests, futures, proxies, redirects, nested requests, delayed requests, cancellation, and WebSocket echo usage.
+- Reorganized the include structure into core, HTTP, WebSocket, types, utils, and startup modules.
+- Added generated documentation styling and Doxygen configuration.
+- Fixed Boost compatibility issues, C++17 compilation issues, Cyrillic path support, rate limiter timing, and blocked-site status handling.

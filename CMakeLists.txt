@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(kurlyk LANGUAGES CXX)
+project(kurlyk VERSION 1.0.2 LANGUAGES CXX)
 # options
 
 option(KURLYK_USE_STANDALONE_ASIO "Use Asio standalone instead of Boost.Asio" ON)
