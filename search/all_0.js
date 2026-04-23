@@ -1,7 +1,7 @@
 var searchData=
 [
   ['_5fcryptox_5fdata_5fconnection_5fproxy_5fconfig_5fhpp_5fincluded_0',['_CRYPTOX_DATA_CONNECTION_PROXY_CONFIG_HPP_INCLUDED',['../ProxyConfig_8hpp.html#a06bde3e0082cd2d274eac5c8086b59c6',1,'ProxyConfig.hpp']]],
-  ['_5fkurlyk_5fauto_5finitializer_1',['_kurlyk_auto_initializer',['../namespaceanonymous__namespace_02AutoInitializer_8hpp_03.html#a3c34d09d359f9ea271cc760f9592578b',1,'anonymous_namespace{AutoInitializer.hpp}']]],
+  ['_5fkurlyk_5fauto_5finitializer_1',['_kurlyk_auto_initializer',['../namespacekurlyk_1_1startup.html#abe97ac90204b23d161026f06ae802642',1,'kurlyk::startup']]],
   ['_5fkurlyk_5fbase_5fweb_5fsocket_5fclient_5fhpp_5fincluded_2',['_KURLYK_BASE_WEB_SOCKET_CLIENT_HPP_INCLUDED',['../BaseWebSocketClient_8hpp.html#a519686d57c4a3c850242ab02df391807',1,'BaseWebSocketClient.hpp']]],
   ['_5fkurlyk_5fcore_5fhpp_5fincluded_3',['_KURLYK_CORE_HPP_INCLUDED',['../core_8hpp.html#a9ea166f6c6badad4db93d99c2e0c2f2a',1,'core.hpp']]],
   ['_5fkurlyk_5fcore_5finetworktaskmanager_5fhpp_5fincluded_4',['_KURLYK_CORE_INETWORKTASKMANAGER_HPP_INCLUDED',['../INetworkTaskManager_8hpp.html#a59a046e1f384c7e453c00ff55231afde',1,'INetworkTaskManager.hpp']]],

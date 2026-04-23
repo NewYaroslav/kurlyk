@@ -16,7 +16,7 @@ var hierarchy =
       [ "kurlyk::utils::HttpErrorCategory", "classkurlyk_1_1utils_1_1HttpErrorCategory.html", null ],
       [ "kurlyk::utils::WebSocketErrorCategory", "classkurlyk_1_1utils_1_1WebSocketErrorCategory.html", null ]
     ] ],
-    [ "kurlyk::utils::EventQueue< T >", "classkurlyk_1_1utils_1_1EventQueue.html", null ],
+    [ "kurlyk::utils::EventQueue&lt; T &gt;", "classkurlyk_1_1utils_1_1EventQueue.html", null ],
     [ "kurlyk::BaseWebSocketClient::FSMEventData", "structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html", null ],
     [ "kurlyk::HttpBatchRequestHandler", "classkurlyk_1_1HttpBatchRequestHandler.html", null ],
     [ "kurlyk::HttpClient", "classkurlyk_1_1HttpClient.html", null ],

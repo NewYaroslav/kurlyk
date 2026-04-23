@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_5fkurlyk_5fauto_5finitializer_0',['_kurlyk_auto_initializer',['../namespaceanonymous__namespace_02AutoInitializer_8hpp_03.html#a3c34d09d359f9ea271cc760f9592578b',1,'anonymous_namespace{AutoInitializer.hpp}']]]
+  ['_5fkurlyk_5fauto_5finitializer_0',['_kurlyk_auto_initializer',['../namespacekurlyk_1_1startup.html#abe97ac90204b23d161026f06ae802642',1,'kurlyk::startup']]]
 ];

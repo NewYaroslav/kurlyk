@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['library_0',['Kurlyk Library',['../index.html',1,'']]]
+  ['basic_20get_20request_0',['Basic GET request',['../index.html#http_basic',1,'']]]
 ];

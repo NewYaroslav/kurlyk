@@ -1,7 +1,7 @@
 var ClientErrorCategory_8hpp =
 [
     [ "kurlyk::utils::ClientErrorCategory", "classkurlyk_1_1utils_1_1ClientErrorCategory.html", "classkurlyk_1_1utils_1_1ClientErrorCategory" ],
-    [ "std::is_error_code_enum< kurlyk::utils::ClientError >", "structstd_1_1is__error__code__enum_3_01kurlyk_1_1utils_1_1ClientError_01_4.html", null ],
+    [ "std::is_error_code_enum&lt; kurlyk::utils::ClientError &gt;", "structstd_1_1is__error__code__enum_3_01kurlyk_1_1utils_1_1ClientError_01_4.html", null ],
     [ "_KURLYK_UTILS_CLIENT_ERROR_CATEGORY_HPP_INCLUDED", "ClientErrorCategory_8hpp.html#aeff40daa1247b79510ccee1f1295a037", null ],
     [ "kurlyk::utils::ClientError", "namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8", [
       [ "kurlyk::utils::ClientError::CancelledByUser", "namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8ad2aa53d9d798b1a4a99957538b77d38f", null ],
