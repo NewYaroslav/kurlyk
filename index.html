@@ -206,6 +206,7 @@ Error Handling</h1>
 </div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="install_sec"></a>
 Installation</h1>
 <p>Add the <span class="tt">include</span> directory to your compiler search path and include <span class="tt">&lt;<a class="el" href="kurlyk_8hpp.html" title="Main header file for the Kurlyk library, providing HTTP and WebSocket support.">kurlyk.hpp</a>&gt;</span> in your sources. The repository contains third party dependencies used by the examples, but for your own project you need <span class="tt">libcurl</span>, <span class="tt">OpenSSL</span> and either Boost.Asio or standalone Asio together with <b>Simple-WebSocket-Server</b>. Kurlyk itself is header-only and works with C++11 or later.</p>
+<p>Repository examples can also be built through CMake by configuring the root project with <span class="tt">-DKURLYK_BUILD_EXAMPLES=ON</span>.</p>
 <h2 class="doxsection"><a class="anchor" id="config_sec"></a>
 Configuration Macros</h2>
 <p>Several macros can be defined before including the library to tailor the build:</p><ul>
