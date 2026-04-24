@@ -3,12 +3,13 @@
 #define _KURLYK_IWEBSOCKET_CLIENT_HPP_INCLUDED
 
 /// \file IWebSocketClient.hpp
-/// \brief Defines an interface for WebSocket client functionality, including connection management, event handling, and configuration.
+/// \brief Defines a legacy internal interface for WebSocket client functionality.
 
 namespace kurlyk {
 
     /// \class IWebSocketClient
-    /// \brief Interface for a WebSocket client, providing methods for connection management, configuration, and event handling.
+    /// \brief Legacy internal compatibility interface for full WebSocket client implementations.
+    /// Public facades and managers may use backend-specific concrete types directly; this interface remains for compatibility with existing internal code paths.
     class IWebSocketClient : public IWebSocketSender {
     public:
 
@@ -75,7 +76,7 @@ namespace kurlyk {
 
     }; // IWebSocketClient
 
-    /// \brief Alias for a shared pointer to an IWebSocketClient instance.
+    /// \brief Legacy shared-pointer alias for the internal compatibility interface.
     using WebSocketClientPtr = std::shared_ptr<IWebSocketClient>;
 
 } // namespace kurlyk

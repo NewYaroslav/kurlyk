@@ -137,11 +137,27 @@ jobs:
         shell: msys2 {0}
         run: ./build-${{ matrix.suite }}/integr_test.exe
 
+      - name: Run MinGW local websocket integration test
+        if: matrix.suite == 'mingw-integration'
+        shell: msys2 {0}
+        run: ./build-${{ matrix.suite }}/ws_local_test.exe
+
       - name: Run MSVC integration test
         if: matrix.suite == 'msvc-integration'
         shell: pwsh
         run: |
           $exe = "build-${{ matrix.suite }}\Release\integr_test.exe"
+          if (-not (Test-Path $exe)) {
+            Write-Error "Executable not found: $exe"
+            exit 1
+          }
+          & $exe
+
+      - name: Run MSVC local websocket integration test
+        if: matrix.suite == 'msvc-integration'
+        shell: pwsh
+        run: |
+          $exe = "build-${{ matrix.suite }}\Release\ws_local_test.exe"
           if (-not (Test-Path $exe)) {
             Write-Error "Executable not found: $exe"
             exit 1

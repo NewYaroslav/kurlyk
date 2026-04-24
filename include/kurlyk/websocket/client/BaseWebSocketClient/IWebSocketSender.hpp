@@ -3,19 +3,20 @@
 #define _KURLYK_IWEBSOCKET_SENDER_HPP_INCLUDED
 
 /// \file IWebSocketSender.hpp
-/// \brief Defines the interface for a WebSocket sender, providing methods for sending messages and managing connection state.
+/// \brief Defines the public sender abstraction exposed through WebSocket events.
 
 namespace kurlyk {
 
     /// \class IWebSocketSender
-    /// \brief Interface for a WebSocket sender, offering methods to send messages, close connections, and check connection status.
+    /// \brief Public sender abstraction used by WebSocketEventData::sender.
+    /// Allows event handlers to inspect connection metadata and send follow-up messages without knowing the backend type.
     class IWebSocketSender {
     public:
 
         /// \brief Default constructor for IWebSocketSender.
         IWebSocketSender() = default;
 
-        /// \brief Virtual destructor for IWebSocketSender.
+        /// \brief Virtual destructor for safe cleanup through the sender abstraction.
         virtual ~IWebSocketSender() = default;
 
         /// \brief Retrieves the HTTP version used in the WebSocket connection.
@@ -56,7 +57,7 @@ namespace kurlyk {
 
     };
 
-    /// \brief Alias for a shared pointer to an IWebSocketSender instance.
+    /// \brief Shared pointer alias for the sender abstraction used in WebSocketEventData.
     using WebSocketSenderPtr = std::shared_ptr<IWebSocketSender>;
 
 } // namespace kurlyk

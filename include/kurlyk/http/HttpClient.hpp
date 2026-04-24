@@ -3,13 +3,13 @@
 #define _KURLYK_HTTP_CLIENT_HPP_INCLUDED
 
 /// \file HttpClient.hpp
-/// \brief Contains the definition of the HttpClient class, which provides an interface for making HTTP requests to a specific host.
+/// \brief Contains the definition of the concrete HttpClient class for making HTTP requests to a specific host.
 
 namespace kurlyk {
 
     /// \class HttpClient
-    /// \brief A client class for making HTTP requests to a specific host.
-    /// This class provides methods to configure the client, including rate limiting, proxy settings, retry logic, and more.
+    /// \brief Concrete HTTP client for making requests to a specific host.
+    /// Provides configuration helpers for rate limiting, proxy settings, retry logic, and request defaults.
     class HttpClient {
     public:
 
@@ -30,8 +30,8 @@ namespace kurlyk {
         HttpClient(const HttpClient&) = delete;
         void operator=(const HttpClient&) = delete;
 
-        /// \brief Destructor for HttpClient.
-        virtual ~HttpClient() {
+        /// \brief Destroys the client, cancels its active request, and releases owned rate limits.
+        ~HttpClient() {
             cancel_requests();
             auto& instance = HttpRequestManager::get_instance();
             if (is_general_limit_owned) {

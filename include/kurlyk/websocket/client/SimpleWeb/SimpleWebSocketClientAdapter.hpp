@@ -19,6 +19,8 @@ namespace kurlyk {
     public:
         using WsClient  = SimpleWeb::SocketClient<SimpleWeb::WS>;
         using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
+        using BaseWebSocketClient::send_close;
+        using BaseWebSocketClient::send_message;
 
         /// \brief Constructs the WebSocket client and initializes the io_context.
         SimpleWebSocketClientAdapter() :

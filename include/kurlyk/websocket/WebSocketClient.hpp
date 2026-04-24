@@ -3,16 +3,19 @@
 #define _KURLYK_WEBSOCKET_CLIENT_HPP_INCLUDED
 
 /// \file WebSocketClient.hpp
-/// \brief Defines the WebSocketClient class, which provides a simplified interface for managing WebSocket connections.
+/// \brief Defines the WebSocketClient facade for managing WebSocket connections.
+
+#include "WebSocketManager.hpp"
 
 namespace kurlyk {
 
     /// \class WebSocketClient
-    /// \brief Provides an interface for managing WebSocket connections, including configuration, event handling, and message sending.
+    /// \brief Public facade for managing WebSocket connections, events, and message sending.
+    /// Internally owns a backend-specific WebSocket client selected at compile time for the active platform.
     class WebSocketClient {
     public:
 
-        /// \brief Default constructor initializes the WebSocketClient.
+        /// \brief Initializes the WebSocket client facade and its backend-specific implementation.
         WebSocketClient() {
             ensure_initialized();
             m_client = WebSocketManager::get_instance().create_client();
@@ -21,7 +24,7 @@ namespace kurlyk {
             };
         }
 
-        /// \brief Constructor with configuration.
+        /// \brief Initializes the facade with a WebSocket configuration object.
         /// \param config A unique pointer to a WebSocketConfig object.
         /// \param callback Callback invoked when configuration is completed.
         WebSocketClient(std::unique_ptr<WebSocketConfig> config, std::function<void(bool)> callback = nullptr) {
@@ -33,7 +36,7 @@ namespace kurlyk {
             m_client->set_config(std::move(config), std::move(callback));
         }
 
-        /// \brief Constructor with URL for configuration.
+        /// \brief Initializes the facade with URL-based configuration values.
         /// \param url The WebSocket server URL.
         /// \param headers HTTP headers included in the WebSocket connection request.
         /// \param proxy_server Proxy address in <ip:port> format.
@@ -77,7 +80,7 @@ namespace kurlyk {
         WebSocketClient(const WebSocketClient&) = delete;
         WebSocketClient& operator=(const WebSocketClient&) = delete;
 
-        /// \brief Destructor resets the WebSocket client instance.
+        /// \brief Schedules backend shutdown through NetworkWorker before the facade is destroyed.
         virtual ~WebSocketClient() {
             auto client = m_client;
             core::NetworkWorker::get_instance().add_task([client](){
@@ -427,8 +430,8 @@ namespace kurlyk {
         }
 
     private:
-        std::shared_ptr<IWebSocketClient> m_client; ///< Pointer to the WebSocket client instance.
-        std::unique_ptr<WebSocketConfig>  m_config; ///< WebSocket configuration object.
+        selected_backend_client_ptr m_client; ///< Backend-specific WebSocket client selected by compile-time platform macros.
+        std::unique_ptr<WebSocketConfig> m_config; ///< Deferred WebSocket configuration copied into the backend before connect().
 
         /// \brief Initializes the WebSocket configuration if it is not already set.
         void init_config() {

@@ -3,9 +3,13 @@
 #define _KURLYK_WEBSOCKET_MANAGER_HPP_INCLUDED
 
 /// \file WebSocketManager.hpp
-/// \brief Defines the WebSocketManager class for managing WebSocket clients in a singleton pattern.
+/// \brief Defines the WebSocketManager singleton responsible for backend-specific WebSocket client instances.
 
 #include "client/BaseWebSocketClient.hpp"
+
+#ifdef KURLYK_USE_EMSCRIPTEN
+#include "client/Emscripten/EmscriptenWebSocketClientAdapter.hpp"
+#endif
 
 #ifdef KURLYK_USE_SIMPLEWEB
 #include "client/SimpleWeb.hpp"
@@ -13,8 +17,21 @@
 
 namespace kurlyk {
 
+#ifdef KURLYK_USE_EMSCRIPTEN
+    /// \brief Backend client type selected for Emscripten builds.
+    using selected_backend_client_t = EmscriptenWebSocketClientAdapter;
+#elif defined(KURLYK_USE_SIMPLEWEB)
+    /// \brief Backend client type selected for native builds using Simple-WebSocket-Server.
+    using selected_backend_client_t = SimpleWebSocketClientAdapter;
+#endif
+
+    /// \brief Shared pointer to the compile-time selected backend client type.
+    using selected_backend_client_ptr = std::shared_ptr<selected_backend_client_t>;
+    /// \brief Weak pointer to the compile-time selected backend client type.
+    using selected_backend_client_weak_ptr = std::weak_ptr<selected_backend_client_t>;
+
     /// \class WebSocketManager
-    /// \brief Manages WebSocket client instances, providing centralized control for processing, resetting, and lifecycle management.
+    /// \brief Manages backend-specific WebSocket client instances and coordinates their lifecycle.
     class WebSocketManager final : public core::INetworkTaskManager {
     public:
 
@@ -25,7 +42,7 @@ namespace kurlyk {
             return *instance;
         }
 
-        /// \brief Processes all active WebSocket clients managed by this instance.
+        /// \brief Processes all active backend-specific WebSocket clients managed by this instance.
         ///
         /// Iterates over each WebSocket client and calls its `process` method to handle pending operations.
         /// Automatically removes clients that are no longer active from the internal client list.
@@ -37,12 +54,12 @@ namespace kurlyk {
                 }
             }
             // Remove expired clients from the list
-            m_client_list.remove_if([](const std::weak_ptr<IWebSocketClient>& client_weak_ptr) {
+            m_client_list.remove_if([](const selected_backend_client_weak_ptr& client_weak_ptr) {
                 return client_weak_ptr.expired();
             });
         }
 
-        /// \brief Shuts down all active WebSocket clients managed by this instance.
+        /// \brief Shuts down all active backend-specific WebSocket clients managed by this instance.
         ///
         /// Iterates over each WebSocket client and calls its `shutdown` method to stop and clear its state.
         void shutdown() override {
@@ -54,7 +71,7 @@ namespace kurlyk {
             }
         }
 
-        /// \brief Checks if any WebSocket client is currently running.
+        /// \brief Checks if any managed backend-specific WebSocket client is currently running.
         /// \return True if at least one WebSocket client is in a running state, otherwise false.
         const bool is_loaded() const override {
             std::lock_guard<std::mutex> lock(m_client_list_mutex);
@@ -66,26 +83,26 @@ namespace kurlyk {
             return false;
         }
 
-        /// \brief Creates and returns a new WebSocket client instance based on the platform defined by compilation flags.
-        /// \return A shared pointer to the created IWebSocketClient instance.
-        std::shared_ptr<IWebSocketClient> create_client() {
-            std::shared_ptr<IWebSocketClient> client;
+        /// \brief Creates and returns a new backend-specific WebSocket client selected by compilation flags.
+        /// \return A shared pointer to the created backend-specific WebSocket client instance.
+        selected_backend_client_ptr create_client() {
+            selected_backend_client_ptr client;
 
 #           ifdef KURLYK_USE_EMSCRIPTEN
             // Client for the Emscripten platform
 #           if __cplusplus >= 201402L
-            client = std::make_shared<EmscriptenWebSocketClientAdapter>();
+            client = std::make_shared<selected_backend_client_t>();
 #           else
-            client = std::shared_ptr<EmscriptenWebSocketClientAdapter>(new EmscriptenWebSocketClientAdapter());
+            client = selected_backend_client_ptr(new selected_backend_client_t());
 #           endif
 #           endif
 
 #           ifdef KURLYK_USE_SIMPLEWEB
             // Client for other platforms
 #           if __cplusplus >= 201402L
-            client = std::make_shared<SimpleWebSocketClientAdapter>();
+            client = std::make_shared<selected_backend_client_t>();
 #           else
-            client = std::shared_ptr<SimpleWebSocketClientAdapter>(new SimpleWebSocketClientAdapter());
+            client = selected_backend_client_ptr(new selected_backend_client_t());
 #           endif
 #           endif
 
@@ -96,7 +113,7 @@ namespace kurlyk {
 
     private:
         mutable std::mutex                          m_client_list_mutex; ///< Mutex for synchronizing access to the client list.
-        std::list<std::weak_ptr<IWebSocketClient>>  m_client_list;       ///< List of WebSocket clients managed by the WebSocketManager.
+        std::list<selected_backend_client_weak_ptr> m_client_list;       ///< List of managed backend-specific WebSocket clients.
 
         /// \brief Private constructor to enforce singleton pattern.
         WebSocketManager() = default;

@@ -44,5 +44,6 @@ This flow illustrates how an HTTP request moves from the caller through `HttpCli
 - HTTP and WebSocket managers apply rate limits and retries consistently.
 - Error dispatch flows through `NetworkWorker`; maintain exception safety.
 - Public APIs rely on value semantics and RAII.
+- `WebSocketClient` acts as a facade over a backend selected at compile time, while event payloads keep the stable `IWebSocketSender` abstraction for follow-up actions.
 - Configuration is compile-time via macros with minimal defaults.
 - Code remains portable across C++11/17 compilers and network stacks.
