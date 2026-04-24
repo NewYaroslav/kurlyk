@@ -56,6 +56,9 @@ int main() {
     std::promise<void> done_promise;
     auto done_future = done_promise.get_future();
     std::atomic<bool> done{false};
+    std::atomic<bool> accepted_send_callback_called(false);
+    std::atomic<bool> rejected_submit_callback_called(false);
+    std::atomic<bool> rejected_bool_callback_called(false);
     std::vector<kurlyk::WebSocketEventType> events;
     std::string echoed_message;
     long open_status_code = 0;
@@ -63,6 +66,7 @@ int main() {
     kurlyk::init(true);
     {
         kurlyk::WebSocketClient client("ws://127.0.0.1:" + std::to_string(port) + "/echo");
+        client.set_max_send_queue_size(1);
         client.on_event([&](std::unique_ptr<kurlyk::WebSocketEventData> event) {
             events.push_back(event->event_type);
             switch (event->event_type) {
@@ -70,14 +74,47 @@ int main() {
                 open_status_code = event->status_code;
                 require(static_cast<bool>(event->sender), "WS_OPEN sender is null");
                 require(event->sender->is_connected(), "WS_OPEN sender is not connected");
-                require(event->sender->send_message("local-echo-check"),
-                        "Failed to send message from WS_OPEN sender");
+                {
+                    kurlyk::SubmitResult send_result = event->sender->submit_message(
+                        "local-echo-check",
+                        0,
+                        [&accepted_send_callback_called](const std::error_code& ec) {
+                            require(!ec, "Accepted websocket send callback reported an error");
+                            accepted_send_callback_called = true;
+                        });
+                    require(send_result.accepted, "Failed to submit first message from WS_OPEN sender");
+
+                    kurlyk::SubmitResult rejected_submit = event->sender->submit_message(
+                        "overflow-submit",
+                        0,
+                        [&rejected_submit_callback_called](const std::error_code&) {
+                            rejected_submit_callback_called = true;
+                        });
+                    require(!rejected_submit.accepted, "Second websocket submit should be rejected");
+                    require(rejected_submit.error_code ==
+                            kurlyk::utils::make_error_code(kurlyk::utils::ClientError::QueueLimitExceeded),
+                            "Second websocket submit returned an unexpected rejection code");
+                    require(!rejected_submit_callback_called.load(),
+                            "Rejected websocket submit callback was called synchronously");
+
+                    const bool rejected_bool = event->sender->send_message(
+                        "overflow-bool",
+                        0,
+                        [&rejected_bool_callback_called](const std::error_code&) {
+                            rejected_bool_callback_called = true;
+                        });
+                    require(!rejected_bool, "WebSocket bool wrapper should reject when the send queue is full");
+                    require(!rejected_bool_callback_called.load(),
+                            "Rejected websocket bool wrapper callback was called synchronously");
+                }
                 break;
             case kurlyk::WebSocketEventType::WS_MESSAGE:
                 echoed_message = event->message;
                 require(static_cast<bool>(event->sender), "WS_MESSAGE sender is null");
-                require(event->sender->send_close(1000, "done"),
-                        "Failed to send close from WS_MESSAGE sender");
+                {
+                    kurlyk::SubmitResult close_result = event->sender->submit_close(1000, "done");
+                    require(close_result.accepted, "Failed to submit close from WS_MESSAGE sender");
+                }
                 break;
             case kurlyk::WebSocketEventType::WS_CLOSE:
                 if (!done.exchange(true)) {
@@ -110,6 +147,9 @@ int main() {
     require(events[2] == kurlyk::WebSocketEventType::WS_CLOSE, "Third websocket event is not WS_CLOSE");
     require(open_status_code == 101, "Unexpected websocket open status code");
     require(echoed_message == "local-echo-check", "Unexpected echoed websocket message");
+    require(accepted_send_callback_called.load(), "Accepted websocket send callback was not called");
+    require(!rejected_submit_callback_called.load(), "Rejected websocket submit callback should never be called");
+    require(!rejected_bool_callback_called.load(), "Rejected websocket bool wrapper callback should never be called");
 
     std::cout << "Local websocket integration test passed" << std::endl;
     return 0;

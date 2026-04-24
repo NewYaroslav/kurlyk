@@ -195,6 +195,18 @@ namespace kurlyk {
             return m_client->is_connected();
         }
 
+        /// \brief Attempts to submit a message through the WebSocket.
+        /// \param message The content of the message to be sent.
+        /// \param rate_limit_id The ID of the rate limit to apply to this message. A value of 0 indicates the default or no rate limit.
+        /// \param callback An optional callback to execute after sending the message.
+        /// \return SubmitResult describing whether the message was successfully queued.
+        SubmitResult submit_message(
+                const std::string &message,
+                long rate_limit_id = 0,
+                std::function<void(const std::error_code&)> callback = nullptr) {
+            return m_client->submit_message(message, rate_limit_id, std::move(callback));
+        }
+
         /// \brief Sends a message through the WebSocket.
         /// \param message The content of the message to be sent.
         /// \param rate_limit_id The ID of the rate limit to apply to this message. A value of 0 indicates the default or no rate limit.
@@ -204,7 +216,19 @@ namespace kurlyk {
                 const std::string &message,
                 long rate_limit_id = 0,
                 std::function<void(const std::error_code&)> callback = nullptr) {
-            return m_client->send_message(message, rate_limit_id, std::move(callback));
+            return submit_message(message, rate_limit_id, std::move(callback)).accepted;
+        }
+
+        /// \brief Attempts to submit a close request to the WebSocket server.
+        /// \param status The status code for the close request (default: 1000).
+        /// \param reason Optional reason for closing the connection.
+        /// \param callback Optional callback to execute after sending the close request.
+        /// \return SubmitResult describing whether the close request was successfully queued.
+        SubmitResult submit_close(
+                const int status = 1000,
+                const std::string &reason = std::string(),
+                std::function<void(const std::error_code&)> callback = nullptr) {
+            return m_client->submit_close(status, reason, std::move(callback));
         }
 
         /// \brief Sends a close request to the WebSocket server.
@@ -216,7 +240,7 @@ namespace kurlyk {
                 const int status = 1000,
                 const std::string &reason = std::string(),
                 std::function<void(const std::error_code&)> callback = nullptr) {
-            return m_client->send_close(status, reason, std::move(callback));
+            return submit_close(status, reason, std::move(callback)).accepted;
         }
 
         /// \brief Retrieves all pending WebSocket events in a batch.
@@ -375,6 +399,13 @@ namespace kurlyk {
         void set_request_timeout(long request_timeout) {
             init_config();
             return m_config->set_request_timeout(request_timeout);
+        }
+
+        /// \brief Sets the maximum number of outbound send operations queued for this client.
+        /// \param max_send_queue_size Queue limit, or `0` to keep the send queue unbounded.
+        void set_max_send_queue_size(std::size_t max_send_queue_size) {
+            init_config();
+            return m_config->set_max_send_queue_size(max_send_queue_size);
         }
 
         /// \brief Sets the path to the CA certificate file.

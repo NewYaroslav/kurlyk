@@ -28,19 +28,37 @@ namespace kurlyk {
         /// \brief Adds a new HTTP request to the manager.
         /// \param request_ptr Unique pointer to the HTTP request object containing request details.
         /// \param callback Callback function invoked when the request completes.
-        /// \return True if the request was successfully added, false if the manager is shutting down.
+        /// \return True if the request was successfully added, false if admission was rejected.
         const bool add_request(
                 std::unique_ptr<HttpRequest> request_ptr,
                 HttpResponseCallback callback) {
-            if (m_shutdown) return false;
+            return submit_request(std::move(request_ptr), std::move(callback)).accepted;
+        }
+
+        /// \brief Attempts to enqueue a new HTTP request and reports the admission result.
+        /// \param request_ptr Unique pointer to the HTTP request object containing request details.
+        /// \param callback Callback function invoked when the request completes.
+        /// \return SubmitResult describing whether the request was accepted into the pending queue.
+        SubmitResult submit_request(
+                std::unique_ptr<HttpRequest> request_ptr,
+                HttpResponseCallback callback) {
             std::lock_guard<std::mutex> lock(m_mutex);
+            if (m_shutdown) {
+                return SubmitResult{false, utils::make_error_code(utils::ClientError::ShuttingDown)};
+            }
+
+            const std::size_t queue_limit = m_max_pending_requests.load();
+            if (queue_limit && m_pending_requests.size() >= queue_limit) {
+                return SubmitResult{false, utils::make_error_code(utils::ClientError::QueueLimitExceeded)};
+            }
+
 #           if __cplusplus >= 201402L
             m_pending_requests.push_back(std::make_unique<HttpRequestContext>(std::move(request_ptr), std::move(callback)));
 #           else
             m_pending_requests.push_back(std::unique_ptr<HttpRequestContext>(
                 new HttpRequestContext(std::move(request_ptr), std::move(callback))));
 #           endif
-            return true;
+            return SubmitResult{true, std::error_code()};
         }
 
         /// \brief Creates a rate limit with specified parameters.
@@ -62,6 +80,18 @@ namespace kurlyk {
         /// \return A new unique request ID.
         uint64_t generate_request_id() {
             return m_request_id_counter++;
+        }
+
+        /// \brief Sets the maximum number of pending requests accepted into the global queue.
+        /// \param max_pending_requests Queue limit, or `0` to keep the queue unbounded.
+        void set_max_pending_requests(std::size_t max_pending_requests) {
+            m_max_pending_requests.store(max_pending_requests);
+        }
+
+        /// \brief Returns the current maximum pending request count.
+        /// \return Configured queue limit, or `0` if the queue is unbounded.
+        std::size_t max_pending_requests() const {
+            return m_max_pending_requests.load();
         }
 
         /// \brief Cancels a request by its unique identifier.
@@ -116,6 +146,7 @@ namespace kurlyk {
         HttpRateLimiter                                     m_rate_limiter;           ///< Rate limiter for controlling request frequency.
         std::atomic<uint64_t>                               m_request_id_counter = ATOMIC_VAR_INIT(1); ///< Atomic counter for unique request IDs.
         std::atomic<bool>                                   m_shutdown = ATOMIC_VAR_INIT(false); ///< Flag indicating if shutdown has been requested.
+        std::atomic<std::size_t>                            m_max_pending_requests = ATOMIC_VAR_INIT(0); ///< Maximum number of requests accepted into the pending queue, or zero if unbounded.
 
         /// \brief Processes all pending requests, moving valid requests to active batches or marking them as failed.
         void process_pending_requests() {

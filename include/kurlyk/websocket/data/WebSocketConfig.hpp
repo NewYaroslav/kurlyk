@@ -27,6 +27,7 @@ namespace kurlyk {
         long idle_timeout       = 0;    ///< Maximum idle time for the WebSocket connection in seconds (0 means no timeout).
         long reconnect_delay    = 5;    ///< Delay in seconds between reconnection attempts.
         long reconnect_attempts = 0;    ///< Number of reconnection attempts (0 means infinite attempts).
+        std::size_t max_send_queue_size = 0; ///< Maximum number of queued outbound send operations, or zero if unbounded.
         bool reconnect      = true;     ///< Enables automatic reconnection if true.
         bool verify_cert    = true;     ///< If true, verifies the server’s certificate and hostname according to RFC 2818.
 
@@ -174,6 +175,12 @@ namespace kurlyk {
         /// \param request_timeout Request timeout in seconds (0 means no timeout).
         void set_request_timeout(long request_timeout) {
             this->request_timeout = request_timeout;
+        }
+
+        /// \brief Sets the maximum number of outbound send operations queued for this client.
+        /// \param max_send_queue_size Queue limit, or `0` to keep the send queue unbounded.
+        void set_max_send_queue_size(std::size_t max_send_queue_size) {
+            this->max_send_queue_size = max_send_queue_size;
         }
 
         /// \brief Sets the path to the CA certificate file.

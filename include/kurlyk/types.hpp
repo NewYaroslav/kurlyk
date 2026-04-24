@@ -23,6 +23,7 @@
 
 // Enumerations and conversion utilities
 #include "types/enums.hpp"
+#include "types/SubmitResult.hpp"
 #include "types/type_utils.hpp"
 #include "types/Cookie.hpp"
 

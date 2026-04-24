@@ -137,6 +137,11 @@ jobs:
         shell: msys2 {0}
         run: ./build-${{ matrix.suite }}/integr_test.exe
 
+      - name: Run MinGW backpressure integration test
+        if: matrix.suite == 'mingw-integration'
+        shell: msys2 {0}
+        run: ./build-${{ matrix.suite }}/backpressure_test.exe
+
       - name: Run MinGW local websocket integration test
         if: matrix.suite == 'mingw-integration'
         shell: msys2 {0}
@@ -147,6 +152,17 @@ jobs:
         shell: pwsh
         run: |
           $exe = "build-${{ matrix.suite }}\Release\integr_test.exe"
+          if (-not (Test-Path $exe)) {
+            Write-Error "Executable not found: $exe"
+            exit 1
+          }
+          & $exe
+
+      - name: Run MSVC backpressure integration test
+        if: matrix.suite == 'msvc-integration'
+        shell: pwsh
+        run: |
+          $exe = "build-${{ matrix.suite }}\Release\backpressure_test.exe"
           if (-not (Test-Path $exe)) {
             Write-Error "Executable not found: $exe"
             exit 1

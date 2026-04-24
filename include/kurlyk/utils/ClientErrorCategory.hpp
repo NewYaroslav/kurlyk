@@ -15,6 +15,8 @@ namespace kurlyk::utils {
         ClientNotInitialized,       ///< Operation attempted before client was properly initialized.
         InvalidConfiguration,       ///< Provided configuration is incomplete or invalid.
         NotConnected,               ///< Operation requires an active connection but none exists.
+        QueueLimitExceeded,         ///< Operation was rejected because the bounded queue is already full.
+        ShuttingDown,               ///< Operation was rejected because the owning subsystem is shutting down.
     };
 
     /// \class ClientErrorCategory
@@ -37,6 +39,10 @@ namespace kurlyk::utils {
                     return "Invalid or missing client configuration";
                 case ClientError::NotConnected:
                     return "Operation failed: client is not connected";
+                case ClientError::QueueLimitExceeded:
+                    return "Operation was rejected because the queue limit was exceeded";
+                case ClientError::ShuttingDown:
+                    return "Operation was rejected because the client is shutting down";
                 default:
                     return "Unknown HTTP client error";
             }

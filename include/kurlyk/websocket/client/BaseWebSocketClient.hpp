@@ -94,7 +94,35 @@ namespace kurlyk {
             return event;
         }
 
-        /// \brief Send a message through the WebSocket.
+        /// \brief Attempts to submit a message through the WebSocket.
+        /// \param message The message to send.
+        /// \param rate_limit_id The rate limit type to apply.
+        /// \param callback The callback to be invoked after sending.
+        /// \return SubmitResult describing whether the message was successfully queued.
+        SubmitResult submit_message(
+                const std::string &message,
+                long rate_limit_id,
+                std::function<void(const std::error_code& ec)> callback = nullptr) override final {
+            if (message.empty()) {
+                return SubmitResult{false, utils::make_error_code(utils::ClientError::InvalidConfiguration)};
+            }
+            if (!is_connected()) {
+                return SubmitResult{false, utils::make_error_code(utils::ClientError::NotConnected)};
+            }
+            std::lock_guard<std::mutex> lock(m_message_queue_mutex);
+            const std::size_t queue_limit = m_max_send_queue_size.load();
+            if (queue_limit && m_message_queue.size() >= queue_limit) {
+                return SubmitResult{false, utils::make_error_code(utils::ClientError::QueueLimitExceeded)};
+            }
+#           if __cplusplus >= 201402L
+            m_message_queue.push_back(std::make_shared<WebSocketSendInfo>(message, rate_limit_id, false, 0, std::move(callback)));
+#           else
+            m_message_queue.push_back(std::shared_ptr<WebSocketSendInfo>(new WebSocketSendInfo(message, rate_limit_id, false, 0, std::move(callback))));
+#           endif
+            return SubmitResult{true, std::error_code()};
+        }
+
+        /// \brief Sends a message through the WebSocket.
         /// \param message The message to send.
         /// \param rate_limit_id The rate limit type to apply.
         /// \param callback The callback to be invoked after sending.
@@ -103,17 +131,35 @@ namespace kurlyk {
                 const std::string &message,
                 long rate_limit_id,
                 std::function<void(const std::error_code& ec)> callback = nullptr) override final {
-            if (message.empty() || !is_connected()) return false;
-            std::lock_guard<std::mutex> lock(m_message_queue_mutex);
-#           if __cplusplus >= 201402L
-            m_message_queue.push_back(std::make_shared<WebSocketSendInfo>(message, rate_limit_id, false, 0, std::move(callback)));
-#           else
-            m_message_queue.push_back(std::shared_ptr<WebSocketSendInfo>(new WebSocketSendInfo(message, rate_limit_id, false, 0, std::move(callback))));
-#           endif
-            return true;
+            return submit_message(message, rate_limit_id, std::move(callback)).accepted;
         }
 
-        /// \brief Send a close request through the WebSocket.
+        /// \brief Attempts to submit a close request through the WebSocket.
+        /// \param status The status code to send with the close request.
+        /// \param reason The reason for closing the connection.
+        /// \param callback The callback to be invoked after sending.
+        /// \return SubmitResult describing whether the close request was successfully queued.
+        SubmitResult submit_close(
+                const int status = 1000,
+                const std::string &reason = std::string(),
+                std::function<void(const std::error_code& ec)> callback = nullptr) override final {
+            if (!is_connected()) {
+                return SubmitResult{false, utils::make_error_code(utils::ClientError::NotConnected)};
+            }
+            std::lock_guard<std::mutex> lock(m_message_queue_mutex);
+            const std::size_t queue_limit = m_max_send_queue_size.load();
+            if (queue_limit && m_message_queue.size() >= queue_limit) {
+                return SubmitResult{false, utils::make_error_code(utils::ClientError::QueueLimitExceeded)};
+            }
+#           if __cplusplus >= 201402L
+            m_message_queue.push_back(std::make_shared<WebSocketSendInfo>(reason, 0, true, status, std::move(callback)));
+#           else
+            m_message_queue.push_back(std::shared_ptr<WebSocketSendInfo>(new WebSocketSendInfo(reason, 0, true, status, std::move(callback))));
+#           endif
+            return SubmitResult{true, std::error_code()};
+        }
+
+        /// \brief Sends a close request through the WebSocket.
         /// \param status The status code to send with the close request.
         /// \param reason The reason for closing the connection.
         /// \param callback The callback to be invoked after sending.
@@ -122,14 +168,7 @@ namespace kurlyk {
                 const int status = 1000,
                 const std::string &reason = std::string(),
                 std::function<void(const std::error_code& ec)> callback = nullptr) override final {
-            if (!is_connected()) return false;
-            std::lock_guard<std::mutex> lock(m_message_queue_mutex);
-#           if __cplusplus >= 201402L
-            m_message_queue.push_back(std::make_shared<WebSocketSendInfo>(reason, 0, true, status, std::move(callback)));
-#           else
-            m_message_queue.push_back(std::shared_ptr<WebSocketSendInfo>(new WebSocketSendInfo(reason, 0, true, status, std::move(callback))));
-#           endif
-            return true;
+            return submit_close(status, reason, std::move(callback)).accepted;
         }
 
 
@@ -337,6 +376,7 @@ namespace kurlyk {
         long                                    m_reconnect_attempt = 0;    ///< Counter for the number of reconnection attempts.
         std::atomic<bool>                       m_is_running = ATOMIC_VAR_INIT(false);  ///< Atomic flag indicating if the client is running.
         std::atomic<bool>                       m_is_connected = ATOMIC_VAR_INIT(false);///< Atomic flag indicating if the client is connected.
+        std::atomic<std::size_t>                m_max_send_queue_size = ATOMIC_VAR_INIT(0); ///< Maximum number of queued outbound send operations, or zero if unbounded.
 
         WebSocketRateLimiter                    m_rate_limiter;             ///< Rate limiter for controlling the frequency of message sending.
         std::chrono::steady_clock::time_point   m_close_time;               ///< Timestamp of the last WebSocket close event, used for reconnection timing.
@@ -401,6 +441,7 @@ namespace kurlyk {
                 m_config = std::move(event.config_data);
                 if (m_config) {
                     m_rate_limiter.set_limit(m_config->rate_limits);
+                    m_max_send_queue_size.store(m_config->max_send_queue_size);
                     if (event.callback) event.callback(true);
                 } else {
                     if (event.callback) event.callback(false);
@@ -467,6 +508,7 @@ namespace kurlyk {
                     break;
                 }
                 m_rate_limiter.set_limit(m_config->rate_limits);
+                m_max_send_queue_size.store(m_config->max_send_queue_size);
 
                 m_reconnect_attempt = 0;
                 if (!init_websocket()) {
@@ -535,6 +577,7 @@ namespace kurlyk {
                         break;
                     }
                     m_rate_limiter.set_limit(m_config->rate_limits);
+                    m_max_send_queue_size.store(m_config->max_send_queue_size);
 
                     m_reconnect_attempt = 0;
                     if (!init_websocket()) {
@@ -579,6 +622,7 @@ namespace kurlyk {
                         break;
                     }
                     m_rate_limiter.set_limit(m_config->rate_limits);
+                    m_max_send_queue_size.store(m_config->max_send_queue_size);
 
                     m_reconnect_attempt = 0;
                     if (!init_websocket()) {
@@ -665,6 +709,7 @@ namespace kurlyk {
                     break;
                 }
                 m_rate_limiter.set_limit(m_config->rate_limits);
+                m_max_send_queue_size.store(m_config->max_send_queue_size);
 
                 m_reconnect_attempt = 0;
                 if (!init_websocket()) {

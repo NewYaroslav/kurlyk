@@ -23,6 +23,7 @@
 - Асинхронное выполнение HTTP и WebSocket запросов
 - Фоновый worker или синхронная обработка
 - Поддержка ограничения скорости для предотвращения перегрузки сети
+- Опциональная защита от неограниченного роста очередей через bounded admission/backpressure
 - Автоматическое переподключение с настраиваемыми параметрами
 - Прокси, пользовательские заголовки, cookie и таймауты
 - Простота использования через интуитивно понятный интерфейс классов
@@ -33,10 +34,82 @@
 
 | Платформа | Что проверяется |
 |-----------|-----------------|
-| Windows | Integration-сборки MinGW и MSVC с fallback-зависимостями. |
+| Windows | Integration-сборки MinGW и MSVC с fallback-зависимостями, HTTP backpressure regression и локальным WebSocket integration coverage. |
 | Windows extras | ODR-проверки singleton и auto-init заголовков. |
 | Linux | C++11/C++17 header smoke test с отключенными HTTP/WebSocket. |
 | macOS | C++11/C++17 header smoke test с отключенными HTTP/WebSocket. |
+
+## Backpressure и переполнение очередей
+
+Теперь в kurlyk есть два разных уровня управления потоком:
+
+- rate limiting замедляет выпуск запросов и сообщений в сетевой backend;
+- backpressure ограничивает объём работы, принимаемой в выбранные очереди.
+
+Что именно ограничивается сейчас:
+
+- HTTP использует глобальный лимит pending queue через `kurlyk::set_max_pending_requests(...)`;
+- WebSocket использует per-client лимит очереди исходящих send/close через `WebSocketClient::set_max_send_queue_size(...)`;
+- значение `0` означает unbounded queue.
+
+Публичные admission helper'ы:
+
+- `kurlyk::SubmitResult`
+- `kurlyk::submit_http_request(...)`
+- `IWebSocketSender::submit_message(...)`
+- `IWebSocketSender::submit_close(...)`
+- `WebSocketClient::submit_message(...)`
+- `WebSocketClient::submit_close(...)`
+
+Совместимость:
+
+- старые `bool`-API сохранены как wrappers;
+- HTTP future-overload при admission reject становится ready сразу и возвращает `HttpResponse` с `error_code`, а не бросает `runtime_error`;
+- в этом проходе не ограничиваются очереди `NetworkWorker`, WebSocket FSM и накопленные event queues.
+
+### Пример HTTP backpressure
+
+```cpp
+kurlyk::init(true);
+kurlyk::set_max_pending_requests(64);
+
+std::unique_ptr<kurlyk::HttpRequest> request(new kurlyk::HttpRequest());
+request->request_id = kurlyk::generate_request_id();
+request->method = "GET";
+request->set_url("https://httpbin.org/get", kurlyk::QueryParams());
+
+kurlyk::SubmitResult submit = kurlyk::submit_http_request(
+    std::move(request),
+    [](kurlyk::HttpResponsePtr response) {
+        if (response && response->error_code) {
+            std::cout << "HTTP runtime error: " << response->error_code.message() << std::endl;
+        }
+    });
+
+if (!submit) {
+    std::cout << "HTTP submit rejected: " << submit.error_code.message() << std::endl;
+}
+```
+
+### Пример WebSocket backpressure
+
+```cpp
+kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
+client.set_max_send_queue_size(32);
+
+kurlyk::SubmitResult submit = client.submit_message(
+    "Hello with admission check",
+    0,
+    [](const std::error_code& ec) {
+        if (ec) {
+            std::cout << "Send failed: " << ec.message() << std::endl;
+        }
+    });
+
+if (!submit) {
+    std::cout << "WebSocket submit rejected: " << submit.error_code.message() << std::endl;
+}
+```
 
 ## Примеры использования
 
@@ -164,6 +237,8 @@ int main() {
 ```
 
 #### Пример 2: Выполнение GET и POST запросов с std::future
+
+Если запрос отклоняется ещё до попадания в pending queue, future становится ready сразу и возвращает `HttpResponse` с `error_code = QueueLimitExceeded` или `ShuttingDown`.
 
 ```cpp
 int main() {

@@ -369,6 +369,21 @@ namespace kurlyk {
             m_request.max_redirects = max_redirects;
         }
 
+        /// \brief Attempts to submit a prepared request to the global HTTP manager.
+        /// \param request_ptr The prepared HTTP request to be enqueued.
+        /// \param callback The callback function to be called when the request is completed.
+        /// \return SubmitResult describing whether the request was accepted into the queue.
+        SubmitResult submit_request(
+                std::unique_ptr<HttpRequest> request_ptr,
+                HttpResponseCallback callback) {
+            SubmitResult submit_result = HttpRequestManager::get_instance().submit_request(
+                std::move(request_ptr), std::move(callback));
+            if (submit_result) {
+                core::NetworkWorker::get_instance().notify();
+            }
+            return submit_result;
+        }
+
         /// \brief Sends an HTTP request with the specified method, path, and parameters.
         /// \param method The HTTP method (e.g., "GET", "POST").
         /// \param path The URL path for the request.
@@ -376,7 +391,7 @@ namespace kurlyk {
         /// \param headers The HTTP headers.
         /// \param content The request body content.
         /// \param callback The callback function to be called when the request is completed.
-        /// \return true if the request was successfully added to the RequestManager; false otherwise.
+        /// \return true if the request was accepted into the queue; false if admission was rejected.
         bool request(
                 const std::string &method,
                 const std::string& path,
@@ -404,7 +419,7 @@ namespace kurlyk {
         /// \param content The request body content.
         /// \param specific_rate_limit_id The specific rate limit ID to be applied to this request.
         /// \param callback The callback function to be called when the request is completed.
-        /// \return true if the request was successfully added to the RequestManager; false otherwise.
+        /// \return true if the request was accepted into the queue; false if admission was rejected.
         bool request(
                 const std::string &method,
                 const std::string& path,
@@ -647,9 +662,7 @@ namespace kurlyk {
         bool request(
                 std::unique_ptr<HttpRequest> request_ptr,
                 HttpResponseCallback callback) {
-            const bool status = HttpRequestManager::get_instance().add_request(std::move(request_ptr), std::move(callback));
-            core::NetworkWorker::get_instance().notify();
-            return status;
+            return submit_request(std::move(request_ptr), std::move(callback)).accepted;
         }
 
         /// \brief Safely sets the response value on the given promise.
@@ -674,6 +687,22 @@ namespace kurlyk {
             }
         }
 
+        /// \brief Creates a ready HTTP response describing a synchronous submission rejection.
+        /// \param submit_result Submission result containing the rejection error code.
+        /// \return A ready HttpResponsePtr describing the rejection.
+        static HttpResponsePtr make_submit_error_response(const SubmitResult& submit_result) {
+#           if __cplusplus >= 201402L
+            auto response = std::make_unique<HttpResponse>();
+#           else
+            auto response = std::unique_ptr<HttpResponse>(new HttpResponse());
+#           endif
+            response->ready = true;
+            response->status_code = 0;
+            response->error_code = submit_result.error_code;
+            response->error_message = submit_result.error_code.message();
+            return response;
+        }
+
         /// \brief Submits a request and propagates any failure to the provided promise.
         /// \param promise Promise to signal upon success or failure.
         /// \param request_ptr Prepared HTTP request to enqueue.
@@ -682,27 +711,21 @@ namespace kurlyk {
                 std::shared_ptr<std::promise<HttpResponsePtr>> promise,
                 std::unique_ptr<HttpRequest> request_ptr,
                 HttpResponseCallback callback) {
-            bool exception_set = false;
             try {
-                if (!request(std::move(request_ptr), std::move(callback))) {
-                    promise->set_exception(std::make_exception_ptr(
-                        std::runtime_error("Failed to add request to RequestManager")));
-                    exception_set = true;
+                const SubmitResult submit_result = submit_request(std::move(request_ptr), std::move(callback));
+                if (!submit_result) {
+                    safe_set_response(promise, make_submit_error_response(submit_result));
                 }
             } catch (const std::exception& e) {
                 KURLYK_HANDLE_ERROR(e, "Exception while submitting request");
-                if (!exception_set) {
-                    try {
-                        promise->set_exception(std::current_exception());
-                    } catch (...) {} // fallback
-                }
+                try {
+                    promise->set_exception(std::current_exception());
+                } catch (...) {} // fallback
             } catch (...) {
                 // Unknown fatal error while submitting request
-                if (!exception_set) {
-                    try {
-                        promise->set_exception(std::current_exception());
-                    } catch (...) {} // fallback
-                }
+                try {
+                    promise->set_exception(std::current_exception());
+                } catch (...) {} // fallback
             }
         }
 

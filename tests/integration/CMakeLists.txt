@@ -14,6 +14,10 @@ add_executable(integr_test
 add_executable(ws_local_test
 	websocket_local_main.cpp
 )
+
+add_executable(backpressure_test
+	backpressure_main.cpp
+)
 list(APPEND CMAKE_MODULE_PATH 
 	"${CMAKE_CURRENT_LIST_DIR}/../../cmake/deps"
 	"${CMAKE_CURRENT_LIST_DIR}/../../cmake"
@@ -49,9 +53,11 @@ add_subdirectory(../.. build)
 
 target_link_libraries(integr_test PRIVATE kurlyk)
 target_link_libraries(ws_local_test PRIVATE kurlyk)
+target_link_libraries(backpressure_test PRIVATE kurlyk)
 
 target_compile_features(integr_test PRIVATE cxx_std_17)
 target_compile_features(ws_local_test PRIVATE cxx_std_17)
+target_compile_features(backpressure_test PRIVATE cxx_std_17)
 
 if(MINGW)
 	target_compile_options(ws_local_test PRIVATE -Wa,-mbig-obj)
@@ -60,3 +66,4 @@ endif()
 include(copy_runtime_dlls)
 copy_runtime_dlls(integr_test)
 copy_runtime_dlls(ws_local_test)
+copy_runtime_dlls(backpressure_test)

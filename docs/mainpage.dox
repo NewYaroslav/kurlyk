@@ -15,6 +15,7 @@ requests, process WebSocket events and apply rate limiting.
 - HTTP and WebSocket clients with a common, class-based API.
 - Asynchronous or synchronous execution via a background worker.
 - Rate limiting for both HTTP requests and WebSocket messages.
+- Optional bounded admission for selected HTTP and WebSocket queues.
 - Automatic reconnection logic for WebSocket connections.
 - Proxy support, configurable timeouts and custom headers.
 - Retry logic and ability to cancel outstanding requests.
@@ -84,6 +85,34 @@ auto [id, future] = kurlyk::http_get("https://httpbin.org/ip", {}, {});
 auto resp2 = future.get();
 \endcode
 
+\subsubsection http_backpressure HTTP admission and queue limits
+Kurlyk separates rate limiting from bounded admission. Rate limiting throttles
+when requests are dispatched to the backend, while backpressure limits how many
+pending requests are accepted into the global HTTP queue.
+
+\code{.cpp}
+kurlyk::set_max_pending_requests(64);
+
+std::unique_ptr<kurlyk::HttpRequest> request(new kurlyk::HttpRequest());
+request->request_id = kurlyk::generate_request_id();
+request->method = "GET";
+request->set_url("https://httpbin.org/get", {});
+
+kurlyk::SubmitResult submit = kurlyk::submit_http_request(
+    std::move(request),
+    [](kurlyk::HttpResponsePtr res) {
+        if (res && res->error_code)
+            std::cerr << res->error_code.message() << std::endl;
+    });
+
+if (!submit)
+    std::cerr << "Rejected: " << submit.error_code.message() << std::endl;
+\endcode
+
+For future-based HTTP calls, an admission reject does not throw a
+`runtime_error`; instead the future becomes ready immediately and returns an
+`HttpResponse` with `error_code` set to `QueueLimitExceeded` or `ShuttingDown`.
+
 \subsection ws_sec WebSocket Client
 \code{.cpp}
 kurlyk::WebSocketClient ws("wss://echo-websocket.fly.dev/");
@@ -94,6 +123,19 @@ ws.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> e) {
 ws.connect_and_wait();
 ws.send_message("Hello!");
 ws.disconnect_and_wait();
+\endcode
+
+\subsubsection ws_backpressure WebSocket send queue admission
+WebSocket backpressure applies to the per-client outbound send queue. It does
+not bound the internal FSM queue or stored event queue in this pass.
+
+\code{.cpp}
+kurlyk::WebSocketClient ws("wss://echo-websocket.fly.dev/");
+ws.set_max_send_queue_size(32);
+
+kurlyk::SubmitResult submit = ws.submit_message("Hello with admission check");
+if (!submit)
+    std::cerr << "Rejected: " << submit.error_code.message() << std::endl;
 \endcode
 
 \section error_sec Error Handling
@@ -118,6 +160,10 @@ Whenever an internal operation encounters an exception and invokes
 `KURLYK_HANDLE_ERROR`, all registered handlers receive the exception, an
 optional message, source file, line and function. This allows detailed
 logging of issues without terminating the program.
+
+For synchronous admission rejects, the public API uses `kurlyk::SubmitResult`
+and `std::error_code` values such as `QueueLimitExceeded` and `ShuttingDown`
+instead of reporting the condition through `KURLYK_HANDLE_ERROR`.
 
 \code{.cpp}
 kurlyk::add_error_handler([](const std::exception& ex,

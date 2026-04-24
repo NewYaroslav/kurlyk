@@ -47,3 +47,24 @@ This flow illustrates how an HTTP request moves from the caller through `HttpCli
 - `WebSocketClient` acts as a facade over a backend selected at compile time, while event payloads keep the stable `IWebSocketSender` abstraction for follow-up actions.
 - Configuration is compile-time via macros with minimal defaults.
 - Code remains portable across C++11/17 compilers and network stacks.
+
+## Flow Control
+
+Kurlyk now uses two separate control layers:
+
+- Rate limiting controls when work is allowed to leave the library and hit the backend.
+- Backpressure controls whether new work is admitted into selected queues.
+
+Current bounded admission points:
+
+- HTTP bounds only the global pending request queue.
+- WebSocket bounds only the per-client outbound send queue.
+
+Current non-bounded areas:
+
+- `core::NetworkWorker` task queue
+- WebSocket FSM queue
+- WebSocket stored event queue
+- WebSocket send callback queue
+
+This means queue limits are a memory/admission safety feature, not a full QoS system, and they should not be described as replacing existing rate limiting behavior.

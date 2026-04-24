@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Fixed lifecycle cleanup so `deinit()` cleans up both asynchronous `init(true)` and synchronous `init(false)` modes.
 - Updated auto-initialization cleanup to stop the `NetworkWorker` instead of only resetting managers.
 - Added synchronous lifecycle regression coverage for repeated `deinit()` calls after `init(false)`.
+- Added low-risk backpressure support with `SubmitResult`, a global HTTP pending queue cap, a per-client WebSocket send queue cap, explicit rejection errors, and integration/CI coverage for admission rejects.
 - Refreshed README and README-RU usage, initialization, dependency, and configuration macro documentation.
 - Added architecture documentation and expanded Doxygen mainpage guidance for startup, error handling, and manual lifecycle usage.
 - Cleaned up public include compatibility around startup and utility headers while preserving the header-only API surface.

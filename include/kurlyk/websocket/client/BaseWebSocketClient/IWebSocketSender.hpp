@@ -41,6 +41,19 @@ namespace kurlyk {
                 long rate_limit_id = 0,
                 std::function<void(const std::error_code&)> callback = nullptr) = 0;
 
+        /// \brief Attempts to submit a WebSocket message and reports the admission result.
+        /// \param message The content of the message to be sent.
+        /// \param rate_limit_id The ID of the rate limit to apply to this message. A value of 0 indicates the default or no rate limit.
+        /// \param callback Optional callback to execute once the message is sent, providing an error code if any issues occur.
+        /// \return SubmitResult describing whether the message was accepted for sending.
+        virtual SubmitResult submit_message(
+                const std::string &message,
+                long rate_limit_id = 0,
+                std::function<void(const std::error_code&)> callback = nullptr) {
+            const bool accepted = send_message(message, rate_limit_id, std::move(callback));
+            return SubmitResult{accepted, std::error_code()};
+        }
+
         /// \brief Sends a close request to the WebSocket server.
         /// \param status The status code for the close request, default is 1000 (normal closure).
         /// \param reason Optional reason for closing the connection.
@@ -50,6 +63,19 @@ namespace kurlyk {
                 int status = 1000,
                 const std::string &reason = std::string(),
                 std::function<void(const std::error_code&)> callback = nullptr) = 0;
+
+        /// \brief Attempts to submit a close request and reports the admission result.
+        /// \param status The status code for the close request, default is 1000 (normal closure).
+        /// \param reason Optional reason for closing the connection.
+        /// \param callback Optional callback to execute once the close request is sent, providing an error code if any issues occur.
+        /// \return SubmitResult describing whether the close request was accepted.
+        virtual SubmitResult submit_close(
+                int status = 1000,
+                const std::string &reason = std::string(),
+                std::function<void(const std::error_code&)> callback = nullptr) {
+            const bool accepted = send_close(status, reason, std::move(callback));
+            return SubmitResult{accepted, std::error_code()};
+        }
 
         /// \brief Checks if the WebSocket connection is currently active.
         /// \return True if the WebSocket is connected, false otherwise.
