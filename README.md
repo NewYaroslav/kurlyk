@@ -42,6 +42,13 @@ If you’re not satisfied with other libraries like *easyhttp-cpp, curl_request,
 
 Examples are located in the `examples` folder. Below are some basic usage examples.
 
+Build all repository examples with CMake:
+
+```powershell
+cmake -S . -B build-examples -DKURLYK_BUILD_EXAMPLES=ON
+cmake --build build-examples --config Release
+```
+
 ### WebSocket Client Example
 
 This example shows how to connect to a WebSocket server, send a message, and handle various events (connection open, message received, connection close, and error). The default C++17 auto-initialization path is used here; for C++11/14 define `KURLYK_AUTO_INIT=0` and call `kurlyk::init()` / `kurlyk::deinit()` explicitly.
@@ -361,6 +368,7 @@ The following CMake options control the fallback mechanism:
 | `KURLYK_USE_FALLBACK_SIMPLE_WS_SERVER` | Enable Simple-WebSocket-Server fallback. |
 | `KURLYK_OPENSSL_SHARED` | Load OpenSSL as a shared library when the fallback is enabled. |
 | `KURLYK_CURL_SHARED` | Load libcurl as a shared library when the fallback is enabled. |
+| `KURLYK_BUILD_EXAMPLES` | Build all targets from the `examples/` directory. |
 
 ### Adding kurlyk
 

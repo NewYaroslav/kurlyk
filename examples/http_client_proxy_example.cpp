@@ -59,7 +59,7 @@ int main() {
         std::string proxy_username = proxy_config["proxy_username"];
         std::string proxy_password = proxy_config["proxy_password"];
 
-        client.set_proxy(proxy_ip, proxy_port, proxy_username, proxy_password, kurlyk::ProxyType::HTTP);
+        client.set_proxy(proxy_ip, proxy_port, proxy_username, proxy_password, kurlyk::ProxyType::PROXY_HTTP);
     }
 
     client.set_user_agent("KurlykClient/1.0");

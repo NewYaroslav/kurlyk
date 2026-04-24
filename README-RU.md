@@ -42,6 +42,13 @@
 
 Примеры находятся в папке `examples`. Ниже приведены основные примеры использования библиотеки.
 
+Собрать все примеры из репозитория через CMake можно так:
+
+```powershell
+cmake -S . -B build-examples -DKURLYK_BUILD_EXAMPLES=ON
+cmake --build build-examples --config Release
+```
+
 ### Пример использования WebSocket клиента
 
 Этот пример показывает, как подключиться к WebSocket серверу, отправить сообщение и обработать различные события (открытие соединения, получение сообщения, закрытие соединения и ошибки). Здесь используется автоинициализация C++17 по умолчанию; для C++11/14 задайте `KURLYK_AUTO_INIT=0` и вызовите `kurlyk::init()` / `kurlyk::deinit()` вручную.
@@ -360,6 +367,7 @@ Asio и Simple-WebSocket-Server — header-only библиотеки и подх
 | `KURLYK_USE_FALLBACK_SIMPLE_WS_SERVER` | Включает fallback Simple-WebSocket-Server. |
 | `KURLYK_OPENSSL_SHARED` | Загружает OpenSSL как shared library, если fallback включён. |
 | `KURLYK_CURL_SHARED` | Загружает libcurl как shared library, если fallback включён. |
+| `KURLYK_BUILD_EXAMPLES` | Собирает все targets из каталога `examples/`. |
 
 ### Подключение kurlyk
 

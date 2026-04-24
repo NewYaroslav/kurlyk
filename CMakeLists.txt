@@ -3,6 +3,7 @@ project(kurlyk VERSION 1.0.2 LANGUAGES CXX)
 # options
 
 option(KURLYK_USE_STANDALONE_ASIO "Use Asio standalone instead of Boost.Asio" ON)
+option(KURLYK_BUILD_EXAMPLES "Build repository examples" OFF)
 
 option(KURLYK_USE_FALLBACK_OPENSSL "Use fallback for OpenSSL" OFF)
 option(KURLYK_USE_FALLBACK_CURL "Use fallback for libcurl" OFF)
@@ -43,3 +44,7 @@ else()
 	message(FATAL_ERROR "This option for Linux is not supported yet.")
 endif()
 use_os_deps(kurlyk)
+
+if(KURLYK_BUILD_EXAMPLES)
+	add_subdirectory(examples)
+endif()
