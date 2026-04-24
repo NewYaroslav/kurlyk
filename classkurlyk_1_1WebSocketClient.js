@@ -35,6 +35,7 @@ var classkurlyk_1_1WebSocketClient =
     [ "set_config", "classkurlyk_1_1WebSocketClient.html#abe0918961f98baec1514b7f6de38a937", null ],
     [ "set_cookie", "classkurlyk_1_1WebSocketClient.html#a33016a2c8b8de8b218f8b3032809892d", null ],
     [ "set_idle_timeout", "classkurlyk_1_1WebSocketClient.html#a59047efd4addf23328ffdb0b39af54b2", null ],
+    [ "set_max_send_queue_size", "classkurlyk_1_1WebSocketClient.html#a3abd91912e26620f99df8732fa471011", null ],
     [ "set_proxy", "classkurlyk_1_1WebSocketClient.html#af06d14bd16ad4b0833b08e0123bf2533", null ],
     [ "set_proxy", "classkurlyk_1_1WebSocketClient.html#a3c344ae555f22eda79d594cbf3777b41", null ],
     [ "set_proxy_auth", "classkurlyk_1_1WebSocketClient.html#a6b7d6d11b4ee9495499b7dc029b5a642", null ],
@@ -47,6 +48,8 @@ var classkurlyk_1_1WebSocketClient =
     [ "set_url", "classkurlyk_1_1WebSocketClient.html#a67a18c638b84f3fd43f752b63191f005", null ],
     [ "set_user_agent", "classkurlyk_1_1WebSocketClient.html#a4a4ae45b0fe97ff7ccbe8cc44257349a", null ],
     [ "set_verify_cert", "classkurlyk_1_1WebSocketClient.html#a2b0b03ff1fdde3dafa7dd44acd8f5fb6", null ],
+    [ "submit_close", "classkurlyk_1_1WebSocketClient.html#a7ab679ed0655b16d1b2f1017faac1557", null ],
+    [ "submit_message", "classkurlyk_1_1WebSocketClient.html#a887780b8353a3075b1b8d92edb970edf", null ],
     [ "m_client", "classkurlyk_1_1WebSocketClient.html#ac201fc9adb9d78f8b74bb5a69ad4afd5", null ],
     [ "m_config", "classkurlyk_1_1WebSocketClient.html#a6f35465fb710c800a13e3d7400fc6fd5", null ]
 ];

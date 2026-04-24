@@ -195,6 +195,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aca9f1d464c0684a2b7cfd85c6f604116"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables debug headers.  <br /></td></tr>
 <tr class="memitem:a2b5071dad4b3709a76b922a8f2e3bf7e" id="r_a2b5071dad4b3709a76b922a8f2e3bf7e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2b5071dad4b3709a76b922a8f2e3bf7e">set_max_redirects</a> (long max_redirects)</td></tr>
 <tr class="memdesc:a2b5071dad4b3709a76b922a8f2e3bf7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the maximum number of redirects for the client.  <br /></td></tr>
+<tr class="memitem:a6bc141d611070728e7f4ba8794c09e4b" id="r_a6bc141d611070728e7f4ba8794c09e4b"><td class="memItemLeft"><a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6bc141d611070728e7f4ba8794c09e4b">submit_request</a> (std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1HttpRequest.html">HttpRequest</a> &gt; request_ptr, <a class="el" href="namespacekurlyk.html#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
+<tr class="memdesc:a6bc141d611070728e7f4ba8794c09e4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to submit a prepared request to the global HTTP manager.  <br /></td></tr>
 <tr class="memitem:a45a65204701d67904029b265590036a0" id="r_a45a65204701d67904029b265590036a0"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a45a65204701d67904029b265590036a0">request</a> (const std::string &amp;method, const std::string &amp;path, const <a class="el" href="namespacekurlyk.html#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="namespacekurlyk.html#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, const std::string &amp;content, <a class="el" href="namespacekurlyk.html#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
 <tr class="memdesc:a45a65204701d67904029b265590036a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an HTTP request with the specified method, path, and parameters.  <br /></td></tr>
 <tr class="memitem:aebfcd2e64ed5ac9ef6ef0090cae347e4" id="r_aebfcd2e64ed5ac9ef6ef0090cae347e4"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aebfcd2e64ed5ac9ef6ef0090cae347e4">request</a> (const std::string &amp;method, const std::string &amp;path, const <a class="el" href="namespacekurlyk.html#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="namespacekurlyk.html#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, const std::string &amp;content, long specific_rate_limit_id, <a class="el" href="namespacekurlyk.html#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
@@ -231,6 +233,8 @@ Private Member Functions</h2></td></tr>
 Static Private Member Functions</h2></td></tr>
 <tr class="memitem:a79e0c5ff34a54b0cc3496c1c0cfeb10a" id="r_a79e0c5ff34a54b0cc3496c1c0cfeb10a"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#a79e0c5ff34a54b0cc3496c1c0cfeb10a">safe_set_response</a> (std::shared_ptr&lt; std::promise&lt; <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> &gt; &gt; promise, <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> response)</td></tr>
 <tr class="memdesc:a79e0c5ff34a54b0cc3496c1c0cfeb10a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safely sets the response value on the given promise.  <br /></td></tr>
+<tr class="memitem:aafc313ea4491aec9277f8366d6323272" id="r_aafc313ea4491aec9277f8366d6323272"><td class="memItemLeft">static <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a>&#160;</td><td class="memItemRight"><a class="el" href="#aafc313ea4491aec9277f8366d6323272">make_submit_error_response</a> (const <a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a> &amp;submit_result)</td></tr>
+<tr class="memdesc:aafc313ea4491aec9277f8366d6323272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a ready HTTP response describing a synchronous submission rejection.  <br /></td></tr>
 <tr class="memitem:abe625e7963f88025e3791576852c45b3" id="r_abe625e7963f88025e3791576852c45b3"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#abe625e7963f88025e3791576852c45b3">ensure_initialized</a> ()</td></tr>
 <tr class="memdesc:abe625e7963f88025e3791576852c45b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ensures that the network worker and request manager are initialized.  <br /></td></tr>
 </table><table class="memberdecls">
@@ -529,7 +533,7 @@ Private Attributes</h2></td></tr>
 
 <p>Ensures that the network worker and request manager are initialized. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00710">710</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00733">733</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -576,7 +580,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00586">586</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00601">601</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -629,7 +633,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00442">442</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00457">457</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -682,7 +686,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00613">613</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00628">628</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -741,7 +745,43 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00473">473</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00488">488</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+
+</div>
+</div>
+<a id="aafc313ea4491aec9277f8366d6323272" name="aafc313ea4491aec9277f8366d6323272"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafc313ea4491aec9277f8366d6323272">&#9670;&#160;</a></span>make_submit_error_response()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> kurlyk::HttpClient::make_submit_error_response </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>submit_result</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a ready HTTP response describing a synchronous submission rejection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">submit_result</td><td>Submission result containing the rejection error code. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A ready <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> describing the rejection. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00693">693</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -819,7 +859,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00599">599</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00614">614</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -878,7 +918,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00457">457</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00472">472</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -937,7 +977,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00628">628</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00643">643</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1002,7 +1042,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00490">490</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00505">505</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1061,7 +1101,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00507">507</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00522">522</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1124,9 +1164,9 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the request was accepted into the queue; false if admission was rejected. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00380">380</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00395">395</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1191,7 +1231,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00544">544</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00559">559</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1260,9 +1300,9 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the request was accepted into the queue; false if admission was rejected. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00408">408</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00423">423</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1303,7 +1343,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00647">647</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00662">662</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1343,7 +1383,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00658">658</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00671">671</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1389,7 +1429,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00681">681</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00710">710</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2671,6 +2711,47 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a6bc141d611070728e7f4ba8794c09e4b" name="a6bc141d611070728e7f4ba8794c09e4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bc141d611070728e7f4ba8794c09e4b">&#9670;&#160;</a></span>submit_request()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a> kurlyk::HttpClient::submit_request </td>
+          <td>(</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1HttpRequest.html">HttpRequest</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>request_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacekurlyk.html#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a></td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Attempts to submit a prepared request to the global HTTP manager. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request_ptr</td><td>The prepared HTTP request to be enqueued. </td></tr>
+    <tr><td class="paramname">callback</td><td>The callback function to be called when the request is completed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structkurlyk_1_1SubmitResult.html" title="Represents the synchronous result of trying to enqueue or submit work.">SubmitResult</a> describing whether the request was accepted into the queue. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00376">376</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+
+</div>
+</div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
 <a id="a7de7695e3d6df4388a6a44bd80100ea2" name="a7de7695e3d6df4388a6a44bd80100ea2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7de7695e3d6df4388a6a44bd80100ea2">&#9670;&#160;</a></span>is_general_limit_owned</h2>
@@ -2694,7 +2775,7 @@ Private Attributes</h2></td></tr>
 
 <p>Flag indicating if the client owns the general rate limit. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00640">640</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00655">655</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2720,7 +2801,7 @@ Private Attributes</h2></td></tr>
 
 <p>Flag indicating if the client owns the specific rate limit. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00641">641</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00656">656</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2746,7 +2827,7 @@ Private Attributes</h2></td></tr>
 
 <p>The base host URL for the HTTP client. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00639">639</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00654">654</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2772,7 +2853,7 @@ Private Attributes</h2></td></tr>
 
 <p>The request object used for configuring and sending requests. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00638">638</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00653">653</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>

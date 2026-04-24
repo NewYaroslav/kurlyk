@@ -8,7 +8,9 @@ var ClientErrorCategory_8hpp =
       [ "kurlyk::utils::ClientError::AbortedDuringDestruction", "namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8a7674a6fb400534e7263fc5d82b5ff06c", null ],
       [ "kurlyk::utils::ClientError::ClientNotInitialized", "namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8a99c0cdf3eb7ef98539743e5dd39ac62c", null ],
       [ "kurlyk::utils::ClientError::InvalidConfiguration", "namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8af237deac1e85c65673a7bba9093bca7e", null ],
-      [ "kurlyk::utils::ClientError::NotConnected", "namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8a4075072d219e061ca0f3124f8fbef463", null ]
+      [ "kurlyk::utils::ClientError::NotConnected", "namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8a4075072d219e061ca0f3124f8fbef463", null ],
+      [ "kurlyk::utils::ClientError::QueueLimitExceeded", "namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8a76c499f10e043a763e23c532982f6126", null ],
+      [ "kurlyk::utils::ClientError::ShuttingDown", "namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8a075d9c9ae8c8f1c79c1a1965cd8c5a42", null ]
     ] ],
     [ "kurlyk::utils::client_error_category", "namespacekurlyk_1_1utils.html#a1b5131894eaadddfa25d5545861a1a41", null ],
     [ "kurlyk::utils::make_error_code", "namespacekurlyk_1_1utils.html#a9c3dc895b9661682fcc279a7c6045480", null ]

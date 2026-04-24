@@ -7,5 +7,7 @@ var classkurlyk_1_1IWebSocketSender =
     [ "get_remote_endpoint", "classkurlyk_1_1IWebSocketSender.html#ad289aaa13c3f2c9d5674e78aff0ced7c", null ],
     [ "is_connected", "classkurlyk_1_1IWebSocketSender.html#ac3fa995ff3f1117d53558cbcfcb2df55", null ],
     [ "send_close", "classkurlyk_1_1IWebSocketSender.html#a51bf8e4553cfacea3413d34fbc6fcfba", null ],
-    [ "send_message", "classkurlyk_1_1IWebSocketSender.html#a08c33a2ca3c8c2386e533383a7aa86e1", null ]
+    [ "send_message", "classkurlyk_1_1IWebSocketSender.html#a08c33a2ca3c8c2386e533383a7aa86e1", null ],
+    [ "submit_close", "classkurlyk_1_1IWebSocketSender.html#a03de0fc839003fbb5ad5762ef878b81f", null ],
+    [ "submit_message", "classkurlyk_1_1IWebSocketSender.html#a3256cd91b6e16156de090b8f8fda9b85", null ]
 ];

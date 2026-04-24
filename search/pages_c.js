@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['repository_0',['Repository',['../index.html#repo_sec',1,'']]],
-  ['request_1',['Basic GET request',['../index.html#http_basic',1,'']]],
-  ['requests_2',['Calling HTTP requests',['../index.html#http_variants',1,'']]]
+  ['queue_20admission_0',['WebSocket send queue admission',['../index.html#ws_backpressure',1,'']]],
+  ['queue_20limits_1',['HTTP admission and queue limits',['../index.html#http_backpressure',1,'']]]
 ];

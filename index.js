@@ -7,9 +7,12 @@ var index =
         [ "Basic GET request", "index.html#http_basic", null ],
         [ "Using a proxy", "index.html#http_proxy", null ],
         [ "Measuring latency", "index.html#http_ping", null ],
-        [ "Calling HTTP requests", "index.html#http_variants", null ]
+        [ "Calling HTTP requests", "index.html#http_variants", null ],
+        [ "HTTP admission and queue limits", "index.html#http_backpressure", null ]
       ] ],
-      [ "WebSocket Client", "index.html#ws_sec", null ]
+      [ "WebSocket Client", "index.html#ws_sec", [
+        [ "WebSocket send queue admission", "index.html#ws_backpressure", null ]
+      ] ]
     ] ],
     [ "Error Handling", "index.html#error_sec", null ],
     [ "Installation", "index.html#install_sec", [

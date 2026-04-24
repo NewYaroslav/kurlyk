@@ -30,6 +30,7 @@ var annotated_dup =
       [ "HttpRequestContext", "classkurlyk_1_1HttpRequestContext.html", "classkurlyk_1_1HttpRequestContext" ],
       [ "HttpRequestHandler", "classkurlyk_1_1HttpRequestHandler.html", "classkurlyk_1_1HttpRequestHandler" ],
       [ "Cookie", "classkurlyk_1_1Cookie.html", "classkurlyk_1_1Cookie" ],
+      [ "SubmitResult", "structkurlyk_1_1SubmitResult.html", "structkurlyk_1_1SubmitResult" ],
       [ "BaseWebSocketClient", "classkurlyk_1_1BaseWebSocketClient.html", "classkurlyk_1_1BaseWebSocketClient" ],
       [ "IWebSocketClient", "classkurlyk_1_1IWebSocketClient.html", "classkurlyk_1_1IWebSocketClient" ],
       [ "IWebSocketSender", "classkurlyk_1_1IWebSocketSender.html", "classkurlyk_1_1IWebSocketSender" ],

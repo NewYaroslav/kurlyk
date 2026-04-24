@@ -16,5 +16,10 @@ var http_2utils_8hpp =
     [ "kurlyk::http_request", "namespacekurlyk.html#af98455788400030f5e18a2e305b94b38", null ],
     [ "kurlyk::http_request", "namespacekurlyk.html#a8cf64ef1636844aec3e232d2c669747d", null ],
     [ "kurlyk::http_request", "namespacekurlyk.html#a5d4ee8e6b46640b045f456eb67d64002", null ],
-    [ "kurlyk::remove_limit", "namespacekurlyk.html#abe5ef66530eb2fa86cda3acd58e88c5d", null ]
+    [ "kurlyk::make_submit_error_response", "namespacekurlyk.html#afe56f68e2137cdd7e79144fdd8405ac3", null ],
+    [ "kurlyk::max_pending_requests", "namespacekurlyk.html#a05cdd73b7c1848155486318277d32049", null ],
+    [ "kurlyk::remove_limit", "namespacekurlyk.html#abe5ef66530eb2fa86cda3acd58e88c5d", null ],
+    [ "kurlyk::safe_set_response", "namespacekurlyk.html#a256c33d85727908962c47a565267c073", null ],
+    [ "kurlyk::set_max_pending_requests", "namespacekurlyk.html#a19c40cbaef5bb075ce99d1b99ab7febc", null ],
+    [ "kurlyk::submit_http_request", "namespacekurlyk.html#ac834500270b0f9fca5292b45b8f0929b", null ]
 ];

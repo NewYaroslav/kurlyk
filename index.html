@@ -112,6 +112,7 @@ Features</h1>
 <li>HTTP and WebSocket clients with a common, class-based API.</li>
 <li>Asynchronous or synchronous execution via a background worker.</li>
 <li>Rate limiting for both HTTP requests and WebSocket messages.</li>
+<li>Optional bounded admission for selected HTTP and WebSocket queues.</li>
 <li>Automatic reconnection logic for WebSocket connections.</li>
 <li>Proxy support, configurable timeouts and custom headers.</li>
 <li>Retry logic and ability to cancel outstanding requests.</li>
@@ -168,8 +169,34 @@ Calling HTTP requests</h3>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> [id, future] = <a class="code hl_function" href="namespacekurlyk.html#abc54e8b6fb3810f7f4423fd9c9c9acfe">kurlyk::http_get</a>(<span class="stringliteral">&quot;https://httpbin.org/ip&quot;</span>, {}, {});</div>
 <div class="line"><span class="keyword">auto</span> resp2 = future.get();</div>
-<div class="ttc" id="anamespacekurlyk_html_abc54e8b6fb3810f7f4423fd9c9c9acfe"><div class="ttname"><a href="namespacekurlyk.html#abc54e8b6fb3810f7f4423fd9c9c9acfe">kurlyk::http_get</a></div><div class="ttdeci">uint64_t http_get(const std::string &amp;url, const QueryParams &amp;query, const Headers &amp;headers, HttpResponseCallback callback)</div><div class="ttdoc">Sends an asynchronous HTTP GET request with a callback.</div><div class="ttdef"><b>Definition</b> <a href="http_2utils_8hpp_source.html#l00262">utils.hpp:262</a></div></div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="ws_sec"></a>
+<div class="ttc" id="anamespacekurlyk_html_abc54e8b6fb3810f7f4423fd9c9c9acfe"><div class="ttname"><a href="namespacekurlyk.html#abc54e8b6fb3810f7f4423fd9c9c9acfe">kurlyk::http_get</a></div><div class="ttdeci">uint64_t http_get(const std::string &amp;url, const QueryParams &amp;query, const Headers &amp;headers, HttpResponseCallback callback)</div><div class="ttdoc">Sends an asynchronous HTTP GET request with a callback.</div><div class="ttdef"><b>Definition</b> <a href="http_2utils_8hpp_source.html#l00291">utils.hpp:291</a></div></div>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="http_backpressure"></a>
+HTTP admission and queue limits</h3>
+<p>Kurlyk separates rate limiting from bounded admission. Rate limiting throttles when requests are dispatched to the backend, while backpressure limits how many pending requests are accepted into the global HTTP queue.</p>
+<div class="fragment"><div class="line"><a class="code hl_function" href="namespacekurlyk.html#a19c40cbaef5bb075ce99d1b99ab7febc">kurlyk::set_max_pending_requests</a>(64);</div>
+<div class="line"> </div>
+<div class="line">std::unique_ptr&lt;kurlyk::HttpRequest&gt; request(<span class="keyword">new</span> <a class="code hl_class" href="classkurlyk_1_1HttpRequest.html">kurlyk::HttpRequest</a>());</div>
+<div class="line">request-&gt;request_id = <a class="code hl_function" href="namespacekurlyk.html#aa01eb3e3c8b5a6c6506e25de1bbb43c5">kurlyk::generate_request_id</a>();</div>
+<div class="line">request-&gt;method = <span class="stringliteral">&quot;GET&quot;</span>;</div>
+<div class="line">request-&gt;set_url(<span class="stringliteral">&quot;https://httpbin.org/get&quot;</span>, {});</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structkurlyk_1_1SubmitResult.html">kurlyk::SubmitResult</a> submit = <a class="code hl_function" href="namespacekurlyk.html#ac834500270b0f9fca5292b45b8f0929b">kurlyk::submit_http_request</a>(</div>
+<div class="line">    std::move(request),</div>
+<div class="line">    [](<a class="code hl_typedef" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">kurlyk::HttpResponsePtr</a> res) {</div>
+<div class="line">        <span class="keywordflow">if</span> (res &amp;&amp; res-&gt;error_code)</div>
+<div class="line">            std::cerr &lt;&lt; res-&gt;error_code.message() &lt;&lt; std::endl;</div>
+<div class="line">    });</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (!submit)</div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Rejected: &quot;</span> &lt;&lt; submit.<a class="code hl_variable" href="structkurlyk_1_1SubmitResult.html#acafc7ccc166c5ca6fe7eacc0bcc79f2c">error_code</a>.message() &lt;&lt; std::endl;</div>
+<div class="ttc" id="aclasskurlyk_1_1HttpRequest_html"><div class="ttname"><a href="classkurlyk_1_1HttpRequest.html">kurlyk::HttpRequest</a></div><div class="ttdoc">Represents an HTTP request.</div><div class="ttdef"><b>Definition</b> <a href="HttpRequest_8hpp_source.html#l00016">HttpRequest.hpp:16</a></div></div>
+<div class="ttc" id="anamespacekurlyk_html_a19c40cbaef5bb075ce99d1b99ab7febc"><div class="ttname"><a href="namespacekurlyk.html#a19c40cbaef5bb075ce99d1b99ab7febc">kurlyk::set_max_pending_requests</a></div><div class="ttdeci">void set_max_pending_requests(std::size_t max_pending_requests)</div><div class="ttdoc">Sets the maximum number of requests accepted into the global pending queue.</div><div class="ttdef"><b>Definition</b> <a href="http_2utils_8hpp_source.html#l00051">utils.hpp:51</a></div></div>
+<div class="ttc" id="anamespacekurlyk_html_aa01eb3e3c8b5a6c6506e25de1bbb43c5"><div class="ttname"><a href="namespacekurlyk.html#aa01eb3e3c8b5a6c6506e25de1bbb43c5">kurlyk::generate_request_id</a></div><div class="ttdeci">uint64_t generate_request_id()</div><div class="ttdoc">Generates a new unique request ID.</div><div class="ttdef"><b>Definition</b> <a href="http_2utils_8hpp_source.html#l00045">utils.hpp:45</a></div></div>
+<div class="ttc" id="anamespacekurlyk_html_ac834500270b0f9fca5292b45b8f0929b"><div class="ttname"><a href="namespacekurlyk.html#ac834500270b0f9fca5292b45b8f0929b">kurlyk::submit_http_request</a></div><div class="ttdeci">SubmitResult submit_http_request(std::unique_ptr&lt; HttpRequest &gt; request_ptr, HttpResponseCallback callback)</div><div class="ttdoc">Attempts to submit an HTTP request and reports the admission result.</div><div class="ttdef"><b>Definition</b> <a href="http_2utils_8hpp_source.html#l00136">utils.hpp:136</a></div></div>
+<div class="ttc" id="astructkurlyk_1_1SubmitResult_html"><div class="ttname"><a href="structkurlyk_1_1SubmitResult.html">kurlyk::SubmitResult</a></div><div class="ttdoc">Represents the synchronous result of trying to enqueue or submit work.</div><div class="ttdef"><b>Definition</b> <a href="SubmitResult_8hpp_source.html#l00014">SubmitResult.hpp:14</a></div></div>
+<div class="ttc" id="astructkurlyk_1_1SubmitResult_html_acafc7ccc166c5ca6fe7eacc0bcc79f2c"><div class="ttname"><a href="structkurlyk_1_1SubmitResult.html#acafc7ccc166c5ca6fe7eacc0bcc79f2c">kurlyk::SubmitResult::error_code</a></div><div class="ttdeci">std::error_code error_code</div><div class="ttdoc">Describes the rejection reason when accepted is false.</div><div class="ttdef"><b>Definition</b> <a href="SubmitResult_8hpp_source.html#l00016">SubmitResult.hpp:16</a></div></div>
+</div><!-- fragment --><p>For future-based HTTP calls, an admission reject does not throw a <span class="tt">runtime_error</span>; instead the future becomes ready immediately and returns an <span class="tt">HttpResponse</span> with <span class="tt">error_code</span> set to <span class="tt">QueueLimitExceeded</span> or <span class="tt">ShuttingDown</span>.</p>
+<h2 class="doxsection"><a class="anchor" id="ws_sec"></a>
 WebSocket Client</h2>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classkurlyk_1_1WebSocketClient.html">kurlyk::WebSocketClient</a> ws(<span class="stringliteral">&quot;wss://echo-websocket.fly.dev/&quot;</span>);</div>
 <div class="line">ws.on_event([](std::unique_ptr&lt;kurlyk::WebSocketEventData&gt; e) {</div>
@@ -181,6 +208,15 @@ WebSocket Client</h2>
 <div class="line">ws.disconnect_and_wait();</div>
 <div class="ttc" id="aclasskurlyk_1_1WebSocketClient_html"><div class="ttname"><a href="classkurlyk_1_1WebSocketClient.html">kurlyk::WebSocketClient</a></div><div class="ttdoc">Public facade for managing WebSocket connections, events, and message sending.</div><div class="ttdef"><b>Definition</b> <a href="WebSocketClient_8hpp_source.html#l00015">WebSocketClient.hpp:15</a></div></div>
 <div class="ttc" id="anamespacekurlyk_html_a5f6eb950ad463a77162efedc98f73d47a4e6ae54ccee152b37e36834f56f4e5c9"><div class="ttname"><a href="namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47a4e6ae54ccee152b37e36834f56f4e5c9">kurlyk::WebSocketEventType::WS_MESSAGE</a></div><div class="ttdeci">@ WS_MESSAGE</div><div class="ttdoc">Message received.</div><div class="ttdef"><b>Definition</b> <a href="enums_8hpp_source.html#l00033">enums.hpp:33</a></div></div>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="ws_backpressure"></a>
+WebSocket send queue admission</h3>
+<p>WebSocket backpressure applies to the per-client outbound send queue. It does not bound the internal FSM queue or stored event queue in this pass.</p>
+<div class="fragment"><div class="line"><a class="code hl_class" href="classkurlyk_1_1WebSocketClient.html">kurlyk::WebSocketClient</a> ws(<span class="stringliteral">&quot;wss://echo-websocket.fly.dev/&quot;</span>);</div>
+<div class="line">ws.set_max_send_queue_size(32);</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structkurlyk_1_1SubmitResult.html">kurlyk::SubmitResult</a> submit = ws.submit_message(<span class="stringliteral">&quot;Hello with admission check&quot;</span>);</div>
+<div class="line"><span class="keywordflow">if</span> (!submit)</div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Rejected: &quot;</span> &lt;&lt; submit.<a class="code hl_variable" href="structkurlyk_1_1SubmitResult.html#acafc7ccc166c5ca6fe7eacc0bcc79f2c">error_code</a>.message() &lt;&lt; std::endl;</div>
 </div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="error_sec"></a>
 Error Handling</h1>
 <p>The library centralizes exception reporting through the <span class="tt">core::NetworkWorker</span>. Applications may register callbacks with <span class="tt"><a class="el" href="namespacekurlyk.html#a64d2036466fbdb6ed5a4f5708c4861e0" title="Registers a global error handler for the network worker.">kurlyk::add_error_handler</a></span> to intercept errors raised inside Kurlyk and forward them to a logging system or metrics collector.</p>
@@ -192,6 +228,7 @@ Error Handling</h1>
 <div class="line">         <span class="keywordtype">int</span> line,</div>
 <div class="line">         <span class="keyword">const</span> <span class="keywordtype">char</span>* func)&gt;;</div>
 </div><!-- fragment --><p>Whenever an internal operation encounters an exception and invokes <span class="tt"><a class="el" href="NetworkWorker_8hpp.html#ac330ad06da14f6e3d438f370fcd8d8fc">KURLYK_HANDLE_ERROR</a></span>, all registered handlers receive the exception, an optional message, source file, line and function. This allows detailed logging of issues without terminating the program.</p>
+<p>For synchronous admission rejects, the public API uses <span class="tt"><a class="el" href="structkurlyk_1_1SubmitResult.html" title="Represents the synchronous result of trying to enqueue or submit work.">kurlyk::SubmitResult</a></span> and <span class="tt">std::error_code</span> values such as <span class="tt">QueueLimitExceeded</span> and <span class="tt">ShuttingDown</span> instead of reporting the condition through <span class="tt"><a class="el" href="NetworkWorker_8hpp.html#ac330ad06da14f6e3d438f370fcd8d8fc">KURLYK_HANDLE_ERROR</a></span>.</p>
 <div class="fragment"><div class="line"><a class="code hl_function" href="namespacekurlyk.html#a64d2036466fbdb6ed5a4f5708c4861e0">kurlyk::add_error_handler</a>([](<span class="keyword">const</span> std::exception&amp; ex,</div>
 <div class="line">                             <span class="keyword">const</span> <span class="keywordtype">char</span>* msg,</div>
 <div class="line">                             <span class="keyword">const</span> <span class="keywordtype">char</span>* file,</div>

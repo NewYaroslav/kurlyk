@@ -149,10 +149,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a9dd5844bad81fec695bed547e68914eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves all pending WebSocket events in a batch.  <br /></td></tr>
 <tr class="memitem:a89ee97514b3ab4369ed2123fad75d704" id="r_a89ee97514b3ab4369ed2123fad75d704"><td class="memItemLeft">std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketEventData.html">WebSocketEventData</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a89ee97514b3ab4369ed2123fad75d704">receive_event</a> () const override final</td></tr>
 <tr class="memdesc:a89ee97514b3ab4369ed2123fad75d704"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the next available WebSocket event, if any.  <br /></td></tr>
+<tr class="memitem:a46b70798b75ded6c4e201f7f66443921" id="r_a46b70798b75ded6c4e201f7f66443921"><td class="memItemLeft"><a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a>&#160;</td><td class="memItemRight"><a class="el" href="#a46b70798b75ded6c4e201f7f66443921">submit_message</a> (const std::string &amp;message, long rate_limit_id, std::function&lt; void(const std::error_code &amp;ec)&gt; callback=nullptr) override final</td></tr>
+<tr class="memdesc:a46b70798b75ded6c4e201f7f66443921"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to submit a message through the WebSocket.  <br /></td></tr>
 <tr class="memitem:a17bf473bfb3952a0f5b5966229bbb06d" id="r_a17bf473bfb3952a0f5b5966229bbb06d"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a17bf473bfb3952a0f5b5966229bbb06d">send_message</a> (const std::string &amp;message, long rate_limit_id, std::function&lt; void(const std::error_code &amp;ec)&gt; callback=nullptr) override final</td></tr>
-<tr class="memdesc:a17bf473bfb3952a0f5b5966229bbb06d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a message through the WebSocket.  <br /></td></tr>
+<tr class="memdesc:a17bf473bfb3952a0f5b5966229bbb06d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a message through the WebSocket.  <br /></td></tr>
+<tr class="memitem:ac0142b28433161ad1403e5e16aa228e2" id="r_ac0142b28433161ad1403e5e16aa228e2"><td class="memItemLeft"><a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac0142b28433161ad1403e5e16aa228e2">submit_close</a> (const int status=1000, const std::string &amp;reason=std::string(), std::function&lt; void(const std::error_code &amp;ec)&gt; callback=nullptr) override final</td></tr>
+<tr class="memdesc:ac0142b28433161ad1403e5e16aa228e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to submit a close request through the WebSocket.  <br /></td></tr>
 <tr class="memitem:a56fe1a535e051f46d8fc32d1435e3ed4" id="r_a56fe1a535e051f46d8fc32d1435e3ed4"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a56fe1a535e051f46d8fc32d1435e3ed4">send_close</a> (const int status=1000, const std::string &amp;reason=std::string(), std::function&lt; void(const std::error_code &amp;ec)&gt; callback=nullptr) override final</td></tr>
-<tr class="memdesc:a56fe1a535e051f46d8fc32d1435e3ed4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a close request through the WebSocket.  <br /></td></tr>
+<tr class="memdesc:a56fe1a535e051f46d8fc32d1435e3ed4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a close request through the WebSocket.  <br /></td></tr>
 <tr class="memitem:abcbcad645ed7dc0c872cbd1d5da65c23" id="r_abcbcad645ed7dc0c872cbd1d5da65c23"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abcbcad645ed7dc0c872cbd1d5da65c23">process</a> () override final</td></tr>
 <tr class="memdesc:abcbcad645ed7dc0c872cbd1d5da65c23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes internal operations such as event handling and state updates.  <br /></td></tr>
 <tr class="memitem:afe85e71366a47f346d035ccec973296f" id="r_afe85e71366a47f346d035ccec973296f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afe85e71366a47f346d035ccec973296f">shutdown</a> () override final</td></tr>
@@ -175,8 +179,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad289aaa13c3f2c9d5674e78aff0ced7c inherit pub_methods_classkurlyk_1_1IWebSocketSender"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the remote endpoint information.  <br /></td></tr>
 <tr class="memitem:a08c33a2ca3c8c2386e533383a7aa86e1 inherit pub_methods_classkurlyk_1_1IWebSocketSender" id="r_a08c33a2ca3c8c2386e533383a7aa86e1"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1IWebSocketSender.html#a08c33a2ca3c8c2386e533383a7aa86e1">send_message</a> (const std::string &amp;message, long rate_limit_id=0, std::function&lt; void(const std::error_code &amp;)&gt; callback=nullptr)=0</td></tr>
 <tr class="memdesc:a08c33a2ca3c8c2386e533383a7aa86e1 inherit pub_methods_classkurlyk_1_1IWebSocketSender"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a WebSocket message.  <br /></td></tr>
+<tr class="memitem:a3256cd91b6e16156de090b8f8fda9b85 inherit pub_methods_classkurlyk_1_1IWebSocketSender" id="r_a3256cd91b6e16156de090b8f8fda9b85"><td class="memItemLeft">virtual <a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a>&#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1IWebSocketSender.html#a3256cd91b6e16156de090b8f8fda9b85">submit_message</a> (const std::string &amp;message, long rate_limit_id=0, std::function&lt; void(const std::error_code &amp;)&gt; callback=nullptr)</td></tr>
+<tr class="memdesc:a3256cd91b6e16156de090b8f8fda9b85 inherit pub_methods_classkurlyk_1_1IWebSocketSender"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to submit a WebSocket message and reports the admission result.  <br /></td></tr>
 <tr class="memitem:a51bf8e4553cfacea3413d34fbc6fcfba inherit pub_methods_classkurlyk_1_1IWebSocketSender" id="r_a51bf8e4553cfacea3413d34fbc6fcfba"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1IWebSocketSender.html#a51bf8e4553cfacea3413d34fbc6fcfba">send_close</a> (int status=1000, const std::string &amp;reason=std::string(), std::function&lt; void(const std::error_code &amp;)&gt; callback=nullptr)=0</td></tr>
 <tr class="memdesc:a51bf8e4553cfacea3413d34fbc6fcfba inherit pub_methods_classkurlyk_1_1IWebSocketSender"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a close request to the WebSocket server.  <br /></td></tr>
+<tr class="memitem:a03de0fc839003fbb5ad5762ef878b81f inherit pub_methods_classkurlyk_1_1IWebSocketSender" id="r_a03de0fc839003fbb5ad5762ef878b81f"><td class="memItemLeft">virtual <a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a>&#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1IWebSocketSender.html#a03de0fc839003fbb5ad5762ef878b81f">submit_close</a> (int status=1000, const std::string &amp;reason=std::string(), std::function&lt; void(const std::error_code &amp;)&gt; callback=nullptr)</td></tr>
+<tr class="memdesc:a03de0fc839003fbb5ad5762ef878b81f inherit pub_methods_classkurlyk_1_1IWebSocketSender"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to submit a close request and reports the admission result.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-types" class="groupheader"><a id="pro-types" name="pro-types"></a>
 Protected Types</h2></td></tr>
@@ -282,6 +290,8 @@ Private Attributes</h2></td></tr>
 <tr class="memdesc:af79f3f35a0946b303772ad2f140e76f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomic flag indicating if the client is running.  <br /></td></tr>
 <tr class="memitem:abb069187746dce5639f3cdd63effbb2c" id="r_abb069187746dce5639f3cdd63effbb2c"><td class="memItemLeft">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight"><a class="el" href="#abb069187746dce5639f3cdd63effbb2c">m_is_connected</a> = ATOMIC_VAR_INIT(false)</td></tr>
 <tr class="memdesc:abb069187746dce5639f3cdd63effbb2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomic flag indicating if the client is connected.  <br /></td></tr>
+<tr class="memitem:abd13d328bfa43531309905587e083eeb" id="r_abd13d328bfa43531309905587e083eeb"><td class="memItemLeft">std::atomic&lt; std::size_t &gt;&#160;</td><td class="memItemRight"><a class="el" href="#abd13d328bfa43531309905587e083eeb">m_max_send_queue_size</a> = ATOMIC_VAR_INIT(0)</td></tr>
+<tr class="memdesc:abd13d328bfa43531309905587e083eeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of queued outbound send operations, or zero if unbounded.  <br /></td></tr>
 <tr class="memitem:a5d19bb3a59329f5fec9013a997e4dc26" id="r_a5d19bb3a59329f5fec9013a997e4dc26"><td class="memItemLeft"><a class="el" href="classkurlyk_1_1WebSocketRateLimiter.html">WebSocketRateLimiter</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5d19bb3a59329f5fec9013a997e4dc26">m_rate_limiter</a></td></tr>
 <tr class="memdesc:a5d19bb3a59329f5fec9013a997e4dc26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rate limiter for controlling the frequency of message sending.  <br /></td></tr>
 <tr class="memitem:a0afc5d68fda9f9cad4dd51a2b20f8c71" id="r_a0afc5d68fda9f9cad4dd51a2b20f8c71"><td class="memItemLeft">std::chrono::steady_clock::time_point&#160;</td><td class="memItemRight"><a class="el" href="#a0afc5d68fda9f9cad4dd51a2b20f8c71">m_close_time</a></td></tr>
@@ -326,7 +336,7 @@ Private Attributes</h2></td></tr>
 
 <p>Alias for unique pointers to <a class="el" href="classkurlyk_1_1WebSocketEventData.html" title="Encapsulates data for a WebSocket event, providing information about event type, message,...">WebSocketEventData</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00345">345</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00385">385</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -352,7 +362,7 @@ Private Attributes</h2></td></tr>
 
 <p>Alias for callback pairs with error codes. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00353">353</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00393">393</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -378,7 +388,7 @@ Private Attributes</h2></td></tr>
 
 <p>Alias for shared pointers to <a class="el" href="classkurlyk_1_1WebSocketSendInfo.html" title="Holds information for sending a WebSocket message, including rate limiting, close status,...">WebSocketSendInfo</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00349">349</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00389">389</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -421,7 +431,7 @@ Private Attributes</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00170">170</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00209">209</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -459,7 +469,7 @@ Private Attributes</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00161">161</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00200">200</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -555,7 +565,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00249">249</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00288">288</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -595,7 +605,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00239">239</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00278">278</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -673,7 +683,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Unique pointer to a <a class="el" href="classkurlyk_1_1WebSocketEventData.html" title="Encapsulates data for a WebSocket event, providing information about event type, message,...">WebSocketEventData</a> representing the close event. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00213">213</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00252">252</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -709,7 +719,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Unique pointer to a <a class="el" href="classkurlyk_1_1WebSocketEventData.html" title="Encapsulates data for a WebSocket event, providing information about event type, message,...">WebSocketEventData</a> representing the error event. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00228">228</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00267">267</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -739,7 +749,7 @@ Private Attributes</h2></td></tr>
 <p>Creates a generic WebSocket event. </p>
 <dl class="section return"><dt>Returns</dt><dd>Unique pointer to the created <a class="el" href="classkurlyk_1_1WebSocketEventData.html" title="Encapsulates data for a WebSocket event, providing information about event type, message,...">WebSocketEventData</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00197">197</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00236">236</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -872,7 +882,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00752">752</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00797">797</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -907,7 +917,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00781">781</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00826">826</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -942,7 +952,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00770">770</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00815">815</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -977,7 +987,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00788">788</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00833">833</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1012,7 +1022,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00736">736</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00781">781</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1169,7 +1179,7 @@ Private Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="classkurlyk_1_1IWebSocketClient.html#ac00514bdfa42ec8fb754e0e880ba98e2">kurlyk::IWebSocketClient</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00140">140</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00179">179</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1198,7 +1208,7 @@ Private Attributes</h2></td></tr>
 
 <p>Processes the current FSM state and transitions to the appropriate next state. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00357">357</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00397">397</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1228,7 +1238,7 @@ Private Attributes</h2></td></tr>
 <p>Processes the queue of messages to be sent over the WebSocket. </p>
 <p>Filters the message queue according to the rate limiter. Messages allowed by the rate limiter are transferred to a temporary list and sent sequentially. Close requests are sent immediately. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00690">690</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00735">735</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1258,7 +1268,7 @@ Private Attributes</h2></td></tr>
 <p>Processes the queue of send callbacks. </p>
 <p>For each callback in the queue, it calls the callback function with the associated error code. This method is typically called after a message has been sent or an error has occurred. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00721">721</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00766">766</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1287,7 +1297,7 @@ Private Attributes</h2></td></tr>
 
 <p>Handles the CONNECTING state. Manages connection attempt, errors, or disconnection. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00416">416</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00457">457</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1316,7 +1326,7 @@ Private Attributes</h2></td></tr>
 
 <p>Handles the INIT state. Initializes connection or updates configuration. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00378">378</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00418">418</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1345,7 +1355,7 @@ Private Attributes</h2></td></tr>
 
 <p>Handles the RECONNECTING state. Attempts to reconnect based on configuration settings. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00564">564</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00607">607</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1374,7 +1384,7 @@ Private Attributes</h2></td></tr>
 
 <p>Processes the STOPPED state in the FSM. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00637">637</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00681">681</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1403,7 +1413,7 @@ Private Attributes</h2></td></tr>
 
 <p>Handles the WORKING state. Processes incoming events and manages connection health. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00490">490</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00532">532</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1503,7 +1513,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Send a close request through the WebSocket. </p>
+<p>Sends a close request through the WebSocket. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">status</td><td>The status code to send with the close request. </td></tr>
@@ -1514,7 +1524,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the close request was successfully queued, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00121">121</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00167">167</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1585,7 +1595,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Send a message through the WebSocket. </p>
+<p>Sends a message through the WebSocket. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">message</td><td>The message to send. </td></tr>
@@ -1596,7 +1606,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the message was successfully queued, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00102">102</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00130">130</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1705,7 +1715,101 @@ Private Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="classkurlyk_1_1IWebSocketClient.html#af639422d2e00ae4e22c89065b5fb31e2">kurlyk::IWebSocketClient</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00148">148</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00187">187</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ac0142b28433161ad1403e5e16aa228e2" name="ac0142b28433161ad1403e5e16aa228e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0142b28433161ad1403e5e16aa228e2">&#9670;&#160;</a></span>submit_close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a> kurlyk::BaseWebSocketClient::submit_close </td>
+          <td>(</td>
+          <td class="paramtype">const int</td>          <td class="paramname"><span class="paramname"><em>status</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1000</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>reason</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::string()</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; void(const std::error_code &amp;ec)&gt;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel final">final</span><span class="mlabel override">override</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Attempts to submit a close request through the WebSocket. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">status</td><td>The status code to send with the close request. </td></tr>
+    <tr><td class="paramname">reason</td><td>The reason for closing the connection. </td></tr>
+    <tr><td class="paramname">callback</td><td>The callback to be invoked after sending. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structkurlyk_1_1SubmitResult.html" title="Represents the synchronous result of trying to enqueue or submit work.">SubmitResult</a> describing whether the close request was successfully queued. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00142">142</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a46b70798b75ded6c4e201f7f66443921" name="a46b70798b75ded6c4e201f7f66443921"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46b70798b75ded6c4e201f7f66443921">&#9670;&#160;</a></span>submit_message()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a> kurlyk::BaseWebSocketClient::submit_message </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>rate_limit_id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; void(const std::error_code &amp;ec)&gt;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel final">final</span><span class="mlabel override">override</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Attempts to submit a message through the WebSocket. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The message to send. </td></tr>
+    <tr><td class="paramname">rate_limit_id</td><td>The rate limit type to apply. </td></tr>
+    <tr><td class="paramname">callback</td><td>The callback to be invoked after sending. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structkurlyk_1_1SubmitResult.html" title="Represents the synchronous result of trying to enqueue or submit work.">SubmitResult</a> describing whether the message was successfully queued. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00102">102</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1732,7 +1836,7 @@ Private Attributes</h2></td></tr>
 
 <p>Timestamp of the last WebSocket close event, used for reconnection timing. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00342">342</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00382">382</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1758,7 +1862,7 @@ Private Attributes</h2></td></tr>
 
 <p>Current configuration for the WebSocket. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00158">158</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00197">197</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1784,7 +1888,7 @@ Private Attributes</h2></td></tr>
 
 <p>Queue holding pending WebSocket events. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00346">346</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00386">386</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1810,7 +1914,7 @@ Private Attributes</h2></td></tr>
 
 <p>Mutex for synchronizing access to the event queue. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00344">344</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00384">384</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1836,7 +1940,7 @@ Private Attributes</h2></td></tr>
 
 <p>Queue for FSM events, managing the event sequence for the FSM. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00336">336</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00375">375</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1884,7 +1988,7 @@ Private Attributes</h2></td></tr>
 
 <p>Atomic flag indicating if the client is connected. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00339">339</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00378">378</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1910,7 +2014,33 @@ Private Attributes</h2></td></tr>
 
 <p>Atomic flag indicating if the client is running. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00338">338</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00377">377</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+
+</div>
+</div>
+<a id="abd13d328bfa43531309905587e083eeb" name="abd13d328bfa43531309905587e083eeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd13d328bfa43531309905587e083eeb">&#9670;&#160;</a></span>m_max_send_queue_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;std::size_t&gt; kurlyk::BaseWebSocketClient::m_max_send_queue_size = ATOMIC_VAR_INIT(0)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum number of queued outbound send operations, or zero if unbounded. </p>
+
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00379">379</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1936,7 +2066,7 @@ Private Attributes</h2></td></tr>
 
 <p>Queue holding messages to be sent over the WebSocket. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00350">350</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00390">390</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1962,7 +2092,7 @@ Private Attributes</h2></td></tr>
 
 <p>Mutex for synchronizing access to the message queue. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00348">348</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00388">388</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1988,7 +2118,7 @@ Private Attributes</h2></td></tr>
 
 <p>Function to handle WebSocket events. Called when a new event is received. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00256">256</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00295">295</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2014,7 +2144,7 @@ Private Attributes</h2></td></tr>
 
 <p>Function to notify about new events in the FSM. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00257">257</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00296">296</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2040,7 +2170,7 @@ Private Attributes</h2></td></tr>
 
 <p>Rate limiter for controlling the frequency of message sending. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00341">341</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00381">381</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2066,7 +2196,7 @@ Private Attributes</h2></td></tr>
 
 <p>Counter for the number of reconnection attempts. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00337">337</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00376">376</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2092,7 +2222,7 @@ Private Attributes</h2></td></tr>
 
 <p>Queue holding send callbacks with their respective error codes. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00354">354</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00394">394</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2118,7 +2248,7 @@ Private Attributes</h2></td></tr>
 
 <p>Mutex for synchronizing access to the send callback queue. </p>
 
-<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00352">352</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="BaseWebSocketClient_8hpp_source.html#l00392">392</a> of file <a class="el" href="BaseWebSocketClient_8hpp_source.html">BaseWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>

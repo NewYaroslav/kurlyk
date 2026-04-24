@@ -139,6 +139,8 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#a1b2f911d69c83070bd7ce9ce320950e8af237deac1e85c65673a7bba9093bca7e">InvalidConfiguration</a>
 , <br />
 &#160;&#160;<a class="el" href="#a1b2f911d69c83070bd7ce9ce320950e8a4075072d219e061ca0f3124f8fbef463">NotConnected</a>
+, <a class="el" href="#a1b2f911d69c83070bd7ce9ce320950e8a76c499f10e043a763e23c532982f6126">QueueLimitExceeded</a>
+, <a class="el" href="#a1b2f911d69c83070bd7ce9ce320950e8a075d9c9ae8c8f1c79c1a1965cd8c5a42">ShuttingDown</a>
 <br />
  }</td></tr>
 <tr class="memdesc:a1b2f911d69c83070bd7ce9ce320950e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines errors related to the internal state or lifecycle of the HTTP/WebSocket client.  <a href="#a1b2f911d69c83070bd7ce9ce320950e8">More...</a><br /></td></tr>
@@ -283,6 +285,10 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="a1b2f911d69c83070bd7ce9ce320950e8a4075072d219e061ca0f3124f8fbef463" name="a1b2f911d69c83070bd7ce9ce320950e8a4075072d219e061ca0f3124f8fbef463"></a>NotConnected&#160;</td><td class="fielddoc"><p>Operation requires an active connection but none exists. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="a1b2f911d69c83070bd7ce9ce320950e8a76c499f10e043a763e23c532982f6126" name="a1b2f911d69c83070bd7ce9ce320950e8a76c499f10e043a763e23c532982f6126"></a>QueueLimitExceeded&#160;</td><td class="fielddoc"><p>Operation was rejected because the bounded queue is already full. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a1b2f911d69c83070bd7ce9ce320950e8a075d9c9ae8c8f1c79c1a1965cd8c5a42" name="a1b2f911d69c83070bd7ce9ce320950e8a075d9c9ae8c8f1c79c1a1965cd8c5a42"></a>ShuttingDown&#160;</td><td class="fielddoc"><p>Operation was rejected because the owning subsystem is shutting down. </p>
+</td></tr>
 </table>
 
 <p class="definition">Definition at line <a class="el" href="ClientErrorCategory_8hpp_source.html#l00012">12</a> of file <a class="el" href="ClientErrorCategory_8hpp_source.html">ClientErrorCategory.hpp</a>.</p>
@@ -397,7 +403,7 @@ Functions</h2></td></tr>
 <p>Returns the singleton instance of the <a class="el" href="classkurlyk_1_1utils_1_1ClientErrorCategory.html" title="Custom std::error_category for reporting internal client errors not tied to specific protocols (e....">ClientErrorCategory</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the client error category. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ClientErrorCategory_8hpp_source.html#l00048">48</a> of file <a class="el" href="ClientErrorCategory_8hpp_source.html">ClientErrorCategory.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ClientErrorCategory_8hpp_source.html#l00054">54</a> of file <a class="el" href="ClientErrorCategory_8hpp_source.html">ClientErrorCategory.hpp</a>.</p>
 
 </div>
 </div>
@@ -797,7 +803,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::error_code representing the specified client error. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ClientErrorCategory_8hpp_source.html#l00056">56</a> of file <a class="el" href="ClientErrorCategory_8hpp_source.html">ClientErrorCategory.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ClientErrorCategory_8hpp_source.html#l00062">62</a> of file <a class="el" href="ClientErrorCategory_8hpp_source.html">ClientErrorCategory.hpp</a>.</p>
 
 </div>
 </div>

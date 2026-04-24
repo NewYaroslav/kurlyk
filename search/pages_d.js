@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['usage_0',['Usage',['../index.html#usage_sec',1,'']]],
-  ['using_20a_20proxy_1',['Using a proxy',['../index.html#http_proxy',1,'']]]
+  ['repository_0',['Repository',['../index.html#repo_sec',1,'']]],
+  ['request_1',['Basic GET request',['../index.html#http_basic',1,'']]],
+  ['requests_2',['Calling HTTP requests',['../index.html#http_variants',1,'']]]
 ];

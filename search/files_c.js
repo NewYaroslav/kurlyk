@@ -6,5 +6,6 @@ var searchData=
   ['simplewebsocketworker_2ehpp_3',['SimpleWebSocketWorker.hpp',['../SimpleWebSocketWorker_8hpp.html',1,'']]],
   ['socketclient_2ehpp_4',['SocketClient.hpp',['../SocketClient_8hpp.html',1,'']]],
   ['startup_2ehpp_5',['startup.hpp',['../startup_8hpp.html',1,'']]],
-  ['string_5futils_2ehpp_6',['string_utils.hpp',['../string__utils_8hpp.html',1,'']]]
+  ['string_5futils_2ehpp_6',['string_utils.hpp',['../string__utils_8hpp.html',1,'']]],
+  ['submitresult_2ehpp_7',['SubmitResult.hpp',['../SubmitResult_8hpp.html',1,'']]]
 ];

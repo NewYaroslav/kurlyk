@@ -148,6 +148,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac9456c842e4f08990af58130f0bdfa2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the idle timeout for the WebSocket connection.  <br /></td></tr>
 <tr class="memitem:ad85f333c3c77e1d59df17c871f7d0842" id="r_ad85f333c3c77e1d59df17c871f7d0842"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad85f333c3c77e1d59df17c871f7d0842">set_request_timeout</a> (long <a class="el" href="#ae539bf1796067b4b55c8ab79bd8878d3">request_timeout</a>)</td></tr>
 <tr class="memdesc:ad85f333c3c77e1d59df17c871f7d0842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the timeout for WebSocket requests.  <br /></td></tr>
+<tr class="memitem:a4ffabe864fc4c339cb5cfcea633a1aa2" id="r_a4ffabe864fc4c339cb5cfcea633a1aa2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4ffabe864fc4c339cb5cfcea633a1aa2">set_max_send_queue_size</a> (std::size_t <a class="el" href="#a4032d2d5f8ba6fe42a5dcb2b7aaa0128">max_send_queue_size</a>)</td></tr>
+<tr class="memdesc:a4ffabe864fc4c339cb5cfcea633a1aa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the maximum number of outbound send operations queued for this client.  <br /></td></tr>
 <tr class="memitem:ad719801e6ff0205882a5d22b1e7469bb" id="r_ad719801e6ff0205882a5d22b1e7469bb"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad719801e6ff0205882a5d22b1e7469bb">set_ca_file</a> (const std::string &amp;<a class="el" href="#a58782b930ea77a671b92d4a9dcf503e1">ca_file</a>)</td></tr>
 <tr class="memdesc:ad719801e6ff0205882a5d22b1e7469bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the path to the CA certificate file.  <br /></td></tr>
 <tr class="memitem:aea9072b20e9baa5275265004de3455c0" id="r_aea9072b20e9baa5275265004de3455c0"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aea9072b20e9baa5275265004de3455c0">set_ca_file</a> (bool <a class="el" href="#aa5bf033c568b524d018cd7f2f597910f">verify_cert</a>, const std::string &amp;<a class="el" href="#a58782b930ea77a671b92d4a9dcf503e1">ca_file</a>)</td></tr>
@@ -195,6 +197,8 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:ad902d114383b7569691e627f4e49b4b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delay in seconds between reconnection attempts.  <br /></td></tr>
 <tr class="memitem:a64f6c677bade08036aefdf22803490ae" id="r_a64f6c677bade08036aefdf22803490ae"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#a64f6c677bade08036aefdf22803490ae">reconnect_attempts</a> = 0</td></tr>
 <tr class="memdesc:a64f6c677bade08036aefdf22803490ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of reconnection attempts (0 means infinite attempts).  <br /></td></tr>
+<tr class="memitem:a4032d2d5f8ba6fe42a5dcb2b7aaa0128" id="r_a4032d2d5f8ba6fe42a5dcb2b7aaa0128"><td class="memItemLeft">std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#a4032d2d5f8ba6fe42a5dcb2b7aaa0128">max_send_queue_size</a> = 0</td></tr>
+<tr class="memdesc:a4032d2d5f8ba6fe42a5dcb2b7aaa0128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of queued outbound send operations, or zero if unbounded.  <br /></td></tr>
 <tr class="memitem:ae0ad7d538b3ad4f30b9e3a48e92e6009" id="r_ae0ad7d538b3ad4f30b9e3a48e92e6009"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ae0ad7d538b3ad4f30b9e3a48e92e6009">reconnect</a> = true</td></tr>
 <tr class="memdesc:ae0ad7d538b3ad4f30b9e3a48e92e6009"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables automatic reconnection if true.  <br /></td></tr>
 <tr class="memitem:aa5bf033c568b524d018cd7f2f597910f" id="r_aa5bf033c568b524d018cd7f2f597910f"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aa5bf033c568b524d018cd7f2f597910f">verify_cert</a> = true</td></tr>
@@ -245,7 +249,7 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The index of the added rate limit configuration. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00208">208</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00215">215</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -281,7 +285,7 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The index of the added rate limit configuration. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00216">216</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00223">223</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -317,7 +321,7 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The index of the added rate limit configuration. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00224">224</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00231">231</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -369,7 +373,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00072">72</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00073">73</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -404,7 +408,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00157">157</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00158">158</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -444,7 +448,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00188">188</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00195">195</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -479,7 +483,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00181">181</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00188">188</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -514,7 +518,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00163">163</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00164">164</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -549,7 +553,42 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00169">169</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00170">170</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a4ffabe864fc4c339cb5cfcea633a1aa2" name="a4ffabe864fc4c339cb5cfcea633a1aa2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ffabe864fc4c339cb5cfcea633a1aa2">&#9670;&#160;</a></span>set_max_send_queue_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kurlyk::WebSocketConfig::set_max_send_queue_size </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t</td>          <td class="paramname"><span class="paramname"><em>max_send_queue_size</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the maximum number of outbound send operations queued for this client. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="#a4032d2d5f8ba6fe42a5dcb2b7aaa0128" title="Maximum number of queued outbound send operations, or zero if unbounded.">max_send_queue_size</a></td><td>Queue limit, or <span class="tt">0</span> to keep the send queue unbounded. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00182">182</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -589,7 +628,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00084">84</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00085">85</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -647,7 +686,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00121">121</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00122">122</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -693,7 +732,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00092">92</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00093">93</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -728,7 +767,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00105">105</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00106">106</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -768,7 +807,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00135">135</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00136">136</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -803,7 +842,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00099">99</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00100">100</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -838,7 +877,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00111">111</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00112">112</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -884,7 +923,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00143">143</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00144">144</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -919,7 +958,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00175">175</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00176">176</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -965,7 +1004,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00049">49</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00050">50</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -1005,7 +1044,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00063">63</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00064">64</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -1040,7 +1079,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00151">151</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00152">152</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -1075,7 +1114,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00195">195</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00202">202</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -1206,6 +1245,24 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a4032d2d5f8ba6fe42a5dcb2b7aaa0128" name="a4032d2d5f8ba6fe42a5dcb2b7aaa0128"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4032d2d5f8ba6fe42a5dcb2b7aaa0128">&#9670;&#160;</a></span>max_send_queue_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t kurlyk::WebSocketConfig::max_send_queue_size = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Maximum number of queued outbound send operations, or zero if unbounded. </p>
+
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00030">30</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+
+</div>
+</div>
 <a id="af6a785ebe98a7c4dc3431c9c1f50db93" name="af6a785ebe98a7c4dc3431c9c1f50db93"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af6a785ebe98a7c4dc3431c9c1f50db93">&#9670;&#160;</a></span>protocols</h2>
 
@@ -1292,7 +1349,7 @@ Public Attributes</h2></td></tr>
 
 <p>List of rate limits applied to WebSocket messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00043">43</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00044">44</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -1310,7 +1367,7 @@ Public Attributes</h2></td></tr>
 
 <p>Enables automatic reconnection if true. </p>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00030">30</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00031">31</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>
@@ -1418,7 +1475,7 @@ Public Attributes</h2></td></tr>
 
 <p>If true, verifies the server’s certificate and hostname according to RFC 2818. </p>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00031">31</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00032">32</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
 </div>
 </div>

@@ -133,6 +133,8 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages asynchronous HTTP requests, including handling responses, retries, and error processing.  <a href="classkurlyk_1_1HttpRequestHandler.html#details">More...</a><br /></td></tr>
 <tr class="memitem:Cookie" id="r_Cookie"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1Cookie.html">Cookie</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an HTTP cookie.  <a href="classkurlyk_1_1Cookie.html#details">More...</a><br /></td></tr>
+<tr class="memitem:SubmitResult" id="r_SubmitResult"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the synchronous result of trying to enqueue or submit work.  <a href="structkurlyk_1_1SubmitResult.html#details">More...</a><br /></td></tr>
 <tr class="memitem:BaseWebSocketClient" id="r_BaseWebSocketClient"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1BaseWebSocketClient.html">BaseWebSocketClient</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class implementing core functionality for WebSocket clients, managing events, states, and message sending.  <a href="classkurlyk_1_1BaseWebSocketClient.html#details">More...</a><br /></td></tr>
 <tr class="memitem:IWebSocketClient" id="r_IWebSocketClient"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1IWebSocketClient.html">IWebSocketClient</a></td></tr>
@@ -218,10 +220,20 @@ Functions</h2></td></tr>
 <tr class="memdesc:abe5ef66530eb2fa86cda3acd58e88c5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an existing rate limit with the specified identifier.  <br /></td></tr>
 <tr class="memitem:aa01eb3e3c8b5a6c6506e25de1bbb43c5" id="r_aa01eb3e3c8b5a6c6506e25de1bbb43c5"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#aa01eb3e3c8b5a6c6506e25de1bbb43c5">generate_request_id</a> ()</td></tr>
 <tr class="memdesc:aa01eb3e3c8b5a6c6506e25de1bbb43c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a new unique request ID.  <br /></td></tr>
+<tr class="memitem:a19c40cbaef5bb075ce99d1b99ab7febc" id="r_a19c40cbaef5bb075ce99d1b99ab7febc"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a19c40cbaef5bb075ce99d1b99ab7febc">set_max_pending_requests</a> (std::size_t <a class="el" href="#a05cdd73b7c1848155486318277d32049">max_pending_requests</a>)</td></tr>
+<tr class="memdesc:a19c40cbaef5bb075ce99d1b99ab7febc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the maximum number of requests accepted into the global pending queue.  <br /></td></tr>
+<tr class="memitem:a05cdd73b7c1848155486318277d32049" id="r_a05cdd73b7c1848155486318277d32049"><td class="memItemLeft">std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#a05cdd73b7c1848155486318277d32049">max_pending_requests</a> ()</td></tr>
+<tr class="memdesc:a05cdd73b7c1848155486318277d32049"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current global pending queue limit.  <br /></td></tr>
 <tr class="memitem:af4e359b92f64aabd5129cc30b1c5f715" id="r_af4e359b92f64aabd5129cc30b1c5f715"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af4e359b92f64aabd5129cc30b1c5f715">cancel_request_by_id</a> (uint64_t request_id, std::function&lt; void()&gt; callback)</td></tr>
 <tr class="memdesc:af4e359b92f64aabd5129cc30b1c5f715"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels a request by its unique identifier.  <br /></td></tr>
 <tr class="memitem:a9d19df9f93548f37b62a698c256544ea" id="r_a9d19df9f93548f37b62a698c256544ea"><td class="memItemLeft">std::future&lt; void &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a9d19df9f93548f37b62a698c256544ea">cancel_request_by_id</a> (uint64_t request_id)</td></tr>
 <tr class="memdesc:a9d19df9f93548f37b62a698c256544ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels a request by its unique identifier and returns a future.  <br /></td></tr>
+<tr class="memitem:afe56f68e2137cdd7e79144fdd8405ac3" id="r_afe56f68e2137cdd7e79144fdd8405ac3"><td class="memItemLeft"><a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a>&#160;</td><td class="memItemRight"><a class="el" href="#afe56f68e2137cdd7e79144fdd8405ac3">make_submit_error_response</a> (const <a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a> &amp;submit_result)</td></tr>
+<tr class="memdesc:afe56f68e2137cdd7e79144fdd8405ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a ready HTTP response describing a synchronous submission rejection.  <br /></td></tr>
+<tr class="memitem:a256c33d85727908962c47a565267c073" id="r_a256c33d85727908962c47a565267c073"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a256c33d85727908962c47a565267c073">safe_set_response</a> (std::shared_ptr&lt; std::promise&lt; <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> &gt; &gt; promise, <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> response)</td></tr>
+<tr class="memdesc:a256c33d85727908962c47a565267c073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safely sets an HTTP response on the provided promise.  <br /></td></tr>
+<tr class="memitem:ac834500270b0f9fca5292b45b8f0929b" id="r_ac834500270b0f9fca5292b45b8f0929b"><td class="memItemLeft"><a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac834500270b0f9fca5292b45b8f0929b">submit_http_request</a> (std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1HttpRequest.html">HttpRequest</a> &gt; request_ptr, <a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
+<tr class="memdesc:ac834500270b0f9fca5292b45b8f0929b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to submit an HTTP request and reports the admission result.  <br /></td></tr>
 <tr class="memitem:a5d4ee8e6b46640b045f456eb67d64002" id="r_a5d4ee8e6b46640b045f456eb67d64002"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a5d4ee8e6b46640b045f456eb67d64002">http_request</a> (std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1HttpRequest.html">HttpRequest</a> &gt; request_ptr, <a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
 <tr class="memdesc:a5d4ee8e6b46640b045f456eb67d64002"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an HTTP request with callback.  <br /></td></tr>
 <tr class="memitem:a8cf64ef1636844aec3e232d2c669747d" id="r_a8cf64ef1636844aec3e232d2c669747d"><td class="memItemLeft">std::future&lt; <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a8cf64ef1636844aec3e232d2c669747d">http_request</a> (std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1HttpRequest.html">HttpRequest</a> &gt; request_ptr)</td></tr>
@@ -454,7 +466,7 @@ Functions</h2></td></tr>
 
 <p>Shared pointer alias for the sender abstraction used in <a class="el" href="classkurlyk_1_1WebSocketEventData.html" title="Encapsulates data for a WebSocket event, providing information about event type, message,...">WebSocketEventData</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="IWebSocketSender_8hpp_source.html#l00061">61</a> of file <a class="el" href="IWebSocketSender_8hpp_source.html">IWebSocketSender.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IWebSocketSender_8hpp_source.html#l00087">87</a> of file <a class="el" href="IWebSocketSender_8hpp_source.html">IWebSocketSender.hpp</a>.</p>
 
 </div>
 </div>
@@ -637,7 +649,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <span class="tt">std::future&lt;void&gt;</span> that becomes ready when the cancellation process is complete. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00060">60</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00072">72</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -677,7 +689,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00052">52</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00064">64</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -897,7 +909,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair containing the unique request ID and a future with the response details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00275">275</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00304">304</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -950,7 +962,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00262">262</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00291">291</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1003,7 +1015,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair containing the unique request ID and a future with the response details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00345">345</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00358">358</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1062,7 +1074,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00330">330</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00343">343</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1133,7 +1145,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00231">231</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00260">260</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1192,7 +1204,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair containing the unique request ID and a future with the response details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00171">171</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00216">216</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1257,7 +1269,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00141">141</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00186">186</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1293,7 +1305,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> with the response details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00097">97</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00160">160</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1334,7 +1346,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the request was successfully added to the manager, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00086">86</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00151">151</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1370,6 +1382,72 @@ Functions</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="runtime_8hpp_source.html#l00013">13</a> of file <a class="el" href="runtime_8hpp_source.html">runtime.hpp</a>.</p>
+
+</div>
+</div>
+<a id="afe56f68e2137cdd7e79144fdd8405ac3" name="afe56f68e2137cdd7e79144fdd8405ac3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe56f68e2137cdd7e79144fdd8405ac3">&#9670;&#160;</a></span>make_submit_error_response()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> kurlyk::make_submit_error_response </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>submit_result</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a ready HTTP response describing a synchronous submission rejection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">submit_result</td><td>Submission result containing the rejection error code. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A ready <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> describing the rejection. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00097">97</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a05cdd73b7c1848155486318277d32049" name="a05cdd73b7c1848155486318277d32049"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05cdd73b7c1848155486318277d32049">&#9670;&#160;</a></span>max_pending_requests()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t kurlyk::max_pending_requests </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the current global pending queue limit. </p>
+<dl class="section return"><dt>Returns</dt><dd>Configured queue limit, or <span class="tt">0</span> if the queue is unbounded. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00057">57</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1532,6 +1610,81 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a256c33d85727908962c47a565267c073" name="a256c33d85727908962c47a565267c073"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a256c33d85727908962c47a565267c073">&#9670;&#160;</a></span>safe_set_response()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kurlyk::safe_set_response </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; std::promise&lt; <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>promise</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a></td>          <td class="paramname"><span class="paramname"><em>response</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Safely sets an HTTP response on the provided promise. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">promise</td><td>Promise that receives the ready response. </td></tr>
+    <tr><td class="paramname">response</td><td>Completed HTTP response to forward to the caller. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00113">113</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a19c40cbaef5bb075ce99d1b99ab7febc" name="a19c40cbaef5bb075ce99d1b99ab7febc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19c40cbaef5bb075ce99d1b99ab7febc">&#9670;&#160;</a></span>set_max_pending_requests()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kurlyk::set_max_pending_requests </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t</td>          <td class="paramname"><span class="paramname"><em>max_pending_requests</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the maximum number of requests accepted into the global pending queue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="#a05cdd73b7c1848155486318277d32049" title="Returns the current global pending queue limit.">max_pending_requests</a></td><td>Queue limit, or <span class="tt">0</span> to keep the queue unbounded. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00051">51</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
 <a id="a3b37e9b3d22d6b803c8885bbd47ad56e" name="a3b37e9b3d22d6b803c8885bbd47ad56e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3b37e9b3d22d6b803c8885bbd47ad56e">&#9670;&#160;</a></span>shutdown()</h2>
 
@@ -1559,6 +1712,47 @@ Functions</h2></td></tr>
 <p>Use this function to stop all network operations and prepare the library for shutdown. </p>
 
 <p class="definition">Definition at line <a class="el" href="runtime_8hpp_source.html#l00038">38</a> of file <a class="el" href="runtime_8hpp_source.html">runtime.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ac834500270b0f9fca5292b45b8f0929b" name="ac834500270b0f9fca5292b45b8f0929b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac834500270b0f9fca5292b45b8f0929b">&#9670;&#160;</a></span>submit_http_request()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a> kurlyk::submit_http_request </td>
+          <td>(</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1HttpRequest.html">HttpRequest</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>request_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a></td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Attempts to submit an HTTP request and reports the admission result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request_ptr</td><td>The HTTP request object with the request details. </td></tr>
+    <tr><td class="paramname">callback</td><td>The callback function to be called upon request completion. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structkurlyk_1_1SubmitResult.html" title="Represents the synchronous result of trying to enqueue or submit work.">SubmitResult</a> describing whether the request was accepted into the queue. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00136">136</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>

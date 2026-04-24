@@ -8,7 +8,7 @@ var searchData=
   ['ensure_5finitialized_5',['ensure_initialized',['../classkurlyk_1_1HttpClient.html#abe625e7963f88025e3791576852c45b3',1,'kurlyk::HttpClient::ensure_initialized()'],['../classkurlyk_1_1WebSocketClient.html#a281cdc161df951e785a5546d37bbcffe',1,'kurlyk::WebSocketClient::ensure_initialized()']]],
   ['enums_2ehpp_6',['enums.hpp',['../enums_8hpp.html',1,'']]],
   ['error_20handling_7',['Error Handling',['../index.html#error_sec',1,'']]],
-  ['error_5fcode_8',['error_code',['../classkurlyk_1_1HttpResponse.html#ac5bf03eef95f0b2089d8b32eb28a6d12',1,'kurlyk::HttpResponse::error_code'],['../classkurlyk_1_1WebSocketEventData.html#abc845082950ccc5f6e9f182a3da5460f',1,'kurlyk::WebSocketEventData::error_code']]],
+  ['error_5fcode_8',['error_code',['../classkurlyk_1_1HttpResponse.html#ac5bf03eef95f0b2089d8b32eb28a6d12',1,'kurlyk::HttpResponse::error_code'],['../structkurlyk_1_1SubmitResult.html#acafc7ccc166c5ca6fe7eacc0bcc79f2c',1,'kurlyk::SubmitResult::error_code'],['../classkurlyk_1_1WebSocketEventData.html#abc845082950ccc5f6e9f182a3da5460f',1,'kurlyk::WebSocketEventData::error_code']]],
   ['error_5fmessage_9',['error_message',['../classkurlyk_1_1HttpResponse.html#a7bc3d7f67cce5d6621a88d7c39fa4868',1,'kurlyk::HttpResponse']]],
   ['errorhandler_10',['ErrorHandler',['../classkurlyk_1_1core_1_1NetworkWorker.html#adb3a3f6ee021097470f74ec38fdfdfb9',1,'kurlyk::core::NetworkWorker']]],
   ['event_5fdata_11',['event_data',['../structkurlyk_1_1BaseWebSocketClient_1_1FSMEventData.html#a5f0e014e62111a81ae0d2fcfd261a185',1,'kurlyk::BaseWebSocketClient::FSMEventData']]],

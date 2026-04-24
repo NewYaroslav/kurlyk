@@ -134,8 +134,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad289aaa13c3f2c9d5674e78aff0ced7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the remote endpoint information.  <br /></td></tr>
 <tr class="memitem:a08c33a2ca3c8c2386e533383a7aa86e1" id="r_a08c33a2ca3c8c2386e533383a7aa86e1"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#a08c33a2ca3c8c2386e533383a7aa86e1">send_message</a> (const std::string &amp;message, long rate_limit_id=0, std::function&lt; void(const std::error_code &amp;)&gt; callback=nullptr)=0</td></tr>
 <tr class="memdesc:a08c33a2ca3c8c2386e533383a7aa86e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a WebSocket message.  <br /></td></tr>
+<tr class="memitem:a3256cd91b6e16156de090b8f8fda9b85" id="r_a3256cd91b6e16156de090b8f8fda9b85"><td class="memItemLeft">virtual <a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3256cd91b6e16156de090b8f8fda9b85">submit_message</a> (const std::string &amp;message, long rate_limit_id=0, std::function&lt; void(const std::error_code &amp;)&gt; callback=nullptr)</td></tr>
+<tr class="memdesc:a3256cd91b6e16156de090b8f8fda9b85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to submit a WebSocket message and reports the admission result.  <br /></td></tr>
 <tr class="memitem:a51bf8e4553cfacea3413d34fbc6fcfba" id="r_a51bf8e4553cfacea3413d34fbc6fcfba"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#a51bf8e4553cfacea3413d34fbc6fcfba">send_close</a> (int status=1000, const std::string &amp;reason=std::string(), std::function&lt; void(const std::error_code &amp;)&gt; callback=nullptr)=0</td></tr>
 <tr class="memdesc:a51bf8e4553cfacea3413d34fbc6fcfba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a close request to the WebSocket server.  <br /></td></tr>
+<tr class="memitem:a03de0fc839003fbb5ad5762ef878b81f" id="r_a03de0fc839003fbb5ad5762ef878b81f"><td class="memItemLeft">virtual <a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a>&#160;</td><td class="memItemRight"><a class="el" href="#a03de0fc839003fbb5ad5762ef878b81f">submit_close</a> (int status=1000, const std::string &amp;reason=std::string(), std::function&lt; void(const std::error_code &amp;)&gt; callback=nullptr)</td></tr>
+<tr class="memdesc:a03de0fc839003fbb5ad5762ef878b81f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to submit a close request and reports the admission result.  <br /></td></tr>
 <tr class="memitem:ac3fa995ff3f1117d53558cbcfcb2df55" id="r_ac3fa995ff3f1117d53558cbcfcb2df55"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#ac3fa995ff3f1117d53558cbcfcb2df55">is_connected</a> () const =0</td></tr>
 <tr class="memdesc:ac3fa995ff3f1117d53558cbcfcb2df55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the WebSocket connection is currently active.  <br /></td></tr>
 </table>
@@ -407,6 +411,100 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the message was accepted for sending, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a03de0fc839003fbb5ad5762ef878b81f" name="a03de0fc839003fbb5ad5762ef878b81f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03de0fc839003fbb5ad5762ef878b81f">&#9670;&#160;</a></span>submit_close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a> kurlyk::IWebSocketSender::submit_close </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>status</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1000</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>reason</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::string()</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; void(const std::error_code &amp;)&gt;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Attempts to submit a close request and reports the admission result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">status</td><td>The status code for the close request, default is 1000 (normal closure). </td></tr>
+    <tr><td class="paramname">reason</td><td>Optional reason for closing the connection. </td></tr>
+    <tr><td class="paramname">callback</td><td>Optional callback to execute once the close request is sent, providing an error code if any issues occur. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structkurlyk_1_1SubmitResult.html" title="Represents the synchronous result of trying to enqueue or submit work.">SubmitResult</a> describing whether the close request was accepted. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="IWebSocketSender_8hpp_source.html#l00072">72</a> of file <a class="el" href="IWebSocketSender_8hpp_source.html">IWebSocketSender.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a3256cd91b6e16156de090b8f8fda9b85" name="a3256cd91b6e16156de090b8f8fda9b85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3256cd91b6e16156de090b8f8fda9b85">&#9670;&#160;</a></span>submit_message()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a> kurlyk::IWebSocketSender::submit_message </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>rate_limit_id</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; void(const std::error_code &amp;)&gt;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Attempts to submit a WebSocket message and reports the admission result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The content of the message to be sent. </td></tr>
+    <tr><td class="paramname">rate_limit_id</td><td>The ID of the rate limit to apply to this message. A value of 0 indicates the default or no rate limit. </td></tr>
+    <tr><td class="paramname">callback</td><td>Optional callback to execute once the message is sent, providing an error code if any issues occur. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structkurlyk_1_1SubmitResult.html" title="Represents the synchronous result of trying to enqueue or submit work.">SubmitResult</a> describing whether the message was accepted for sending. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="IWebSocketSender_8hpp_source.html#l00049">49</a> of file <a class="el" href="IWebSocketSender_8hpp_source.html">IWebSocketSender.hpp</a>.</p>
 
 </div>
 </div>
