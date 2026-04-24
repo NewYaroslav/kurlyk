@@ -120,7 +120,7 @@ Classes</h2></td></tr>
 <tr class="memitem:HttpResponse" id="r_HttpResponse"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpResponse.html">HttpResponse</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the response received from an HTTP request, including headers, content, and status.  <a href="classkurlyk_1_1HttpResponse.html#details">More...</a><br /></td></tr>
 <tr class="memitem:HttpClient" id="r_HttpClient"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpClient.html">HttpClient</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A client class for making HTTP requests to a specific host.  <a href="classkurlyk_1_1HttpClient.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concrete HTTP client for making requests to a specific host.  <a href="classkurlyk_1_1HttpClient.html#details">More...</a><br /></td></tr>
 <tr class="memitem:HttpRequestManager" id="r_HttpRequestManager"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpRequestManager.html">HttpRequestManager</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages and processes HTTP requests using a singleton pattern.  <a href="classkurlyk_1_1HttpRequestManager.html#details">More...</a><br /></td></tr>
 <tr class="memitem:HttpBatchRequestHandler" id="r_HttpBatchRequestHandler"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpBatchRequestHandler.html">HttpBatchRequestHandler</a></td></tr>
@@ -136,9 +136,9 @@ Classes</h2></td></tr>
 <tr class="memitem:BaseWebSocketClient" id="r_BaseWebSocketClient"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1BaseWebSocketClient.html">BaseWebSocketClient</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class implementing core functionality for WebSocket clients, managing events, states, and message sending.  <a href="classkurlyk_1_1BaseWebSocketClient.html#details">More...</a><br /></td></tr>
 <tr class="memitem:IWebSocketClient" id="r_IWebSocketClient"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1IWebSocketClient.html">IWebSocketClient</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for a WebSocket client, providing methods for connection management, configuration, and event handling.  <a href="classkurlyk_1_1IWebSocketClient.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Legacy internal compatibility interface for full WebSocket client implementations.  <a href="classkurlyk_1_1IWebSocketClient.html#details">More...</a><br /></td></tr>
 <tr class="memitem:IWebSocketSender" id="r_IWebSocketSender"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1IWebSocketSender.html">IWebSocketSender</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for a WebSocket sender, offering methods to send messages, close connections, and check connection status.  <a href="classkurlyk_1_1IWebSocketSender.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Public sender abstraction used by <a class="el" href="classkurlyk_1_1WebSocketEventData.html#a5447c5f0813c590186ecc3a7d1500066" title="Pointer to the WebSocket sender, allowing further actions related to this event.">WebSocketEventData::sender</a>.  <a href="classkurlyk_1_1IWebSocketSender.html#details">More...</a><br /></td></tr>
 <tr class="memitem:WebSocketEventData" id="r_WebSocketEventData"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1WebSocketEventData.html">WebSocketEventData</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encapsulates data for a WebSocket event, providing information about event type, message, status, and errors.  <a href="classkurlyk_1_1WebSocketEventData.html#details">More...</a><br /></td></tr>
 <tr class="memitem:WebSocketRateLimiter" id="r_WebSocketRateLimiter"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1WebSocketRateLimiter.html">WebSocketRateLimiter</a></td></tr>
@@ -154,9 +154,9 @@ Classes</h2></td></tr>
 <tr class="memitem:WebSocketSendInfo" id="r_WebSocketSendInfo"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1WebSocketSendInfo.html">WebSocketSendInfo</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds information for sending a WebSocket message, including rate limiting, close status, and a callback.  <a href="classkurlyk_1_1WebSocketSendInfo.html#details">More...</a><br /></td></tr>
 <tr class="memitem:WebSocketClient" id="r_WebSocketClient"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1WebSocketClient.html">WebSocketClient</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides an interface for managing WebSocket connections, including configuration, event handling, and message sending.  <a href="classkurlyk_1_1WebSocketClient.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Public facade for managing WebSocket connections, events, and message sending.  <a href="classkurlyk_1_1WebSocketClient.html#details">More...</a><br /></td></tr>
 <tr class="memitem:WebSocketManager" id="r_WebSocketManager"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1WebSocketManager.html">WebSocketManager</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages WebSocket client instances, providing centralized control for processing, resetting, and lifecycle management.  <a href="classkurlyk_1_1WebSocketManager.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages backend-specific WebSocket client instances and coordinates their lifecycle.  <a href="classkurlyk_1_1WebSocketManager.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -173,9 +173,13 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ab07e33df3720a507c4116c70f0f16b6d" id="r_ab07e33df3720a507c4116c70f0f16b6d"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ab07e33df3720a507c4116c70f0f16b6d">Cookies</a> = <a class="el" href="namespacekurlyk_1_1utils.html#a8eb3b6f8239f058f4e9942752cb82562">utils::CaseInsensitiveCookieMultimap</a></td></tr>
 <tr class="memdesc:ab07e33df3720a507c4116c70f0f16b6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for HTTP cookies, stored case-insensitively.  <br /></td></tr>
 <tr class="memitem:ac7905e767ee3a36feb37206bc5179dd2" id="r_ac7905e767ee3a36feb37206bc5179dd2"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ac7905e767ee3a36feb37206bc5179dd2">WebSocketClientPtr</a> = std::shared_ptr&lt;<a class="el" href="classkurlyk_1_1IWebSocketClient.html">IWebSocketClient</a>&gt;</td></tr>
-<tr class="memdesc:ac7905e767ee3a36feb37206bc5179dd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for a shared pointer to an <a class="el" href="classkurlyk_1_1IWebSocketClient.html" title="Interface for a WebSocket client, providing methods for connection management, configuration,...">IWebSocketClient</a> instance.  <br /></td></tr>
+<tr class="memdesc:ac7905e767ee3a36feb37206bc5179dd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Legacy shared-pointer alias for the internal compatibility interface.  <br /></td></tr>
 <tr class="memitem:ae21191afea07a4120a34bff9c53e302f" id="r_ae21191afea07a4120a34bff9c53e302f"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ae21191afea07a4120a34bff9c53e302f">WebSocketSenderPtr</a> = std::shared_ptr&lt;<a class="el" href="classkurlyk_1_1IWebSocketSender.html">IWebSocketSender</a>&gt;</td></tr>
-<tr class="memdesc:ae21191afea07a4120a34bff9c53e302f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for a shared pointer to an <a class="el" href="classkurlyk_1_1IWebSocketSender.html" title="Interface for a WebSocket sender, offering methods to send messages, close connections,...">IWebSocketSender</a> instance.  <br /></td></tr>
+<tr class="memdesc:ae21191afea07a4120a34bff9c53e302f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared pointer alias for the sender abstraction used in <a class="el" href="classkurlyk_1_1WebSocketEventData.html" title="Encapsulates data for a WebSocket event, providing information about event type, message,...">WebSocketEventData</a>.  <br /></td></tr>
+<tr class="memitem:a0362af3cf80458414131a97b0f632a41" id="r_a0362af3cf80458414131a97b0f632a41"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a0362af3cf80458414131a97b0f632a41">selected_backend_client_ptr</a> = std::shared_ptr&lt;selected_backend_client_t&gt;</td></tr>
+<tr class="memdesc:a0362af3cf80458414131a97b0f632a41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared pointer to the compile-time selected backend client type.  <br /></td></tr>
+<tr class="memitem:a73ed0659126714edca8b349341b3fc56" id="r_a73ed0659126714edca8b349341b3fc56"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a73ed0659126714edca8b349341b3fc56">selected_backend_client_weak_ptr</a> = std::weak_ptr&lt;selected_backend_client_t&gt;</td></tr>
+<tr class="memdesc:a73ed0659126714edca8b349341b3fc56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weak pointer to the compile-time selected backend client type.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -382,6 +386,42 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0362af3cf80458414131a97b0f632a41" name="a0362af3cf80458414131a97b0f632a41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0362af3cf80458414131a97b0f632a41">&#9670;&#160;</a></span>selected_backend_client_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a0362af3cf80458414131a97b0f632a41">kurlyk::selected_backend_client_ptr</a> = std::shared_ptr&lt;selected_backend_client_t&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shared pointer to the compile-time selected backend client type. </p>
+
+<p class="definition">Definition at line <a class="el" href="WebSocketManager_8hpp_source.html#l00029">29</a> of file <a class="el" href="WebSocketManager_8hpp_source.html">WebSocketManager.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a73ed0659126714edca8b349341b3fc56" name="a73ed0659126714edca8b349341b3fc56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73ed0659126714edca8b349341b3fc56">&#9670;&#160;</a></span>selected_backend_client_weak_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a73ed0659126714edca8b349341b3fc56">kurlyk::selected_backend_client_weak_ptr</a> = std::weak_ptr&lt;selected_backend_client_t&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Weak pointer to the compile-time selected backend client type. </p>
+
+<p class="definition">Definition at line <a class="el" href="WebSocketManager_8hpp_source.html#l00031">31</a> of file <a class="el" href="WebSocketManager_8hpp_source.html">WebSocketManager.hpp</a>.</p>
+
+</div>
+</div>
 <a id="ac7905e767ee3a36feb37206bc5179dd2" name="ac7905e767ee3a36feb37206bc5179dd2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac7905e767ee3a36feb37206bc5179dd2">&#9670;&#160;</a></span>WebSocketClientPtr</h2>
 
@@ -394,9 +434,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Alias for a shared pointer to an <a class="el" href="classkurlyk_1_1IWebSocketClient.html" title="Interface for a WebSocket client, providing methods for connection management, configuration,...">IWebSocketClient</a> instance. </p>
+<p>Legacy shared-pointer alias for the internal compatibility interface. </p>
 
-<p class="definition">Definition at line <a class="el" href="IWebSocketClient_8hpp_source.html#l00079">79</a> of file <a class="el" href="IWebSocketClient_8hpp_source.html">IWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IWebSocketClient_8hpp_source.html#l00080">80</a> of file <a class="el" href="IWebSocketClient_8hpp_source.html">IWebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -412,9 +452,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Alias for a shared pointer to an <a class="el" href="classkurlyk_1_1IWebSocketSender.html" title="Interface for a WebSocket sender, offering methods to send messages, close connections,...">IWebSocketSender</a> instance. </p>
+<p>Shared pointer alias for the sender abstraction used in <a class="el" href="classkurlyk_1_1WebSocketEventData.html" title="Encapsulates data for a WebSocket event, providing information about event type, message,...">WebSocketEventData</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="IWebSocketSender_8hpp_source.html#l00060">60</a> of file <a class="el" href="IWebSocketSender_8hpp_source.html">IWebSocketSender.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IWebSocketSender_8hpp_source.html#l00061">61</a> of file <a class="el" href="IWebSocketSender_8hpp_source.html">IWebSocketSender.hpp</a>.</p>
 
 </div>
 </div>

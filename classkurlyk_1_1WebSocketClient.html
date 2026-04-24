@@ -104,7 +104,7 @@ $(function(){initNavTree('classkurlyk_1_1WebSocketClient.html','','classkurlyk_1
 </div><!--header-->
 <div class="contents">
 
-<p>Provides an interface for managing WebSocket connections, including configuration, event handling, and message sending.  
+<p>Public facade for managing WebSocket connections, events, and message sending.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>&gt;</code></p>
@@ -112,15 +112,15 @@ $(function(){initNavTree('classkurlyk_1_1WebSocketClient.html','','classkurlyk_1
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af45439eff5614a8796b838da6a45b106" id="r_af45439eff5614a8796b838da6a45b106"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#af45439eff5614a8796b838da6a45b106">WebSocketClient</a> ()</td></tr>
-<tr class="memdesc:af45439eff5614a8796b838da6a45b106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor initializes the <a class="el" href="classkurlyk_1_1WebSocketClient.html" title="Provides an interface for managing WebSocket connections, including configuration,...">WebSocketClient</a>.  <br /></td></tr>
+<tr class="memdesc:af45439eff5614a8796b838da6a45b106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the WebSocket client facade and its backend-specific implementation.  <br /></td></tr>
 <tr class="memitem:aaf33b6dfd7900849fe03c99231fcf07e" id="r_aaf33b6dfd7900849fe03c99231fcf07e"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aaf33b6dfd7900849fe03c99231fcf07e">WebSocketClient</a> (std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketConfig.html">WebSocketConfig</a> &gt; config, std::function&lt; void(bool)&gt; callback=nullptr)</td></tr>
-<tr class="memdesc:aaf33b6dfd7900849fe03c99231fcf07e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with configuration.  <br /></td></tr>
+<tr class="memdesc:aaf33b6dfd7900849fe03c99231fcf07e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the facade with a WebSocket configuration object.  <br /></td></tr>
 <tr class="memitem:a623e9f67df1682978551d7d78feb29ec" id="r_a623e9f67df1682978551d7d78feb29ec"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a623e9f67df1682978551d7d78feb29ec">WebSocketClient</a> (const std::string &amp;url, const <a class="el" href="namespacekurlyk.html#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers=<a class="el" href="namespacekurlyk.html#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a>(), const std::string &amp;proxy_server=std::string(), const std::string &amp;proxy_auth=std::string(), <a class="el" href="namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3d">ProxyType</a> proxy_type=<a class="el" href="namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3da7df92075ddc48c0c2e21a8dcfa3b11f7">ProxyType::PROXY_HTTP</a>, long request_timeout=20, bool reconnect=true, bool verify_cert=true, const std::string &amp;ca_file=std::string(), int rpm=200)</td></tr>
-<tr class="memdesc:a623e9f67df1682978551d7d78feb29ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with URL for configuration.  <br /></td></tr>
+<tr class="memdesc:a623e9f67df1682978551d7d78feb29ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the facade with URL-based configuration values.  <br /></td></tr>
 <tr class="memitem:aa832fdb8cbf485237bdcfb97e943a6bc" id="r_aa832fdb8cbf485237bdcfb97e943a6bc"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa832fdb8cbf485237bdcfb97e943a6bc">WebSocketClient</a> (const WebSocketClient &amp;)=delete</td></tr>
 <tr class="memitem:a6e4346b9d5311b8cfb93106f4ff79ca4" id="r_a6e4346b9d5311b8cfb93106f4ff79ca4"><td class="memItemLeft"><a class="el" href="#af45439eff5614a8796b838da6a45b106">WebSocketClient</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a6e4346b9d5311b8cfb93106f4ff79ca4">operator=</a> (const <a class="el" href="#af45439eff5614a8796b838da6a45b106">WebSocketClient</a> &amp;)=delete</td></tr>
 <tr class="memitem:ae6898756b40fc593ce22521954f049c7" id="r_ae6898756b40fc593ce22521954f049c7"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="#ae6898756b40fc593ce22521954f049c7">~WebSocketClient</a> ()</td></tr>
-<tr class="memdesc:ae6898756b40fc593ce22521954f049c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor resets the WebSocket client instance.  <br /></td></tr>
+<tr class="memdesc:ae6898756b40fc593ce22521954f049c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedules backend shutdown through NetworkWorker before the facade is destroyed.  <br /></td></tr>
 <tr class="memitem:a47b6b81cd77a4229a4780e04f2e050ea" id="r_a47b6b81cd77a4229a4780e04f2e050ea"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a47b6b81cd77a4229a4780e04f2e050ea">on_event</a> (std::function&lt; void(std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketEventData.html">WebSocketEventData</a> &gt;)&gt; callback)</td></tr>
 <tr class="memdesc:a47b6b81cd77a4229a4780e04f2e050ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a callback for WebSocket events.  <br /></td></tr>
 <tr class="memitem:a04f2f27771049e9dd92fa18885643436" id="r_a04f2f27771049e9dd92fa18885643436"><td class="memItemLeft">std::function&lt; void(std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketEventData.html">WebSocketEventData</a> &gt;)&gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a04f2f27771049e9dd92fa18885643436">event_handler</a> ()</td></tr>
@@ -212,15 +212,16 @@ Static Private Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ad98299447e617e7dbcebf7f231f31f84" id="r_ad98299447e617e7dbcebf7f231f31f84"><td class="memItemLeft">std::shared_ptr&lt; <a class="el" href="classkurlyk_1_1IWebSocketClient.html">IWebSocketClient</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ad98299447e617e7dbcebf7f231f31f84">m_client</a></td></tr>
-<tr class="memdesc:ad98299447e617e7dbcebf7f231f31f84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the WebSocket client instance.  <br /></td></tr>
+<tr class="memitem:ac201fc9adb9d78f8b74bb5a69ad4afd5" id="r_ac201fc9adb9d78f8b74bb5a69ad4afd5"><td class="memItemLeft"><a class="el" href="namespacekurlyk.html#a0362af3cf80458414131a97b0f632a41">selected_backend_client_ptr</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac201fc9adb9d78f8b74bb5a69ad4afd5">m_client</a></td></tr>
+<tr class="memdesc:ac201fc9adb9d78f8b74bb5a69ad4afd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Backend-specific WebSocket client selected by compile-time platform macros.  <br /></td></tr>
 <tr class="memitem:a6f35465fb710c800a13e3d7400fc6fd5" id="r_a6f35465fb710c800a13e3d7400fc6fd5"><td class="memItemLeft">std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1WebSocketConfig.html">WebSocketConfig</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a6f35465fb710c800a13e3d7400fc6fd5">m_config</a></td></tr>
-<tr class="memdesc:a6f35465fb710c800a13e3d7400fc6fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">WebSocket configuration object.  <br /></td></tr>
+<tr class="memdesc:a6f35465fb710c800a13e3d7400fc6fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deferred WebSocket configuration copied into the backend before <a class="el" href="#afab67bb2191abba99da7330c425c3135" title="Asynchronously connects to the WebSocket server.">connect()</a>.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides an interface for managing WebSocket connections, including configuration, event handling, and message sending. </p>
+<div class="textblock"><p>Public facade for managing WebSocket connections, events, and message sending. </p>
+<p>Internally owns a backend-specific WebSocket client selected at compile time for the active platform. </p>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00012">12</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00015">15</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af45439eff5614a8796b838da6a45b106" name="af45439eff5614a8796b838da6a45b106"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af45439eff5614a8796b838da6a45b106">&#9670;&#160;</a></span>WebSocketClient() <span class="overload">[1/4]</span></h2>
@@ -245,9 +246,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Default constructor initializes the <a class="el" href="classkurlyk_1_1WebSocketClient.html" title="Provides an interface for managing WebSocket connections, including configuration,...">WebSocketClient</a>. </p>
+<p>Initializes the WebSocket client facade and its backend-specific implementation. </p>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00016">16</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00019">19</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -278,7 +279,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor with configuration. </p>
+<p>Initializes the facade with a WebSocket configuration object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">config</td><td>A unique pointer to a <a class="el" href="classkurlyk_1_1WebSocketConfig.html" title="Configuration parameters for establishing and managing WebSocket connections.">WebSocketConfig</a> object. </td></tr>
@@ -287,7 +288,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00027">27</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00030">30</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -358,7 +359,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor with URL for configuration. </p>
+<p>Initializes the facade with URL-based configuration values. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">url</td><td>The WebSocket server URL. </td></tr>
@@ -375,7 +376,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00047">47</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00050">50</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -427,9 +428,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Destructor resets the WebSocket client instance. </p>
+<p>Schedules backend shutdown through NetworkWorker before the facade is destroyed. </p>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00081">81</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00084">84</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -472,7 +473,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The index of the added rate limit configuration. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00408">408</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00411">411</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -508,7 +509,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The index of the added rate limit configuration. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00416">416</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00419">419</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -544,7 +545,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The index of the added rate limit configuration. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00424">424</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00427">427</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -574,7 +575,7 @@ Private Attributes</h2></td></tr>
 <p>Asynchronously connects to the WebSocket server. </p>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the success status of the connection. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00123">123</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00126">126</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -609,7 +610,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00143">143</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00146">146</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -639,7 +640,7 @@ Private Attributes</h2></td></tr>
 <p>Connects to the WebSocket server, blocking until the connection completes. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if the connection was successful, or false if it failed. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00158">158</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00161">161</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -669,7 +670,7 @@ Private Attributes</h2></td></tr>
 <p>Asynchronously disconnects from the WebSocket server. </p>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the success status of the disconnection. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00165">165</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00168">168</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -704,7 +705,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00184">184</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00187">187</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -734,7 +735,7 @@ Private Attributes</h2></td></tr>
 <p>Disconnects from the WebSocket server, blocking until the disconnection completes. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if the disconnection was successful, or false if it failed. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00177">177</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00180">180</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -764,7 +765,7 @@ Private Attributes</h2></td></tr>
 <p>Ensures the WebSocket and network components are initialized. </p>
 <p>This method is called only once per application run. </p>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00446">446</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00449">449</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -794,7 +795,7 @@ Private Attributes</h2></td></tr>
 <p>Accessor for the event handler function. </p>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the event handler callback function for WebSocket events. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00096">96</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00099">99</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -824,7 +825,7 @@ Private Attributes</h2></td></tr>
 <p>Retrieves the headers associated with the WebSocket connection. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="namespacekurlyk.html#a987e16c5aba72ff54627a8ad3a0e9fec" title="Alias for HTTP headers, providing a case-insensitive unordered multimap.">Headers</a> object containing the HTTP headers. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00239">239</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00242">242</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -854,7 +855,7 @@ Private Attributes</h2></td></tr>
 <p>Retrieves the HTTP version used in the WebSocket connection. </p>
 <dl class="section return"><dt>Returns</dt><dd>The HTTP version string. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00233">233</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00236">236</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -884,7 +885,7 @@ Private Attributes</h2></td></tr>
 <p>Retrieves the remote endpoint information. </p>
 <dl class="section return"><dt>Returns</dt><dd>The remote endpoint as a string in the format "IP:Port". </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00245">245</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00248">248</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -913,7 +914,7 @@ Private Attributes</h2></td></tr>
 
 <p>Initializes the WebSocket configuration if it is not already set. </p>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00434">434</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00437">437</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -943,7 +944,7 @@ Private Attributes</h2></td></tr>
 <p>Checks if the WebSocket is connected. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if the WebSocket is connected, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00191">191</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00194">194</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -978,7 +979,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00090">90</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00093">93</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1033,7 +1034,7 @@ Private Attributes</h2></td></tr>
 <p>Retrieves a single WebSocket event, if available. </p>
 <dl class="section return"><dt>Returns</dt><dd>A unique pointer to a <a class="el" href="classkurlyk_1_1WebSocketEventData.html" title="Encapsulates data for a WebSocket event, providing information about event type, message,...">WebSocketEventData</a> object representing a single event, or nullptr if no events are available. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00227">227</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00230">230</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1063,7 +1064,7 @@ Private Attributes</h2></td></tr>
 <p>Retrieves all pending WebSocket events in a batch. </p>
 <dl class="section return"><dt>Returns</dt><dd>A list of unique pointers to <a class="el" href="classkurlyk_1_1WebSocketEventData.html" title="Encapsulates data for a WebSocket event, providing information about event type, message,...">WebSocketEventData</a> objects representing events. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00221">221</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00224">224</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1110,7 +1111,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the close request was successfully queued, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00212">212</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00215">215</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1157,7 +1158,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the message was successfully queued, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00200">200</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00203">203</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1209,7 +1210,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00271">271</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00274">274</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1244,7 +1245,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00351">351</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00354">354</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1284,7 +1285,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00387">387</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00390">390</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1319,7 +1320,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00379">379</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00382">382</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1355,7 +1356,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the success status of the configuration setup. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00103">103</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00106">106</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1395,7 +1396,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00116">116</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00119">119</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1430,7 +1431,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00358">358</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00361">361</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1465,7 +1466,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00365">365</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00368">368</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1523,7 +1524,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00294">294</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00297">297</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1569,7 +1570,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00280">280</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00283">283</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1604,7 +1605,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00313">313</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00316">316</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1644,7 +1645,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00328">328</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00331">331</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1679,7 +1680,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00306">306</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00309">309</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1714,7 +1715,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00320">320</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00323">323</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1760,7 +1761,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00337">337</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00340">340</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1795,7 +1796,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00372">372</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00375">375</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1841,7 +1842,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00253">253</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00256">256</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1881,7 +1882,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00261">261</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00264">264</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1916,7 +1917,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00344">344</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00347">347</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1951,13 +1952,13 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00394">394</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00397">397</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="ad98299447e617e7dbcebf7f231f31f84" name="ad98299447e617e7dbcebf7f231f31f84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad98299447e617e7dbcebf7f231f31f84">&#9670;&#160;</a></span>m_client</h2>
+<a id="ac201fc9adb9d78f8b74bb5a69ad4afd5" name="ac201fc9adb9d78f8b74bb5a69ad4afd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac201fc9adb9d78f8b74bb5a69ad4afd5">&#9670;&#160;</a></span>m_client</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1966,7 +1967,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classkurlyk_1_1IWebSocketClient.html">IWebSocketClient</a>&gt; kurlyk::WebSocketClient::m_client</td>
+          <td class="memname"><a class="el" href="namespacekurlyk.html#a0362af3cf80458414131a97b0f632a41">selected_backend_client_ptr</a> kurlyk::WebSocketClient::m_client</td>
         </tr>
       </table>
   </td>
@@ -1976,9 +1977,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Pointer to the WebSocket client instance. </p>
+<p>Backend-specific WebSocket client selected by compile-time platform macros. </p>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00430">430</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00433">433</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2002,9 +2003,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>WebSocket configuration object. </p>
+<p>Deferred WebSocket configuration copied into the backend before <a class="el" href="#afab67bb2191abba99da7330c425c3135" title="Asynchronously connects to the WebSocket server.">connect()</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00431">431</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WebSocketClient_8hpp_source.html#l00434">434</a> of file <a class="el" href="WebSocketClient_8hpp_source.html">WebSocketClient.hpp</a>.</p>
 
 </div>
 </div>

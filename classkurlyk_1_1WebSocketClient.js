@@ -47,6 +47,6 @@ var classkurlyk_1_1WebSocketClient =
     [ "set_url", "classkurlyk_1_1WebSocketClient.html#a67a18c638b84f3fd43f752b63191f005", null ],
     [ "set_user_agent", "classkurlyk_1_1WebSocketClient.html#a4a4ae45b0fe97ff7ccbe8cc44257349a", null ],
     [ "set_verify_cert", "classkurlyk_1_1WebSocketClient.html#a2b0b03ff1fdde3dafa7dd44acd8f5fb6", null ],
-    [ "m_client", "classkurlyk_1_1WebSocketClient.html#ad98299447e617e7dbcebf7f231f31f84", null ],
+    [ "m_client", "classkurlyk_1_1WebSocketClient.html#ac201fc9adb9d78f8b74bb5a69ad4afd5", null ],
     [ "m_config", "classkurlyk_1_1WebSocketClient.html#a6f35465fb710c800a13e3d7400fc6fd5", null ]
 ];

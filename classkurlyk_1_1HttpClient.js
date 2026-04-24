@@ -3,7 +3,7 @@ var classkurlyk_1_1HttpClient =
     [ "HttpClient", "classkurlyk_1_1HttpClient.html#a64a5e87c6b0a243d5f9568bdd3ab8b42", null ],
     [ "HttpClient", "classkurlyk_1_1HttpClient.html#aab70abf31216ae2bdae3af300c031307", null ],
     [ "HttpClient", "classkurlyk_1_1HttpClient.html#a4a9b9a31c12f87e03a680ca31eaf3c6a", null ],
-    [ "~HttpClient", "classkurlyk_1_1HttpClient.html#af04653a5a8250309f80d70eb85fc1b4e", null ],
+    [ "~HttpClient", "classkurlyk_1_1HttpClient.html#a0ea2bc6276f2caa9019280de6820c9fd", null ],
     [ "add_valid_status", "classkurlyk_1_1HttpClient.html#a5d3d9bcbd4df96a7f25f3e4eee49b906", null ],
     [ "assign_rate_limit_id", "classkurlyk_1_1HttpClient.html#a82a044c7cb111129a4fef8e2934904f0", null ],
     [ "cancel_requests", "classkurlyk_1_1HttpClient.html#afb4ce908011ef698c1a11f86c2a31bb3", null ],

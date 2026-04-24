@@ -141,7 +141,7 @@ Basic GET request</h3>
 <div class="line">http.get(<span class="stringliteral">&quot;/ip&quot;</span>, {}, {}, [](<a class="code hl_typedef" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">kurlyk::HttpResponsePtr</a> res) {</div>
 <div class="line">    std::cout &lt;&lt; res-&gt;content &lt;&lt; std::endl;</div>
 <div class="line">});</div>
-<div class="ttc" id="aclasskurlyk_1_1HttpClient_html"><div class="ttname"><a href="classkurlyk_1_1HttpClient.html">kurlyk::HttpClient</a></div><div class="ttdoc">A client class for making HTTP requests to a specific host.</div><div class="ttdef"><b>Definition</b> <a href="HttpClient_8hpp_source.html#l00013">HttpClient.hpp:13</a></div></div>
+<div class="ttc" id="aclasskurlyk_1_1HttpClient_html"><div class="ttname"><a href="classkurlyk_1_1HttpClient.html">kurlyk::HttpClient</a></div><div class="ttdoc">Concrete HTTP client for making requests to a specific host.</div><div class="ttdef"><b>Definition</b> <a href="HttpClient_8hpp_source.html#l00013">HttpClient.hpp:13</a></div></div>
 <div class="ttc" id="anamespacekurlyk_html_a3edebba92661af6dfefe442ba4ee09f4"><div class="ttname"><a href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">kurlyk::HttpResponsePtr</a></div><div class="ttdeci">std::unique_ptr&lt; HttpResponse &gt; HttpResponsePtr</div><div class="ttdoc">A unique pointer to an HttpResponse object for memory management.</div><div class="ttdef"><b>Definition</b> <a href="HttpResponse_8hpp_source.html#l00032">HttpResponse.hpp:32</a></div></div>
 </div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="http_proxy"></a>
 Using a proxy</h3>
@@ -179,7 +179,7 @@ WebSocket Client</h2>
 <div class="line">ws.connect_and_wait();</div>
 <div class="line">ws.send_message(<span class="stringliteral">&quot;Hello!&quot;</span>);</div>
 <div class="line">ws.disconnect_and_wait();</div>
-<div class="ttc" id="aclasskurlyk_1_1WebSocketClient_html"><div class="ttname"><a href="classkurlyk_1_1WebSocketClient.html">kurlyk::WebSocketClient</a></div><div class="ttdoc">Provides an interface for managing WebSocket connections, including configuration,...</div><div class="ttdef"><b>Definition</b> <a href="WebSocketClient_8hpp_source.html#l00012">WebSocketClient.hpp:12</a></div></div>
+<div class="ttc" id="aclasskurlyk_1_1WebSocketClient_html"><div class="ttname"><a href="classkurlyk_1_1WebSocketClient.html">kurlyk::WebSocketClient</a></div><div class="ttdoc">Public facade for managing WebSocket connections, events, and message sending.</div><div class="ttdef"><b>Definition</b> <a href="WebSocketClient_8hpp_source.html#l00015">WebSocketClient.hpp:15</a></div></div>
 <div class="ttc" id="anamespacekurlyk_html_a5f6eb950ad463a77162efedc98f73d47a4e6ae54ccee152b37e36834f56f4e5c9"><div class="ttname"><a href="namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47a4e6ae54ccee152b37e36834f56f4e5c9">kurlyk::WebSocketEventType::WS_MESSAGE</a></div><div class="ttdeci">@ WS_MESSAGE</div><div class="ttdoc">Message received.</div><div class="ttdef"><b>Definition</b> <a href="enums_8hpp_source.html#l00033">enums.hpp:33</a></div></div>
 </div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="error_sec"></a>
 Error Handling</h1>

@@ -104,7 +104,7 @@ $(function(){initNavTree('classkurlyk_1_1HttpClient.html','','classkurlyk_1_1Htt
 </div><!--header-->
 <div class="contents">
 
-<p>A client class for making HTTP requests to a specific host.  
+<p>Concrete HTTP client for making requests to a specific host.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>&gt;</code></p>
@@ -112,13 +112,13 @@ $(function(){initNavTree('classkurlyk_1_1HttpClient.html','','classkurlyk_1_1Htt
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a64a5e87c6b0a243d5f9568bdd3ab8b42" id="r_a64a5e87c6b0a243d5f9568bdd3ab8b42"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a64a5e87c6b0a243d5f9568bdd3ab8b42">HttpClient</a> ()</td></tr>
-<tr class="memdesc:a64a5e87c6b0a243d5f9568bdd3ab8b42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor for <a class="el" href="classkurlyk_1_1HttpClient.html" title="A client class for making HTTP requests to a specific host.">HttpClient</a>.  <br /></td></tr>
+<tr class="memdesc:a64a5e87c6b0a243d5f9568bdd3ab8b42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor for <a class="el" href="classkurlyk_1_1HttpClient.html" title="Concrete HTTP client for making requests to a specific host.">HttpClient</a>.  <br /></td></tr>
 <tr class="memitem:aab70abf31216ae2bdae3af300c031307" id="r_aab70abf31216ae2bdae3af300c031307"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aab70abf31216ae2bdae3af300c031307">HttpClient</a> (const std::string &amp;host)</td></tr>
-<tr class="memdesc:aab70abf31216ae2bdae3af300c031307"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classkurlyk_1_1HttpClient.html" title="A client class for making HTTP requests to a specific host.">HttpClient</a> with the specified host.  <br /></td></tr>
+<tr class="memdesc:aab70abf31216ae2bdae3af300c031307"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classkurlyk_1_1HttpClient.html" title="Concrete HTTP client for making requests to a specific host.">HttpClient</a> with the specified host.  <br /></td></tr>
 <tr class="memitem:a4a9b9a31c12f87e03a680ca31eaf3c6a" id="r_a4a9b9a31c12f87e03a680ca31eaf3c6a"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a4a9b9a31c12f87e03a680ca31eaf3c6a">HttpClient</a> (const HttpClient &amp;)=delete</td></tr>
 <tr class="memitem:aec78eb0c7cc6015d8c92fb61ff20df16" id="r_aec78eb0c7cc6015d8c92fb61ff20df16"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aec78eb0c7cc6015d8c92fb61ff20df16">operator=</a> (const <a class="el" href="#a64a5e87c6b0a243d5f9568bdd3ab8b42">HttpClient</a> &amp;)=delete</td></tr>
-<tr class="memitem:af04653a5a8250309f80d70eb85fc1b4e" id="r_af04653a5a8250309f80d70eb85fc1b4e"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="#af04653a5a8250309f80d70eb85fc1b4e">~HttpClient</a> ()</td></tr>
-<tr class="memdesc:af04653a5a8250309f80d70eb85fc1b4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor for <a class="el" href="classkurlyk_1_1HttpClient.html" title="A client class for making HTTP requests to a specific host.">HttpClient</a>.  <br /></td></tr>
+<tr class="memitem:a0ea2bc6276f2caa9019280de6820c9fd" id="r_a0ea2bc6276f2caa9019280de6820c9fd"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0ea2bc6276f2caa9019280de6820c9fd">~HttpClient</a> ()</td></tr>
+<tr class="memdesc:a0ea2bc6276f2caa9019280de6820c9fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the client, cancels its active request, and releases owned rate limits.  <br /></td></tr>
 <tr class="memitem:afb4ce908011ef698c1a11f86c2a31bb3" id="r_afb4ce908011ef698c1a11f86c2a31bb3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afb4ce908011ef698c1a11f86c2a31bb3">cancel_requests</a> ()</td></tr>
 <tr class="memdesc:afb4ce908011ef698c1a11f86c2a31bb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels the active request associated with this client and waits for its completion.  <br /></td></tr>
 <tr class="memitem:ac5b1684d28dff736adede8a51a41dbd1" id="r_ac5b1684d28dff736adede8a51a41dbd1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac5b1684d28dff736adede8a51a41dbd1">set_host</a> (const std::string &amp;host)</td></tr>
@@ -246,8 +246,8 @@ Private Attributes</h2></td></tr>
 <tr class="memdesc:ae495d59de79d376eb0a6951961b43730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating if the client owns the specific rate limit.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A client class for making HTTP requests to a specific host. </p>
-<p>This class provides methods to configure the client, including rate limiting, proxy settings, retry logic, and more. </p>
+<div class="textblock"><p>Concrete HTTP client for making requests to a specific host. </p>
+<p>Provides configuration helpers for rate limiting, proxy settings, retry logic, and request defaults. </p>
 
 <p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00013">13</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -274,7 +274,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Default constructor for <a class="el" href="classkurlyk_1_1HttpClient.html" title="A client class for making HTTP requests to a specific host.">HttpClient</a>. </p>
+<p>Default constructor for <a class="el" href="classkurlyk_1_1HttpClient.html" title="Concrete HTTP client for making requests to a specific host.">HttpClient</a>. </p>
 
 <p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00017">17</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
@@ -303,7 +303,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructs an <a class="el" href="classkurlyk_1_1HttpClient.html" title="A client class for making HTTP requests to a specific host.">HttpClient</a> with the specified host. </p>
+<p>Constructs an <a class="el" href="classkurlyk_1_1HttpClient.html" title="Concrete HTTP client for making requests to a specific host.">HttpClient</a> with the specified host. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">host</td><td>The base host URL for the HTTP client. </td></tr>
@@ -340,8 +340,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="af04653a5a8250309f80d70eb85fc1b4e" name="af04653a5a8250309f80d70eb85fc1b4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af04653a5a8250309f80d70eb85fc1b4e">&#9670;&#160;</a></span>~HttpClient()</h2>
+<a id="a0ea2bc6276f2caa9019280de6820c9fd" name="a0ea2bc6276f2caa9019280de6820c9fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ea2bc6276f2caa9019280de6820c9fd">&#9670;&#160;</a></span>~HttpClient()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -350,7 +350,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual kurlyk::HttpClient::~HttpClient </td>
+          <td class="memname">kurlyk::HttpClient::~HttpClient </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -358,12 +358,12 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Destructor for <a class="el" href="classkurlyk_1_1HttpClient.html" title="A client class for making HTTP requests to a specific host.">HttpClient</a>. </p>
+<p>Destroys the client, cancels its active request, and releases owned rate limits. </p>
 
 <p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00034">34</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 

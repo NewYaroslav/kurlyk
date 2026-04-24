@@ -104,7 +104,7 @@ $(function(){initNavTree('classkurlyk_1_1IWebSocketClient.html','','classkurlyk_
 </div><!--header-->
 <div class="contents">
 
-<p>Interface for a WebSocket client, providing methods for connection management, configuration, and event handling.  
+<p>Legacy internal compatibility interface for full WebSocket client implementations.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="IWebSocketClient_8hpp_source.html">IWebSocketClient.hpp</a>&gt;</code></p>
@@ -114,7 +114,7 @@ Inheritance diagram for kurlyk::IWebSocketClient:</div>
  <div class="center">
   <img src="classkurlyk_1_1IWebSocketClient.png" usemap="#kurlyk_3A_3AIWebSocketClient_map" alt=""/>
   <map id="kurlyk_3A_3AIWebSocketClient_map" name="kurlyk_3A_3AIWebSocketClient_map">
-<area href="classkurlyk_1_1IWebSocketSender.html" title="Interface for a WebSocket sender, offering methods to send messages, close connections,..." alt="kurlyk::IWebSocketSender" shape="rect" coords="0,0,229,24"/>
+<area href="classkurlyk_1_1IWebSocketSender.html" title="Public sender abstraction used by WebSocketEventData::sender." alt="kurlyk::IWebSocketSender" shape="rect" coords="0,0,229,24"/>
 <area href="classkurlyk_1_1BaseWebSocketClient.html" title="Base class implementing core functionality for WebSocket clients, managing events,..." alt="kurlyk::BaseWebSocketClient" shape="rect" coords="0,112,229,136"/>
 <area href="classkurlyk_1_1SimpleWebSocketClientAdapter.html" title="A WebSocket client adapter that leverages the Simple WebSocket Server library for managing WebSocket ..." alt="kurlyk::SimpleWebSocketClientAdapter" shape="rect" coords="0,168,229,192"/>
   </map>
@@ -148,9 +148,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:af639422d2e00ae4e22c89065b5fb31e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts down the WebSocket client, disconnecting and clearing all pending events.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classkurlyk_1_1IWebSocketSender"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classkurlyk_1_1IWebSocketSender')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classkurlyk_1_1IWebSocketSender.html">kurlyk::IWebSocketSender</a></td></tr>
 <tr class="memitem:a20eb15abc7b3f1184cc532acbfcfabd4 inherit pub_methods_classkurlyk_1_1IWebSocketSender" id="r_a20eb15abc7b3f1184cc532acbfcfabd4"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1IWebSocketSender.html#a20eb15abc7b3f1184cc532acbfcfabd4">IWebSocketSender</a> ()=default</td></tr>
-<tr class="memdesc:a20eb15abc7b3f1184cc532acbfcfabd4 inherit pub_methods_classkurlyk_1_1IWebSocketSender"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor for <a class="el" href="classkurlyk_1_1IWebSocketSender.html" title="Interface for a WebSocket sender, offering methods to send messages, close connections,...">IWebSocketSender</a>.  <br /></td></tr>
+<tr class="memdesc:a20eb15abc7b3f1184cc532acbfcfabd4 inherit pub_methods_classkurlyk_1_1IWebSocketSender"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor for <a class="el" href="classkurlyk_1_1IWebSocketSender.html" title="Public sender abstraction used by WebSocketEventData::sender.">IWebSocketSender</a>.  <br /></td></tr>
 <tr class="memitem:ac2530fb72f28a66de3243a40b78c1413 inherit pub_methods_classkurlyk_1_1IWebSocketSender" id="r_ac2530fb72f28a66de3243a40b78c1413"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1IWebSocketSender.html#ac2530fb72f28a66de3243a40b78c1413">~IWebSocketSender</a> ()=default</td></tr>
-<tr class="memdesc:ac2530fb72f28a66de3243a40b78c1413 inherit pub_methods_classkurlyk_1_1IWebSocketSender"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for <a class="el" href="classkurlyk_1_1IWebSocketSender.html" title="Interface for a WebSocket sender, offering methods to send messages, close connections,...">IWebSocketSender</a>.  <br /></td></tr>
+<tr class="memdesc:ac2530fb72f28a66de3243a40b78c1413 inherit pub_methods_classkurlyk_1_1IWebSocketSender"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for safe cleanup through the sender abstraction.  <br /></td></tr>
 <tr class="memitem:ade073ce49cb88eb071bae7d82dd620bb inherit pub_methods_classkurlyk_1_1IWebSocketSender" id="r_ade073ce49cb88eb071bae7d82dd620bb"><td class="memItemLeft">virtual std::string&#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1IWebSocketSender.html#ade073ce49cb88eb071bae7d82dd620bb">get_http_version</a> ()=0</td></tr>
 <tr class="memdesc:ade073ce49cb88eb071bae7d82dd620bb inherit pub_methods_classkurlyk_1_1IWebSocketSender"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the HTTP version used in the WebSocket connection.  <br /></td></tr>
 <tr class="memitem:a104a179c6034942f7e092ca0d156bc8a inherit pub_methods_classkurlyk_1_1IWebSocketSender" id="r_a104a179c6034942f7e092ca0d156bc8a"><td class="memItemLeft">virtual <a class="el" href="namespacekurlyk.html#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a>&#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1IWebSocketSender.html#a104a179c6034942f7e092ca0d156bc8a">get_headers</a> ()=0</td></tr>
@@ -165,9 +165,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac3fa995ff3f1117d53558cbcfcb2df55 inherit pub_methods_classkurlyk_1_1IWebSocketSender"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the WebSocket connection is currently active.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Interface for a WebSocket client, providing methods for connection management, configuration, and event handling. </p>
+<div class="textblock"><p>Legacy internal compatibility interface for full WebSocket client implementations. </p>
+<p>Public facades and managers may use backend-specific concrete types directly; this interface remains for compatibility with existing internal code paths. </p>
 
-<p class="definition">Definition at line <a class="el" href="IWebSocketClient_8hpp_source.html#l00012">12</a> of file <a class="el" href="IWebSocketClient_8hpp_source.html">IWebSocketClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IWebSocketClient_8hpp_source.html#l00013">13</a> of file <a class="el" href="IWebSocketClient_8hpp_source.html">IWebSocketClient.hpp</a>.</p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a382835673472d80a59943e70242aca84" name="a382835673472d80a59943e70242aca84"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a382835673472d80a59943e70242aca84">&#9670;&#160;</a></span>IWebSocketClient()</h2>

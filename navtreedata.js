@@ -64,12 +64,12 @@ var NAVTREEINDEX =
 [
 "AutoInitializer_8hpp.html",
 "classkurlyk_1_1BaseWebSocketClient.html#ad14518b9ad14309b3af910e4d47838a8a714bf4050ed2c6155702085e2566f598",
-"classkurlyk_1_1HttpClient.html#a45a65204701d67904029b265590036a0",
+"classkurlyk_1_1HttpClient.html#a4411eaba46a3520b1f1ef2d4066cb053",
 "classkurlyk_1_1HttpRequestContext.html#a8cbca53ab56680e6a7c3d4924ce30363",
-"classkurlyk_1_1SimpleWebSocketWorker.html",
-"classkurlyk_1_1WebSocketManager.html#a8ec506304fc4077bff4ae307af8f6ecf",
-"functions_h.html",
-"structcryptox_1_1ProxyConfig.html#a651cd6933edab889da366b18224942e3"
+"classkurlyk_1_1SimpleWebSocketClientAdapter.html#af50f6e16d010954ad39098b13b6432bc",
+"classkurlyk_1_1WebSocketManager.html#a5f365bb7f2202bf902ba9ec01a2ff9a5",
+"functions_func_u.html",
+"structcryptox_1_1ProxyConfig.html#a1ad61612de9029e69e63dd9aa6027193"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

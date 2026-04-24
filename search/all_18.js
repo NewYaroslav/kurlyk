@@ -4,7 +4,7 @@ var searchData=
   ['_7ebasewebsocketclient_1',['~BaseWebSocketClient',['../classkurlyk_1_1BaseWebSocketClient.html#a05ab6b2d026133ebddb8961376b01489',1,'kurlyk::BaseWebSocketClient']]],
   ['_7eemscriptenwebsocketclientadapter_2',['~EmscriptenWebSocketClientAdapter',['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#a9ffe5575d8e3b97e6ddceefb2b770949',1,'kurlyk::EmscriptenWebSocketClientAdapter']]],
   ['_7ehttpbatchrequesthandler_3',['~HttpBatchRequestHandler',['../classkurlyk_1_1HttpBatchRequestHandler.html#ac775d9e4f5a9a8deafa71effe6deb72d',1,'kurlyk::HttpBatchRequestHandler']]],
-  ['_7ehttpclient_4',['~HttpClient',['../classkurlyk_1_1HttpClient.html#af04653a5a8250309f80d70eb85fc1b4e',1,'kurlyk::HttpClient']]],
+  ['_7ehttpclient_4',['~HttpClient',['../classkurlyk_1_1HttpClient.html#a0ea2bc6276f2caa9019280de6820c9fd',1,'kurlyk::HttpClient']]],
   ['_7ehttprequesthandler_5',['~HttpRequestHandler',['../classkurlyk_1_1HttpRequestHandler.html#a037b47d5379c26810e8538a78014236c',1,'kurlyk::HttpRequestHandler']]],
   ['_7ehttprequestmanager_6',['~HttpRequestManager',['../classkurlyk_1_1HttpRequestManager.html#a74758f6e78a33bd9a61abd2f69e6dd22',1,'kurlyk::HttpRequestManager']]],
   ['_7einetworktaskmanager_7',['~INetworkTaskManager',['../classkurlyk_1_1core_1_1INetworkTaskManager.html#a91c2fb48a15fb0ebc693c2c76c817055',1,'kurlyk::core::INetworkTaskManager']]],

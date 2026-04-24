@@ -30,6 +30,8 @@ var namespacekurlyk =
     [ "HttpResponseCallback", "namespacekurlyk.html#a083281e24e253ffb0cdc59981611c9e0", null ],
     [ "HttpResponsePtr", "namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4", null ],
     [ "QueryParams", "namespacekurlyk.html#ae6eb5e4e8f3237dc0b1b57f78adcfe5f", null ],
+    [ "selected_backend_client_ptr", "namespacekurlyk.html#a0362af3cf80458414131a97b0f632a41", null ],
+    [ "selected_backend_client_weak_ptr", "namespacekurlyk.html#a73ed0659126714edca8b349341b3fc56", null ],
     [ "WebSocketClientPtr", "namespacekurlyk.html#ac7905e767ee3a36feb37206bc5179dd2", null ],
     [ "WebSocketSenderPtr", "namespacekurlyk.html#ae21191afea07a4120a34bff9c53e302f", null ],
     [ "ProxyType", "namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3d", [

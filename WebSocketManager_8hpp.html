@@ -104,7 +104,7 @@ $(function(){initNavTree('WebSocketManager_8hpp.html','',''); });
 </div><!--header-->
 <div class="contents">
 
-<p>Defines the WebSocketManager class for managing WebSocket clients in a singleton pattern.  
+<p>Defines the WebSocketManager singleton responsible for backend-specific WebSocket client instances.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="BaseWebSocketClient_8hpp_source.html">client/BaseWebSocketClient.hpp</a>&quot;</code><br />
 </div>
@@ -113,7 +113,7 @@ $(function(){initNavTree('WebSocketManager_8hpp.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:kurlyk_3A_3AWebSocketManager" id="r_kurlyk_3A_3AWebSocketManager"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1WebSocketManager.html">kurlyk::WebSocketManager</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages WebSocket client instances, providing centralized control for processing, resetting, and lifecycle management.  <a href="classkurlyk_1_1WebSocketManager.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages backend-specific WebSocket client instances and coordinates their lifecycle.  <a href="classkurlyk_1_1WebSocketManager.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -123,9 +123,16 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a3612df5658ea2bd11538a8df73f35a0f" id="r_a3612df5658ea2bd11538a8df73f35a0f"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a3612df5658ea2bd11538a8df73f35a0f">_KURLYK_WEBSOCKET_MANAGER_HPP_INCLUDED</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a0362af3cf80458414131a97b0f632a41" id="r_a0362af3cf80458414131a97b0f632a41"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="namespacekurlyk.html#a0362af3cf80458414131a97b0f632a41">kurlyk::selected_backend_client_ptr</a> = std::shared_ptr&lt;selected_backend_client_t&gt;</td></tr>
+<tr class="memdesc:a0362af3cf80458414131a97b0f632a41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared pointer to the compile-time selected backend client type.  <br /></td></tr>
+<tr class="memitem:a73ed0659126714edca8b349341b3fc56" id="r_a73ed0659126714edca8b349341b3fc56"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="namespacekurlyk.html#a73ed0659126714edca8b349341b3fc56">kurlyk::selected_backend_client_weak_ptr</a> = std::weak_ptr&lt;selected_backend_client_t&gt;</td></tr>
+<tr class="memdesc:a73ed0659126714edca8b349341b3fc56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weak pointer to the compile-time selected backend client type.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Defines the WebSocketManager class for managing WebSocket clients in a singleton pattern. </p>
+<div class="textblock"><p>Defines the WebSocketManager singleton responsible for backend-specific WebSocket client instances. </p>
 
 <p class="definition">Definition in file <a class="el" href="WebSocketManager_8hpp_source.html">WebSocketManager.hpp</a>.</p>
 </div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
