@@ -373,6 +373,39 @@ int main() {
 }
 ```
 
+#### Example 7: Enabling streaming mode on `HttpClient`
+
+Use `HttpClient::set_streaming(true)` when the same client instance should
+emit chunk callbacks for requests built from its defaults. This is convenient
+for small proxy services that keep a long-lived configured upstream client.
+
+```cpp
+int main() {
+    kurlyk::init(true);
+
+    kurlyk::HttpClient client("http://httpbin.org");
+    client.set_streaming(true);
+
+    client.get("/stream/5", kurlyk::QueryParams(), kurlyk::Headers(),
+        [](kurlyk::HttpResponsePtr response) {
+            if (!response) return;
+
+            if (response->stream_chunk) {
+                std::cout << response->content;
+                return;
+            }
+
+            if (response->ready && response->error_code) {
+                std::cerr << response->error_code.message() << std::endl;
+            }
+        });
+
+    std::cin.get();
+    kurlyk::deinit();
+    return 0;
+}
+```
+
 ## Dependencies and Installation
 
 ### Supported compiler toolchains

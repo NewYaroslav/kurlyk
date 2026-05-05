@@ -189,6 +189,14 @@ int main() {
 
 Эти примеры показывают, как использовать HTTP-клиент библиотеки kurlyk для выполнения различных запросов и обработки ответов. В них отключена автоинициализация, потому что `kurlyk::init()` и `kurlyk::deinit()` вызываются вручную.
 
+#### Поток выполнения HTTP callback'ов
+
+HTTP callback'и выполняются на пути обработки `NetworkWorker`. В асинхронном
+режиме это фоновый worker thread; в синхронном режиме это поток, который
+вызывает `kurlyk::process()`. Держите callback'и короткими и при необходимости
+передавайте тяжёлую работу в очереди или потоки приложения, потому что
+блокирующий callback задерживает другую HTTP/WebSocket работу того же worker'а.
+
 #### Общий helper для примеров
 
 ```cpp
@@ -316,6 +324,84 @@ int main() {
     KURLYK_PRINT << "Request id: " << result.first << std::endl;
     print_response(result.second.get());
 
+    kurlyk::deinit();
+    return 0;
+}
+```
+
+#### Пример 6: Потоковая обработка чанков ответа
+
+Когда streaming включён, callback вызывается для каждого полученного чанка тела
+с `response->stream_chunk == true` и `response->ready == false`. Последний
+callback остаётся обычным завершённым ответом с `ready == true`.
+Используйте `stream_chunk` первым для классификации body chunk callback'ов.
+Chunk callback не является маркером успеха; итоговый `ready`-ответ остаётся
+авторитетным результатом передачи. `status_code` у chunk содержит текущий HTTP
+статус, когда libcurl уже может его отдать, но это не маркер завершения.
+Неготовые callback'и с `stream_chunk == false` зарезервированы для
+промежуточных состояний, например неудачной попытки перед retry, и могут нести
+`error_code`. Если был отдан хотя бы один streaming chunk, kurlyk не делает
+автоматический retry этой передачи, потому что вызывающий код уже мог переслать
+байты downstream-клиенту.
+
+```cpp
+int main() {
+    kurlyk::init(true);
+
+    kurlyk::http_post(
+        "https://api.example.com/v1/chat/completions",
+        kurlyk::QueryParams(),
+        kurlyk::Headers{{"Content-Type", "application/json"}},
+        R"({"stream":true})",
+        true,
+        [](kurlyk::HttpResponsePtr response) {
+            if (!response) return;
+
+            if (response->stream_chunk) {
+                std::cout << response->content;
+                return;
+            }
+
+            if (response->error_code) {
+                std::cerr << response->error_code.message() << std::endl;
+            }
+        });
+
+    std::cin.get();
+    kurlyk::deinit();
+    return 0;
+}
+```
+
+#### Пример 7: Включение streaming-режима у `HttpClient`
+
+Используйте `HttpClient::set_streaming(true)`, когда один и тот же экземпляр
+клиента должен отдавать chunk callback'и для запросов, построенных из его
+настроек по умолчанию. Это удобно для небольших proxy-сервисов, которые держат
+долгоживущий настроенный upstream client.
+
+```cpp
+int main() {
+    kurlyk::init(true);
+
+    kurlyk::HttpClient client("http://httpbin.org");
+    client.set_streaming(true);
+
+    client.get("/stream/5", kurlyk::QueryParams(), kurlyk::Headers(),
+        [](kurlyk::HttpResponsePtr response) {
+            if (!response) return;
+
+            if (response->stream_chunk) {
+                std::cout << response->content;
+                return;
+            }
+
+            if (response->ready && response->error_code) {
+                std::cerr << response->error_code.message() << std::endl;
+            }
+        });
+
+    std::cin.get();
     kurlyk::deinit();
     return 0;
 }
