@@ -56,6 +56,7 @@ var classkurlyk_1_1HttpClient =
     [ "set_rate_limit_rps", "classkurlyk_1_1HttpClient.html#a7485c4a57bc19b5f3e848bd7a1c61401", null ],
     [ "set_referer", "classkurlyk_1_1HttpClient.html#a8d8d43426448404aa3197c744fc792f5", null ],
     [ "set_retry_attempts", "classkurlyk_1_1HttpClient.html#a82b9f2c2a7f52788958aed6aaa0b3b85", null ],
+    [ "set_streaming", "classkurlyk_1_1HttpClient.html#a64ebf85073dcf445a3620b252959a868", null ],
     [ "set_timeout", "classkurlyk_1_1HttpClient.html#a869bfba1bad51c06178c777663610e93", null ],
     [ "set_user_agent", "classkurlyk_1_1HttpClient.html#aa521bcc9eb9592597418bc8d3e5d83d9", null ],
     [ "set_valid_statuses", "classkurlyk_1_1HttpClient.html#a16dfcae350fbd39198995976c5661584", null ],

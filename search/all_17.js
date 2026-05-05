@@ -29,11 +29,12 @@ var searchData=
   ['work_5fguard_5ft_26',['work_guard_t',['../classkurlyk_1_1SimpleWebSocketWorker.html#a05445d875485df014f587246012d3dcf',1,'kurlyk::SimpleWebSocketWorker']]],
   ['working_27',['WORKING',['../classkurlyk_1_1BaseWebSocketClient.html#a90b3688aedeb9c7a6d8fea9083f8c43fa89d036f09443b696bc2590c1e1fc159d',1,'kurlyk::BaseWebSocketClient::WORKING'],['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#ac86656570c4abc56d1fcd03e8826fd54a89d036f09443b696bc2590c1e1fc159d',1,'kurlyk::EmscriptenWebSocketClientAdapter::WORKING'],['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#addc863707fa6f03603297732a1207a0fa89d036f09443b696bc2590c1e1fc159d',1,'kurlyk::EmscriptenWebSocketClientAdapter::WORKING']]],
   ['write_5fhttp_5fresponse_5fbody_28',['write_http_response_body',['../classkurlyk_1_1HttpRequestHandler.html#a2cbcadf813fd1a419a0110556ae59596',1,'kurlyk::HttpRequestHandler']]],
-  ['ws_5fclose_29',['WS_CLOSE',['../namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47aa1513ec98e85afa6e2cb65179c844353',1,'kurlyk']]],
-  ['ws_5ferror_30',['WS_ERROR',['../namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47a47a9efd7685631369812dfd807399607',1,'kurlyk']]],
-  ['ws_5fmessage_31',['WS_MESSAGE',['../namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47a4e6ae54ccee152b37e36834f56f4e5c9',1,'kurlyk']]],
-  ['ws_5fopen_32',['WS_OPEN',['../namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47af5f93f6611018ccd2d29909a79edc6fb',1,'kurlyk']]],
-  ['wsclient_33',['WsClient',['../classkurlyk_1_1SimpleWebSocketClientAdapter.html#a7907e4c8792084b46f589a246622aa5e',1,'kurlyk::SimpleWebSocketClientAdapter']]],
-  ['wss_34',['WSS',['../namespaceSimpleWeb.html#a3cea9596d402f19a3dab130e03536b17',1,'SimpleWeb']]],
-  ['wssclient_35',['WssClient',['../classkurlyk_1_1SimpleWebSocketClientAdapter.html#a174a3b18855f0a2117b176306d1279cf',1,'kurlyk::SimpleWebSocketClientAdapter']]]
+  ['write_5fresponse_5fbody_29',['write_response_body',['../classkurlyk_1_1HttpRequestHandler.html#a1a110c020b10057ecb41ccb29be8d5db',1,'kurlyk::HttpRequestHandler']]],
+  ['ws_5fclose_30',['WS_CLOSE',['../namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47aa1513ec98e85afa6e2cb65179c844353',1,'kurlyk']]],
+  ['ws_5ferror_31',['WS_ERROR',['../namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47a47a9efd7685631369812dfd807399607',1,'kurlyk']]],
+  ['ws_5fmessage_32',['WS_MESSAGE',['../namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47a4e6ae54ccee152b37e36834f56f4e5c9',1,'kurlyk']]],
+  ['ws_5fopen_33',['WS_OPEN',['../namespacekurlyk.html#a5f6eb950ad463a77162efedc98f73d47af5f93f6611018ccd2d29909a79edc6fb',1,'kurlyk']]],
+  ['wsclient_34',['WsClient',['../classkurlyk_1_1SimpleWebSocketClientAdapter.html#a7907e4c8792084b46f589a246622aa5e',1,'kurlyk::SimpleWebSocketClientAdapter']]],
+  ['wss_35',['WSS',['../namespaceSimpleWeb.html#a3cea9596d402f19a3dab130e03536b17',1,'SimpleWeb']]],
+  ['wssclient_36',['WssClient',['../classkurlyk_1_1SimpleWebSocketClientAdapter.html#a174a3b18855f0a2117b176306d1279cf',1,'kurlyk::SimpleWebSocketClientAdapter']]]
 ];

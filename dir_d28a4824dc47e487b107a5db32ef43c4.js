@@ -7,6 +7,7 @@ var dir_d28a4824dc47e487b107a5db32ef43c4 =
     [ "delayed_request_example.cpp", "delayed__request__example_8cpp.html", "delayed__request__example_8cpp" ],
     [ "http_client_future_example.cpp", "http__client__future__example_8cpp.html", "http__client__future__example_8cpp" ],
     [ "http_client_proxy_example.cpp", "http__client__proxy__example_8cpp.html", "http__client__proxy__example_8cpp" ],
+    [ "http_streaming_example.cpp", "http__streaming__example_8cpp.html", "http__streaming__example_8cpp" ],
     [ "interrupted_requests_example.cpp", "interrupted__requests__example_8cpp.html", "interrupted__requests__example_8cpp" ],
     [ "nested_http_requests_example.cpp", "nested__http__requests__example_8cpp.html", "nested__http__requests__example_8cpp" ],
     [ "redirect_handling_example.cpp", "redirect__handling__example_8cpp.html", "redirect__handling__example_8cpp" ],

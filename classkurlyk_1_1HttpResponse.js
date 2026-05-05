@@ -12,5 +12,6 @@ var classkurlyk_1_1HttpResponse =
     [ "retry_attempt", "classkurlyk_1_1HttpResponse.html#a04053b260e4c788a826abe79bb530d82", null ],
     [ "starttransfer_time", "classkurlyk_1_1HttpResponse.html#ae7517a45390fedeca02195fcd9f21d48", null ],
     [ "status_code", "classkurlyk_1_1HttpResponse.html#a430abca0d51661b3650d246fe28ded75", null ],
+    [ "stream_chunk", "classkurlyk_1_1HttpResponse.html#ab638d2e2447ab558921f1d5fd6f3a130", null ],
     [ "total_time", "classkurlyk_1_1HttpResponse.html#a0b5df61b0c6534ea0896a698640adffb", null ]
 ];

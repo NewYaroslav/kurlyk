@@ -136,6 +136,9 @@ Usage</h1>
 <div class="ttc" id="anamespacekurlyk_html_a874abdd250d6f1c6c8433dd28dc22418"><div class="ttname"><a href="namespacekurlyk.html#a874abdd250d6f1c6c8433dd28dc22418">kurlyk::deinit</a></div><div class="ttdeci">void deinit()</div><div class="ttdoc">Deinitializes the Kurlyk library, stopping async processing or cleaning up synchronous state.</div><div class="ttdef"><b>Definition</b> <a href="runtime_8hpp_source.html#l00026">runtime.hpp:26</a></div></div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="http_sec"></a>
 HTTP Client</h2>
+<h3 class="doxsection"><a class="anchor" id="http_callbacks"></a>
+HTTP callback threading</h3>
+<p>HTTP callbacks run on the <span class="tt">NetworkWorker</span> processing path. With asynchronous startup this is the background worker thread; with synchronous startup it is the thread that calls <span class="tt"><a class="el" href="namespacekurlyk.html#acb3c4a47343ed818b4579d9ad5c918bf" title="Processes pending requests (used in synchronous mode).">kurlyk::process()</a></span>. Keep callbacks short and hand work off to application-owned queues or threads when needed, because blocking a callback delays other HTTP/WebSocket work handled by the same worker.</p>
 <h3 class="doxsection"><a class="anchor" id="http_basic"></a>
 Basic GET request</h3>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classkurlyk_1_1HttpClient.html">kurlyk::HttpClient</a> http(<span class="stringliteral">&quot;https://httpbin.org&quot;</span>);</div>
@@ -143,7 +146,7 @@ Basic GET request</h3>
 <div class="line">    std::cout &lt;&lt; res-&gt;content &lt;&lt; std::endl;</div>
 <div class="line">});</div>
 <div class="ttc" id="aclasskurlyk_1_1HttpClient_html"><div class="ttname"><a href="classkurlyk_1_1HttpClient.html">kurlyk::HttpClient</a></div><div class="ttdoc">Concrete HTTP client for making requests to a specific host.</div><div class="ttdef"><b>Definition</b> <a href="HttpClient_8hpp_source.html#l00013">HttpClient.hpp:13</a></div></div>
-<div class="ttc" id="anamespacekurlyk_html_a3edebba92661af6dfefe442ba4ee09f4"><div class="ttname"><a href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">kurlyk::HttpResponsePtr</a></div><div class="ttdeci">std::unique_ptr&lt; HttpResponse &gt; HttpResponsePtr</div><div class="ttdoc">A unique pointer to an HttpResponse object for memory management.</div><div class="ttdef"><b>Definition</b> <a href="HttpResponse_8hpp_source.html#l00032">HttpResponse.hpp:32</a></div></div>
+<div class="ttc" id="anamespacekurlyk_html_a3edebba92661af6dfefe442ba4ee09f4"><div class="ttname"><a href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">kurlyk::HttpResponsePtr</a></div><div class="ttdeci">std::unique_ptr&lt; HttpResponse &gt; HttpResponsePtr</div><div class="ttdoc">A unique pointer to an HttpResponse object for memory management.</div><div class="ttdef"><b>Definition</b> <a href="HttpResponse_8hpp_source.html#l00033">HttpResponse.hpp:33</a></div></div>
 </div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="http_proxy"></a>
 Using a proxy</h3>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classkurlyk_1_1HttpClient.html">kurlyk::HttpClient</a> client(<span class="stringliteral">&quot;https://httpbin.org&quot;</span>);</div>
@@ -169,7 +172,28 @@ Calling HTTP requests</h3>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> [id, future] = <a class="code hl_function" href="namespacekurlyk.html#abc54e8b6fb3810f7f4423fd9c9c9acfe">kurlyk::http_get</a>(<span class="stringliteral">&quot;https://httpbin.org/ip&quot;</span>, {}, {});</div>
 <div class="line"><span class="keyword">auto</span> resp2 = future.get();</div>
-<div class="ttc" id="anamespacekurlyk_html_abc54e8b6fb3810f7f4423fd9c9c9acfe"><div class="ttname"><a href="namespacekurlyk.html#abc54e8b6fb3810f7f4423fd9c9c9acfe">kurlyk::http_get</a></div><div class="ttdeci">uint64_t http_get(const std::string &amp;url, const QueryParams &amp;query, const Headers &amp;headers, HttpResponseCallback callback)</div><div class="ttdoc">Sends an asynchronous HTTP GET request with a callback.</div><div class="ttdef"><b>Definition</b> <a href="http_2utils_8hpp_source.html#l00291">utils.hpp:291</a></div></div>
+<div class="ttc" id="anamespacekurlyk_html_abc54e8b6fb3810f7f4423fd9c9c9acfe"><div class="ttname"><a href="namespacekurlyk.html#abc54e8b6fb3810f7f4423fd9c9c9acfe">kurlyk::http_get</a></div><div class="ttdeci">uint64_t http_get(const std::string &amp;url, const QueryParams &amp;query, const Headers &amp;headers, HttpResponseCallback callback)</div><div class="ttdoc">Sends an asynchronous HTTP GET request with a callback.</div><div class="ttdef"><b>Definition</b> <a href="http_2utils_8hpp_source.html#l00362">utils.hpp:362</a></div></div>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="http_streaming"></a>
+Streaming response chunks</h3>
+<p>Enable streaming when the caller needs body chunks before the transfer finishes, for example when proxying SSE responses. Chunk callbacks carry <span class="tt">stream_chunk == true</span> and <span class="tt">ready == false</span>; the final callback keeps the usual <span class="tt">ready == true</span> contract.</p>
+<p>Use <span class="tt">stream_chunk</span> first to classify body chunk callbacks. A chunk callback is not a success marker; the final ready response remains authoritative for the transfer result. <span class="tt">status_code</span> on a chunk contains the current HTTP status when libcurl has one, but it is not a completion marker. Non-ready callbacks with <span class="tt">stream_chunk == false</span> are reserved for non-final request states such as failed attempts before retry and may carry <span class="tt">error_code</span>. If at least one streaming chunk was emitted, kurlyk does not retry that transfer automatically, since the caller may already have forwarded bytes to a downstream client.</p>
+<div class="fragment"><div class="line"><a class="code hl_function" href="namespacekurlyk.html#afb920c9f7c5341eebc15041b49b0d790">kurlyk::http_post</a>(</div>
+<div class="line">    <span class="stringliteral">&quot;https://api.example.com/v1/chat/completions&quot;</span>,</div>
+<div class="line">    {},</div>
+<div class="line">    {{<span class="stringliteral">&quot;Content-Type&quot;</span>, <span class="stringliteral">&quot;application/json&quot;</span>}},</div>
+<div class="line">    R<span class="stringliteral">&quot;({&quot;stream&quot;:true})&quot;,</span></div>
+<div class="line"><span class="stringliteral">    </span><span class="keyword">true</span>,</div>
+<div class="line">    [](<a class="code hl_typedef" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">kurlyk::HttpResponsePtr</a> res) {</div>
+<div class="line">        <span class="keywordflow">if</span> (!res)</div>
+<div class="line">            <span class="keywordflow">return</span>;</div>
+<div class="line">        <span class="keywordflow">if</span> (res-&gt;stream_chunk) {</div>
+<div class="line">            std::cout &lt;&lt; res-&gt;content;</div>
+<div class="line">            <span class="keywordflow">return</span>;</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">if</span> (res-&gt;error_code)</div>
+<div class="line">            std::cerr &lt;&lt; res-&gt;error_code.message() &lt;&lt; std::endl;</div>
+<div class="line">    });</div>
+<div class="ttc" id="anamespacekurlyk_html_afb920c9f7c5341eebc15041b49b0d790"><div class="ttname"><a href="namespacekurlyk.html#afb920c9f7c5341eebc15041b49b0d790">kurlyk::http_post</a></div><div class="ttdeci">uint64_t http_post(const std::string &amp;url, const QueryParams &amp;query, const Headers &amp;headers, const std::string &amp;content, HttpResponseCallback callback)</div><div class="ttdoc">Sends an asynchronous HTTP POST request with a callback.</div><div class="ttdef"><b>Definition</b> <a href="http_2utils_8hpp_source.html#l00430">utils.hpp:430</a></div></div>
 </div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="http_backpressure"></a>
 HTTP admission and queue limits</h3>
 <p>Kurlyk separates rate limiting from bounded admission. Rate limiting throttles when requests are dispatched to the backend, while backpressure limits how many pending requests are accepted into the global HTTP queue.</p>

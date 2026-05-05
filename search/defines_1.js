@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['kurlyk_5fauto_5finit_0',['KURLYK_AUTO_INIT',['../kurlyk_8hpp.html#a372e65e8b39c6631b25aabcb58e7bb84',1,'kurlyk.hpp']]],
+  ['kurlyk_5fauto_5finit_0',['KURLYK_AUTO_INIT',['../kurlyk_8hpp.html#a372e65e8b39c6631b25aabcb58e7bb84',1,'KURLYK_AUTO_INIT:&#160;kurlyk.hpp'],['../http__streaming__example_8cpp.html#a372e65e8b39c6631b25aabcb58e7bb84',1,'KURLYK_AUTO_INIT:&#160;http_streaming_example.cpp']]],
   ['kurlyk_5fauto_5finit_5fuse_5fasync_1',['KURLYK_AUTO_INIT_USE_ASYNC',['../kurlyk_8hpp.html#a55ea0075f5a7aaffe7884891874481f6',1,'kurlyk.hpp']]],
   ['kurlyk_5fenable_5fjson_2',['KURLYK_ENABLE_JSON',['../kurlyk_8hpp.html#a7ddea7a9e56b82507ef3196ba873a85f',1,'kurlyk.hpp']]],
   ['kurlyk_5fhandle_5ferror_3',['KURLYK_HANDLE_ERROR',['../NetworkWorker_8hpp.html#ac330ad06da14f6e3d438f370fcd8d8fc',1,'NetworkWorker.hpp']]],

@@ -124,7 +124,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a04053b260e4c788a826abe79bb530d82" id="r_a04053b260e4c788a826abe79bb530d82"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#a04053b260e4c788a826abe79bb530d82">retry_attempt</a> = 0</td></tr>
 <tr class="memdesc:a04053b260e4c788a826abe79bb530d82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of retry attempts performed for this request.  <br /></td></tr>
 <tr class="memitem:af806019492eb7f3db13324f768dc2e2d" id="r_af806019492eb7f3db13324f768dc2e2d"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#af806019492eb7f3db13324f768dc2e2d">ready</a> = false</td></tr>
-<tr class="memdesc:af806019492eb7f3db13324f768dc2e2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the response is ready to be processed.  <br /></td></tr>
+<tr class="memdesc:af806019492eb7f3db13324f768dc2e2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the response is final and ready to be processed.  <br /></td></tr>
+<tr class="memitem:ab638d2e2447ab558921f1d5fd6f3a130" id="r_ab638d2e2447ab558921f1d5fd6f3a130"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab638d2e2447ab558921f1d5fd6f3a130">stream_chunk</a> = false</td></tr>
+<tr class="memdesc:ab638d2e2447ab558921f1d5fd6f3a130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if content contains an intermediate streaming body chunk.  <br /></td></tr>
 <tr class="memitem:a15c3f53abf77d552d27ab32bf66aa300" id="r_a15c3f53abf77d552d27ab32bf66aa300"><td class="memItemLeft">double&#160;</td><td class="memItemRight"><a class="el" href="#a15c3f53abf77d552d27ab32bf66aa300">namelookup_time</a> = -1</td></tr>
 <tr class="memdesc:a15c3f53abf77d552d27ab32bf66aa300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time until name resolution completed (DNS).  <br /></td></tr>
 <tr class="memitem:a3d5dd9f66510a32d31909ec03f3cb5e4" id="r_a3d5dd9f66510a32d31909ec03f3cb5e4"><td class="memItemLeft">double&#160;</td><td class="memItemRight"><a class="el" href="#a3d5dd9f66510a32d31909ec03f3cb5e4">connect_time</a> = -1</td></tr>
@@ -157,7 +159,7 @@ Public Attributes</h2></td></tr>
 
 <p>Time until SSL handshake completed (HTTPS only). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00025">25</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00026">26</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
 
 </div>
 </div>
@@ -175,7 +177,7 @@ Public Attributes</h2></td></tr>
 
 <p>Time until TCP connection established. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00024">24</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00025">25</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
 
 </div>
 </div>
@@ -265,7 +267,7 @@ Public Attributes</h2></td></tr>
 
 <p>Time until name resolution completed (DNS). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00023">23</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00024">24</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
 
 </div>
 </div>
@@ -283,7 +285,7 @@ Public Attributes</h2></td></tr>
 
 <p>Time until request is ready to be sent. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00026">26</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00027">27</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
 
 </div>
 </div>
@@ -299,7 +301,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Indicates if the response is ready to be processed. </p>
+<p>Indicates if the response is final and ready to be processed. </p>
 
 <p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00020">20</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
 
@@ -337,7 +339,7 @@ Public Attributes</h2></td></tr>
 
 <p>Time until first byte is received from the server. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00027">27</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00028">28</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
 
 </div>
 </div>
@@ -359,6 +361,24 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ab638d2e2447ab558921f1d5fd6f3a130" name="ab638d2e2447ab558921f1d5fd6f3a130"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab638d2e2447ab558921f1d5fd6f3a130">&#9670;&#160;</a></span>stream_chunk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool kurlyk::HttpResponse::stream_chunk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indicates if content contains an intermediate streaming body chunk. </p>
+
+<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00021">21</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
+
+</div>
+</div>
 <a id="a0b5df61b0c6534ea0896a698640adffb" name="a0b5df61b0c6534ea0896a698640adffb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0b5df61b0c6534ea0896a698640adffb">&#9670;&#160;</a></span>total_time</h2>
 
@@ -373,7 +393,7 @@ Public Attributes</h2></td></tr>
 
 <p>Total time of the transfer. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00028">28</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00029">29</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
 
 </div>
 </div>

@@ -240,16 +240,24 @@ Functions</h2></td></tr>
 <tr class="memdesc:a8cf64ef1636844aec3e232d2c669747d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an HTTP request asynchronously and returns a future with the response.  <br /></td></tr>
 <tr class="memitem:af98455788400030f5e18a2e305b94b38" id="r_af98455788400030f5e18a2e305b94b38"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#af98455788400030f5e18a2e305b94b38">http_request</a> (const std::string &amp;method, const std::string &amp;url, const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, const std::string &amp;content, <a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
 <tr class="memdesc:af98455788400030f5e18a2e305b94b38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an HTTP request with detailed parameters and a callback.  <br /></td></tr>
+<tr class="memitem:ae0bc8d2bb4b0e0209e2ac170864740ec" id="r_ae0bc8d2bb4b0e0209e2ac170864740ec"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#ae0bc8d2bb4b0e0209e2ac170864740ec">http_request</a> (const std::string &amp;method, const std::string &amp;url, const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, const std::string &amp;content, bool streaming, <a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
+<tr class="memdesc:ae0bc8d2bb4b0e0209e2ac170864740ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an HTTP request with detailed parameters, streaming mode, and a callback.  <br /></td></tr>
 <tr class="memitem:ad509b9e6ed5e54ac9f3a3668b2b0b6e9" id="r_ad509b9e6ed5e54ac9f3a3668b2b0b6e9"><td class="memItemLeft">std::pair&lt; uint64_t, std::future&lt; <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ad509b9e6ed5e54ac9f3a3668b2b0b6e9">http_request</a> (const std::string &amp;method, const std::string &amp;url, const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, const std::string &amp;content)</td></tr>
 <tr class="memdesc:ad509b9e6ed5e54ac9f3a3668b2b0b6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an HTTP request asynchronously with detailed parameters and returns a future.  <br /></td></tr>
 <tr class="memitem:a34432c316487e46167a6a30c72a7ce0f" id="r_a34432c316487e46167a6a30c72a7ce0f"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#a34432c316487e46167a6a30c72a7ce0f">http_request</a> (const std::string &amp;method, const std::string &amp;host, const std::string &amp;path, const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, const std::string &amp;content, <a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
 <tr class="memdesc:a34432c316487e46167a6a30c72a7ce0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an HTTP request with a specified host, path, and callback.  <br /></td></tr>
+<tr class="memitem:aa109c87afc1bca2f1ae840e882a25e59" id="r_aa109c87afc1bca2f1ae840e882a25e59"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#aa109c87afc1bca2f1ae840e882a25e59">http_request</a> (const std::string &amp;method, const std::string &amp;host, const std::string &amp;path, const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, const std::string &amp;content, bool streaming, <a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
+<tr class="memdesc:aa109c87afc1bca2f1ae840e882a25e59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an HTTP request with host/path parameters, streaming mode, and a callback.  <br /></td></tr>
 <tr class="memitem:abc54e8b6fb3810f7f4423fd9c9c9acfe" id="r_abc54e8b6fb3810f7f4423fd9c9c9acfe"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#abc54e8b6fb3810f7f4423fd9c9c9acfe">http_get</a> (const std::string &amp;url, const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, <a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
 <tr class="memdesc:abc54e8b6fb3810f7f4423fd9c9c9acfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an asynchronous HTTP GET request with a callback.  <br /></td></tr>
+<tr class="memitem:aaadaf2aa0378983ff26582cb0b2db6a9" id="r_aaadaf2aa0378983ff26582cb0b2db6a9"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#aaadaf2aa0378983ff26582cb0b2db6a9">http_get</a> (const std::string &amp;url, const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, bool streaming, <a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
+<tr class="memdesc:aaadaf2aa0378983ff26582cb0b2db6a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an asynchronous HTTP GET request with streaming callbacks.  <br /></td></tr>
 <tr class="memitem:a780292d261f15e7f853e92484f36556c" id="r_a780292d261f15e7f853e92484f36556c"><td class="memItemLeft">std::pair&lt; uint64_t, std::future&lt; <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a780292d261f15e7f853e92484f36556c">http_get</a> (const std::string &amp;url, const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers)</td></tr>
 <tr class="memdesc:a780292d261f15e7f853e92484f36556c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an asynchronous HTTP GET request and returns a future with the response.  <br /></td></tr>
 <tr class="memitem:afb920c9f7c5341eebc15041b49b0d790" id="r_afb920c9f7c5341eebc15041b49b0d790"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#afb920c9f7c5341eebc15041b49b0d790">http_post</a> (const std::string &amp;url, const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, const std::string &amp;content, <a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
 <tr class="memdesc:afb920c9f7c5341eebc15041b49b0d790"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an asynchronous HTTP POST request with a callback.  <br /></td></tr>
+<tr class="memitem:a446f29e2b5e408d9279bafd18de4821e" id="r_a446f29e2b5e408d9279bafd18de4821e"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#a446f29e2b5e408d9279bafd18de4821e">http_post</a> (const std::string &amp;url, const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, const std::string &amp;content, bool streaming, <a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> callback)</td></tr>
+<tr class="memdesc:a446f29e2b5e408d9279bafd18de4821e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an asynchronous HTTP POST request with streaming callbacks.  <br /></td></tr>
 <tr class="memitem:a9d77ca8675668ce34bf9bd2fd976e5cc" id="r_a9d77ca8675668ce34bf9bd2fd976e5cc"><td class="memItemLeft">std::pair&lt; uint64_t, std::future&lt; <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a9d77ca8675668ce34bf9bd2fd976e5cc">http_post</a> (const std::string &amp;url, const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query, const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;headers, const std::string &amp;content)</td></tr>
 <tr class="memdesc:a9d77ca8675668ce34bf9bd2fd976e5cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an asynchronous HTTP POST request and returns a future with the response.  <br /></td></tr>
 <tr class="memitem:a26e256217e0559cd0459aa81ad54eb6f" id="r_a26e256217e0559cd0459aa81ad54eb6f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a26e256217e0559cd0459aa81ad54eb6f">init</a> (const bool use_async=true)</td></tr>
@@ -334,7 +342,7 @@ Functions</h2></td></tr>
 
 <p>A unique pointer to an <a class="el" href="classkurlyk_1_1HttpRequest.html" title="Represents an HTTP request.">HttpRequest</a> object for memory management. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00283">283</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00290">290</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -358,7 +366,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00036">36</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00037">37</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
 
 </div>
 </div>
@@ -376,7 +384,7 @@ Functions</h2></td></tr>
 
 <p>A unique pointer to an <a class="el" href="classkurlyk_1_1HttpResponse.html" title="Represents the response received from an HTTP request, including headers, content,...">HttpResponse</a> object for memory management. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00032">32</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00033">33</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
 
 </div>
 </div>
@@ -867,7 +875,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a780292d261f15e7f853e92484f36556c" name="a780292d261f15e7f853e92484f36556c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a780292d261f15e7f853e92484f36556c">&#9670;&#160;</a></span>http_get() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a780292d261f15e7f853e92484f36556c">&#9670;&#160;</a></span>http_get() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -909,12 +917,71 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair containing the unique request ID and a future with the response details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00304">304</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00391">391</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
+<a id="aaadaf2aa0378983ff26582cb0b2db6a9" name="aaadaf2aa0378983ff26582cb0b2db6a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaadaf2aa0378983ff26582cb0b2db6a9">&#9670;&#160;</a></span>http_get() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t kurlyk::http_get </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>query</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>headers</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>streaming</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a></td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sends an asynchronous HTTP GET request with streaming callbacks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>Full request URL. </td></tr>
+    <tr><td class="paramname">query</td><td>Query parameters for the GET request. </td></tr>
+    <tr><td class="paramname">headers</td><td>HTTP headers to include. </td></tr>
+    <tr><td class="paramname">streaming</td><td>If true, invokes callback for each received body chunk. </td></tr>
+    <tr><td class="paramname">callback</td><td>Callback function invoked for chunks and request completion. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00377">377</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
 <a id="abc54e8b6fb3810f7f4423fd9c9c9acfe" name="abc54e8b6fb3810f7f4423fd9c9c9acfe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc54e8b6fb3810f7f4423fd9c9c9acfe">&#9670;&#160;</a></span>http_get() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abc54e8b6fb3810f7f4423fd9c9c9acfe">&#9670;&#160;</a></span>http_get() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -962,12 +1029,12 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00291">291</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00362">362</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
 <a id="a9d77ca8675668ce34bf9bd2fd976e5cc" name="a9d77ca8675668ce34bf9bd2fd976e5cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d77ca8675668ce34bf9bd2fd976e5cc">&#9670;&#160;</a></span>http_post() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d77ca8675668ce34bf9bd2fd976e5cc">&#9670;&#160;</a></span>http_post() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1015,12 +1082,77 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair containing the unique request ID and a future with the response details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00358">358</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00463">463</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a446f29e2b5e408d9279bafd18de4821e" name="a446f29e2b5e408d9279bafd18de4821e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a446f29e2b5e408d9279bafd18de4821e">&#9670;&#160;</a></span>http_post() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t kurlyk::http_post </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>query</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>headers</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>content</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>streaming</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a></td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sends an asynchronous HTTP POST request with streaming callbacks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>Full request URL. </td></tr>
+    <tr><td class="paramname">query</td><td>Query parameters for the POST request. </td></tr>
+    <tr><td class="paramname">headers</td><td>HTTP headers to include. </td></tr>
+    <tr><td class="paramname">content</td><td>Body content for the POST request. </td></tr>
+    <tr><td class="paramname">streaming</td><td>If true, invokes callback for each received body chunk. </td></tr>
+    <tr><td class="paramname">callback</td><td>Callback function invoked for chunks and request completion. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00447">447</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
 <a id="afb920c9f7c5341eebc15041b49b0d790" name="afb920c9f7c5341eebc15041b49b0d790"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb920c9f7c5341eebc15041b49b0d790">&#9670;&#160;</a></span>http_post() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afb920c9f7c5341eebc15041b49b0d790">&#9670;&#160;</a></span>http_post() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1074,12 +1206,89 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00343">343</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00430">430</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
+<a id="aa109c87afc1bca2f1ae840e882a25e59" name="aa109c87afc1bca2f1ae840e882a25e59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa109c87afc1bca2f1ae840e882a25e59">&#9670;&#160;</a></span>http_request() <span class="overload">[1/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t kurlyk::http_request </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>method</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>host</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>query</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>headers</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>content</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>streaming</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a></td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sends an HTTP request with host/path parameters, streaming mode, and a callback. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">method</td><td>HTTP method (e.g., "GET", "POST"). </td></tr>
+    <tr><td class="paramname">host</td><td>Host name or IP address. </td></tr>
+    <tr><td class="paramname">path</td><td>URL path for the request. </td></tr>
+    <tr><td class="paramname">query</td><td>Query parameters for the request. </td></tr>
+    <tr><td class="paramname">headers</td><td>HTTP headers to include. </td></tr>
+    <tr><td class="paramname">content</td><td>Body content for POST requests. </td></tr>
+    <tr><td class="paramname">streaming</td><td>If true, invokes callback for each received body chunk. </td></tr>
+    <tr><td class="paramname">callback</td><td>Callback function invoked for chunks and request completion. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00329">329</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
 <a id="a34432c316487e46167a6a30c72a7ce0f" name="a34432c316487e46167a6a30c72a7ce0f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34432c316487e46167a6a30c72a7ce0f">&#9670;&#160;</a></span>http_request() <span class="overload">[1/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a34432c316487e46167a6a30c72a7ce0f">&#9670;&#160;</a></span>http_request() <span class="overload">[2/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1145,12 +1354,12 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00260">260</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00294">294</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
 <a id="ad509b9e6ed5e54ac9f3a3668b2b0b6e9" name="ad509b9e6ed5e54ac9f3a3668b2b0b6e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad509b9e6ed5e54ac9f3a3668b2b0b6e9">&#9670;&#160;</a></span>http_request() <span class="overload">[2/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad509b9e6ed5e54ac9f3a3668b2b0b6e9">&#9670;&#160;</a></span>http_request() <span class="overload">[3/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1204,12 +1413,83 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair containing the unique request ID and a future with the response details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00216">216</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00250">250</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ae0bc8d2bb4b0e0209e2ac170864740ec" name="ae0bc8d2bb4b0e0209e2ac170864740ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0bc8d2bb4b0e0209e2ac170864740ec">&#9670;&#160;</a></span>http_request() <span class="overload">[4/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t kurlyk::http_request </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>method</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>query</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>headers</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>content</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>streaming</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a></td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sends an HTTP request with detailed parameters, streaming mode, and a callback. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">method</td><td>HTTP method (e.g., "GET", "POST"). </td></tr>
+    <tr><td class="paramname">url</td><td>Full request URL. </td></tr>
+    <tr><td class="paramname">query</td><td>Query parameters for the request. </td></tr>
+    <tr><td class="paramname">headers</td><td>HTTP headers to include. </td></tr>
+    <tr><td class="paramname">content</td><td>Body content for POST requests. </td></tr>
+    <tr><td class="paramname">streaming</td><td>If true, invokes callback for each received body chunk. </td></tr>
+    <tr><td class="paramname">callback</td><td>Callback function invoked for chunks and request completion. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00218">218</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
 <a id="af98455788400030f5e18a2e305b94b38" name="af98455788400030f5e18a2e305b94b38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af98455788400030f5e18a2e305b94b38">&#9670;&#160;</a></span>http_request() <span class="overload">[3/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af98455788400030f5e18a2e305b94b38">&#9670;&#160;</a></span>http_request() <span class="overload">[5/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1274,7 +1554,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a8cf64ef1636844aec3e232d2c669747d" name="a8cf64ef1636844aec3e232d2c669747d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cf64ef1636844aec3e232d2c669747d">&#9670;&#160;</a></span>http_request() <span class="overload">[4/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cf64ef1636844aec3e232d2c669747d">&#9670;&#160;</a></span>http_request() <span class="overload">[6/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1310,7 +1590,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a5d4ee8e6b46640b045f456eb67d64002" name="a5d4ee8e6b46640b045f456eb67d64002"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d4ee8e6b46640b045f456eb67d64002">&#9670;&#160;</a></span>http_request() <span class="overload">[5/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d4ee8e6b46640b045f456eb67d64002">&#9670;&#160;</a></span>http_request() <span class="overload">[7/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

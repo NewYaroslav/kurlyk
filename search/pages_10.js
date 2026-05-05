@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['websocket_20client_0',['WebSocket Client',['../index.html#ws_sec',1,'']]],
-  ['websocket_20send_20queue_20admission_1',['WebSocket send queue admission',['../index.html#ws_backpressure',1,'']]]
+  ['usage_0',['Usage',['../index.html#usage_sec',1,'']]],
+  ['using_20a_20proxy_1',['Using a proxy',['../index.html#http_proxy',1,'']]]
 ];

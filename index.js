@@ -4,10 +4,12 @@ var index =
     [ "Features", "index.html#features_sec", null ],
     [ "Usage", "index.html#usage_sec", [
       [ "HTTP Client", "index.html#http_sec", [
+        [ "HTTP callback threading", "index.html#http_callbacks", null ],
         [ "Basic GET request", "index.html#http_basic", null ],
         [ "Using a proxy", "index.html#http_proxy", null ],
         [ "Measuring latency", "index.html#http_ping", null ],
         [ "Calling HTTP requests", "index.html#http_variants", null ],
+        [ "Streaming response chunks", "index.html#http_streaming", null ],
         [ "HTTP admission and queue limits", "index.html#http_backpressure", null ]
       ] ],
       [ "WebSocket Client", "index.html#ws_sec", [

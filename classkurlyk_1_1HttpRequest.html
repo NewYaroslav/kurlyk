@@ -161,6 +161,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5bb766de0df75342ceba98ce4ab89379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the request timeout.  <br /></td></tr>
 <tr class="memitem:a85ed48125c43cc9b6a2ded795579407d" id="r_a85ed48125c43cc9b6a2ded795579407d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a85ed48125c43cc9b6a2ded795579407d">set_connect_timeout</a> (long <a class="el" href="#a348983cc43dffed7afaf76443d252465">connect_timeout</a>)</td></tr>
 <tr class="memdesc:a85ed48125c43cc9b6a2ded795579407d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the connection timeout.  <br /></td></tr>
+<tr class="memitem:a88835f705ec47575e62ed0715c47bfec" id="r_a88835f705ec47575e62ed0715c47bfec"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a88835f705ec47575e62ed0715c47bfec">set_streaming</a> (bool <a class="el" href="#a6e59e84de88b9f615a1746266f249e94">streaming</a>)</td></tr>
+<tr class="memdesc:a88835f705ec47575e62ed0715c47bfec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables intermediate callbacks for response body chunks.  <br /></td></tr>
 <tr class="memitem:a2acfc480a628544cac23a12dd1f5bf89" id="r_a2acfc480a628544cac23a12dd1f5bf89"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2acfc480a628544cac23a12dd1f5bf89">set_verbose</a> (bool <a class="el" href="#a36813dc657e76b9f9ee0919b63992e6b">verbose</a>)</td></tr>
 <tr class="memdesc:a2acfc480a628544cac23a12dd1f5bf89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables verbose mode.  <br /></td></tr>
 <tr class="memitem:ad47dadd6ff4c21c63c483033d7f4e967" id="r_ad47dadd6ff4c21c63c483033d7f4e967"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad47dadd6ff4c21c63c483033d7f4e967">set_debug_header</a> (bool <a class="el" href="#a342d3ee102d4d3b33a3302edbce1032f">debug_header</a>)</td></tr>
@@ -214,6 +216,8 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:a9c6b68a72c71a926c575178c480d8deb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically set Referer header.  <br /></td></tr>
 <tr class="memitem:a2b822c2c1ea747c5163933cc6029f162" id="r_a2b822c2c1ea747c5163933cc6029f162"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a2b822c2c1ea747c5163933cc6029f162">head_only</a> = false</td></tr>
 <tr class="memdesc:a2b822c2c1ea747c5163933cc6029f162"><td class="mdescLeft">&#160;</td><td class="mdescRight">If true, sends the request without a response body (HEAD-like behavior).  <br /></td></tr>
+<tr class="memitem:a6e59e84de88b9f615a1746266f249e94" id="r_a6e59e84de88b9f615a1746266f249e94"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a6e59e84de88b9f615a1746266f249e94">streaming</a> = false</td></tr>
+<tr class="memdesc:a6e59e84de88b9f615a1746266f249e94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable intermediate callbacks for response body chunks.  <br /></td></tr>
 <tr class="memitem:a26d7a2976007a657247d0ab7b1e8b931" id="r_a26d7a2976007a657247d0ab7b1e8b931"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#a26d7a2976007a657247d0ab7b1e8b931">timeout</a> = 30</td></tr>
 <tr class="memdesc:a26d7a2976007a657247d0ab7b1e8b931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request timeout in seconds.  <br /></td></tr>
 <tr class="memitem:a348983cc43dffed7afaf76443d252465" id="r_a348983cc43dffed7afaf76443d252465"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#a348983cc43dffed7afaf76443d252465">connect_timeout</a> = 10</td></tr>
@@ -272,7 +276,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00217">217</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00218">218</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -301,7 +305,7 @@ Public Attributes</h2></td></tr>
 
 <p>Clears all valid status codes. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00228">228</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00229">229</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -353,7 +357,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00104">104</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00105">105</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -388,7 +392,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00120">120</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00121">121</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -423,7 +427,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00252">252</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00253">253</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -458,7 +462,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00246">246</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00247">247</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -493,7 +497,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00264">264</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00265">265</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -528,7 +532,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00126">126</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00127">127</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -563,7 +567,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00240">240</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00241">241</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -598,7 +602,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00276">276</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00283">283</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -633,7 +637,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00132">132</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00133">133</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -673,7 +677,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00145">145</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00146">146</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -731,7 +735,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00169">169</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00170">170</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -777,7 +781,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00155">155</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00156">156</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -812,7 +816,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00188">188</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00189">189</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -852,7 +856,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00201">201</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00202">202</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -887,7 +891,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00182">182</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00183">183</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -922,7 +926,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00194">194</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00195">195</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -957,7 +961,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00138">138</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00139">139</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -997,7 +1001,42 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00210">210</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00211">211</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a88835f705ec47575e62ed0715c47bfec" name="a88835f705ec47575e62ed0715c47bfec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88835f705ec47575e62ed0715c47bfec">&#9670;&#160;</a></span>set_streaming()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kurlyk::HttpRequest::set_streaming </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>streaming</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enables or disables intermediate callbacks for response body chunks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="#a6e59e84de88b9f615a1746266f249e94" title="Enable intermediate callbacks for response body chunks.">streaming</a></td><td>Enable (true) or disable (false) streaming callbacks. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00271">271</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1032,7 +1071,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00258">258</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00259">259</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1078,7 +1117,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00080">80</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00081">81</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1124,7 +1163,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00061">61</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00062">62</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1164,7 +1203,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00091">91</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00092">92</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1199,7 +1238,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00234">234</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00235">235</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1234,7 +1273,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00223">223</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00224">224</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1269,7 +1308,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00270">270</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00277">277</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1378,7 +1417,7 @@ Public Attributes</h2></td></tr>
 
 <p>Flag to clear the cookie file at the start of the request. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00051">51</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00052">52</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1396,7 +1435,7 @@ Public Attributes</h2></td></tr>
 
 <p>Connection timeout in seconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00044">44</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00045">45</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1468,7 +1507,7 @@ Public Attributes</h2></td></tr>
 
 <p>Include headers in debug output (CURLOPT_HEADER). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00055">55</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00056">56</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1504,7 +1543,7 @@ Public Attributes</h2></td></tr>
 
 <p>ID for general rate limiting. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00045">45</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00046">46</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1720,7 +1759,7 @@ Public Attributes</h2></td></tr>
 
 <p>Number of retry attempts in case of failure. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00048">48</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00049">49</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1738,7 +1777,7 @@ Public Attributes</h2></td></tr>
 
 <p>Delay between retry attempts in milliseconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00049">49</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00050">50</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1756,7 +1795,25 @@ Public Attributes</h2></td></tr>
 
 <p>ID for specific rate limiting. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00046">46</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00047">47</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a6e59e84de88b9f615a1746266f249e94" name="a6e59e84de88b9f615a1746266f249e94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e59e84de88b9f615a1746266f249e94">&#9670;&#160;</a></span>streaming</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool kurlyk::HttpRequest::streaming = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable intermediate callbacks for response body chunks. </p>
+
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00042">42</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1774,7 +1831,7 @@ Public Attributes</h2></td></tr>
 
 <p>Request timeout in seconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00043">43</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00044">44</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1846,7 +1903,7 @@ Public Attributes</h2></td></tr>
 
 <p>Set of valid HTTP response status codes. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00047">47</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00048">48</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1864,7 +1921,7 @@ Public Attributes</h2></td></tr>
 
 <p>Enable verbose output (CURLOPT_VERBOSE). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00054">54</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00055">55</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>

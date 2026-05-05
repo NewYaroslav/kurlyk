@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['usage_0',['Usage',['../index.html#usage_sec',1,'']]],
-  ['using_20a_20proxy_1',['Using a proxy',['../index.html#http_proxy',1,'']]]
+  ['threading_0',['HTTP callback threading',['../index.html#http_callbacks',1,'']]]
 ];
