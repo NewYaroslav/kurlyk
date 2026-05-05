@@ -35,7 +35,12 @@ namespace kurlyk::utils {
         }
 
 #   	if __cplusplus >= 201703L
-		return std::filesystem::path(exe_path).u8string();
+        auto utf8_path = std::filesystem::path(exe_path).u8string();
+#       if defined(__cpp_char8_t)
+        return std::string(reinterpret_cast<const char*>(utf8_path.data()), utf8_path.size());
+#       else
+        return utf8_path;
+#       endif
 #   	else
 		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 		return converter.to_bytes(exe_path);

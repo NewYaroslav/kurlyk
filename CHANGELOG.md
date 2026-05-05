@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Added `HttpResponse::stream_chunk` to distinguish intermediate body chunks from the final ready response.
 - Documented HTTP callback threading and disabled automatic retries after streaming chunks have been emitted.
 - Fixed HTTP retry decisions so curl transfer errors can retry even when an HTTP status code was already received.
+- Fixed Windows executable path conversion with C++20 `std::filesystem::path::u8string()`.
 
 ## [v1.0.2] - 2026-04-23
 - Added CMake build integration with fallback dependency helpers for OpenSSL, libcurl, Asio, and Simple-WebSocket-Server.
