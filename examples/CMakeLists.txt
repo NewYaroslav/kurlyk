@@ -8,6 +8,7 @@ set(KURLYK_EXAMPLE_SOURCES
 	delayed_request_example.cpp
 	http_client_future_example.cpp
 	http_client_proxy_example.cpp
+	http_streaming_example.cpp
 	interrupted_requests_example.cpp
 	nested_http_requests_example.cpp
 	redirect_handling_example.cpp

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+- Added HTTP response streaming callbacks via `HttpRequest::streaming`, `HttpClient::set_streaming(...)`, and callback overloads for standalone HTTP helpers.
+- Added `HttpResponse::stream_chunk` to distinguish intermediate body chunks from the final ready response.
+- Documented HTTP callback threading and disabled automatic retries after streaming chunks have been emitted.
+- Fixed HTTP retry decisions so curl transfer errors can retry even when an HTTP status code was already received.
+
 ## [v1.0.2] - 2026-04-23
 - Added CMake build integration with fallback dependency helpers for OpenSSL, libcurl, Asio, and Simple-WebSocket-Server.
 - Added CI coverage for Linux and macOS smoke builds, Windows integration builds, and ODR regression tests.

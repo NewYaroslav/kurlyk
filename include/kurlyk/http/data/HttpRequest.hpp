@@ -39,6 +39,7 @@ namespace kurlyk {
         long max_redirects   = 10;       ///< Maximum allowed redirects.
         bool auto_referer    = false;    ///< Automatically set Referer header.
         bool head_only       = false;    ///< If true, sends the request without a response body (HEAD-like behavior).
+        bool streaming       = false;    ///< Enable intermediate callbacks for response body chunks.
 
         long timeout         = 30;       ///< Request timeout in seconds.
         long connect_timeout = 10;       ///< Connection timeout in seconds.
@@ -263,6 +264,12 @@ namespace kurlyk {
         /// \param connect_timeout Connection timeout in seconds.
         void set_connect_timeout(long connect_timeout) {
             this->connect_timeout = connect_timeout;
+        }
+
+        /// \brief Enables or disables intermediate callbacks for response body chunks.
+        /// \param streaming Enable (true) or disable (false) streaming callbacks.
+        void set_streaming(bool streaming) {
+            this->streaming = streaming;
         }
 
         /// \brief Enables or disables verbose mode.

@@ -45,6 +45,13 @@ int main() {
 
 \subsection http_sec HTTP Client
 
+\subsubsection http_callbacks HTTP callback threading
+HTTP callbacks run on the `NetworkWorker` processing path. With asynchronous
+startup this is the background worker thread; with synchronous startup it is
+the thread that calls `kurlyk::process()`. Keep callbacks short and hand work
+off to application-owned queues or threads when needed, because blocking a
+callback delays other HTTP/WebSocket work handled by the same worker.
+
 \subsubsection http_basic Basic GET request
 \code{.cpp}
 kurlyk::HttpClient http("https://httpbin.org");
@@ -83,6 +90,41 @@ auto resp = fut.get();
 
 auto [id, future] = kurlyk::http_get("https://httpbin.org/ip", {}, {});
 auto resp2 = future.get();
+\endcode
+
+\subsubsection http_streaming Streaming response chunks
+Enable streaming when the caller needs body chunks before the transfer
+finishes, for example when proxying SSE responses. Chunk callbacks carry
+`stream_chunk == true` and `ready == false`; the final callback keeps the
+usual `ready == true` contract.
+
+Use `stream_chunk` first to classify body chunk callbacks. A chunk callback
+is not a success marker; the final ready response remains authoritative for
+the transfer result. `status_code` on a chunk contains the current HTTP status
+when libcurl has one, but it is not a completion marker. Non-ready callbacks
+with `stream_chunk == false` are reserved for non-final request states such
+as failed attempts before retry and may carry `error_code`.
+If at least one streaming chunk was emitted, kurlyk does not retry that
+transfer automatically, since the caller may already have forwarded bytes to a
+downstream client.
+
+\code{.cpp}
+kurlyk::http_post(
+    "https://api.example.com/v1/chat/completions",
+    {},
+    {{"Content-Type", "application/json"}},
+    R"({"stream":true})",
+    true,
+    [](kurlyk::HttpResponsePtr res) {
+        if (!res)
+            return;
+        if (res->stream_chunk) {
+            std::cout << res->content;
+            return;
+        }
+        if (res->error_code)
+            std::cerr << res->error_code.message() << std::endl;
+    });
 \endcode
 
 \subsubsection http_backpressure HTTP admission and queue limits

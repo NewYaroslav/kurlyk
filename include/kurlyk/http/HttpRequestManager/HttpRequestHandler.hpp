@@ -42,13 +42,11 @@ namespace kurlyk {
             }
         }
 
-        /// \brief Processes the body data received from the server and appends it to the response content.
+        /// \brief Processes body data received from server and appends it to response content.
         static size_t write_http_response_body(char* data, size_t size, size_t nmemb, void* userdata) {
             size_t total_size = size * nmemb;
-            auto* buffer = static_cast<std::string*>(userdata);
-            if (buffer) {
-                buffer->append(data, total_size);
-            }
+            auto* handler = static_cast<HttpRequestHandler*>(userdata);
+            if (handler) return handler->write_response_body(data, total_size);
             return total_size;
         }
 
@@ -97,9 +95,15 @@ namespace kurlyk {
             ++retry_attempt;
 
             m_response->retry_attempt = retry_attempt;
-            if (!retry_attempts ||
-                valid_statuses.count(m_response->status_code) ||
-                retry_attempt >= retry_attempts) {
+            const bool has_curl_error = message->data.result != CURLE_OK;
+            const bool has_valid_status = valid_statuses.count(m_response->status_code) > 0;
+            const bool should_retry =
+                retry_attempts &&
+                (has_curl_error || !has_valid_status) &&
+                retry_attempt < retry_attempts &&
+                !m_has_stream_chunk;
+
+            if (!should_retry) {
                 fill_response_timings();
                 m_response->ready = true;
                 m_request_context->callback(std::move(m_response));
@@ -144,6 +148,7 @@ namespace kurlyk {
         struct curl_slist*                  m_headers = nullptr; ///< CURL headers list.
         char                                m_error_buffer[CURL_ERROR_SIZE]; ///< Buffer for CURL error messages.
         bool                                m_callback_called = false; ///< Indicates if the callback was called.
+        bool                                m_has_stream_chunk = false; ///< Indicates if a streaming body chunk was emitted.
         mutable std::string                 m_ca_file; ///< Cached CA file path.
 
         /// \brief Initializes CURL options for the request, setting headers, method, SSL, timeouts, and other parameters.
@@ -166,10 +171,56 @@ namespace kurlyk {
 
             curl_easy_setopt(m_curl, CURLOPT_ERRORBUFFER, m_error_buffer);
             curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, write_http_response_body);
-            curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, &m_response->content);
+            curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, this);
             curl_easy_setopt(m_curl, CURLOPT_HEADERDATA, &m_response->headers);
             curl_easy_setopt(m_curl, CURLOPT_HEADERFUNCTION, parse_http_response_header);
             curl_easy_setopt(m_curl, CURLOPT_PRIVATE, this);
+        }
+
+        /// \brief Stores received body data and emits a streaming chunk when enabled.
+        size_t write_response_body(const char* data, size_t total_size) {
+            if (m_response) {
+                m_response->content.append(data, total_size);
+            }
+            emit_stream_chunk(data, total_size);
+            return total_size;
+        }
+
+        /// \brief Invokes the response callback with an intermediate body chunk.
+        void emit_stream_chunk(const char* data, size_t total_size) {
+            if (!data || total_size == 0 || !m_request_context ||
+                !m_request_context->request ||
+                !m_request_context->request->streaming ||
+                !m_request_context->callback) {
+                return;
+            }
+
+#           if __cplusplus >= 201402L
+            auto chunk = std::make_unique<HttpResponse>();
+#           else
+            auto chunk = std::unique_ptr<HttpResponse>(new HttpResponse());
+#           endif
+
+            if (m_response) {
+                chunk->headers = m_response->headers;
+            }
+            chunk->content.assign(data, total_size);
+            chunk->retry_attempt = m_request_context->retry_attempt + 1;
+            chunk->ready = false;
+            chunk->stream_chunk = true;
+            if (m_curl) {
+                curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &chunk->status_code);
+            }
+
+            m_has_stream_chunk = true;
+
+            try {
+                m_request_context->callback(std::move(chunk));
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "Unhandled exception in HttpRequestHandler streaming callback");
+            } catch (...) {
+                // Unknown fatal error in streaming callback
+            }
         }
         
         void fill_response_timings() {

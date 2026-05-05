@@ -206,6 +206,40 @@ namespace kurlyk {
         return 0;
     }
 
+    /// \brief Sends an HTTP request with detailed parameters, streaming mode, and a callback.
+    /// \param method HTTP method (e.g., "GET", "POST").
+    /// \param url Full request URL.
+    /// \param query Query parameters for the request.
+    /// \param headers HTTP headers to include.
+    /// \param content Body content for POST requests.
+    /// \param streaming If true, invokes callback for each received body chunk.
+    /// \param callback Callback function invoked for chunks and request completion.
+    /// \return Unique identifier of the HTTP request if successfully added, or 0 on failure.
+    inline uint64_t http_request(
+            const std::string &method,
+            const std::string &url,
+            const QueryParams &query,
+            const Headers &headers,
+            const std::string &content,
+            bool streaming,
+            HttpResponseCallback callback) {
+#       if __cplusplus >= 201402L
+        auto request_ptr = std::make_unique<HttpRequest>();
+#       else
+        auto request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest());
+#       endif
+
+        const uint64_t request_id = HttpRequestManager::get_instance().generate_request_id();
+        request_ptr->request_id = request_id;
+        request_ptr->set_url(url, query);
+        request_ptr->method  = method;
+        request_ptr->headers = headers;
+        request_ptr->content = content;
+        request_ptr->streaming = streaming;
+        if (http_request(std::move(request_ptr), std::move(callback))) return request_id;
+        return 0;
+    }
+
     /// \brief Sends an HTTP request asynchronously with detailed parameters and returns a future.
     /// \param method HTTP method (e.g., "GET", "POST").
     /// \param url The full request URL.
@@ -282,6 +316,43 @@ namespace kurlyk {
         return 0;
     }
 
+    /// \brief Sends an HTTP request with host/path parameters, streaming mode, and a callback.
+    /// \param method HTTP method (e.g., "GET", "POST").
+    /// \param host Host name or IP address.
+    /// \param path URL path for the request.
+    /// \param query Query parameters for the request.
+    /// \param headers HTTP headers to include.
+    /// \param content Body content for POST requests.
+    /// \param streaming If true, invokes callback for each received body chunk.
+    /// \param callback Callback function invoked for chunks and request completion.
+    /// \return Unique identifier of the HTTP request if successfully added, or 0 on failure.
+    inline uint64_t http_request(
+            const std::string &method,
+            const std::string &host,
+            const std::string &path,
+            const QueryParams &query,
+            const Headers &headers,
+            const std::string &content,
+            bool streaming,
+            HttpResponseCallback callback) {
+
+#       if __cplusplus >= 201402L
+        auto request_ptr = std::make_unique<HttpRequest>();
+#       else
+        auto request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest());
+#       endif
+
+        const uint64_t request_id = HttpRequestManager::get_instance().generate_request_id();
+        request_ptr->request_id = request_id;
+        request_ptr->set_url(host, path, query);
+        request_ptr->method  = method;
+        request_ptr->headers = headers;
+        request_ptr->content = content;
+        request_ptr->streaming = streaming;
+        if (http_request(std::move(request_ptr), std::move(callback))) return request_id;
+        return 0;
+    }
+
     /// \brief Sends an asynchronous HTTP GET request with a callback.
     /// \param url The full request URL.
     /// \param query Query parameters for the GET request.
@@ -294,6 +365,22 @@ namespace kurlyk {
             const Headers& headers,
             HttpResponseCallback callback) {
         return http_request("GET", url, query, headers, std::string(), std::move(callback));
+    }
+
+    /// \brief Sends an asynchronous HTTP GET request with streaming callbacks.
+    /// \param url Full request URL.
+    /// \param query Query parameters for the GET request.
+    /// \param headers HTTP headers to include.
+    /// \param streaming If true, invokes callback for each received body chunk.
+    /// \param callback Callback function invoked for chunks and request completion.
+    /// \return Unique identifier of the HTTP request if successfully added, or 0 on failure.
+    inline uint64_t http_get(
+            const std::string &url,
+            const QueryParams& query,
+            const Headers& headers,
+            bool streaming,
+            HttpResponseCallback callback) {
+        return http_request("GET", url, query, headers, std::string(), streaming, std::move(callback));
     }
 
     /// \brief Sends an asynchronous HTTP GET request and returns a future with the response.
@@ -347,6 +434,24 @@ namespace kurlyk {
             const std::string& content,
             HttpResponseCallback callback) {
         return http_request("POST", url, query, headers, content, std::move(callback));
+    }
+
+    /// \brief Sends an asynchronous HTTP POST request with streaming callbacks.
+    /// \param url Full request URL.
+    /// \param query Query parameters for the POST request.
+    /// \param headers HTTP headers to include.
+    /// \param content Body content for the POST request.
+    /// \param streaming If true, invokes callback for each received body chunk.
+    /// \param callback Callback function invoked for chunks and request completion.
+    /// \return Unique identifier of the HTTP request if successfully added, or 0 on failure.
+    inline uint64_t http_post(
+            const std::string &url,
+            const QueryParams& query,
+            const Headers& headers,
+            const std::string& content,
+            bool streaming,
+            HttpResponseCallback callback) {
+        return http_request("POST", url, query, headers, content, streaming, std::move(callback));
     }
 
     /// \brief Sends an asynchronous HTTP POST request and returns a future with the response.

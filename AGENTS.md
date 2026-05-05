@@ -86,7 +86,8 @@ Format: `type(scope): short description` where the scope is optional. Keep messa
 
 - Always use the `m_` prefix for class fields (e.g., `m_event_hub`, `m_task_manager`).
 - Optional `p_` and `str_` prefixes may be used when a function or method has more than five variables or arguments of different types. Otherwise, omit these prefixes.
-- Boolean variables start with `is`, `has`, `use`, `enable`, or for class fields, `m_is_`, `m_has_`, etc. (e.g., `is_connected`, `m_is_active`).
+- Boolean variables usually start with `is`, `has`, `use`, `enable`, or for class fields, `m_is_`, `m_has_`, etc. (e.g., `is_connected`, `m_is_active`).
+- Prefer the surrounding file's established naming style over applying the boolean-prefix rule mechanically. Public request/config and response data structs usually use property or mode names rather than predicate-style names when neighboring fields do (e.g., `head_only`, `verbose`, `debug_header`, `streaming`, `ready`, `stream_chunk`).
 - Do not use the prefixes `b_`, `n_`, or `f_`.
 
 ### Doxygen comments

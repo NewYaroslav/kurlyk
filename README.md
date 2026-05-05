@@ -189,6 +189,14 @@ int main() {
 
 These examples demonstrate how to use the kurlyk HTTP client to perform different requests and handle responses. They disable auto-init because they call `kurlyk::init()` and `kurlyk::deinit()` manually.
 
+#### HTTP callback threading
+
+HTTP callbacks run on the `NetworkWorker` processing path. With asynchronous
+startup this is the background worker thread; with synchronous startup it is
+the thread that calls `kurlyk::process()`. Keep callbacks short and hand work
+off to application-owned queues or threads when needed, because blocking a
+callback delays other HTTP/WebSocket work handled by the same worker.
+
 #### Shared helper used by the examples
 
 ```cpp
@@ -316,6 +324,50 @@ int main() {
     KURLYK_PRINT << "Request id: " << result.first << std::endl;
     print_response(result.second.get());
 
+    kurlyk::deinit();
+    return 0;
+}
+```
+
+#### Example 6: Streaming response chunks
+
+When streaming is enabled, the callback is invoked for each received body chunk
+with `response->stream_chunk == true` and `response->ready == false`. The
+last callback remains the usual completed response with `ready == true`.
+Use `stream_chunk` first to classify body chunk callbacks. A chunk callback
+is not a success marker; the final ready response remains authoritative for
+the transfer result. `status_code` on a chunk contains the current HTTP status
+when libcurl has one, but it is not a completion marker. Non-ready callbacks
+with `stream_chunk == false` are reserved for non-final request states such
+as failed attempts before retry and may carry `error_code`.
+If at least one streaming chunk was emitted, kurlyk does not retry that
+transfer automatically, since the caller may already have forwarded bytes to a
+downstream client.
+
+```cpp
+int main() {
+    kurlyk::init(true);
+
+    kurlyk::http_post(
+        "https://api.example.com/v1/chat/completions",
+        kurlyk::QueryParams(),
+        kurlyk::Headers{{"Content-Type", "application/json"}},
+        R"({"stream":true})",
+        true,
+        [](kurlyk::HttpResponsePtr response) {
+            if (!response) return;
+
+            if (response->stream_chunk) {
+                std::cout << response->content;
+                return;
+            }
+
+            if (response->error_code) {
+                std::cerr << response->error_code.message() << std::endl;
+            }
+        });
+
+    std::cin.get();
     kurlyk::deinit();
     return 0;
 }

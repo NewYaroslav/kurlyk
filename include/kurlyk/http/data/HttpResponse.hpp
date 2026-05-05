@@ -17,7 +17,8 @@ namespace kurlyk {
         std::string     error_message;      ///< Error message detailing the issue, if any.
         long            status_code = 0;    ///< HTTP status code of the response (e.g., 200, 404).
         long            retry_attempt = 0;  ///< Number of retry attempts performed for this request.
-        bool            ready = false;      ///< Indicates if the response is ready to be processed.
+        bool            ready = false;      ///< Indicates if the response is final and ready to be processed.
+        bool            stream_chunk = false; ///< Indicates if content contains an intermediate streaming body chunk.
         
         // --- Timing metrics (all values in seconds) ---
         double namelookup_time    = -1; ///< Time until name resolution completed (DNS).

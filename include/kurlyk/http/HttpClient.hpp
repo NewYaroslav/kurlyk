@@ -238,6 +238,12 @@ namespace kurlyk {
             m_request.head_only = value;
         }
 
+        /// \brief Enables or disables intermediate callbacks for response body chunks.
+        /// \param streaming Enable (true) or disable (false) streaming callbacks.
+        void set_streaming(bool streaming) {
+            m_request.streaming = streaming;
+        }
+
         /// \brief Sets the proxy server address.
         /// \param ip Proxy server IP address.
         /// \param port Proxy server port.
