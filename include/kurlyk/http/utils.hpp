@@ -9,41 +9,67 @@
 
 namespace kurlyk {
 
-    /// \brief Creates a rate limit with specified parameters.
+    /// \brief Creates a RAII rate-limit handle with specified parameters.
     /// \param requests_per_period Maximum number of requests allowed within the specified period.
     /// \param period_ms Time period in milliseconds for the rate limit.
-    /// \return A unique identifier for the created rate limit.
-    inline long create_rate_limit(long requests_per_period, long period_ms) {
-        return HttpRequestManager::get_instance().create_rate_limit(requests_per_period, period_ms);
+    /// \param sequential When true, no other request sharing this limit may start until
+    ///        the current request (including all its retries) has finished.
+    /// \return Handle for the created rate limit.
+    inline HttpRateLimitHandlePtr create_rate_limit(long requests_per_period, long period_ms, bool sequential = false) {
+        return HttpRequestManager::get_instance().create_rate_limit(requests_per_period, period_ms, sequential);
     }
 
-    /// \brief Creates a rate limit based on Requests Per Minute (RPM).
+    /// \brief Creates a RAII rate-limit based on Requests Per Minute (RPM).
     /// \param requests_per_minute Maximum number of requests allowed per minute.
-    /// \return A unique identifier for the created rate limit.
-    inline long create_rate_limit_rpm(long requests_per_minute) {
+    /// \param sequential When true, no other request sharing this limit may start until
+    ///        the current request (including all its retries) has finished.
+    /// \return Handle for the created rate limit.
+    inline HttpRateLimitHandlePtr create_rate_limit_rpm(long requests_per_minute, bool sequential = false) {
         long period_ms = 60000; // 1 minute in milliseconds
-        return HttpRequestManager::get_instance().create_rate_limit(requests_per_minute, period_ms);
+        return HttpRequestManager::get_instance().create_rate_limit(requests_per_minute, period_ms, sequential);
     }
 
-    /// \brief Creates a rate limit based on Requests Per Second (RPS).
+    /// \brief Creates a RAII rate-limit based on Requests Per Second (RPS).
     /// \param requests_per_second Maximum number of requests allowed per second.
-    /// \return A unique identifier for the created rate limit.
-    inline long create_rate_limit_rps(long requests_per_second) {
+    /// \param sequential When true, no other request sharing this limit may start until
+    ///        the current request (including all its retries) has finished.
+    /// \return Handle for the created rate limit.
+    inline HttpRateLimitHandlePtr create_rate_limit_rps(long requests_per_second, bool sequential = false) {
         long period_ms = 1000; // 1 second in milliseconds
-        return HttpRequestManager::get_instance().create_rate_limit(requests_per_second, period_ms);
+        return HttpRequestManager::get_instance().create_rate_limit(requests_per_second, period_ms, sequential);
     }
 
-    /// \brief Removes an existing rate limit with the specified identifier.
+    /// \brief Returns a manager-owned rate-limit handle by ID.
+    /// \note Returns empty if the manager-owned handle was already released.
+    inline HttpRateLimitHandlePtr get_rate_limit(long limit_id) {
+        return HttpRequestManager::get_instance().get_rate_limit(limit_id);
+    }
+
+    /// \brief Releases manager-owned rate-limit handle by ID.
+    /// \note Physical limit data may remain alive while requests still hold handles.
     /// \param limit_id The unique identifier of the rate limit to be removed.
     /// \return True if the rate limit was successfully removed, or false if the rate limit ID was not found.
     inline bool remove_limit(long limit_id) {
         return HttpRequestManager::get_instance().remove_limit(limit_id);
     }
 
+    /// \brief Releases manager-owned rate-limit handle.
+    /// \note Physical limit data may remain alive while requests still hold handles.
+    /// \return True if the rate limit was successfully removed, or false if the rate limit ID was not found.
+    inline bool remove_limit(const HttpRateLimitHandlePtr& limit) {
+        return HttpRequestManager::get_instance().remove_limit(limit);
+    }
+
     /// \brief Generates a new unique request ID.
     /// \return A new unique request ID.
     inline uint64_t generate_request_id() {
         return HttpRequestManager::get_instance().generate_request_id();
+    }
+
+    /// \brief Generates a new group ID.
+    /// \return A new group ID.
+    inline uint64_t generate_group_id() {
+        return HttpRequestManager::get_instance().generate_group_id();
     }
 
     /// \brief Sets the maximum number of requests accepted into the global pending queue.
@@ -73,6 +99,39 @@ namespace kurlyk {
         auto promise = std::make_shared<std::promise<void>>();
         auto future = promise->get_future();
         HttpRequestManager::get_instance().cancel_request_by_id(request_id, [promise](){
+            try {
+                promise->set_value();
+            } catch (const std::future_error& e) {
+                if (e.code() == std::make_error_condition(std::future_errc::promise_already_satisfied)) {
+                    KURLYK_HANDLE_ERROR(e, "Promise already satisfied in HttpClient::request callback");
+                } else {
+                    KURLYK_HANDLE_ERROR(e, "Future error in HttpClient::request callback");
+                }
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "Unhandled exception in HttpClient::request callback");
+            } catch (...) {
+                // Unknown fatal error in request callback
+            }
+        });
+        ::kurlyk::core::NetworkWorker::get_instance().notify();
+        return future;
+    }
+
+    /// \brief Cancels all requests with the specified group ID.
+    /// \param group_id The group identifier of requests to cancel.
+    /// \param callback An optional callback function to execute after cancellation.
+    inline void cancel_requests_by_group_id(uint64_t group_id, std::function<void()> callback) {
+        HttpRequestManager::get_instance().cancel_requests_by_group_id(group_id, std::move(callback));
+        ::kurlyk::core::NetworkWorker::get_instance().notify();
+    }
+
+    /// \brief Cancels all requests with the specified group ID and returns a future.
+    /// \param group_id The group identifier of requests to cancel.
+    /// \return A `std::future<void>` that becomes ready when the cancellation process is complete.
+    inline std::future<void> cancel_requests_by_group_id(uint64_t group_id) {
+        auto promise = std::make_shared<std::promise<void>>();
+        auto future = promise->get_future();
+        HttpRequestManager::get_instance().cancel_requests_by_group_id(group_id, [promise](){
             try {
                 promise->set_value();
             } catch (const std::future_error& e) {

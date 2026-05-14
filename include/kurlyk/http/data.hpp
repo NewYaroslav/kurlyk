@@ -5,6 +5,7 @@
 /// \file data.hpp
 /// \brief Aggregates core HTTP data structures such as request, response, and cookie.
 
+#include "HttpRequestManager/HttpRateLimitHandle.hpp"
 #include "data/HttpRequest.hpp"
 #include "data/HttpResponse.hpp"
 

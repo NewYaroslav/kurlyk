@@ -2,14 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [v1.0.2] - 2026-04-23
+- Added separate HTTP `request_id` and `group_id` semantics so individual requests can be cancelled by request ID while `HttpClient::cancel_requests()` cancels the client's request group.
+- Added RAII-backed HTTP rate limit handles so pending requests keep their assigned limits alive until completion.
 - Added HTTP response streaming callbacks via `HttpRequest::streaming`, `HttpClient::set_streaming(...)`, and callback overloads for standalone HTTP helpers.
 - Added `HttpResponse::stream_chunk` to distinguish intermediate body chunks from the final ready response.
 - Documented HTTP callback threading and disabled automatic retries after streaming chunks have been emitted.
 - Fixed HTTP retry decisions so curl transfer errors can retry even when an HTTP status code was already received.
 - Fixed Windows executable path conversion with C++20 `std::filesystem::path::u8string()`.
-
-## [v1.0.2] - 2026-04-23
 - Added CMake build integration with fallback dependency helpers for OpenSSL, libcurl, Asio, and Simple-WebSocket-Server.
 - Added CI coverage for Linux and macOS smoke builds, Windows integration builds, and ODR regression tests.
 - Switched Windows MinGW CI jobs from Chocolatey MinGW path assumptions to MSYS2 UCRT64 with Ninja.
@@ -23,6 +23,9 @@ All notable changes to this project will be documented in this file.
 - Cleaned up public include compatibility around startup and utility headers while preserving the header-only API surface.
 - Updated examples and comments for clearer console output, manual lifecycle handling, and non-pausing execution.
 - Updated the Asio submodule to `asio-1-36-0`.
+- Added optional sequential rate-limit mode (`create_rate_limit(..., sequential=true)`) so no other request sharing the limit may start while any request (including retries) is still in-flight.
+- Added in-flight token tracking so sequential rate-limit locks are only released when `HttpRequestContext::complete()` is called (success, retry exhaustion, cancellation, or handler destruction).
+- Added integration test and example coverage for the sequential rate-limit feature.
 
 ## [v1.0.1] - 2025-08-16
 - Documented automatic initialization behavior on the Doxygen mainpage.

@@ -5,6 +5,10 @@
 /// \file HttpRequestContext.hpp
 /// \brief Defines the HttpRequestContext class for managing HTTP request context, including retries and timing.
 
+#include <atomic>
+#include <cstdint>
+#include <functional>
+
 namespace kurlyk {
 
     /// \class HttpRequestContext
@@ -17,6 +21,9 @@ namespace kurlyk {
         HttpResponseCallback         callback;      ///< Callback function to be invoked when the request completes.
         long                         retry_attempt; ///< Number of retry attempts made for this request.
         time_point_t                 start_time;    ///< Time when the request was initially created or last retried.
+        uint64_t                     in_flight_token = 0; ///< Token for sequential rate-limit tracking.
+        std::function<void()>        on_complete;   ///< Callback invoked once when the request finishes (including retries).
+        std::atomic<bool>            complete_called{false};  ///< True after on_complete has been invoked.
 
         /// \brief Constructs a HttpRequestContext with the specified request and callback.
         /// \param request_ptr A unique pointer to the HTTP request object.
@@ -26,10 +33,23 @@ namespace kurlyk {
             HttpResponseCallback callback)
             : request(std::move(request_ptr)),
               callback(std::move(callback)),
-              retry_attempt(0) {
+              retry_attempt(0),
+              in_flight_token(0),
+              complete_called(false) {
         }
-        
+
         HttpRequestContext() = default;
+
+        /// \brief Invokes on_complete exactly once. Thread-safe and idempotent.
+        void complete() {
+            bool expected = false;
+            if (!complete_called.compare_exchange_strong(expected, true)) {
+                return;
+            }
+            if (on_complete) {
+                on_complete();
+            }
+        }
     }; // HttpRequestContext
 
 } // namespace kurlyk

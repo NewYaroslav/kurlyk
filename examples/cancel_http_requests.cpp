@@ -1,3 +1,4 @@
+#define KURLYK_AUTO_INIT 0
 #include <kurlyk.hpp>
 
 void print_response(const kurlyk::HttpResponsePtr& response) {
@@ -77,84 +78,65 @@ int main() {
         KURLYK_PRINT << "Future-based request exception: " << e.what() << std::endl;
     }
 
-    // ---
+    const uint64_t group_id = kurlyk::generate_group_id();
+    const uint64_t grouped_request_id1 = kurlyk::generate_request_id();
+    const uint64_t grouped_request_id2 = kurlyk::generate_request_id();
 
-    for (int n = 0; n < 10; ++n) {
-        KURLYK_PRINT << "Iteration " << n << std::endl;
+    auto make_grouped_request = [group_id](uint64_t request_id) {
+#       if __cplusplus >= 201402L
+        auto request = std::make_unique<kurlyk::HttpRequest>();
+#       else
+        auto request = std::unique_ptr<kurlyk::HttpRequest>(new kurlyk::HttpRequest());
+#       endif
+        request->request_id = request_id;
+        request->group_id = group_id;
+        request->method = "GET";
+        request->set_url("https://httpbin.org", "/delay/5");
+        return request;
+    };
 
-        uint32_t limit_id = kurlyk::create_rate_limit_rps(2);
+    auto submit_grouped = [](std::unique_ptr<kurlyk::HttpRequest> request, const char* label) {
+        kurlyk::SubmitResult submit = kurlyk::submit_http_request(
+            std::move(request),
+            [label](kurlyk::HttpResponsePtr response) {
+                KURLYK_PRINT << label << " response:" << std::endl;
+                print_response(response);
+            });
 
-        int num_clients = 10;
-        int num_req = 3;
-        int cancel_after_ms = 3000;
-
-        std::vector<std::unique_ptr<kurlyk::HttpClient>> clients;
-        std::vector<std::future<kurlyk::HttpResponsePtr>> futures;
-
-        for (int i = 0; i < num_clients; ++i) {
-            auto client = std::make_unique<kurlyk::HttpClient>("https://httpbin.org");
-            client->set_timeout(5);
-            client->set_connect_timeout(5);
-            client->set_retry_attempts(3, 1000);
-
-            KURLYK_PRINT << "Client #" << i << std::endl;
-
-            for (int j = 0; j < num_req; ++j) {
-                if (j % 3 == 0) {
-                    client->set_head_only(true);
-                    futures.emplace_back(client->get("/delay/2", kurlyk::QueryParams(), kurlyk::Headers()));
-                    client->set_head_only(false);
-                } else {
-                    futures.emplace_back(client->get("/delay/2", kurlyk::QueryParams(), kurlyk::Headers(), limit_id));
-                }
-            }
-            clients.emplace_back(std::move(client));
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        if (!submit) {
+            KURLYK_PRINT << label << " submit rejected: " << submit.error_code.message() << std::endl;
         }
+    };
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(cancel_after_ms));
+    submit_grouped(make_grouped_request(grouped_request_id1), "Grouped request 1");
+    submit_grouped(make_grouped_request(grouped_request_id2), "Grouped request 2");
 
-        for (int i = 0; i < num_clients; ++i) {
+    KURLYK_PRINT << "Sent grouped requests. Request IDs: "
+                 << grouped_request_id1 << ", " << grouped_request_id2
+                 << " | Group ID: " << group_id << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    KURLYK_PRINT << "Cancelling both grouped requests by group_id..." << std::endl;
+    kurlyk::cancel_requests_by_group_id(group_id).wait();
 
-            auto& client = clients[i];
+    auto limit = kurlyk::create_rate_limit_rps(2);
+    KURLYK_PRINT << "Created rate-limit handle ID: " << limit->id() << std::endl;
 
-            KURLYK_PRINT << "Client #" << i << " using HEAD request" << std::endl;
-            client->set_head_only(true);
-            futures.emplace_back(client->get("/delay/2", kurlyk::QueryParams(), kurlyk::Headers()));
-            client->set_head_only(false);
+    kurlyk::HttpClient limited_client("https://httpbin.org");
+    limited_client.set_timeout(5);
+    limited_client.set_rate_limit_handle(limit);
 
-            try {
-                KURLYK_PRINT << "[Cancel] Starting cancel for client #" << i << std::endl;
-                client->cancel_requests();
-                KURLYK_PRINT << "[Cancel] Finished cancel for client #" << i << std::endl;
-            } catch (const std::exception& e) {
-                KURLYK_PRINT << "[Cancel] Exception for client #" << i << ": " << e.what() << std::endl;
-            }
+    auto limited_future = limited_client.get("/delay/2", kurlyk::QueryParams(), kurlyk::Headers());
+    kurlyk::remove_limit(limit);
+    KURLYK_PRINT << "Released manager-owned rate-limit handle; pending requests keep copied handles alive." << std::endl;
 
-            try {
-                KURLYK_PRINT << "[Cancel2] Starting cancel for client #" << i << std::endl;
-                client->cancel_requests();
-                KURLYK_PRINT << "[Cancel2] Finished cancel for client #" << i << std::endl;
-            } catch (const std::exception& e) {
-                KURLYK_PRINT << "[Cancel2] Exception for client #" << i << ": " << e.what() << std::endl;
-            }
-        }
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    KURLYK_PRINT << "Cancelling the HttpClient request group..." << std::endl;
+    limited_client.cancel_requests();
 
-        KURLYK_PRINT << "Results:" << std::endl;
-        for (int i = 0; i < num_clients; ++i) {
-            try {
-                auto response = futures[i].get();
-                KURLYK_PRINT << "[Result] Client #" << i
-                             << " | Ready: " << response->ready
-                             << " | Status: " << response->status_code
-                             << " | Error: " << response->error_code.message()
-                             << std::endl;
-            } catch (const std::exception& e) {
-                KURLYK_PRINT << "[Result] Client #" << i << " threw exception: " << e.what() << std::endl;
-            }
-        }
-
-        kurlyk::remove_limit(limit_id);
+    try {
+        print_response(limited_future.get());
+    } catch (const std::exception& e) {
+        KURLYK_PRINT << "Limited request exception: " << e.what() << std::endl;
     }
 
     KURLYK_PRINT << "Press Enter to exit..." << std::endl;

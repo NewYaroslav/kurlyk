@@ -1,3 +1,4 @@
+#define KURLYK_AUTO_INIT 0
 #include <kurlyk.hpp>
 #include <iostream>
 #include <fstream>

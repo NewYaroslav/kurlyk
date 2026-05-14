@@ -43,6 +43,8 @@ namespace kurlyk::startup {
 #       endif
     };
 	
+	/// Convenience auto-init helper. Initialization order relative to other statics
+	/// is undefined; ensure_initialized() in client constructors is the reliable fallback.
 	inline AutoInitializer _kurlyk_auto_initializer;
 
 } // namespace kurlyk::startup

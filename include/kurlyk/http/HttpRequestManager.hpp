@@ -7,14 +7,16 @@
 
 #include "HttpRequestManager/HttpRequestContext.hpp"
 #include "HttpRequestManager/HttpRequestHandler.hpp"
+#include "HttpRequestManager/HttpRateLimitHandle.hpp"
 #include "HttpRequestManager/HttpRateLimiter.hpp"
 #include "HttpRequestManager/HttpBatchRequestHandler.hpp"
-#include "HttpRequestManager/HttpRateLimiter.hpp"
+
 
 namespace kurlyk {
 
     /// \class HttpRequestManager
     /// \brief Manages and processes HTTP requests using a singleton pattern.
+    /// \note All process_*(), is_loaded(), and shutdown() must be called exclusively from the NetworkWorker thread. m_mutex guards only public entry points (submit_request, cancel_request_by_id, cancel_requests_by_group_id).
     class HttpRequestManager final : public core::INetworkTaskManager {
     public:
 
@@ -29,7 +31,7 @@ namespace kurlyk {
         /// \param request_ptr Unique pointer to the HTTP request object containing request details.
         /// \param callback Callback function invoked when the request completes.
         /// \return True if the request was successfully added, false if admission was rejected.
-        const bool add_request(
+        bool add_request(
                 std::unique_ptr<HttpRequest> request_ptr,
                 HttpResponseCallback callback) {
             return submit_request(std::move(request_ptr), std::move(callback)).accepted;
@@ -53,20 +55,30 @@ namespace kurlyk {
             }
 
 #           if __cplusplus >= 201402L
-            m_pending_requests.push_back(std::make_unique<HttpRequestContext>(std::move(request_ptr), std::move(callback)));
+            auto context = std::make_unique<HttpRequestContext>(std::move(request_ptr), std::move(callback));
 #           else
-            m_pending_requests.push_back(std::unique_ptr<HttpRequestContext>(
-                new HttpRequestContext(std::move(request_ptr), std::move(callback))));
+            auto context = std::unique_ptr<HttpRequestContext>(
+                new HttpRequestContext(std::move(request_ptr), std::move(callback)));
 #           endif
+            context->in_flight_token = m_next_in_flight_token.fetch_add(1, std::memory_order_relaxed);
+            m_pending_requests.push_back(std::move(context));
             return SubmitResult{true, std::error_code()};
         }
 
-        /// \brief Creates a rate limit with specified parameters.
+        /// \brief Creates a rate-limit handle with specified parameters.
         /// \param requests_per_period Maximum number of requests allowed in the specified period.
         /// \param period_ms Time period in milliseconds during which the rate limit applies.
-        /// \return A unique identifier for the created rate limit.
-        const long create_rate_limit(long requests_per_period, long period_ms) {
-            return m_rate_limiter.create_limit(requests_per_period, period_ms);
+        /// \param sequential When true, no other request sharing this limit may start until
+        ///        the current request (including all its retries) has finished.
+        /// \return RAII handle for the created rate limit.
+        HttpRateLimitHandlePtr create_rate_limit(long requests_per_period, long period_ms, bool sequential = false) {
+            return m_rate_limiter.create_limit_handle(requests_per_period, period_ms, sequential);
+        }
+
+        /// \brief Returns a handle for a registered rate limit ID.
+        /// \note Returns empty if the manager-owned handle was already released.
+        HttpRateLimitHandlePtr get_rate_limit(long limit_id) {
+            return m_rate_limiter.get_limit(limit_id);
         }
 
         /// \brief Removes an existing rate limit with the specified identifier.
@@ -76,10 +88,22 @@ namespace kurlyk {
             return m_rate_limiter.remove_limit(limit_id);
         }
 
+        /// \brief Releases manager-owned handle for the specified rate-limit handle.
+        /// \note Physical limit data may remain alive while requests still hold handles.
+        bool remove_limit(const HttpRateLimitHandlePtr& limit) {
+            return m_rate_limiter.remove_limit(limit);
+        }
+
         /// \brief Generates a new unique request ID.
         /// \return A new unique request ID.
         uint64_t generate_request_id() {
             return m_request_id_counter++;
+        }
+
+        /// \brief Generates a new group ID.
+        /// \return A new group ID.
+        uint64_t generate_group_id() {
+            return m_group_id_counter++;
         }
 
         /// \brief Sets the maximum number of pending requests accepted into the global queue.
@@ -94,22 +118,37 @@ namespace kurlyk {
             return m_max_pending_requests.load();
         }
 
-        /// \brief Cancels a request by its unique identifier.
+        /// \brief Cancels one request by request ID.
         /// \param request_id The unique identifier of the request to cancel.
         /// \param callback An optional callback function to execute after cancellation.
         void cancel_request_by_id(uint64_t request_id, std::function<void()> callback) {
-            if (m_shutdown) {
+            if (m_shutdown || request_id == 0) {
                 if (callback) callback();
                 return;
             }
             std::lock_guard<std::mutex> lock(m_mutex);
-            m_requests_to_cancel[request_id].push_back(std::move(callback));
+            m_requests_to_cancel_by_id[request_id].push_back(std::move(callback));
+        }
+
+        /// \brief Cancels all requests with the specified group ID.
+        /// \param group_id The group identifier of requests to cancel.
+        /// \param callback An optional callback function to execute after cancellation.
+        void cancel_requests_by_group_id(uint64_t group_id, std::function<void()> callback) {
+            if (m_shutdown || group_id == 0) {
+                if (callback) callback();
+                return;
+            }
+            std::lock_guard<std::mutex> lock(m_mutex);
+            m_groups_to_cancel[group_id].push_back(std::move(callback));
         }
 
         /// \brief Processes all requests in the manager.
         ///
         /// Executes pending, active, and retry-eligible failed requests.
         void process() override {
+            if (m_shutdown) {
+                return;
+            }
             process_pending_requests();
             process_active_requests();
             process_retry_failed_requests();
@@ -119,7 +158,9 @@ namespace kurlyk {
         /// \brief Shuts down the request manager, clearing all active and pending requests.
         /// Stops request processing and releases all resources tied to active and pending requests.
         void shutdown() override {
-            m_shutdown = true;
+            if (m_shutdown.exchange(true)) {
+                return;
+            }
             cleanup_pending_requests();
             process_cancel_requests();
             m_active_request_batches.clear();
@@ -133,18 +174,23 @@ namespace kurlyk {
                 !m_pending_requests.empty() ||
                 !m_failed_requests.empty() ||
                 !m_active_request_batches.empty() ||
-                !m_requests_to_cancel.empty();
+                !m_requests_to_cancel_by_id.empty() ||
+                !m_groups_to_cancel.empty();
         }
 
     private:
         mutable std::mutex                                  m_mutex;                  ///< Mutex to protect access to the pending requests list and requests-to-cancel map.
         std::list<std::unique_ptr<HttpRequestContext>>      m_pending_requests;       ///< List of pending HTTP requests awaiting processing.
-        std::list<std::unique_ptr<HttpRequestContext>>      m_failed_requests;        ///< List of failed HTTP requests for retrying.
-        std::list<std::unique_ptr<HttpBatchRequestHandler>> m_active_request_batches; ///< List of currently active HTTP request batches.
+        std::list<std::unique_ptr<HttpRequestContext>>      m_failed_requests;        ///< List of failed HTTP requests for retrying. Protected by NetworkWorker thread serialization, NOT by m_mutex.
+        std::list<std::unique_ptr<HttpBatchRequestHandler>> m_active_request_batches; ///< List of currently active HTTP request batches. Protected by NetworkWorker thread serialization, NOT by m_mutex.
         using callback_list_t = std::list<std::function<void()>>;
-        std::unordered_map<uint64_t, callback_list_t>       m_requests_to_cancel;     ///< Map of request IDs to their associated cancellation callbacks.
+        using cancel_map_t = std::unordered_map<uint64_t, callback_list_t>;
+        cancel_map_t                                       m_requests_to_cancel_by_id; ///< Map of request IDs to their associated cancellation callbacks.
+        cancel_map_t                                       m_groups_to_cancel;         ///< Map of group IDs to their associated cancellation callbacks.
         HttpRateLimiter                                     m_rate_limiter;           ///< Rate limiter for controlling request frequency.
+        std::atomic<uint64_t>                               m_next_in_flight_token{1}; ///< Atomic counter for sequential rate-limit tokens.
         std::atomic<uint64_t>                               m_request_id_counter = ATOMIC_VAR_INIT(1); ///< Atomic counter for unique request IDs.
+        std::atomic<uint64_t>                               m_group_id_counter = ATOMIC_VAR_INIT(1); ///< Atomic counter for group IDs.
         std::atomic<bool>                                   m_shutdown = ATOMIC_VAR_INIT(false); ///< Flag indicating if shutdown has been requested.
         std::atomic<std::size_t>                            m_max_pending_requests = ATOMIC_VAR_INIT(0); ///< Maximum number of requests accepted into the pending queue, or zero if unbounded.
 
@@ -167,14 +213,26 @@ namespace kurlyk {
                     continue;
                 }
 
+                // Set up completion callback before allow_request so it is armed
+                // even if an exception occurs after the token is committed.
+                auto general_limit = request->general_rate_limit;
+                auto specific_limit = request->specific_rate_limit;
+                uint64_t token = context->in_flight_token;
+                context->on_complete = [this, general_limit, specific_limit, token]() {
+                    m_rate_limiter.release_request(general_limit, specific_limit, token);
+                };
+
                 // Check if the request is allowed by the rate limiter.
                 const bool allowed = m_rate_limiter.allow_request(
-                    request->general_rate_limit_id,
-                    request->specific_rate_limit_id);
+                    general_limit,
+                    specific_limit,
+                    token);
                 if (!allowed) {
+                    context->on_complete = nullptr;
                     ++it;
                     continue;
                 }
+
                 pending_request.push_back(std::move(context));
                 it = m_pending_requests.erase(it);
             }
@@ -193,6 +251,7 @@ namespace kurlyk {
                     response->status_code = BAD_REQUEST;
                     response->ready = true;
                     context->callback(std::move(response));
+                    context->complete();
                 }
                 failed_requests.clear();
             }
@@ -247,40 +306,81 @@ namespace kurlyk {
             }
         }
 
-        /// \brief Processes and cancels HTTP requests based on their IDs.
+        /// \brief Processes and cancels HTTP requests based on their request or group IDs.
         void process_cancel_requests() {
             std::unique_lock<std::mutex> lock(m_mutex);
-            if (m_requests_to_cancel.empty()) return;
+            if (m_requests_to_cancel_by_id.empty() && m_groups_to_cancel.empty()) return;
 
-            auto requests_to_cancel = std::move(m_requests_to_cancel);
-            m_requests_to_cancel.clear();
+            auto requests_to_cancel = std::move(m_requests_to_cancel_by_id);
+            auto groups_to_cancel = std::move(m_groups_to_cancel);
+            m_requests_to_cancel_by_id.clear();
+            m_groups_to_cancel.clear();
+
+            std::list<std::unique_ptr<HttpRequestContext>> canceled_pending_requests;
+            auto pending_it = m_pending_requests.begin();
+            while (pending_it != m_pending_requests.end()) {
+                const auto& ctx = *pending_it;
+                if (!matches_cancel(ctx, requests_to_cancel, groups_to_cancel)) {
+                    ++pending_it;
+                    continue;
+                }
+                canceled_pending_requests.push_back(std::move(*pending_it));
+                pending_it = m_pending_requests.erase(pending_it);
+            }
             lock.unlock();
 
-            for (const auto &request_context : m_failed_requests) {
-                if (!requests_to_cancel.count(request_context->request->request_id)) continue;
-#               if __cplusplus >= 201402L
-                auto response = std::make_unique<HttpResponse>();
-#               else
-                auto response = std::unique_ptr<HttpResponse>(new HttpResponse());
-#               endif
-                const long CANCELED_REQUEST_CODE = 499;
-                response->error_code = utils::make_error_code(CURLE_OK);
-                response->status_code = CANCELED_REQUEST_CODE;
-                response->ready = true;
-                request_context->callback(std::move(response));
+            for (const auto& request_context : canceled_pending_requests) {
+                request_context->callback(make_cancelled_response());
+                request_context->complete();
             }
 
-            m_failed_requests.remove_if([&](const std::unique_ptr<HttpRequestContext>& ctx) {
-                return ctx && ctx->request && requests_to_cancel.count(ctx->request->request_id) > 0;
-            });
-
+            auto failed_it = m_failed_requests.begin();
+            while (failed_it != m_failed_requests.end()) {
+                const auto& request_context = *failed_it;
+                if (!matches_cancel(request_context, requests_to_cancel, groups_to_cancel)) {
+                    ++failed_it;
+                    continue;
+                }
+                request_context->callback(make_cancelled_response());
+                request_context->complete();
+                failed_it = m_failed_requests.erase(failed_it);
+            }
 
             for (const auto &handler : m_active_request_batches) {
-                handler->cancel_request_by_id(requests_to_cancel);
+                handler->cancel_requests(requests_to_cancel, groups_to_cancel);
             }
 
-            for (const auto &request : requests_to_cancel) {
-                for (const auto &callback : request.second) {
+            invoke_cancel_callbacks(requests_to_cancel);
+            invoke_cancel_callbacks(groups_to_cancel);
+        }
+
+        static bool matches_cancel(
+                const std::unique_ptr<HttpRequestContext>& ctx,
+                const cancel_map_t& requests_to_cancel,
+                const cancel_map_t& groups_to_cancel) {
+            if (!ctx || !ctx->request) return false;
+            const auto request_id = ctx->request->request_id;
+            const auto group_id = ctx->request->group_id;
+            return
+                (request_id != 0 && requests_to_cancel.count(request_id) > 0) ||
+                (group_id != 0 && groups_to_cancel.count(group_id) > 0);
+        }
+
+        static HttpResponsePtr make_cancelled_response() {
+#           if __cplusplus >= 201402L
+            auto response = std::make_unique<HttpResponse>();
+#           else
+            auto response = std::unique_ptr<HttpResponse>(new HttpResponse());
+#           endif
+            response->error_code = utils::make_error_code(utils::ClientError::CancelledByUser);
+            response->status_code = 499;
+            response->ready = true;
+            return response;
+        }
+
+        static void invoke_cancel_callbacks(const cancel_map_t& requests_to_cancel) {
+            for (const auto& request : requests_to_cancel) {
+                for (const auto& callback : request.second) {
                     if (callback) callback();
                 }
             }
@@ -290,7 +390,9 @@ namespace kurlyk {
         void cleanup_pending_requests() {
             std::unique_lock<std::mutex> lock(m_mutex);
             auto pending_requests = std::move(m_pending_requests);
+            auto failed_requests  = std::move(m_failed_requests);
             m_pending_requests.clear();
+            m_failed_requests.clear();
             lock.unlock();
 
             for (const auto &request_context : pending_requests) {
@@ -304,8 +406,9 @@ namespace kurlyk {
                 response->status_code = CANCELED_REQUEST_CODE;
                 response->ready = true;
                 request_context->callback(std::move(response));
+                request_context->complete();
             }
-            for (const auto &request_context : m_failed_requests) {
+            for (const auto &request_context : failed_requests) {
 #               if __cplusplus >= 201402L
                 auto response = std::make_unique<HttpResponse>();
 #               else
@@ -316,6 +419,7 @@ namespace kurlyk {
                 response->status_code = CANCELED_REQUEST_CODE;
                 response->ready = true;
                 request_context->callback(std::move(response));
+                request_context->complete();
             }
         }
 

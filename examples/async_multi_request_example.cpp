@@ -1,4 +1,5 @@
 #include <iostream>
+#define KURLYK_AUTO_INIT 0
 #include <kurlyk.hpp>
 #include <future>
 #include <vector>

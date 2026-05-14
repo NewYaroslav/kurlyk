@@ -39,6 +39,7 @@ namespace kurlyk {
                 m_response->status_code = 499; // Client closed request
                 m_response->ready = true;
                 m_request_context->callback(std::move(m_response));
+                m_request_context->complete();
             }
         }
 
@@ -108,6 +109,7 @@ namespace kurlyk {
                 m_response->ready = true;
                 m_request_context->callback(std::move(m_response));
                 m_callback_called = true;
+                if (m_request_context) m_request_context->complete();
                 return true;
             }
             m_request_context->start_time = std::chrono::steady_clock::now();
@@ -128,6 +130,10 @@ namespace kurlyk {
         /// \return The unique ID of the HTTP request if the context exists, or 0 if no context is set.
         uint64_t get_request_id() { return m_request_context ? m_request_context->request->request_id : 0; }
 
+        /// \brief Retrieves the group ID of the HTTP request.
+        /// \return The group ID of the HTTP request if the context exists, or 0 if no context is set.
+        uint64_t get_group_id() { return m_request_context ? m_request_context->request->group_id : 0; }
+
         /// \brief Marks the request as cancelled.
         void cancel() {
             if (!m_callback_called) {
@@ -138,6 +144,7 @@ namespace kurlyk {
                     m_request_context->callback(std::move(m_response));
                 }
                 m_callback_called = true;
+                if (m_request_context) m_request_context->complete();
             }
         }
 

@@ -68,15 +68,28 @@ namespace kurlyk {
         /// \brief Cancels HTTP requests based on their unique IDs.
         /// \param to_cancel A map of request IDs to their corresponding cancellation callbacks.
         void cancel_request_by_id(const std::unordered_map<uint64_t, std::list<std::function<void()>>>& to_cancel) {
+            cancel_requests(to_cancel, std::unordered_map<uint64_t, std::list<std::function<void()>>>());
+        }
+
+        /// \brief Cancels HTTP requests based on their request or group IDs.
+        /// \param requests_to_cancel A map of request IDs to their corresponding cancellation callbacks.
+        /// \param groups_to_cancel A map of group IDs to their corresponding cancellation callbacks.
+        void cancel_requests(
+                const std::unordered_map<uint64_t, std::list<std::function<void()>>>& requests_to_cancel,
+                const std::unordered_map<uint64_t, std::list<std::function<void()>>>& groups_to_cancel) {
             auto it = m_handlers.begin();
             while (it != m_handlers.end()) {
-                uint64_t id = (*it)->get_request_id();
-                if (!to_cancel.count(id)) {
+                const uint64_t request_id = (*it)->get_request_id();
+                const uint64_t group_id = (*it)->get_group_id();
+                const bool should_cancel =
+                    (request_id != 0 && requests_to_cancel.count(request_id) > 0) ||
+                    (group_id != 0 && groups_to_cancel.count(group_id) > 0);
+                if (!should_cancel) {
                     ++it;
                     continue;
                 }
                 curl_multi_remove_handle(m_multi_handle, (*it)->get_curl());
-                (*it)->cancel(); // Cancel the request.
+                (*it)->cancel();
                 it = m_handlers.erase(it);
             }
         }

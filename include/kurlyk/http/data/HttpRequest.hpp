@@ -15,7 +15,8 @@ namespace kurlyk {
     /// for configuring these parameters and handling HTTP requests.
     class HttpRequest {
     public:
-        uint64_t request_id = 0;         ///< Unique identifier for the request (default is 0).
+        uint64_t request_id = 0;         ///< Unique ID of this concrete HTTP request.
+        uint64_t group_id = 0;           ///< ID shared by related requests, for example all requests created by one HttpClient.
         Headers headers;                 ///< HTTP request headers.
         std::string url;                 ///< Full request URL.
         std::string method = "GET";      ///< HTTP request method (e.g., "GET", "POST").
@@ -43,8 +44,8 @@ namespace kurlyk {
 
         long timeout         = 30;       ///< Request timeout in seconds.
         long connect_timeout = 10;       ///< Connection timeout in seconds.
-        long general_rate_limit_id  = 0; ///< ID for general rate limiting.
-        long specific_rate_limit_id = 0; ///< ID for specific rate limiting.
+        HttpRateLimitHandlePtr general_rate_limit;  ///< General rate limit handle.
+        HttpRateLimitHandlePtr specific_rate_limit; ///< Specific rate limit handle.
         std::set<long> valid_statuses = {200}; ///< Set of valid HTTP response status codes.
         long retry_attempts = 0;         ///< Number of retry attempts in case of failure.
         long retry_delay_ms = 0;         ///< Delay between retry attempts in milliseconds.

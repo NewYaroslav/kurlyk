@@ -6,6 +6,7 @@
 /// \brief Defines the WebSocketClient facade for managing WebSocket connections.
 
 #include "WebSocketManager.hpp"
+#include <mutex>
 
 namespace kurlyk {
 
@@ -478,13 +479,12 @@ namespace kurlyk {
         /// \brief Ensures the WebSocket and network components are initialized.
         /// This method is called only once per application run.
         static void ensure_initialized() {
-            static bool is_initialized = false;
-            if (!is_initialized) {
-                is_initialized = true;
+            static std::once_flag once;
+            std::call_once(once, []() {
                 HttpRequestManager::get_instance();
                 WebSocketManager::get_instance();
                 core::NetworkWorker::get_instance().start(KURLYK_AUTO_INIT_USE_ASYNC);
-            }
+            });
         }
 
     }; // WebSocketClient

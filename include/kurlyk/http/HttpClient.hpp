@@ -16,7 +16,7 @@ namespace kurlyk {
         /// \brief Default constructor for HttpClient.
         HttpClient() {
             ensure_initialized();
-            m_request.request_id = HttpRequestManager::get_instance().generate_request_id();
+            m_request.group_id = HttpRequestManager::get_instance().generate_group_id();
         }
 
         /// \brief Constructs an HttpClient with the specified host.
@@ -24,30 +24,40 @@ namespace kurlyk {
         HttpClient(const std::string& host) :
                 m_host(host) {
             ensure_initialized();
-            m_request.request_id = HttpRequestManager::get_instance().generate_request_id();
+            m_request.group_id = HttpRequestManager::get_instance().generate_group_id();
         }
 
         HttpClient(const HttpClient&) = delete;
-        void operator=(const HttpClient&) = delete;
+        HttpClient& operator=(const HttpClient&) = delete;
+        HttpClient(HttpClient&&) = delete;
+        HttpClient& operator=(HttpClient&&) = delete;
 
-        /// \brief Destroys the client, cancels its active request, and releases owned rate limits.
+        /// \brief Destroys the client, cancels requests associated with this client, and releases owned rate limits.
+        /// \warning This method blocks until cancellation callback is delivered.
+        /// It must not be called from the network worker thread.
         ~HttpClient() {
             cancel_requests();
-            auto& instance = HttpRequestManager::get_instance();
-            if (is_general_limit_owned) {
-                instance.remove_limit(m_request.general_rate_limit_id);
-            }
-            if (is_specific_limit_owned) {
-                instance.remove_limit(m_request.specific_rate_limit_id);
-            }
+            clear_rate_limit(RateLimitType::RL_GENERAL);
+            clear_rate_limit(RateLimitType::RL_SPECIFIC);
         }
 
-        /// \brief Cancels the active request associated with this client and waits for its completion.
-        /// \note If no active request is associated or the ID is invalid, the method may have no effect.
+        /// \brief Cancels requests associated with this client and waits for cancellation callbacks.
+        /// \note All requests created by one HttpClient share the same group_id.
+        /// \warning This method blocks until cancellation callback is delivered.
+        /// It must not be called from the network worker thread.
         void cancel_requests() {
+            auto& worker = core::NetworkWorker::get_instance();
+            auto& manager = HttpRequestManager::get_instance();
+            const uint64_t group_id = m_request.group_id;
+            if (worker.is_worker_thread()) {
+                // On the worker thread: execute cancellation inline to avoid self-deadlock.
+                manager.cancel_requests_by_group_id(group_id, nullptr);
+                worker.process();
+                return;
+            }
             auto promise = std::make_shared<std::promise<void>>();
             auto future = promise->get_future();
-            HttpRequestManager::get_instance().cancel_request_by_id(m_request.request_id, [promise](){
+            manager.cancel_requests_by_group_id(group_id, [promise](){
                 try {
                     promise->set_value();
                 } catch (const std::future_error& e) {
@@ -62,11 +72,35 @@ namespace kurlyk {
                     // Unknown fatal error in request callback
                 }
             });
-            core::NetworkWorker::get_instance().notify();
+            worker.notify();
             try {
                 future.get();
             } catch (const std::exception& e) {
                 KURLYK_HANDLE_ERROR(e, "cancel_requests() future.get() failed");
+            }
+        }
+
+        /// \brief Clears the configured rate limit of the specified type.
+        /// \param type Rate limit type to clear.
+        void clear_rate_limit(RateLimitType type = RateLimitType::RL_GENERAL) {
+            auto& instance = HttpRequestManager::get_instance();
+
+            switch (type) {
+            case RateLimitType::RL_GENERAL:
+                if (m_owns_general_rate_limit) {
+                    instance.remove_limit(m_request.general_rate_limit);
+                }
+                m_request.general_rate_limit.reset();
+                m_owns_general_rate_limit = false;
+                break;
+
+            case RateLimitType::RL_SPECIFIC:
+                if (m_owns_specific_rate_limit) {
+                    instance.remove_limit(m_request.specific_rate_limit);
+                }
+                m_request.specific_rate_limit.reset();
+                m_owns_specific_rate_limit = false;
+                break;
             }
         }
 
@@ -82,64 +116,91 @@ namespace kurlyk {
             m_request.headers = headers;
         }
 
-        /// \brief Assigns an existing rate limit to the HTTP request.
+        /// \brief Assigns an existing rate limit to future requests by ID.
         /// \param limit_id The unique identifier of the rate limit to assign.
-        /// \param type Specifies the rate limit type (general or specific).
-        void assign_rate_limit_id(
+        /// \param type Rate limit type to configure.
+        /// \return True if the rate limit was found and assigned; false otherwise.
+        bool assign_rate_limit_id(
                 long limit_id,
                 RateLimitType type = RateLimitType::RL_GENERAL) {
-            auto& instance = HttpRequestManager::get_instance();
+            return assign_rate_limit_handle(
+                HttpRequestManager::get_instance().get_rate_limit(limit_id), type);
+        }
+
+        /// \brief Assigns an existing rate-limit handle to future requests.
+        /// \param limit Shared rate-limit handle to assign.
+        /// \param type Rate limit type to configure.
+        /// \return True if the handle was assigned; false if the handle is empty.
+        /// \note The client does not own externally assigned limits and will not release
+        ///       the manager-owned handle for them.
+        bool assign_rate_limit_handle(
+                const HttpRateLimitHandlePtr& limit,
+                RateLimitType type = RateLimitType::RL_GENERAL) {
+            if (!limit) {
+                return false;
+            }
+
+            clear_rate_limit(type);
+
             switch (type) {
             case RateLimitType::RL_GENERAL:
-                if (is_general_limit_owned) {
-                    instance.remove_limit(m_request.general_rate_limit_id);
-                }
-                m_request.general_rate_limit_id = limit_id;
-                is_general_limit_owned = false;
+                m_request.general_rate_limit = limit;
                 break;
+
             case RateLimitType::RL_SPECIFIC:
-                if (is_specific_limit_owned) {
-                    instance.remove_limit(m_request.specific_rate_limit_id);
-                }
-                m_request.specific_rate_limit_id = limit_id;
-                is_specific_limit_owned = false;
+                m_request.specific_rate_limit = limit;
                 break;
             }
+            return true;
         }
 
         /// \brief Sets the rate limit ID for the HTTP request (alias for `assign_rate_limit_id`).
         /// \param limit_id The unique identifier of the rate limit to assign.
         /// \param type Specifies the rate limit type (general or specific).
+        /// \return True if the rate limit was found and assigned; false otherwise.
         /// \note This method is an alias for `assign_rate_limit_id`.
-        void set_rate_limit_id(
+        bool set_rate_limit_id(
                 long limit_id,
                 RateLimitType type = RateLimitType::RL_GENERAL) {
-            assign_rate_limit_id(limit_id, type);
+            return assign_rate_limit_id(limit_id, type);
         }
 
-        /// \brief Sets the rate limit for HTTP requests.
-        /// \param requests_per_period The maximum number of requests allowed within the specified period.
-        /// \param period_ms The duration of the period in milliseconds.
-        /// \param type The type of rate limit (either general or specific).
+        /// \brief Sets an existing rate-limit handle for future requests.
+        /// \param limit Shared rate-limit handle to assign.
+        /// \param type Rate limit type to configure.
+        /// \return True if the handle was assigned; false if the handle is empty.
+        bool set_rate_limit_handle(
+                const HttpRateLimitHandlePtr& limit,
+                RateLimitType type = RateLimitType::RL_GENERAL) {
+            return assign_rate_limit_handle(limit, type);
+        }
+
+        /// \brief Creates and assigns an owned rate limit for future requests.
+        /// \param requests_per_period Maximum requests allowed within the period. `0` means unlimited.
+        /// \param period_ms Period duration in milliseconds.
+        /// \param type Rate limit type to configure.
+        /// \param sequential When true, no other request sharing this limit may start until
+        ///        the current request (including all its retries) has finished.
         void set_rate_limit(
                 long requests_per_period,
                 long period_ms,
-                RateLimitType type = RateLimitType::RL_GENERAL) {
+                RateLimitType type = RateLimitType::RL_GENERAL,
+                bool sequential = false) {
             auto& instance = HttpRequestManager::get_instance();
+
+            clear_rate_limit(type);
+
             switch (type) {
             case RateLimitType::RL_GENERAL:
-                if (is_general_limit_owned) {
-                    instance.remove_limit(m_request.general_rate_limit_id);
-                }
-                m_request.general_rate_limit_id = instance.create_rate_limit(requests_per_period, period_ms);
-                is_general_limit_owned = true;
+                m_request.general_rate_limit =
+                    instance.create_rate_limit(requests_per_period, period_ms, sequential);
+                m_owns_general_rate_limit = true;
                 break;
+
             case RateLimitType::RL_SPECIFIC:
-                if (is_specific_limit_owned) {
-                    instance.remove_limit(m_request.specific_rate_limit_id);
-                }
-                m_request.specific_rate_limit_id = instance.create_rate_limit(requests_per_period, period_ms);
-                is_specific_limit_owned = true;
+                m_request.specific_rate_limit =
+                    instance.create_rate_limit(requests_per_period, period_ms, sequential);
+                m_owns_specific_rate_limit = true;
                 break;
             }
         }
@@ -147,21 +208,27 @@ namespace kurlyk {
         /// \brief Sets the rate limit based on requests per minute (RPM).
         /// \param requests_per_minute Maximum number of requests allowed per minute.
         /// \param type The type of rate limit (either general or specific).
+        /// \param sequential When true, no other request sharing this limit may start until
+        ///        the current request (including all its retries) has finished.
         void set_rate_limit_rpm(
                 long requests_per_minute,
-                RateLimitType type = RateLimitType::RL_GENERAL) {
+                RateLimitType type = RateLimitType::RL_GENERAL,
+                bool sequential = false) {
             long period_ms = 60000; // 1 minute in milliseconds
-            return set_rate_limit(requests_per_minute, period_ms, type);
+            set_rate_limit(requests_per_minute, period_ms, type, sequential);
         }
 
         /// \brief Sets the rate limit based on requests per second (RPS).
         /// \param requests_per_second Maximum number of requests allowed per second.
         /// \param type The type of rate limit (either general or specific).
+        /// \param sequential When true, no other request sharing this limit may start until
+        ///        the current request (including all its retries) has finished.
         void set_rate_limit_rps(
                 long requests_per_second,
-                RateLimitType type = RateLimitType::RL_GENERAL) {
+                RateLimitType type = RateLimitType::RL_GENERAL,
+                bool sequential = false) {
             long period_ms = 1000; // 1 second in milliseconds
-            return set_rate_limit(requests_per_second, period_ms, type);
+            set_rate_limit(requests_per_second, period_ms, type, sequential);
         }
 
         /// \brief Sets the Accept-Encoding header.
@@ -186,30 +253,31 @@ namespace kurlyk {
         /// \brief Sets the Accept-Language header value.
         /// \param value The language value to be sent with the Accept-Language header.
         void set_accept_language(const std::string& value) {
-            m_request.headers.emplace("Accept-Language", value);
+            set_header("Accept-Language", value);
         }
 
         /// \brief Sets the Content-Type header value.
         /// \param value The MIME type for the Content-Type header.
         void set_content_type(const std::string& value) {
-            m_request.headers.emplace("Content-Type", value);
+            set_header("Content-Type", value);
         }
 
         /// \brief Sets the Origin header value.
         /// \param value The origin to be sent with the Origin header.
         void set_origin(const std::string& value) {
-            m_request.headers.emplace("Origin", value);
+            set_header("Origin", value);
         }
 
         /// \brief Sets the Referer header value.
         /// \param value The referer URL to be sent with the Referer header.
         void set_referer(const std::string& value) {
-            m_request.headers.emplace("Referer", value);
+            set_header("Referer", value);
         }
 
         /// \brief Sets the Do Not Track (DNT) header value.
         /// \param value If true, sets the DNT header to "1".
         void set_dnt(const bool value) {
+            m_request.headers.erase("dnt");
             if (value) m_request.headers.emplace("dnt", "1");
         }
 
@@ -405,27 +473,19 @@ namespace kurlyk {
                 const Headers &headers,
                 const std::string &content,
                 HttpResponseCallback callback) {
-#           if __cplusplus >= 201402L
-            std::unique_ptr<HttpRequest> request_ptr = std::make_unique<HttpRequest>(m_request);
-#           else
-            std::unique_ptr<HttpRequest> request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest(m_request));
-#           endif
-            request_ptr->method = method;
-            request_ptr->set_url(m_host, path, query);
-            request_ptr->headers.insert(headers.begin(), headers.end());
-            request_ptr->content = content;
-            return request(std::move(request_ptr), std::move(callback));
+            return request(make_request(method, path, query, headers, content), std::move(callback));
         }
 
-        /// \brief Sends an HTTP request with the specified method, path, parameters, and specific rate limit ID.
+        /// \brief Sends an HTTP request with a temporary specific rate limit found by ID.
         /// \param method The HTTP method (e.g., "GET", "POST").
         /// \param path The URL path for the request.
         /// \param query The query arguments.
         /// \param headers The HTTP headers.
         /// \param content The request body content.
-        /// \param specific_rate_limit_id The specific rate limit ID to be applied to this request.
+        /// \param specific_rate_limit_id ID of a registered rate limit.
         /// \param callback The callback function to be called when the request is completed.
         /// \return true if the request was accepted into the queue; false if admission was rejected.
+        /// \note If the ID is not found, the request is submitted without an additional specific limit.
         bool request(
                 const std::string &method,
                 const std::string& path,
@@ -434,23 +494,35 @@ namespace kurlyk {
                 const std::string &content,
                 long specific_rate_limit_id,
                 HttpResponseCallback callback) {
-#           if __cplusplus >= 201402L
-            std::unique_ptr<HttpRequest> request_ptr = std::make_unique<HttpRequest>(m_request);
-#           else
-            std::unique_ptr<HttpRequest> request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest(m_request));
-#           endif
-            request_ptr->method = method;
-            request_ptr->set_url(m_host, path, query);
-            request_ptr->headers.insert(headers.begin(), headers.end());
-            request_ptr->content = content;
+            return request(
+                method,
+                path,
+                query,
+                headers,
+                content,
+                HttpRequestManager::get_instance().get_rate_limit(specific_rate_limit_id),
+                std::move(callback));
+        }
 
-            // Set the specific rate limit ID for this request
-            if (is_specific_limit_owned) {
-                HttpRequestManager::get_instance().remove_limit(request_ptr->specific_rate_limit_id);
-            }
-            request_ptr->specific_rate_limit_id = specific_rate_limit_id;
-            is_specific_limit_owned = false;
-
+        /// \brief Sends an HTTP request with a temporary specific rate limit.
+        /// \param method HTTP method, e.g. "GET" or "POST".
+        /// \param path URL path for the request.
+        /// \param query Query parameters.
+        /// \param headers Additional HTTP headers.
+        /// \param content Request body content.
+        /// \param specific_rate_limit Specific rate-limit handle applied only to this request.
+        /// \param callback Callback invoked when the request completes.
+        /// \return True if the request was accepted into the queue.
+        bool request(
+                const std::string &method,
+                const std::string& path,
+                const QueryParams &query,
+                const Headers &headers,
+                const std::string &content,
+                const HttpRateLimitHandlePtr& specific_rate_limit,
+                HttpResponseCallback callback) {
+            auto request_ptr = make_request(method, path, query, headers, content);
+            request_ptr->specific_rate_limit = specific_rate_limit;
             return request(std::move(request_ptr), std::move(callback));
         }
 
@@ -484,13 +556,14 @@ namespace kurlyk {
             return request("POST", path, query, headers, content, std::move(callback));
         }
 
-        /// \brief Sends a GET request with a specific rate limit ID.
+        /// \brief Sends a GET request with a temporary specific rate limit found by ID.
         /// \param path The URL path for the request.
         /// \param query The query arguments.
         /// \param headers The HTTP headers.
-        /// \param specific_rate_limit_id The specific rate limit ID to be applied to this request.
+        /// \param specific_rate_limit_id ID of a registered rate limit.
         /// \param callback The callback function to be called when the request is completed.
         /// \return true if the request was successfully added to the RequestManager; false otherwise.
+        /// \note If the ID is not found, the request is submitted without an additional specific limit.
         bool get(
                 const std::string& path,
                 const QueryParams& query,
@@ -500,14 +573,31 @@ namespace kurlyk {
             return request("GET", path, query, headers, std::string(), specific_rate_limit_id, std::move(callback));
         }
 
-        /// \brief Sends a POST request with a specific rate limit ID.
+        /// \brief Sends a GET request with a temporary specific rate limit.
+        /// \param path URL path for the request.
+        /// \param query Query parameters.
+        /// \param headers Additional HTTP headers.
+        /// \param specific_rate_limit Specific rate-limit handle applied only to this request.
+        /// \param callback Callback invoked when the request completes.
+        /// \return True if the request was accepted into the queue.
+        bool get(
+                const std::string& path,
+                const QueryParams& query,
+                const Headers& headers,
+                const HttpRateLimitHandlePtr& specific_rate_limit,
+                HttpResponseCallback callback) {
+            return request("GET", path, query, headers, std::string(), specific_rate_limit, std::move(callback));
+        }
+
+        /// \brief Sends a POST request with a temporary specific rate limit found by ID.
         /// \param path The URL path for the request.
         /// \param query The query arguments.
         /// \param headers The HTTP headers.
         /// \param content The request body content.
-        /// \param specific_rate_limit_id The specific rate limit ID to be applied to this request.
+        /// \param specific_rate_limit_id ID of a registered rate limit.
         /// \param callback The callback function to be called when the request is completed.
         /// \return true if the request was successfully added to the RequestManager; false otherwise.
+        /// \note If the ID is not found, the request is submitted without an additional specific limit.
         bool post(
                 const std::string& path,
                 const QueryParams& query,
@@ -516,6 +606,24 @@ namespace kurlyk {
                 long specific_rate_limit_id,
                 HttpResponseCallback callback) {
             return request("POST", path, query, headers, content, specific_rate_limit_id, std::move(callback));
+        }
+
+        /// \brief Sends a POST request with a temporary specific rate limit.
+        /// \param path URL path for the request.
+        /// \param query Query parameters.
+        /// \param headers Additional HTTP headers.
+        /// \param content Request body content.
+        /// \param specific_rate_limit Specific rate-limit handle applied only to this request.
+        /// \param callback Callback invoked when the request completes.
+        /// \return True if the request was accepted into the queue.
+        bool post(
+                const std::string& path,
+                const QueryParams& query,
+                const Headers& headers,
+                const std::string& content,
+                const HttpRateLimitHandlePtr& specific_rate_limit,
+                HttpResponseCallback callback) {
+            return request("POST", path, query, headers, content, specific_rate_limit, std::move(callback));
         }
 
         /// \brief Sends an HTTP request with a specified method, path, and parameters, and returns a future with the response.
@@ -531,37 +639,18 @@ namespace kurlyk {
                 const QueryParams& query,
                 const Headers& headers,
                 const std::string& content) {
-#           if __cplusplus >= 201402L
-            auto request_ptr = std::make_unique<HttpRequest>(m_request);
-#           else
-            auto request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest(m_request));
-#           endif
-            request_ptr->method = method;
-            request_ptr->set_url(m_host, path, query);
-            request_ptr->headers.insert(headers.begin(), headers.end());
-            request_ptr->content = content;
-
-            auto promise = std::make_shared<std::promise<HttpResponsePtr>>();
-            auto future = promise->get_future();
-
-            HttpResponseCallback callback = [promise](HttpResponsePtr response) {
-                safe_set_response(promise, std::move(response));
-            };
-
-            safe_submit_request(
-                promise, std::move(request_ptr), std::move(callback));
-
-            return future;
+            return submit_future_request(make_request(method, path, query, headers, content));
         }
 
-        /// \brief Sends an HTTP request with a specified method, path, specific rate limit ID and parameters, and returns a future with the response.
+        /// \brief Sends an HTTP request with a temporary specific rate limit found by ID and returns a future with the response.
         /// \param method The HTTP method (e.g., "GET", "POST").
         /// \param path The URL path for the request.
         /// \param query The query arguments.
         /// \param headers The HTTP headers.
         /// \param content The request body content.
-        /// \param specific_rate_limit_id The specific rate limit ID to be applied to this request.
+        /// \param specific_rate_limit_id ID of a registered rate limit.
         /// \return A future containing the HttpResponsePtr object.
+        /// \note If the ID is not found, the request is submitted without an additional specific limit.
         std::future<HttpResponsePtr> request(
                 const std::string& method,
                 const std::string& path,
@@ -569,34 +658,33 @@ namespace kurlyk {
                 const Headers& headers,
                 const std::string& content,
                 long specific_rate_limit_id) {
-#           if __cplusplus >= 201402L
-            auto request_ptr = std::make_unique<HttpRequest>(m_request);
-#           else
-            auto request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest(m_request));
-#           endif
-            request_ptr->method = method;
-            request_ptr->set_url(m_host, path, query);
-            request_ptr->headers.insert(headers.begin(), headers.end());
-            request_ptr->content = content;
+            return request(
+                method,
+                path,
+                query,
+                headers,
+                content,
+                HttpRequestManager::get_instance().get_rate_limit(specific_rate_limit_id));
+        }
 
-            // Set the specific rate limit ID for this request
-            if (is_specific_limit_owned) {
-                HttpRequestManager::get_instance().remove_limit(request_ptr->specific_rate_limit_id);
-            }
-            request_ptr->specific_rate_limit_id = specific_rate_limit_id;
-            is_specific_limit_owned = false;
-
-            auto promise = std::make_shared<std::promise<HttpResponsePtr>>();
-            auto future = promise->get_future();
-
-            HttpResponseCallback callback = [promise](HttpResponsePtr response) {
-                safe_set_response(promise, std::move(response));
-            };
-
-            safe_submit_request(
-                promise, std::move(request_ptr), std::move(callback));
-
-            return future;
+        /// \brief Sends an HTTP request with a temporary specific rate limit and returns a future with the response.
+        /// \param method HTTP method, e.g. "GET" or "POST".
+        /// \param path URL path for the request.
+        /// \param query Query parameters.
+        /// \param headers Additional HTTP headers.
+        /// \param content Request body content.
+        /// \param specific_rate_limit Specific rate-limit handle applied only to this request.
+        /// \return A future containing the HttpResponsePtr object.
+        std::future<HttpResponsePtr> request(
+                const std::string& method,
+                const std::string& path,
+                const QueryParams& query,
+                const Headers& headers,
+                const std::string& content,
+                const HttpRateLimitHandlePtr& specific_rate_limit) {
+            auto request_ptr = make_request(method, path, query, headers, content);
+            request_ptr->specific_rate_limit = specific_rate_limit;
+            return submit_future_request(std::move(request_ptr));
         }
 
         /// \brief Sends a GET request asynchronously and returns a future with the response.
@@ -625,12 +713,13 @@ namespace kurlyk {
             return request("POST", path, query, headers, content);
         }
 
-        /// \brief Sends an asynchronous GET request with a specific rate limit ID and returns a future with the response.
+        /// \brief Sends an asynchronous GET request with a temporary specific rate limit found by ID.
         /// \param path The URL path for the request.
         /// \param query The query arguments.
         /// \param headers The HTTP headers.
-        /// \param specific_rate_limit_id The specific rate limit ID to be applied to this request.
+        /// \param specific_rate_limit_id ID of a registered rate limit.
         /// \return A future containing the HttpResponsePtr object.
+        /// \note If the ID is not found, the request is submitted without an additional specific limit.
         std::future<HttpResponsePtr> get(
                 const std::string& path,
                 const QueryParams& query,
@@ -639,13 +728,14 @@ namespace kurlyk {
             return request("GET", path, query, headers, std::string(), specific_rate_limit_id);
         }
 
-        /// \brief Sends an asynchronous POST request with a specific rate limit ID and returns a future with the response.
+        /// \brief Sends an asynchronous POST request with a temporary specific rate limit found by ID.
         /// \param path The URL path for the request.
         /// \param query The query arguments.
         /// \param headers The HTTP headers.
         /// \param content The request body content.
-        /// \param specific_rate_limit_id The specific rate limit ID to be applied to this request.
+        /// \param specific_rate_limit_id ID of a registered rate limit.
         /// \return A future containing the HttpResponsePtr object.
+        /// \note If the ID is not found, the request is submitted without an additional specific limit.
         std::future<HttpResponsePtr> post(
                 const std::string& path,
                 const QueryParams& query,
@@ -655,11 +745,41 @@ namespace kurlyk {
             return request("POST", path, query, headers, content, specific_rate_limit_id);
         }
 
+        /// \brief Sends an asynchronous GET request with a temporary specific rate limit.
+        /// \param path URL path for the request.
+        /// \param query Query parameters.
+        /// \param headers Additional HTTP headers.
+        /// \param specific_rate_limit Specific rate-limit handle applied only to this request.
+        /// \return A future containing the HttpResponsePtr object.
+        std::future<HttpResponsePtr> get(
+                const std::string& path,
+                const QueryParams& query,
+                const Headers& headers,
+                const HttpRateLimitHandlePtr& specific_rate_limit) {
+            return request("GET", path, query, headers, std::string(), specific_rate_limit);
+        }
+
+        /// \brief Sends an asynchronous POST request with a temporary specific rate limit.
+        /// \param path URL path for the request.
+        /// \param query Query parameters.
+        /// \param headers Additional HTTP headers.
+        /// \param content Request body content.
+        /// \param specific_rate_limit Specific rate-limit handle applied only to this request.
+        /// \return A future containing the HttpResponsePtr object.
+        std::future<HttpResponsePtr> post(
+                const std::string& path,
+                const QueryParams& query,
+                const Headers& headers,
+                const std::string& content,
+                const HttpRateLimitHandlePtr& specific_rate_limit) {
+            return request("POST", path, query, headers, content, specific_rate_limit);
+        }
+
     private:
-        HttpRequest m_request;  ///< The request object used for configuring and sending requests.
+        HttpRequest m_request;  ///< Request defaults shared by requests created by this client.
         std::string m_host;     ///< The base host URL for the HTTP client.
-        bool is_general_limit_owned = false; ///< Flag indicating if the client owns the general rate limit.
-        bool is_specific_limit_owned = false; ///< Flag indicating if the client owns the specific rate limit.
+        bool m_owns_general_rate_limit = false; ///< Flag indicating if the client owns the general rate limit.
+        bool m_owns_specific_rate_limit = false; ///< Flag indicating if the client owns the specific rate limit.
 
         /// \brief Adds the request to the request manager and notifies the worker to process it.
         /// \param request_ptr The HTTP request to be sent.
@@ -669,6 +789,43 @@ namespace kurlyk {
                 std::unique_ptr<HttpRequest> request_ptr,
                 HttpResponseCallback callback) {
             return submit_request(std::move(request_ptr), std::move(callback)).accepted;
+        }
+
+        void set_header(const std::string& name, const std::string& value) {
+            m_request.headers.erase(name);
+            m_request.headers.emplace(name, value);
+        }
+
+        std::unique_ptr<HttpRequest> make_request(
+                const std::string& method,
+                const std::string& path,
+                const QueryParams& query,
+                const Headers& headers,
+                const std::string& content) const {
+#           if __cplusplus >= 201402L
+            auto request_ptr = std::make_unique<HttpRequest>(m_request);
+#           else
+            auto request_ptr = std::unique_ptr<HttpRequest>(new HttpRequest(m_request));
+#           endif
+
+            request_ptr->request_id = HttpRequestManager::get_instance().generate_request_id();
+            request_ptr->method = method;
+            request_ptr->set_url(m_host, path, query);
+            request_ptr->headers.insert(headers.begin(), headers.end());
+            request_ptr->content = content;
+            return request_ptr;
+        }
+
+        std::future<HttpResponsePtr> submit_future_request(std::unique_ptr<HttpRequest> request_ptr) {
+            auto promise = std::make_shared<std::promise<HttpResponsePtr>>();
+            auto future = promise->get_future();
+
+            HttpResponseCallback callback = [promise](HttpResponsePtr response) {
+                safe_set_response(promise, std::move(response));
+            };
+
+            safe_submit_request(promise, std::move(request_ptr), std::move(callback));
+            return future;
         }
 
         /// \brief Safely sets the response value on the given promise.
@@ -737,12 +894,11 @@ namespace kurlyk {
 
         /// \brief Ensures that the network worker and request manager are initialized.
         static void ensure_initialized() {
-            static bool is_initialized = false;
-            if (!is_initialized) {
-                is_initialized = true;
+            static std::once_flag once;
+            std::call_once(once, []() {
                 HttpRequestManager::get_instance();
                 core::NetworkWorker::get_instance().start(KURLYK_AUTO_INIT_USE_ASYNC);
-            }
+            });
         }
 
     }; // HttpClient

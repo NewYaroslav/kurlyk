@@ -92,11 +92,34 @@ auto [id, future] = kurlyk::http_get("https://httpbin.org/ip", {}, {});
 auto resp2 = future.get();
 \endcode
 
+\subsubsection http_cancellation Cancellation scopes
+Each HTTP request has a `request_id` for cancelling one concrete request and a
+`group_id` for cancelling related requests. `HttpClient` assigns one `group_id`
+to all requests created by that client, so `HttpClient::cancel_requests()`
+cancels the client's request group. Standalone and manually created requests can
+use `cancel_request_by_id(...)` or `cancel_requests_by_group_id(...)` directly.
+
+\subsubsection http_rate_limits HTTP rate limit lifetime
+HTTP rate limits are held through `HttpRateLimitHandlePtr`. Functions such as
+`create_rate_limit(...)`, `create_rate_limit_rps(...)` and
+`create_rate_limit_rpm(...)` return handles, and queued requests copy the handle
+they were assigned. Calling `remove_limit(id)` or `remove_limit(handle)` releases
+the manager-owned handle, but physical limit data stays alive while pending,
+active or retrying requests still hold copies.
+
+Prefer handle-based APIs such as `HttpClient::set_rate_limit_handle(...)`,
+`HttpClient::assign_rate_limit_handle(...)` and per-request overloads accepting
+`HttpRateLimitHandlePtr`. ID-based overloads are kept for legacy lookup usage;
+if the ID no longer has a manager-owned handle, the request is submitted without
+that additional specific limit.
+
 \subsubsection http_streaming Streaming response chunks
 Enable streaming when the caller needs body chunks before the transfer
-finishes, for example when proxying SSE responses. Chunk callbacks carry
-`stream_chunk == true` and `ready == false`; the final callback keeps the
-usual `ready == true` contract.
+finishes, for example when proxying SSE responses. Streaming can be enabled via
+standalone helper overloads, `HttpClient::set_streaming(true)`, or direct
+`HttpRequest::set_streaming(true)` / `HttpRequest::streaming` before
+`submit_http_request(...)`. Chunk callbacks carry `stream_chunk == true` and
+`ready == false`; the final callback keeps the usual `ready == true` contract.
 
 Use `stream_chunk` first to classify body chunk callbacks. A chunk callback
 is not a success marker; the final ready response remains authoritative for

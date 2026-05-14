@@ -147,6 +147,26 @@ jobs:
         shell: msys2 {0}
         run: ./build-${{ matrix.suite }}/ws_local_test.exe
 
+      - name: Run MinGW rate limit lifetime integration test
+        if: matrix.suite == 'mingw-integration'
+        shell: msys2 {0}
+        run: ./build-${{ matrix.suite }}/rate_limit_lifetime_test.exe
+
+      - name: Run MinGW request group cancellation integration test
+        if: matrix.suite == 'mingw-integration'
+        shell: msys2 {0}
+        run: ./build-${{ matrix.suite }}/request_group_cancel_test.exe
+
+      - name: Run MinGW HTTP client rate limit API integration test
+        if: matrix.suite == 'mingw-integration'
+        shell: msys2 {0}
+        run: ./build-${{ matrix.suite }}/http_client_rate_limit_api_test.exe
+
+      - name: Run MinGW sequential rate limit integration test
+        if: matrix.suite == 'mingw-integration'
+        shell: msys2 {0}
+        run: ./build-${{ matrix.suite }}/sequential_rate_limit_test.exe
+
       - name: Run MSVC integration test
         if: matrix.suite == 'msvc-integration'
         shell: pwsh
@@ -174,6 +194,50 @@ jobs:
         shell: pwsh
         run: |
           $exe = "build-${{ matrix.suite }}\Release\ws_local_test.exe"
+          if (-not (Test-Path $exe)) {
+            Write-Error "Executable not found: $exe"
+            exit 1
+          }
+          & $exe
+
+      - name: Run MSVC rate limit lifetime integration test
+        if: matrix.suite == 'msvc-integration'
+        shell: pwsh
+        run: |
+          $exe = "build-${{ matrix.suite }}\Release\rate_limit_lifetime_test.exe"
+          if (-not (Test-Path $exe)) {
+            Write-Error "Executable not found: $exe"
+            exit 1
+          }
+          & $exe
+
+      - name: Run MSVC request group cancellation integration test
+        if: matrix.suite == 'msvc-integration'
+        shell: pwsh
+        run: |
+          $exe = "build-${{ matrix.suite }}\Release\request_group_cancel_test.exe"
+          if (-not (Test-Path $exe)) {
+            Write-Error "Executable not found: $exe"
+            exit 1
+          }
+          & $exe
+
+      - name: Run MSVC HTTP client rate limit API integration test
+        if: matrix.suite == 'msvc-integration'
+        shell: pwsh
+        run: |
+          $exe = "build-${{ matrix.suite }}\Release\http_client_rate_limit_api_test.exe"
+          if (-not (Test-Path $exe)) {
+            Write-Error "Executable not found: $exe"
+            exit 1
+          }
+          & $exe
+
+      - name: Run MSVC sequential rate limit integration test
+        if: matrix.suite == 'msvc-integration'
+        shell: pwsh
+        run: |
+          $exe = "build-${{ matrix.suite }}\Release\sequential_rate_limit_test.exe"
           if (-not (Test-Path $exe)) {
             Write-Error "Executable not found: $exe"
             exit 1

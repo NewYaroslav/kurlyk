@@ -1,4 +1,5 @@
 #include <iostream>
+#define KURLYK_AUTO_INIT 0
 #include <kurlyk.hpp>
 
 void print_response(const kurlyk::HttpResponsePtr& response) {
@@ -12,6 +13,7 @@ void print_response(const kurlyk::HttpResponsePtr& response) {
 }
 
 int main() {
+    kurlyk::init(true);
     kurlyk::HttpClient client("https://httpbin.org");
 
     KURLYK_PRINT << "Sending GET request using HttpClient method..." << std::endl;

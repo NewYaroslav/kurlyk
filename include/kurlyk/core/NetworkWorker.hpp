@@ -8,6 +8,8 @@
 #define KURLYK_HANDLE_ERROR(e, msg) \
     ::kurlyk::core::NetworkWorker::get_instance().handle_error((e), (msg), __FILE__, __LINE__, __FUNCTION__)
 
+#include <thread>
+
 namespace kurlyk::core {
 
     /// \class NetworkWorker
@@ -85,6 +87,11 @@ namespace kurlyk::core {
             }
         }
 
+        /// \brief Returns true if the calling thread is the worker thread.
+        bool is_worker_thread() const {
+            return std::this_thread::get_id() == m_worker_thread_id;
+        }
+
         /// \brief Adds a task to the queue and notifies the worker thread.
         /// \param task A function or lambda with no arguments to be executed by the worker.
         void add_task(std::function<void()> task) {
@@ -118,8 +125,8 @@ namespace kurlyk::core {
         /// Signals the condition variable to wake up the worker thread if it is waiting, allowing tasks to be processed.
         void notify() {
             std::lock_guard<std::mutex> locker(m_notify_mutex);
-            m_notify_condition.notify_one();
             m_notify = true;
+            m_notify_condition.notify_one();
         }
 
         /// \brief Starts the worker thread for asynchronous task processing.
@@ -137,6 +144,7 @@ namespace kurlyk::core {
             m_future = std::async(
                     std::launch::async,
                     [this] {
+                m_worker_thread_id = std::this_thread::get_id();
                 for (;;) {
                     std::unique_lock<std::mutex> locker(m_notify_mutex);
                     m_notify_condition.wait(locker, [this]() { return m_notify; });
@@ -213,9 +221,10 @@ namespace kurlyk::core {
     private:
         std::shared_future<void>    m_future;                           ///< Future for managing asynchronous worker execution.
         std::atomic<bool>           m_shutdown = ATOMIC_VAR_INIT(false);///< Flag indicating if shutdown has been requested.
+        std::thread::id             m_worker_thread_id;                 ///< ID of the async worker thread, if started.
         std::mutex                  m_notify_mutex;                     ///< Mutex for managing worker notifications.
         std::condition_variable     m_notify_condition;                 ///< Condition variable for notifying the worker.
-        bool                        m_notify = false;                   ///< Flag indicating whether a notification is pending.
+        bool                        m_notify = false;                   ///< Flag indicating whether a notification is pending. Access is always guarded by m_notify_mutex; atomic is unnecessary because the mutex provides the happens-before relation.
         std::mutex                  m_is_worker_started_mutex;          ///< Mutex to control worker thread initialization.
         bool                        m_is_worker_started = false;        ///< Flag indicating if the worker thread is started.
         mutable std::mutex          m_tasks_list_mutex;                 ///< Mutex for protecting access to the task list.

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <unordered_map>
+#define KURLYK_AUTO_INIT 0
 #include <kurlyk.hpp>
 
 /// \brief Reads proxy configuration from a text file.

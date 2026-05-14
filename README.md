@@ -12,65 +12,389 @@
 
 [README на русском](README-RU.md)
 
-## Description
+## What it is
 
-**kurlyk** is another library implementing HTTP and WebSocket clients for C++. Built as a wrapper around `curl` and `Simple-WebSocket-Server`, it provides a simplified interface for working with HTTP and WebSocket connections in C++ applications. The library supports asynchronous HTTP requests with rate limiting and retry mechanisms, as well as WebSocket connectivity.
+**kurlyk** is yet another library implementing HTTP and WebSocket clients for C++. Built as a wrapper around `curl` and `Simple-WebSocket-Server`, it provides a simplified interface for working with HTTP and WebSocket in C++ applications. It supports asynchronous HTTP requests with rate limiting and retry attempts, as well as WebSocket connections.
 
-If you’re not satisfied with other libraries like *easyhttp-cpp, curl_request, curlpp-async, curlwrapper, curl-Easy-cpp, curlpp11, easycurl, curl-cpp-wrapper…* then you might want to give `kurlyk` a try.
+If, for some reason, other libraries such as *easyhttp-cpp, curl_request, curlpp-async, curlwrapper, curl-Easy-cpp, curlpp11, easycurl, curl-cpp-wrapper…* did not work for you, `kurlyk` may be worth trying.
 
-### Features
+## Features
 
-- Asynchronous HTTP and WebSocket requests
-- Optional background worker or synchronous processing
-- Rate limiting support to prevent network overload
-- Optional bounded queue admission to protect HTTP and WebSocket producers from unbounded growth
-- Automatic reconnection with customizable parameters
-- Proxy servers, custom headers, cookies and timeouts
-- Simple and intuitive class-based interface
-- Designed for use in small applications
-- Supports C++11 and newer toolchains
+- Asynchronous HTTP and WebSocket requests.
+- Background worker or synchronous processing via `kurlyk::process()`.
+- HTTP callback API and `std::future` API.
+- Rate limits, retry, proxy, custom headers, cookies, and timeouts.
+- Streaming HTTP responses with a callback for each chunk.
+- WebSocket events, message sending, and automatic reconnection.
+- Bounded admission/backpressure for the HTTP pending queue and WebSocket send queue.
+- Support for C++11 and newer toolchains.
 
-### CI coverage
+## Quick start
 
-| Platform | Coverage |
-|----------|----------|
-| Windows | MinGW and MSVC integration builds with fallback dependencies, HTTP backpressure regression, and local WebSocket integration coverage. |
-| Windows extras | ODR checks for singleton and auto-initialization headers. |
-| Linux | C++11/C++17 header smoke test with HTTP/WebSocket disabled. |
-| macOS | C++11/C++17 header smoke test with HTTP/WebSocket disabled. |
-
-## Backpressure
-
-Kurlyk now separates two forms of flow control:
-
-- Rate limiting slows dispatch to the network backend.
-- Backpressure limits how much work is accepted into selected queues.
-
-Current bounded queues:
-
-- HTTP uses a global pending-request queue limit configured with `kurlyk::set_max_pending_requests(...)`.
-- WebSocket uses a per-client outbound send queue limit configured with `WebSocketClient::set_max_send_queue_size(...)`.
-- A value of `0` keeps the queue unbounded.
-
-Admission helpers:
-
-- `kurlyk::SubmitResult`
-- `kurlyk::submit_http_request(...)`
-- `IWebSocketSender::submit_message(...)`
-- `IWebSocketSender::submit_close(...)`
-- `WebSocketClient::submit_message(...)`
-- `WebSocketClient::submit_close(...)`
-
-Compatibility notes:
-
-- Existing `bool`-returning APIs are still available as wrappers.
-- HTTP future overloads now become ready immediately on admission reject and return an `HttpResponse` with `error_code` instead of throwing a `runtime_error`.
-- Backpressure in this pass does not bound `NetworkWorker`, WebSocket FSM queues, or stored event queues.
-
-### HTTP backpressure example
+### Minimal HTTP GET
 
 ```cpp
-kurlyk::init(true);
+#include <kurlyk.hpp>
+#include <iostream>
+
+int main() {
+    kurlyk::HttpClient client("https://httpbin.org");
+
+    auto response = client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers()).get();
+
+    if (response && response->ready) {
+        std::cout << response->content << std::endl;
+    }
+
+    return 0;
+}
+```
+
+For C++11/14 or manual lifecycle management, use `kurlyk::init()` / `kurlyk::deinit()`.
+
+### Minimal WebSocket echo
+
+```cpp
+#include <kurlyk.hpp>
+#include <iostream>
+#include <thread>
+#include <chrono>
+
+int main() {
+    kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
+
+    client.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> event) {
+        if (event->event_type == kurlyk::WebSocketEventType::WS_OPEN) {
+            event->sender->send_message("Hello");
+        }
+
+        if (event->event_type == kurlyk::WebSocketEventType::WS_MESSAGE) {
+            std::cout << event->message << std::endl;
+        }
+    });
+
+    client.connect();
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+    client.disconnect_and_wait();
+
+    return 0;
+}
+```
+
+## Building examples
+
+Examples are located in the `examples` folder. Build all repository targets with CMake:
+
+```powershell
+cmake -S . -B build-examples -DKURLYK_BUILD_EXAMPLES=ON
+cmake --build build-examples --config Release
+```
+
+For MinGW, you can select the generator and compilers explicitly:
+
+```powershell
+cmake -S . -B build-examples-mingw -G "MinGW Makefiles" `
+    -DCMAKE_C_COMPILER=gcc `
+    -DCMAKE_CXX_COMPILER=g++ `
+    -DKURLYK_BUILD_EXAMPLES=ON
+cmake --build build-examples-mingw --config Release
+```
+
+For MinGW, dependencies are already available in the repository as git submodules in the `libs` folder, and the fallback CMake options below can build missing dependencies automatically.
+
+## Basic HTTP usage
+
+The HTTP client can be used through callbacks, futures, or low-level helpers. With auto-init enabled by default, you can create `HttpClient` without manual `kurlyk::init()` / `kurlyk::deinit()` calls; manual lifecycle management is needed for C++11/14, synchronous mode, or explicit worker control.
+
+### Shared helper for examples
+
+```cpp
+#include <kurlyk.hpp>
+#include <iostream>
+
+void print_response(const kurlyk::HttpResponsePtr& response) {
+    if (!response) {
+        KURLYK_PRINT << "response is null" << std::endl;
+        return;
+    }
+
+    KURLYK_PRINT
+        << "ready: " << std::boolalpha << response->ready << std::endl
+        << "response: " << response->content << std::endl
+        << "error_code: " << response->error_code.message() << std::endl
+        << "status_code: " << response->status_code << std::endl
+        << "----------------------------------------" << std::endl;
+}
+```
+
+### Callback API
+
+Callback overloads of `get(...)`, `post(...)`, and `request(...)` return `bool`: `true` when the request is accepted into the queue and `false` when it is rejected during admission. The callback itself receives `kurlyk::HttpResponsePtr` and is not limited to the final response: in streaming mode it is called for each chunk with `stream_chunk == true`, and during retry it may receive an intermediate non-ready response for a failed attempt. The final result is identified by `response && response->ready`.
+
+```cpp
+int main() {
+    kurlyk::HttpClient client("https://httpbin.org");
+
+    client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers(),
+        [](const kurlyk::HttpResponsePtr response) {
+            print_response(response);
+        });
+
+    client.post("/post", kurlyk::QueryParams(), {{"Content-Type", "application/json"}},
+        "{\"text\":\"Sample POST Content\"}",
+        [](const kurlyk::HttpResponsePtr response) {
+            print_response(response);
+        });
+
+    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
+    std::cin.get();
+    return 0;
+}
+```
+
+### Future API
+
+If a request is rejected before it enters the pending queue, the future becomes ready immediately and returns an `HttpResponse` with `error_code = QueueLimitExceeded` or `ShuttingDown`.
+
+```cpp
+int main() {
+    kurlyk::HttpClient client("https://httpbin.org");
+
+    auto future_response = client.get("/get", kurlyk::QueryParams{{"param", "value"}}, kurlyk::Headers());
+    print_response(future_response.get());
+
+    auto future_post = client.post("/post", kurlyk::QueryParams(),
+        kurlyk::Headers{{"Header", "Value"}}, "Async POST Content");
+    print_response(future_post.get());
+
+    return 0;
+}
+```
+
+### Proxy
+
+```cpp
+int main() {
+    kurlyk::HttpClient client("https://httpbin.org");
+
+    client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::HTTP);
+
+    client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers(),
+        [](const kurlyk::HttpResponsePtr response) {
+            print_response(response);
+        });
+
+    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
+    std::cin.get();
+    return 0;
+}
+```
+
+### Low-level helpers
+
+Low-level helpers are useful when you need the ID of a concrete request or direct access to the standalone HTTP API.
+
+```cpp
+int main() {
+    const uint64_t request_id = kurlyk::http_get(
+        "https://httpbin.org/ip",
+        kurlyk::QueryParams(),
+        kurlyk::Headers(),
+        [](const kurlyk::HttpResponsePtr response) {
+            print_response(response);
+        });
+
+    KURLYK_PRINT << "Request id: " << request_id << std::endl;
+    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
+    std::cin.get();
+
+    kurlyk::cancel_request_by_id(request_id).wait();
+    return 0;
+}
+```
+
+```cpp
+int main() {
+    auto result = kurlyk::http_get(
+        "https://httpbin.org/ip",
+        kurlyk::QueryParams(),
+        kurlyk::Headers());
+
+    KURLYK_PRINT << "Request id: " << result.first << std::endl;
+    print_response(result.second.get());
+
+    return 0;
+}
+```
+
+## Basic WebSocket usage
+
+`WebSocketClient` connects to a server, reports events through `on_event(...)`, and lets you send messages through the sender from an event or through the client itself. For a simple scenario, handle `WS_OPEN`, `WS_MESSAGE`, `WS_CLOSE`, and `WS_ERROR`.
+
+### Connecting and handling events
+
+```cpp
+#include <kurlyk.hpp>
+#include <thread>
+#include <chrono>
+
+int main() {
+    kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
+
+    client.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> event) {
+        switch (event->event_type) {
+            case kurlyk::WebSocketEventType::WS_OPEN:
+                KURLYK_PRINT << "Connection established" << std::endl;
+                event->sender->send_message("Hello, WebSocket!");
+                break;
+
+            case kurlyk::WebSocketEventType::WS_MESSAGE:
+                KURLYK_PRINT << "Message received: " << event->message << std::endl;
+                break;
+
+            case kurlyk::WebSocketEventType::WS_CLOSE:
+                KURLYK_PRINT << "Connection closed: " << event->message
+                             << "; Status code: " << event->status_code << std::endl;
+                break;
+
+            case kurlyk::WebSocketEventType::WS_ERROR:
+                KURLYK_PRINT << "Error: " << event->error_code.message() << std::endl;
+                break;
+        }
+    });
+
+    client.connect();
+    std::this_thread::sleep_for(std::chrono::seconds(10));
+    client.disconnect_and_wait();
+    return 0;
+}
+```
+
+### Sending messages
+
+`send_message(...)` returns `bool` and fits simple code. `submit_message(...)` returns `SubmitResult` and lets you distinguish successful queue admission from an admission reject.
+
+```cpp
+client.send_message("Hello");
+
+kurlyk::SubmitResult submit = client.submit_message(
+    "Hello with admission check",
+    0,
+    [](const std::error_code& ec) {
+        if (ec) {
+            std::cout << "Send failed: " << ec.message() << std::endl;
+        }
+    });
+
+if (!submit) {
+    std::cout << "WebSocket submit rejected: " << submit.error_code.message() << std::endl;
+}
+```
+
+### Limiting the send queue
+
+To protect the producer, you can limit the size of the outbound WebSocket send/close queue. A value of `0` means the queue is unbounded.
+
+```cpp
+kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
+client.set_max_send_queue_size(32);
+```
+
+## Initialization
+
+In C++17+, auto-initialization is available by default, so simple examples can create `HttpClient` or `WebSocketClient` immediately. For C++11/14 or manual mode, disable auto init and call `init()` / `deinit()` yourself.
+
+```cpp
+#define KURLYK_AUTO_INIT 0
+#include <kurlyk.hpp>
+
+int main() {
+    kurlyk::init(true);
+    kurlyk::HttpClient client("https://httpbin.org");
+    kurlyk::deinit();
+    return 0;
+}
+```
+
+`kurlyk::deinit()` is the normal cleanup call for both asynchronous `init(true)` and synchronous `init(false)` modes. `kurlyk::shutdown()` remains available for explicit manager cleanup/reset scenarios, but normal manual lifetime management should use the `init()` / `deinit()` pair.
+
+## Advanced features
+
+### Rate limits
+
+A rate limit controls how quickly HTTP requests are released to the network backend. For a simple per-client speed limit, use `set_rate_limit_rps(...)` or `set_rate_limit_rpm(...)`.
+
+```cpp
+kurlyk::HttpClient client("https://api.example.com");
+client.set_rate_limit_rps(1);
+```
+
+To share one limit between multiple clients, use `HttpRateLimitHandlePtr`:
+
+```cpp
+auto limit = kurlyk::create_rate_limit_rps(5);
+
+kurlyk::HttpClient client_a("https://api.example.com");
+kurlyk::HttpClient client_b("https://api.example.com");
+
+client_a.set_rate_limit_handle(limit);
+client_b.set_rate_limit_handle(limit);
+```
+
+`HttpRateLimitHandlePtr` keeps the physical limit data alive while at least one handle copy exists. Pending, active, and retrying requests copy their assigned handles, so `remove_limit(id)` or `remove_limit(handle)` only releases the manager-owned reference and does not invalidate already queued requests.
+
+Prefer handle-based APIs for new code:
+
+- `HttpClient::set_rate_limit_handle(...)`
+- `HttpClient::assign_rate_limit_handle(...)`
+- per-request overloads that accept `HttpRateLimitHandlePtr`
+
+ID-based APIs such as `set_rate_limit_id(...)` and per-request `long specific_rate_limit_id` overloads remain legacy lookup helpers. If the manager-owned handle has already been removed, lookup by ID returns an empty handle and the request is submitted without that additional specific limit.
+
+### HTTP request cancellation
+
+HTTP requests can be cancelled by the ID of one concrete request or by the ID of a related request group. `HttpClient` assigns one `group_id` to all requests created by that client, so `HttpClient::cancel_requests()` cancels the client's request group.
+
+```cpp
+uint64_t request_id = kurlyk::http_get(
+    "https://httpbin.org/delay/5",
+    kurlyk::QueryParams(),
+    kurlyk::Headers(),
+    [](kurlyk::HttpResponsePtr response) {
+        print_response(response);
+    });
+
+kurlyk::cancel_request_by_id(request_id).wait();
+```
+
+HTTP requests have two identifiers:
+
+- `request_id` is the ID of one concrete request and is used by `cancel_request_by_id(...)`.
+- `group_id` is the ID of a related request group and is used by `cancel_requests_by_group_id(...)`.
+
+For manually constructed low-level requests, set `group_id` explicitly if you want to cancel a group:
+
+```cpp
+const uint64_t group_id = kurlyk::generate_group_id();
+
+std::unique_ptr<kurlyk::HttpRequest> request(new kurlyk::HttpRequest());
+request->request_id = kurlyk::generate_request_id();
+request->group_id = group_id;
+request->method = "GET";
+request->set_url("https://httpbin.org", "/delay/5");
+
+kurlyk::submit_http_request(std::move(request), [](kurlyk::HttpResponsePtr response) {
+    print_response(response);
+});
+
+kurlyk::cancel_requests_by_group_id(group_id).wait();
+```
+
+### Backpressure
+
+A rate limit slows request dispatch. Backpressure limits how many requests or messages are accepted into a queue at all.
+
+```cpp
 kurlyk::set_max_pending_requests(64);
 
 std::unique_ptr<kurlyk::HttpRequest> request(new kurlyk::HttpRequest());
@@ -91,263 +415,33 @@ if (!submit) {
 }
 ```
 
-### WebSocket backpressure example
+Current bounded queues:
 
-```cpp
-kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
-client.set_max_send_queue_size(32);
+- HTTP uses a global pending-queue limit configured with `kurlyk::set_max_pending_requests(...)`.
+- WebSocket uses a per-client outbound send/close queue limit configured with `WebSocketClient::set_max_send_queue_size(...)`.
+- A value of `0` means an unbounded queue.
 
-kurlyk::SubmitResult submit = client.submit_message(
-    "Hello with admission check",
-    0,
-    [](const std::error_code& ec) {
-        if (ec) {
-            std::cout << "Send failed: " << ec.message() << std::endl;
-        }
-    });
+Public admission helpers:
 
-if (!submit) {
-    std::cout << "WebSocket submit rejected: " << submit.error_code.message() << std::endl;
-}
-```
+- `kurlyk::SubmitResult`
+- `kurlyk::submit_http_request(...)`
+- `IWebSocketSender::submit_message(...)`
+- `IWebSocketSender::submit_close(...)`
+- `WebSocketClient::submit_message(...)`
+- `WebSocketClient::submit_close(...)`
 
-## Usage Examples
+Compatibility notes:
 
-Examples are located in the `examples` folder. Below are some basic usage examples.
+- older `bool` APIs remain available as wrappers;
+- HTTP future overloads become ready immediately on admission reject and return an `HttpResponse` with `error_code` instead of throwing `runtime_error`;
+- this pass does not bound `NetworkWorker`, WebSocket FSM queues, or accumulated event queues.
 
-Build all repository examples with CMake:
+### Streaming
 
-```powershell
-cmake -S . -B build-examples -DKURLYK_BUILD_EXAMPLES=ON
-cmake --build build-examples --config Release
-```
-
-### WebSocket Client Example
-
-This example shows how to connect to a WebSocket server, send a message, and handle various events (connection open, message received, connection close, and error). The default C++17 auto-initialization path is used here; for C++11/14 define `KURLYK_AUTO_INIT=0` and call `kurlyk::init()` / `kurlyk::deinit()` explicitly.
-
-```cpp
-#include <kurlyk.hpp>
-#include <thread>
-#include <chrono>
-
-int main() {
-    // Create a WebSocket client with the specified server URL
-    kurlyk::WebSocketClient client("wss://echo-websocket.fly.dev/");
-
-    // Set up WebSocket event handler
-    client.on_event([](std::unique_ptr<kurlyk::WebSocketEventData> event) {
-        switch (event->event_type) {
-            case kurlyk::WebSocketEventType::WS_OPEN:
-                KURLYK_PRINT << "Connection established" << std::endl;
-
-                KURLYK_PRINT << "HTTP Version: " << event->sender->get_http_version() << std::endl;
-                KURLYK_PRINT << "Headers:" << std::endl;
-                for (const auto& header : event->sender->get_headers()) {
-                    KURLYK_PRINT << header.first << ": " << header.second << std::endl;
-                }
-
-                event->sender->send_message("Hello, WebSocket!", 0, [](const std::error_code& ec) {
-                    if (ec) {
-                        KURLYK_PRINT << "Failed to send message: " << ec.message() << std::endl;
-                    } else {
-                        KURLYK_PRINT << "Message sent successfully" << std::endl;
-                    }
-                });
-                break;
-
-            case kurlyk::WebSocketEventType::WS_MESSAGE:
-                KURLYK_PRINT << "Message received: " << event->message << std::endl;
-                event->sender->send_message("Hello again!");
-                break;
-
-            case kurlyk::WebSocketEventType::WS_CLOSE:
-                KURLYK_PRINT << "Connection closed: " << event->message
-                             << "; Status code: " << event->status_code << std::endl;
-                break;
-
-            case kurlyk::WebSocketEventType::WS_ERROR:
-                KURLYK_PRINT << "Error: " << event->error_code.message() << std::endl;
-                break;
-        }
-    });
-
-    KURLYK_PRINT << "Connecting..." << std::endl;
-    client.connect();
-
-    std::this_thread::sleep_for(std::chrono::seconds(10));
-
-    KURLYK_PRINT << "Disconnecting..." << std::endl;
-    client.disconnect_and_wait();
-
-    KURLYK_PRINT << "End of execution" << std::endl;
-    return 0;
-}
-```
-
-### HTTP Client Examples
-
-These examples demonstrate how to use the kurlyk HTTP client to perform different requests and handle responses. They disable auto-init because they call `kurlyk::init()` and `kurlyk::deinit()` manually.
-
-#### HTTP callback threading
-
-HTTP callbacks run on the `NetworkWorker` processing path. With asynchronous
-startup this is the background worker thread; with synchronous startup it is
-the thread that calls `kurlyk::process()`. Keep callbacks short and hand work
-off to application-owned queues or threads when needed, because blocking a
-callback delays other HTTP/WebSocket work handled by the same worker.
-
-#### Shared helper used by the examples
-
-```cpp
-#define KURLYK_AUTO_INIT 0
-#include <kurlyk.hpp>
-#include <iostream>
-
-void print_response(const kurlyk::HttpResponsePtr& response) {
-    if (!response) {
-        KURLYK_PRINT << "response is null" << std::endl;
-        return;
-    }
-
-    KURLYK_PRINT
-        << "ready: " << std::boolalpha << response->ready << std::endl
-        << "response: " << response->content << std::endl
-        << "error_code: " << response->error_code.message() << std::endl
-        << "status_code: " << response->status_code << std::endl
-        << "----------------------------------------" << std::endl;
-}
-```
-
-#### Example 1: Performing GET and POST requests with response handlers
+Streaming lets you receive an HTTP body in parts instead of waiting for the whole response to finish. The callback is invoked for each chunk with `response->stream_chunk == true` and `response->ready == false`, and the last callback is the normal completed response with `ready == true`.
 
 ```cpp
 int main() {
-    kurlyk::init(true);
-    kurlyk::HttpClient client("https://httpbin.org");
-
-    client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers(),
-        [](const kurlyk::HttpResponsePtr response) {
-            print_response(response);
-        });
-
-    client.post("/post", kurlyk::QueryParams(), {{"Content-Type", "application/json"}},
-        "{\"text\":\"Sample POST Content\"}",
-        [](const kurlyk::HttpResponsePtr response) {
-            print_response(response);
-        });
-
-    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
-    std::cin.get();
-    kurlyk::deinit();
-    return 0;
-}
-```
-
-#### Example 2: Performing GET and POST requests with std::future
-
-If a request is rejected before it enters the pending queue, the returned future becomes ready immediately and yields an `HttpResponse` with `error_code` set to `QueueLimitExceeded` or `ShuttingDown`.
-
-```cpp
-int main() {
-    kurlyk::init(true);
-    kurlyk::HttpClient client("https://httpbin.org");
-
-    auto future_response = client.get("/get", kurlyk::QueryParams{{"param", "value"}}, kurlyk::Headers());
-    print_response(future_response.get());
-
-    auto future_post = client.post("/post", kurlyk::QueryParams(),
-        kurlyk::Headers{{"Header", "Value"}}, "Async POST Content");
-    print_response(future_post.get());
-
-    kurlyk::deinit();
-    return 0;
-}
-```
-
-#### Example 3: Setting up a proxy and sending a GET request
-
-```cpp
-int main() {
-    kurlyk::init(true);
-    kurlyk::HttpClient client("https://httpbin.org");
-
-    client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::HTTP);
-
-    client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers(),
-        [](const kurlyk::HttpResponsePtr response) {
-            print_response(response);
-        });
-
-    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
-    std::cin.get();
-    kurlyk::deinit();
-    return 0;
-}
-```
-
-#### Example 4: GET request using the `http_get` callback overload
-
-```cpp
-int main() {
-    kurlyk::init(true);
-
-    const uint64_t request_id = kurlyk::http_get(
-        "https://httpbin.org/ip",
-        kurlyk::QueryParams(),
-        kurlyk::Headers(),
-        [](const kurlyk::HttpResponsePtr response) {
-            print_response(response);
-        });
-
-    KURLYK_PRINT << "Request id: " << request_id << std::endl;
-    KURLYK_PRINT << "Press Enter to exit..." << std::endl;
-    std::cin.get();
-
-    kurlyk::cancel_request_by_id(request_id).wait();
-    kurlyk::deinit();
-    return 0;
-}
-```
-
-#### Example 5: GET request using the `http_get` future overload
-
-```cpp
-int main() {
-    kurlyk::init(true);
-
-    auto result = kurlyk::http_get(
-        "https://httpbin.org/ip",
-        kurlyk::QueryParams(),
-        kurlyk::Headers());
-
-    KURLYK_PRINT << "Request id: " << result.first << std::endl;
-    print_response(result.second.get());
-
-    kurlyk::deinit();
-    return 0;
-}
-```
-
-#### Example 6: Streaming response chunks
-
-When streaming is enabled, the callback is invoked for each received body chunk
-with `response->stream_chunk == true` and `response->ready == false`. The
-last callback remains the usual completed response with `ready == true`.
-Use `stream_chunk` first to classify body chunk callbacks. A chunk callback
-is not a success marker; the final ready response remains authoritative for
-the transfer result. `status_code` on a chunk contains the current HTTP status
-when libcurl has one, but it is not a completion marker. Non-ready callbacks
-with `stream_chunk == false` are reserved for non-final request states such
-as failed attempts before retry and may carry `error_code`.
-If at least one streaming chunk was emitted, kurlyk does not retry that
-transfer automatically, since the caller may already have forwarded bytes to a
-downstream client.
-
-```cpp
-int main() {
-    kurlyk::init(true);
-
     kurlyk::http_post(
         "https://api.example.com/v1/chat/completions",
         kurlyk::QueryParams(),
@@ -368,81 +462,85 @@ int main() {
         });
 
     std::cin.get();
-    kurlyk::deinit();
     return 0;
 }
 ```
 
-#### Example 7: Enabling streaming mode on `HttpClient`
-
-Use `HttpClient::set_streaming(true)` when the same client instance should
-emit chunk callbacks for requests built from its defaults. This is convenient
-for small proxy services that keep a long-lived configured upstream client.
+For requests created through `HttpClient`, enable streaming on the client:
 
 ```cpp
-int main() {
-    kurlyk::init(true);
-
-    kurlyk::HttpClient client("http://httpbin.org");
-    client.set_streaming(true);
-
-    client.get("/stream/5", kurlyk::QueryParams(), kurlyk::Headers(),
-        [](kurlyk::HttpResponsePtr response) {
-            if (!response) return;
-
-            if (response->stream_chunk) {
-                std::cout << response->content;
-                return;
-            }
-
-            if (response->ready && response->error_code) {
-                std::cerr << response->error_code.message() << std::endl;
-            }
-        });
-
-    std::cin.get();
-    kurlyk::deinit();
-    return 0;
-}
+kurlyk::HttpClient client("http://httpbin.org");
+client.set_streaming(true);
 ```
 
-## Dependencies and Installation
+Use `stream_chunk` first to classify body chunk callbacks. A chunk callback is not a success marker; the final `ready` response remains the authoritative transfer result. If at least one streaming chunk was emitted, kurlyk does not retry that transfer automatically, because the caller may already have forwarded bytes to a downstream client.
 
-### Supported compiler toolchains
+### Retry
+
+Retry repeats a failed HTTP request after a configured delay. It is useful for temporary network errors and unstable upstream APIs.
+
+```cpp
+kurlyk::HttpClient client("https://httpbin.org");
+client.set_retry_attempts(3, 1000);
+```
+
+The number of performed attempts is available in `HttpResponse::retry_attempt`. For streaming requests, automatic retry is not performed after at least one body chunk has been emitted.
+
+### Proxy
+
+Proxy settings can be configured on `HttpClient`, and then they apply to requests created by that client.
+
+```cpp
+kurlyk::HttpClient client("https://httpbin.org");
+client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::HTTP);
+```
+
+## Installation and dependencies
+
+### Supported toolchains
 
 - **MSVC**
 - **MinGW (GCC)**
 
-MSVC support is currently considered unstable. The confirmed working configuration is **C++17** with **Visual Studio 2022 (generator: Visual Studio 17 2022)**.
+MSVC builds are currently considered unstable. The confirmed configuration is **C++17** with **Visual Studio 2022 (generator: Visual Studio 17 2022)**.
+
+### Adding kurlyk
+
+Add the path to the library headers to your project:
+
+```text
+kurlyk/include
+```
+
+**kurlyk** is a header-only library, so including it with `#include <kurlyk.hpp>` is enough to start using it.
 
 ### Dependencies
 
-To work with the **kurlyk** library in MinGW, you will need the following dependencies:
+To use **kurlyk** in a MinGW environment, you need these dependencies:
 
 1. For WebSocket:
-
-    - [Simple-WebSocket-Server](https://gitlab.com/eidheim/Simple-WebSocket-Server)
-    - Boost.Asio or [standalone Asio](https://github.com/chriskohlhoff/asio/tree/master)
-    - [OpenSSL](https://slproweb.com/products/Win32OpenSSL.html) (*LTS version Win64 OpenSSL v3.0.15*)
+   - [Simple-WebSocket-Server](https://gitlab.com/eidheim/Simple-WebSocket-Server)
+   - Boost.Asio or [standalone Asio](https://github.com/chriskohlhoff/asio/tree/master)
+   - [OpenSSL](https://slproweb.com/products/Win32OpenSSL.html) (*LTS version Win64 OpenSSL v3.0.15*)
 
 2. For HTTP:
-    - [libcurl](https://curl.se/windows/)
+   - [libcurl](https://curl.se/windows/)
 
 All dependencies are also included as submodules in the `libs` folder.
 
-### OpenSSL Setup
+### OpenSSL
 
-1. Add OpenSSL paths to the project (example for version *3.4.0*):
+Add OpenSSL paths to the project, for example for version *3.4.0*:
 
-```
+```text
 OpenSSL-Win64/include
 OpenSSL-Win64/lib/VC/x64/MD
 OpenSSL-Win64/bin
 ```
 
-2. Link OpenSSL libraries from `lib/VC/x64/MD`:
+Link OpenSSL libraries from `lib/VC/x64/MD`:
 
-```
+```text
 capi.lib
 dasync.lib
 libcrypto.lib
@@ -452,132 +550,93 @@ ossltest.lib
 padlock.lib
 ```
 
-### Standalone Asio Setup
+### Asio
 
-1. Add the path to Asio in your project (example for [Asio repository](https://github.com/chriskohlhoff/asio/tree/master)):
+Add the path to asio:
 
-```
+```text
 asio/asio/include
 ```
 
-2. Set the macro `ASIO_STANDALONE` in your project settings or before including `kurlyk.hpp`:
+For standalone Asio, define `ASIO_STANDALONE` in project settings or before including `kurlyk.hpp`:
 
 ```cpp
 #define ASIO_STANDALONE
 #include <kurlyk.hpp>
 ```
 
-> **Note:** For Boost.Asio, you do not need to define the `ASIO_STANDALONE` macro.
+For Boost.Asio, you do not need to define `ASIO_STANDALONE`.
 
-### curl Setup
+### curl
 
-1. Add the paths for `curl` in your project (example for version *8.11.0*):
+Add paths for `curl`, for example for version *8.11.0*:
 
-```
+```text
 curl-8.11.0_1-win64-mingw/bin
 curl-8.11.0_1-win64-mingw/include
 curl-8.11.0_1-win64-mingw/lib
 ```
 
-2. Link the `curl` libraries from the `lib` folder:
+Link the `curl` libraries from the `lib` folder:
 
-```
+```text
 libcurl.a
 libcurl.dll.a
 ```
 
-### Simple-WebSocket-Server Setup
+### Simple-WebSocket-Server
 
-Add the path to the Simple-WebSocket-Server headers in your project:
+Add the path to the library headers:
 
-```
+```text
 Simple-WebSocket-Server
 ```
 
-### Linking Other Dependencies
+### Other dependencies
 
-Additionally, link the following libraries in the linker:
+Also add these libraries to the linker:
 
-```
+```text
 ws2_32
 wsock32
 crypt32
 ```
 
-### Dependency resolution and fallbacks
+### Fallback dependencies
 
-The project provides a fallback mechanism for third-party dependencies. If a required dependency is not available on the system, it can be automatically downloaded and built as part of the project.
-Fallback availability depends on the selected compiler toolchain and the linkage type (static or shared). The supported combinations are shown in the table below.
+The library supports automatically downloading dependencies when they are missing. Fallback availability depends on the compiler and linkage type.
 
 | Dependency | MinGW (Shared) | MinGW (Static) | MSVC (Shared) | MSVC (Static) |
 |------------|---------------|---------------|---------------|---------------|
 | OpenSSL    | yes           | yes           | yes           | yes           |
 | curl       | yes           | yes           | yes           | no            |
 
-Asio and Simple-WebSocket-Server are header-only libraries and suitable for all specified configuration types.
+Asio and Simple-WebSocket-Server are header-only libraries and work for all listed build variants.
 
 #### CMake fallback options
 
-The following CMake options control the fallback mechanism:
-
 | Option | Description |
 |--------|-------------|
-| `KURLYK_USE_FALLBACK_OPENSSL` | Enable OpenSSL fallback. |
-| `KURLYK_USE_FALLBACK_CURL` | Enable libcurl fallback. |
-| `KURLYK_USE_FALLBACK_ASIO` | Enable Asio fallback. |
-| `KURLYK_USE_FALLBACK_SIMPLE_WS_SERVER` | Enable Simple-WebSocket-Server fallback. |
-| `KURLYK_OPENSSL_SHARED` | Load OpenSSL as a shared library when the fallback is enabled. |
-| `KURLYK_CURL_SHARED` | Load libcurl as a shared library when the fallback is enabled. |
-| `KURLYK_BUILD_EXAMPLES` | Build all targets from the `examples/` directory. |
+| `KURLYK_USE_FALLBACK_OPENSSL` | Enables OpenSSL fallback. |
+| `KURLYK_USE_FALLBACK_CURL` | Enables libcurl fallback. |
+| `KURLYK_USE_FALLBACK_ASIO` | Enables Asio fallback. |
+| `KURLYK_USE_FALLBACK_SIMPLE_WS_SERVER` | Enables Simple-WebSocket-Server fallback. |
+| `KURLYK_OPENSSL_SHARED` | Loads OpenSSL as a shared library when fallback is enabled. |
+| `KURLYK_CURL_SHARED` | Loads libcurl as a shared library when fallback is enabled. |
+| `KURLYK_BUILD_EXAMPLES` | Builds all targets from the `examples/` directory. |
 
-### Adding kurlyk
+## Configuration macros
 
-Add the path to the kurlyk header files:
-
-```
-kurlyk/include
-```
-
-**kurlyk** is a header-only library, so you only need to include it with `#include <kurlyk.hpp>` to start using it.
-
-## Initialization specifics
-
-**C++11/14**
-
-When using C++11 or C++14, disable automatic initialization and initialize the library manually:
-
-```cpp
-#define KURLYK_AUTO_INIT 0
-#include <kurlyk.hpp>
-
-int main() {
-    kurlyk::init(true);
-    // your network code
-    kurlyk::deinit();
-}
-```
-
-Call `kurlyk::init()` **exactly once** before using the library and `kurlyk::deinit()` **also once** before program termination.
-
-**C++17+ (if automatic initialization enabled)**
-
-Starting from C++17, thread-safe automatic initialization is supported. By default, the library initializes itself automatically, and explicit calls to `kurlyk::init()` and `kurlyk::deinit()` are not required.
-Automatic initialization behavior can be controlled via configuration macros: `KURLYK_AUTO_INIT` and `KURLYK_AUTO_INIT_USE_ASYNC` (see [Configuration Macros](#configuration-macros)).
-
-`kurlyk::deinit()` is the normal cleanup call for both asynchronous `init(true)` and synchronous `init(false)` modes. `kurlyk::shutdown()` remains available for explicit manager cleanup/reset scenarios, but normal manual lifetime management should use the `init()` / `deinit()` pair.
-
-## Configuration Macros
-
-Define these macros before including `kurlyk.hpp` to fine-tune the library:
+Define these macros before including `kurlyk.hpp` to configure the library:
 
 | Macro | Default | Description |
 |-------|---------|-------------|
 | `KURLYK_AUTO_INIT` | `1` | Automatically registers managers during static initialization. |
-| `KURLYK_AUTO_INIT_USE_ASYNC` | `1` | Starts the network worker thread in the background when auto-init is enabled. Set to `0` for manual processing. |
-| `KURLYK_HTTP_SUPPORT` | `1` | Enables or disables the HTTP part of the library. |
-| `KURLYK_WEBSOCKET_SUPPORT` | `1` | Enables or disables the WebSocket part of the library. |
-| `KURLYK_ENABLE_JSON` | `0` | Adds JSON serialization helpers for some types. |
-| `KURLYK_USE_JSON` | undefined | Enables enum-to-JSON helpers in `type_utils.hpp`; usually set alongside `KURLYK_ENABLE_JSON`. |
+| `KURLYK_AUTO_INIT_USE_ASYNC` | `1` | Starts the network thread in the background when auto init is enabled. Set to `0` for manual processing. |
+| `KURLYK_HTTP_SUPPORT` | `1` | Enables or disables the HTTP subsystem. |
+| `KURLYK_WEBSOCKET_SUPPORT` | `1` | Enables or disables the WebSocket subsystem. |
+| `KURLYK_ENABLE_JSON` | `0` | Adds helper functions for JSON serialization of some types. |
+| `KURLYK_USE_JSON` | undefined | Enables enum-to-JSON helpers in `type_utils.hpp`; usually used together with `KURLYK_ENABLE_JSON`. |
 
 ## Repository layout
 
@@ -587,8 +646,8 @@ Define these macros before including `kurlyk.hpp` to fine-tune the library:
 | `include/kurlyk/core` | Core infrastructure with `NetworkWorker` and base interfaces. |
 | `include/kurlyk/http` | HTTP client and request management. |
 | `include/kurlyk/websocket` | WebSocket client and connection management. |
-| `include/kurlyk/types` | Shared enums, cookies, proxy config and helpers. |
-| `include/kurlyk/utils` | Encoding, URL, HTTP, path and error helpers. |
+| `include/kurlyk/types` | Shared enums, cookie, proxy config, and helpers. |
+| `include/kurlyk/utils` | Encoding, URL, HTTP, path, and error helpers. |
 | `tests/integration` | Windows dependency and integration build checks. |
 | `tests/odr` | Header-only ODR checks. |
 | `tests/smoke` | Portable header smoke checks. |
@@ -618,6 +677,15 @@ c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++17 -o header_smoke
 ./header_smoke
 ```
 
+## CI coverage
+
+| Platform | Coverage |
+|----------|----------|
+| Windows | MinGW and MSVC integration builds with fallback dependencies, HTTP backpressure regression, and local WebSocket integration coverage. |
+| Windows extras | ODR checks for singleton and auto-initialization headers. |
+| Linux | C++11/C++17 header smoke test with HTTP/WebSocket disabled. |
+| macOS | C++11/C++17 header smoke test with HTTP/WebSocket disabled. |
+
 ## Documentation
 
 Generate Doxygen documentation:
@@ -626,15 +694,15 @@ Generate Doxygen documentation:
 doxygen Doxyfile
 ```
 
-Published documentation is available at <https://newyaroslav.github.io/kurlyk/>.
+Published documentation: <https://newyaroslav.github.io/kurlyk/>.
 
 ## License
 
-This library is distributed under the MIT license. See the [LICENSE](LICENSE) file in the repository for details.
+This library is distributed under the MIT license. See [LICENSE](LICENSE) for details.
 
 ## Support
 
-If you have questions or issues using the library, you can refer to the documentation or ask a question in the GitHub Issues section.
+If you have questions or issues while using the library, consult the documentation or ask a question in GitHub Issues.
 
 In short, **kurlyk!**
 
