@@ -171,7 +171,9 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a78ff7a6b8f0c081f1a7bbe41cc470406" id="r_a78ff7a6b8f0c081f1a7bbe41cc470406"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#a78ff7a6b8f0c081f1a7bbe41cc470406">request_id</a> = 0</td></tr>
-<tr class="memdesc:a78ff7a6b8f0c081f1a7bbe41cc470406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique identifier for the request (default is 0).  <br /></td></tr>
+<tr class="memdesc:a78ff7a6b8f0c081f1a7bbe41cc470406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique ID of this concrete HTTP request.  <br /></td></tr>
+<tr class="memitem:ade463edde7ca9e4e339ad3dc31533e50" id="r_ade463edde7ca9e4e339ad3dc31533e50"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#ade463edde7ca9e4e339ad3dc31533e50">group_id</a> = 0</td></tr>
+<tr class="memdesc:ade463edde7ca9e4e339ad3dc31533e50"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID shared by related requests, for example all requests created by one <a class="el" href="classkurlyk_1_1HttpClient.html" title="Concrete HTTP client for making requests to a specific host.">HttpClient</a>.  <br /></td></tr>
 <tr class="memitem:a84ae98c42b90c774cedecc1030236abc" id="r_a84ae98c42b90c774cedecc1030236abc"><td class="memItemLeft"><a class="el" href="namespacekurlyk.html#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a>&#160;</td><td class="memItemRight"><a class="el" href="#a84ae98c42b90c774cedecc1030236abc">headers</a></td></tr>
 <tr class="memdesc:a84ae98c42b90c774cedecc1030236abc"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP request headers.  <br /></td></tr>
 <tr class="memitem:a56e04746cd86cb402533e1d3463f316e" id="r_a56e04746cd86cb402533e1d3463f316e"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a56e04746cd86cb402533e1d3463f316e">url</a></td></tr>
@@ -222,10 +224,10 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:a26d7a2976007a657247d0ab7b1e8b931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request timeout in seconds.  <br /></td></tr>
 <tr class="memitem:a348983cc43dffed7afaf76443d252465" id="r_a348983cc43dffed7afaf76443d252465"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#a348983cc43dffed7afaf76443d252465">connect_timeout</a> = 10</td></tr>
 <tr class="memdesc:a348983cc43dffed7afaf76443d252465"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connection timeout in seconds.  <br /></td></tr>
-<tr class="memitem:a78aff56a54672e1da7c39926202189b6" id="r_a78aff56a54672e1da7c39926202189b6"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#a78aff56a54672e1da7c39926202189b6">general_rate_limit_id</a> = 0</td></tr>
-<tr class="memdesc:a78aff56a54672e1da7c39926202189b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID for general rate limiting.  <br /></td></tr>
-<tr class="memitem:a19c37a075f7809d391f48ef8c756a6c4" id="r_a19c37a075f7809d391f48ef8c756a6c4"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#a19c37a075f7809d391f48ef8c756a6c4">specific_rate_limit_id</a> = 0</td></tr>
-<tr class="memdesc:a19c37a075f7809d391f48ef8c756a6c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID for specific rate limiting.  <br /></td></tr>
+<tr class="memitem:adc39130cb271f668dd9036dbd89d07cf" id="r_adc39130cb271f668dd9036dbd89d07cf"><td class="memItemLeft"><a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a>&#160;</td><td class="memItemRight"><a class="el" href="#adc39130cb271f668dd9036dbd89d07cf">general_rate_limit</a></td></tr>
+<tr class="memdesc:adc39130cb271f668dd9036dbd89d07cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">General rate limit handle.  <br /></td></tr>
+<tr class="memitem:aee9d2950419f621d063d81ed7c48f500" id="r_aee9d2950419f621d063d81ed7c48f500"><td class="memItemLeft"><a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a>&#160;</td><td class="memItemRight"><a class="el" href="#aee9d2950419f621d063d81ed7c48f500">specific_rate_limit</a></td></tr>
+<tr class="memdesc:aee9d2950419f621d063d81ed7c48f500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific rate limit handle.  <br /></td></tr>
 <tr class="memitem:ad3a0b60762f7f96876a0373b923e5d2e" id="r_ad3a0b60762f7f96876a0373b923e5d2e"><td class="memItemLeft">std::set&lt; long &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ad3a0b60762f7f96876a0373b923e5d2e">valid_statuses</a> = {200}</td></tr>
 <tr class="memdesc:ad3a0b60762f7f96876a0373b923e5d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of valid HTTP response status codes.  <br /></td></tr>
 <tr class="memitem:ac0d9f61c44eab9ce4e2fb1bac95f1d55" id="r_ac0d9f61c44eab9ce4e2fb1bac95f1d55"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#ac0d9f61c44eab9ce4e2fb1bac95f1d55">retry_attempts</a> = 0</td></tr>
@@ -276,7 +278,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00218">218</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00219">219</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -305,7 +307,7 @@ Public Attributes</h2></td></tr>
 
 <p>Clears all valid status codes. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00229">229</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00230">230</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -357,7 +359,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00105">105</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00106">106</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -392,7 +394,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00121">121</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00122">122</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -427,7 +429,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00253">253</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00254">254</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -462,7 +464,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00247">247</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00248">248</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -497,7 +499,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00265">265</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00266">266</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -532,7 +534,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00127">127</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00128">128</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -567,7 +569,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00241">241</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00242">242</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -602,7 +604,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00283">283</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00284">284</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -637,7 +639,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00133">133</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00134">134</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -677,7 +679,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00146">146</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00147">147</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -735,7 +737,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00170">170</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00171">171</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -781,7 +783,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00156">156</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00157">157</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -816,7 +818,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00189">189</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00190">190</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -856,7 +858,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00202">202</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00203">203</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -891,7 +893,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00183">183</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00184">184</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -926,7 +928,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00195">195</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00196">196</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -961,7 +963,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00139">139</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00140">140</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1001,7 +1003,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00211">211</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00212">212</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1036,7 +1038,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00271">271</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00272">272</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1071,7 +1073,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00259">259</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00260">260</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1117,7 +1119,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00081">81</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00082">82</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1163,7 +1165,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00062">62</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00063">63</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1203,7 +1205,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00092">92</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00093">93</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1238,7 +1240,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00235">235</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00236">236</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1273,7 +1275,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00224">224</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00225">225</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1308,7 +1310,7 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00277">277</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00278">278</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1327,7 +1329,7 @@ Public Attributes</h2></td></tr>
 
 <p>Accept-Encoding header. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00024">24</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00025">25</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1345,7 +1347,7 @@ Public Attributes</h2></td></tr>
 
 <p>Automatically set Referer header. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00040">40</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00041">41</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1363,7 +1365,7 @@ Public Attributes</h2></td></tr>
 
 <p>Path to the CA certificate file. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00029">29</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00030">30</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1381,7 +1383,7 @@ Public Attributes</h2></td></tr>
 
 <p>Path to a directory containing CA certificates. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00030">30</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00031">31</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1399,7 +1401,7 @@ Public Attributes</h2></td></tr>
 
 <p>Path to the client certificate file. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00027">27</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00028">28</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1417,7 +1419,7 @@ Public Attributes</h2></td></tr>
 
 <p>Flag to clear the cookie file at the start of the request. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00052">52</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00053">53</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1435,7 +1437,7 @@ Public Attributes</h2></td></tr>
 
 <p>Connection timeout in seconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00045">45</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00046">46</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1453,7 +1455,7 @@ Public Attributes</h2></td></tr>
 
 <p>Data payload for the request. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00022">22</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00023">23</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1471,7 +1473,7 @@ Public Attributes</h2></td></tr>
 
 <p><a class="el" href="classkurlyk_1_1Cookie.html" title="Represents an HTTP cookie.">Cookie</a> data as a string. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00026">26</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00027">27</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1489,7 +1491,7 @@ Public Attributes</h2></td></tr>
 
 <p>Path to the cookie file; if empty, cookies are not saved. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00025">25</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00026">26</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1507,7 +1509,7 @@ Public Attributes</h2></td></tr>
 
 <p>Include headers in debug output (CURLOPT_HEADER). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00056">56</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00057">57</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1525,25 +1527,43 @@ Public Attributes</h2></td></tr>
 
 <p>Automatically follow HTTP redirects. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00038">38</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00039">39</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
-<a id="a78aff56a54672e1da7c39926202189b6" name="a78aff56a54672e1da7c39926202189b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78aff56a54672e1da7c39926202189b6">&#9670;&#160;</a></span>general_rate_limit_id</h2>
+<a id="adc39130cb271f668dd9036dbd89d07cf" name="adc39130cb271f668dd9036dbd89d07cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc39130cb271f668dd9036dbd89d07cf">&#9670;&#160;</a></span>general_rate_limit</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long kurlyk::HttpRequest::general_rate_limit_id = 0</td>
+          <td class="memname"><a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> kurlyk::HttpRequest::general_rate_limit</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>ID for general rate limiting. </p>
+<p>General rate limit handle. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00046">46</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00047">47</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ade463edde7ca9e4e339ad3dc31533e50" name="ade463edde7ca9e4e339ad3dc31533e50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade463edde7ca9e4e339ad3dc31533e50">&#9670;&#160;</a></span>group_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t kurlyk::HttpRequest::group_id = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ID shared by related requests, for example all requests created by one <a class="el" href="classkurlyk_1_1HttpClient.html" title="Concrete HTTP client for making requests to a specific host.">HttpClient</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00019">19</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1561,7 +1581,7 @@ Public Attributes</h2></td></tr>
 
 <p>If true, sends the request without a response body (HEAD-like behavior). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00041">41</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00042">42</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1579,7 +1599,7 @@ Public Attributes</h2></td></tr>
 
 <p>HTTP request headers. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00019">19</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00020">20</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1597,7 +1617,7 @@ Public Attributes</h2></td></tr>
 
 <p>Network interface name to use for the request. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00035">35</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00036">36</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1615,7 +1635,7 @@ Public Attributes</h2></td></tr>
 
 <p>Path to the private key for the client certificate. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00028">28</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00029">29</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1633,7 +1653,7 @@ Public Attributes</h2></td></tr>
 
 <p>Maximum allowed redirects. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00039">39</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00040">40</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1651,7 +1671,7 @@ Public Attributes</h2></td></tr>
 
 <p>HTTP request method (e.g., "GET", "POST"). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00021">21</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00022">22</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1669,7 +1689,7 @@ Public Attributes</h2></td></tr>
 
 <p>Proxy authentication in &lt;username:password&gt; format. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00032">32</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00033">33</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1687,7 +1707,7 @@ Public Attributes</h2></td></tr>
 
 <p>Proxy address in &lt;ip:port&gt; format. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00031">31</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00032">32</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1705,7 +1725,7 @@ Public Attributes</h2></td></tr>
 
 <p>Enable proxy tunneling. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00034">34</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00035">35</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1723,7 +1743,7 @@ Public Attributes</h2></td></tr>
 
 <p>Proxy type (e.g., HTTP, SOCKS5). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00033">33</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00034">34</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1739,7 +1759,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Unique identifier for the request (default is 0). </p>
+<p>Unique ID of this concrete HTTP request. </p>
 
 <p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00018">18</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
@@ -1759,7 +1779,7 @@ Public Attributes</h2></td></tr>
 
 <p>Number of retry attempts in case of failure. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00049">49</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00050">50</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1777,25 +1797,25 @@ Public Attributes</h2></td></tr>
 
 <p>Delay between retry attempts in milliseconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00050">50</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00051">51</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
-<a id="a19c37a075f7809d391f48ef8c756a6c4" name="a19c37a075f7809d391f48ef8c756a6c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19c37a075f7809d391f48ef8c756a6c4">&#9670;&#160;</a></span>specific_rate_limit_id</h2>
+<a id="aee9d2950419f621d063d81ed7c48f500" name="aee9d2950419f621d063d81ed7c48f500"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee9d2950419f621d063d81ed7c48f500">&#9670;&#160;</a></span>specific_rate_limit</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long kurlyk::HttpRequest::specific_rate_limit_id = 0</td>
+          <td class="memname"><a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> kurlyk::HttpRequest::specific_rate_limit</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>ID for specific rate limiting. </p>
+<p>Specific rate limit handle. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00047">47</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00048">48</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1813,7 +1833,7 @@ Public Attributes</h2></td></tr>
 
 <p>Enable intermediate callbacks for response body chunks. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00042">42</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00043">43</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1831,7 +1851,7 @@ Public Attributes</h2></td></tr>
 
 <p>Request timeout in seconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00044">44</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00045">45</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1849,7 +1869,7 @@ Public Attributes</h2></td></tr>
 
 <p>Full request URL. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00020">20</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00021">21</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1867,7 +1887,7 @@ Public Attributes</h2></td></tr>
 
 <p>Enable the specified network interface. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00036">36</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00037">37</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1885,7 +1905,7 @@ Public Attributes</h2></td></tr>
 
 <p>User-Agent header. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00023">23</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00024">24</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1903,7 +1923,7 @@ Public Attributes</h2></td></tr>
 
 <p>Set of valid HTTP response status codes. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00048">48</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00049">49</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -1921,7 +1941,7 @@ Public Attributes</h2></td></tr>
 
 <p>Enable verbose output (CURLOPT_VERBOSE). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00055">55</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00056">56</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>

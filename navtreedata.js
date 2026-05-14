@@ -45,7 +45,8 @@ var NAVTREE =
         [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", "functions_vars" ],
         [ "Typedefs", "functions_type.html", null ],
-        [ "Enumerations", "functions_enum.html", null ]
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Related Symbols", "functions_rela.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -63,13 +64,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AutoInitializer_8hpp.html",
-"classkurlyk_1_1BaseWebSocketClient.html#ad14518b9ad14309b3af910e4d47838a8",
-"classkurlyk_1_1HttpClient.html#a289cef53a557204be15c42a0ecece402",
-"classkurlyk_1_1HttpRequest.html#acabd6b955358d68b56bdbb32fc1fa4ab",
-"classkurlyk_1_1SimpleWebSocketClientAdapter.html#a8fcc2186969775f1b5186acc01ce6301",
-"classkurlyk_1_1WebSocketConfig.html#ad605d2a76f321542a52039c3d1e10a0e",
-"dir_58e4523a50a12b7c7d22457eb7a90f3f.html",
-"namespacekurlyk_1_1utils.html#a59cab8e0e0a2e21d60d85065c5582224a05a8d5f9c17595b9338cf7d7db3ee97b"
+"classkurlyk_1_1BaseWebSocketClient.html#ac15f89168aaca60ee6840cfb00d7ad7c",
+"classkurlyk_1_1HttpClient.html#a0ea2bc6276f2caa9019280de6820c9fd",
+"classkurlyk_1_1HttpRateLimiter.html#afc74a4205ceaf1adc4caf404ba3f9861",
+"classkurlyk_1_1HttpRequestManager.html#a648b235cc2555e6d3010e65920b59ba4",
+"classkurlyk_1_1WebSocketClient.html#a2b0b03ff1fdde3dafa7dd44acd8f5fb6",
+"classkurlyk_1_1core_1_1INetworkTaskManager.html#a91c2fb48a15fb0ebc693c2c76c817055",
+"globals_func.html",
+"structcryptox_1_1ProxyConfig.html#a1ad61612de9029e69e63dd9aa6027193"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

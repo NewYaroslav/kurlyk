@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['sender_0',['sender',['../classkurlyk_1_1WebSocketEventData.html#a5447c5f0813c590186ecc3a7d1500066',1,'kurlyk::WebSocketEventData']]],
-  ['specific_5frate_5flimit_5fid_1',['specific_rate_limit_id',['../classkurlyk_1_1HttpRequest.html#a19c37a075f7809d391f48ef8c756a6c4',1,'kurlyk::HttpRequest']]],
-  ['start_5ftime_2',['start_time',['../structkurlyk_1_1HttpRateLimiter_1_1LimitData.html#a41b3dc33b8e4247801e7b2512d3f6288',1,'kurlyk::HttpRateLimiter::LimitData::start_time'],['../classkurlyk_1_1HttpRequestContext.html#a1f6c95508f0fae139e314dcfb4b4d858',1,'kurlyk::HttpRequestContext::start_time'],['../structkurlyk_1_1WebSocketRateLimiter_1_1LimitData.html#a57a0ac55d407bc6a7e417e07c0eba8b5',1,'kurlyk::WebSocketRateLimiter::LimitData::start_time']]],
-  ['starttransfer_5ftime_3',['starttransfer_time',['../classkurlyk_1_1HttpResponse.html#ae7517a45390fedeca02195fcd9f21d48',1,'kurlyk::HttpResponse']]],
-  ['status_4',['status',['../classkurlyk_1_1WebSocketSendInfo.html#ab8586d816e72712da21787ffa96b9274',1,'kurlyk::WebSocketSendInfo']]],
-  ['status_5fcode_5',['status_code',['../classkurlyk_1_1HttpResponse.html#a430abca0d51661b3650d246fe28ded75',1,'kurlyk::HttpResponse::status_code'],['../classkurlyk_1_1WebSocketEventData.html#a48d3a3d9b9a6e4fbeefbac848d8221a1',1,'kurlyk::WebSocketEventData::status_code']]],
-  ['stream_5fchunk_6',['stream_chunk',['../classkurlyk_1_1HttpResponse.html#ab638d2e2447ab558921f1d5fd6f3a130',1,'kurlyk::HttpResponse']]],
-  ['streaming_7',['streaming',['../classkurlyk_1_1HttpRequest.html#a6e59e84de88b9f615a1746266f249e94',1,'kurlyk::HttpRequest']]]
+  ['path_0',['path',['../classkurlyk_1_1Cookie.html#af54b9b0a3c5ec898b19c2a3e0503d8ee',1,'kurlyk::Cookie']]],
+  ['period_5fms_1',['period_ms',['../structkurlyk_1_1HttpRateLimiter_1_1LimitData.html#ae302a4d697755142c5e64d82cf544951',1,'kurlyk::HttpRateLimiter::LimitData::period_ms'],['../structkurlyk_1_1WebSocketRateLimiter_1_1LimitData.html#abe9c03fb6c4c8645c52006b067bcd32e',1,'kurlyk::WebSocketRateLimiter::LimitData::period_ms'],['../structkurlyk_1_1WebSocketConfig_1_1RateLimitData.html#aaef21a340e8d5a0cf1ba43b0312b15b2',1,'kurlyk::WebSocketConfig::RateLimitData::period_ms']]],
+  ['pretransfer_5ftime_2',['pretransfer_time',['../classkurlyk_1_1HttpResponse.html#aa6ff73b2495f06c46073683022168f4d',1,'kurlyk::HttpResponse']]],
+  ['protocols_3',['protocols',['../classkurlyk_1_1WebSocketConfig.html#af6a785ebe98a7c4dc3431c9c1f50db93',1,'kurlyk::WebSocketConfig']]],
+  ['proxy_5fauth_4',['proxy_auth',['../classkurlyk_1_1HttpRequest.html#a1f1ee8834f9a1d75bbfcec9fd5ce93ef',1,'kurlyk::HttpRequest::proxy_auth'],['../structcryptox_1_1ProxyConfig.html#a1ad61612de9029e69e63dd9aa6027193',1,'cryptox::ProxyConfig::proxy_auth'],['../classkurlyk_1_1WebSocketConfig.html#ad605d2a76f321542a52039c3d1e10a0e',1,'kurlyk::WebSocketConfig::proxy_auth']]],
+  ['proxy_5fserver_5',['proxy_server',['../classkurlyk_1_1HttpRequest.html#a704085df4b959a296133b150c688d129',1,'kurlyk::HttpRequest::proxy_server'],['../structcryptox_1_1ProxyConfig.html#a9ef2fff4f38eb9c784e0a76c596f01c4',1,'cryptox::ProxyConfig::proxy_server'],['../classkurlyk_1_1WebSocketConfig.html#a324fde4f4f591ca81f7158cac3f9c741',1,'kurlyk::WebSocketConfig::proxy_server']]],
+  ['proxy_5ftunnel_6',['proxy_tunnel',['../classkurlyk_1_1HttpRequest.html#a055c4231b7404481090d3d7530be7d58',1,'kurlyk::HttpRequest']]],
+  ['proxy_5ftype_7',['proxy_type',['../classkurlyk_1_1HttpRequest.html#a8085a6d90cc32967e07898d6007b57aa',1,'kurlyk::HttpRequest::proxy_type'],['../structcryptox_1_1ProxyConfig.html#a688e34f6d618231c1c3ab06acd6c6b23',1,'cryptox::ProxyConfig::proxy_type'],['../classkurlyk_1_1WebSocketConfig.html#a1a9ffc792c68a11219e2819446f90f85',1,'kurlyk::WebSocketConfig::proxy_type']]]
 ];

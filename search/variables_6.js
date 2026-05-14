@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['general_5frate_5flimit_5fid_0',['general_rate_limit_id',['../classkurlyk_1_1HttpRequest.html#a78aff56a54672e1da7c39926202189b6',1,'kurlyk::HttpRequest']]]
+  ['general_5frate_5flimit_0',['general_rate_limit',['../classkurlyk_1_1HttpRequest.html#adc39130cb271f668dd9036dbd89d07cf',1,'kurlyk::HttpRequest']]],
+  ['group_5fid_1',['group_id',['../classkurlyk_1_1HttpRequest.html#ade463edde7ca9e4e339ad3dc31533e50',1,'kurlyk::HttpRequest']]]
 ];

@@ -126,7 +126,11 @@ Classes</h2></td></tr>
 <tr class="memitem:HttpBatchRequestHandler" id="r_HttpBatchRequestHandler"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpBatchRequestHandler.html">HttpBatchRequestHandler</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles multiple asynchronous HTTP requests using libcurl's multi interface.  <a href="classkurlyk_1_1HttpBatchRequestHandler.html#details">More...</a><br /></td></tr>
 <tr class="memitem:HttpRateLimiter" id="r_HttpRateLimiter"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpRateLimiter.html">HttpRateLimiter</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages rate limits for HTTP requests, ensuring compliance with set limits.  <a href="classkurlyk_1_1HttpRateLimiter.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages rate limits for HTTP requests.  <a href="classkurlyk_1_1HttpRateLimiter.html#details">More...</a><br /></td></tr>
+<tr class="memitem:HttpRateLimitHandle" id="r_HttpRateLimitHandle"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpRateLimitHandle.html">HttpRateLimitHandle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">RAII handle that owns a registered HTTP rate-limit ID.  <a href="classkurlyk_1_1HttpRateLimitHandle.html#details">More...</a><br /></td></tr>
+<tr class="memitem:HttpRateLimitLease" id="r_HttpRateLimitLease"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpRateLimitLease.html">HttpRateLimitLease</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">RAII lease that owns temporary serialized rate-limit locks.  <a href="classkurlyk_1_1HttpRateLimitLease.html#details">More...</a><br /></td></tr>
 <tr class="memitem:HttpRequestContext" id="r_HttpRequestContext"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpRequestContext.html">HttpRequestContext</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the context of an HTTP request, including the request object, callback function, retry attempts, and timing.  <a href="classkurlyk_1_1HttpRequestContext.html#details">More...</a><br /></td></tr>
 <tr class="memitem:HttpRequestHandler" id="r_HttpRequestHandler"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpRequestHandler.html">HttpRequestHandler</a></td></tr>
@@ -168,6 +172,10 @@ Typedefs</h2></td></tr>
 <tr class="memdesc:a3edebba92661af6dfefe442ba4ee09f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A unique pointer to an <a class="el" href="classkurlyk_1_1HttpResponse.html" title="Represents the response received from an HTTP request, including headers, content,...">HttpResponse</a> object for memory management.  <br /></td></tr>
 <tr class="memitem:a083281e24e253ffb0cdc59981611c9e0" id="r_a083281e24e253ffb0cdc59981611c9e0"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> = std::function&lt;void(<a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> response)&gt;</td></tr>
 <tr class="memdesc:a083281e24e253ffb0cdc59981611c9e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definition for the callback function used to handle HTTP responses.  <br /></td></tr>
+<tr class="memitem:add287752edc6bc19d26a46274b8d524d" id="r_add287752edc6bc19d26a46274b8d524d"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> = std::shared_ptr&lt;<a class="el" href="classkurlyk_1_1HttpRateLimitHandle.html">HttpRateLimitHandle</a>&gt;</td></tr>
+<tr class="memdesc:add287752edc6bc19d26a46274b8d524d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared RAII handle for HTTP rate limits.  <br /></td></tr>
+<tr class="memitem:a59df2ed0f5514ecd36cb6eb79560170a" id="r_a59df2ed0f5514ecd36cb6eb79560170a"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a59df2ed0f5514ecd36cb6eb79560170a">HttpRateLimitLeasePtr</a> = std::shared_ptr&lt;<a class="el" href="classkurlyk_1_1HttpRateLimitLease.html">HttpRateLimitLease</a>&gt;</td></tr>
+<tr class="memdesc:a59df2ed0f5514ecd36cb6eb79560170a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared RAII lease for serialized HTTP rate-limit ownership.  <br /></td></tr>
 <tr class="memitem:a987e16c5aba72ff54627a8ad3a0e9fec" id="r_a987e16c5aba72ff54627a8ad3a0e9fec"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> = <a class="el" href="namespacekurlyk_1_1utils.html#a0f1c389206408eed954a5a761683aec7">utils::CaseInsensitiveMultimap</a></td></tr>
 <tr class="memdesc:a987e16c5aba72ff54627a8ad3a0e9fec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for HTTP headers, providing a case-insensitive unordered multimap.  <br /></td></tr>
 <tr class="memitem:ae6eb5e4e8f3237dc0b1b57f78adcfe5f" id="r_ae6eb5e4e8f3237dc0b1b57f78adcfe5f"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> = <a class="el" href="namespacekurlyk_1_1utils.html#a0f1c389206408eed954a5a761683aec7">utils::CaseInsensitiveMultimap</a></td></tr>
@@ -210,16 +218,22 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aeb07f74e95b281c14503060afd67763b" id="r_aeb07f74e95b281c14503060afd67763b"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#aeb07f74e95b281c14503060afd67763b">create_rate_limit</a> (long requests_per_period, long period_ms)</td></tr>
-<tr class="memdesc:aeb07f74e95b281c14503060afd67763b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a rate limit with specified parameters.  <br /></td></tr>
-<tr class="memitem:a78ab3dbb673bfc2367b319d26bc54476" id="r_a78ab3dbb673bfc2367b319d26bc54476"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#a78ab3dbb673bfc2367b319d26bc54476">create_rate_limit_rpm</a> (long requests_per_minute)</td></tr>
-<tr class="memdesc:a78ab3dbb673bfc2367b319d26bc54476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a rate limit based on Requests Per Minute (RPM).  <br /></td></tr>
-<tr class="memitem:aa7df4dbbd3e7e1747faeb0460cb6a71f" id="r_aa7df4dbbd3e7e1747faeb0460cb6a71f"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#aa7df4dbbd3e7e1747faeb0460cb6a71f">create_rate_limit_rps</a> (long requests_per_second)</td></tr>
-<tr class="memdesc:aa7df4dbbd3e7e1747faeb0460cb6a71f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a rate limit based on Requests Per Second (RPS).  <br /></td></tr>
+<tr class="memitem:a05093698df5a2f4d1c1a951acc87a570" id="r_a05093698df5a2f4d1c1a951acc87a570"><td class="memItemLeft"><a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a>&#160;</td><td class="memItemRight"><a class="el" href="#a05093698df5a2f4d1c1a951acc87a570">create_rate_limit</a> (long requests_per_period, long period_ms, bool sequential=false)</td></tr>
+<tr class="memdesc:a05093698df5a2f4d1c1a951acc87a570"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a RAII rate-limit handle with specified parameters.  <br /></td></tr>
+<tr class="memitem:add9d09fa6395c22f4ed07b50d5e61e07" id="r_add9d09fa6395c22f4ed07b50d5e61e07"><td class="memItemLeft"><a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a>&#160;</td><td class="memItemRight"><a class="el" href="#add9d09fa6395c22f4ed07b50d5e61e07">create_rate_limit_rpm</a> (long requests_per_minute, bool sequential=false)</td></tr>
+<tr class="memdesc:add9d09fa6395c22f4ed07b50d5e61e07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a RAII rate-limit based on Requests Per Minute (RPM).  <br /></td></tr>
+<tr class="memitem:acef313e32a8c115a160b92cd6cbc3682" id="r_acef313e32a8c115a160b92cd6cbc3682"><td class="memItemLeft"><a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a>&#160;</td><td class="memItemRight"><a class="el" href="#acef313e32a8c115a160b92cd6cbc3682">create_rate_limit_rps</a> (long requests_per_second, bool sequential=false)</td></tr>
+<tr class="memdesc:acef313e32a8c115a160b92cd6cbc3682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a RAII rate-limit based on Requests Per Second (RPS).  <br /></td></tr>
+<tr class="memitem:a645d2b32b9bcc5e0d6de78dadb3052e0" id="r_a645d2b32b9bcc5e0d6de78dadb3052e0"><td class="memItemLeft"><a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a>&#160;</td><td class="memItemRight"><a class="el" href="#a645d2b32b9bcc5e0d6de78dadb3052e0">get_rate_limit</a> (long limit_id)</td></tr>
+<tr class="memdesc:a645d2b32b9bcc5e0d6de78dadb3052e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a manager-owned rate-limit handle by ID.  <br /></td></tr>
 <tr class="memitem:abe5ef66530eb2fa86cda3acd58e88c5d" id="r_abe5ef66530eb2fa86cda3acd58e88c5d"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#abe5ef66530eb2fa86cda3acd58e88c5d">remove_limit</a> (long limit_id)</td></tr>
-<tr class="memdesc:abe5ef66530eb2fa86cda3acd58e88c5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an existing rate limit with the specified identifier.  <br /></td></tr>
+<tr class="memdesc:abe5ef66530eb2fa86cda3acd58e88c5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases manager-owned rate-limit handle by ID.  <br /></td></tr>
+<tr class="memitem:a188c29dde9ea6118fe9a821ace7dfd9e" id="r_a188c29dde9ea6118fe9a821ace7dfd9e"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a188c29dde9ea6118fe9a821ace7dfd9e">remove_limit</a> (const <a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;limit)</td></tr>
+<tr class="memdesc:a188c29dde9ea6118fe9a821ace7dfd9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases manager-owned rate-limit handle.  <br /></td></tr>
 <tr class="memitem:aa01eb3e3c8b5a6c6506e25de1bbb43c5" id="r_aa01eb3e3c8b5a6c6506e25de1bbb43c5"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#aa01eb3e3c8b5a6c6506e25de1bbb43c5">generate_request_id</a> ()</td></tr>
 <tr class="memdesc:aa01eb3e3c8b5a6c6506e25de1bbb43c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a new unique request ID.  <br /></td></tr>
+<tr class="memitem:aa6e7947ad409eb0e9d7202498b2002cf" id="r_aa6e7947ad409eb0e9d7202498b2002cf"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#aa6e7947ad409eb0e9d7202498b2002cf">generate_group_id</a> ()</td></tr>
+<tr class="memdesc:aa6e7947ad409eb0e9d7202498b2002cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a new group ID.  <br /></td></tr>
 <tr class="memitem:a19c40cbaef5bb075ce99d1b99ab7febc" id="r_a19c40cbaef5bb075ce99d1b99ab7febc"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a19c40cbaef5bb075ce99d1b99ab7febc">set_max_pending_requests</a> (std::size_t <a class="el" href="#a05cdd73b7c1848155486318277d32049">max_pending_requests</a>)</td></tr>
 <tr class="memdesc:a19c40cbaef5bb075ce99d1b99ab7febc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the maximum number of requests accepted into the global pending queue.  <br /></td></tr>
 <tr class="memitem:a05cdd73b7c1848155486318277d32049" id="r_a05cdd73b7c1848155486318277d32049"><td class="memItemLeft">std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#a05cdd73b7c1848155486318277d32049">max_pending_requests</a> ()</td></tr>
@@ -228,6 +242,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:af4e359b92f64aabd5129cc30b1c5f715"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels a request by its unique identifier.  <br /></td></tr>
 <tr class="memitem:a9d19df9f93548f37b62a698c256544ea" id="r_a9d19df9f93548f37b62a698c256544ea"><td class="memItemLeft">std::future&lt; void &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a9d19df9f93548f37b62a698c256544ea">cancel_request_by_id</a> (uint64_t request_id)</td></tr>
 <tr class="memdesc:a9d19df9f93548f37b62a698c256544ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels a request by its unique identifier and returns a future.  <br /></td></tr>
+<tr class="memitem:a7ef5f6c72118ed0a25193bc87613191d" id="r_a7ef5f6c72118ed0a25193bc87613191d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7ef5f6c72118ed0a25193bc87613191d">cancel_requests_by_group_id</a> (uint64_t group_id, std::function&lt; void()&gt; callback)</td></tr>
+<tr class="memdesc:a7ef5f6c72118ed0a25193bc87613191d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels all requests with the specified group ID.  <br /></td></tr>
+<tr class="memitem:a2da7af3ac634138be6073b9bd4f33f5c" id="r_a2da7af3ac634138be6073b9bd4f33f5c"><td class="memItemLeft">std::future&lt; void &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a2da7af3ac634138be6073b9bd4f33f5c">cancel_requests_by_group_id</a> (uint64_t group_id)</td></tr>
+<tr class="memdesc:a2da7af3ac634138be6073b9bd4f33f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels all requests with the specified group ID and returns a future.  <br /></td></tr>
 <tr class="memitem:afe56f68e2137cdd7e79144fdd8405ac3" id="r_afe56f68e2137cdd7e79144fdd8405ac3"><td class="memItemLeft"><a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a>&#160;</td><td class="memItemRight"><a class="el" href="#afe56f68e2137cdd7e79144fdd8405ac3">make_submit_error_response</a> (const <a class="el" href="structkurlyk_1_1SubmitResult.html">SubmitResult</a> &amp;submit_result)</td></tr>
 <tr class="memdesc:afe56f68e2137cdd7e79144fdd8405ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a ready HTTP response describing a synchronous submission rejection.  <br /></td></tr>
 <tr class="memitem:a256c33d85727908962c47a565267c073" id="r_a256c33d85727908962c47a565267c073"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a256c33d85727908962c47a565267c073">safe_set_response</a> (std::shared_ptr&lt; std::promise&lt; <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> &gt; &gt; promise, <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> response)</td></tr>
@@ -328,6 +346,44 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="add287752edc6bc19d26a46274b8d524d" name="add287752edc6bc19d26a46274b8d524d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add287752edc6bc19d26a46274b8d524d">&#9670;&#160;</a></span>HttpRateLimitHandlePtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#add287752edc6bc19d26a46274b8d524d">kurlyk::HttpRateLimitHandlePtr</a> = std::shared_ptr&lt;<a class="el" href="classkurlyk_1_1HttpRateLimitHandle.html">HttpRateLimitHandle</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shared RAII handle for HTTP rate limits. </p>
+<p>Requests should store this pointer to keep the referenced rate limit alive while they are pending, active, or waiting for retry. </p>
+
+<p class="definition">Definition at line <a class="el" href="HttpRateLimitHandle_8hpp_source.html#l00078">78</a> of file <a class="el" href="HttpRateLimitHandle_8hpp_source.html">HttpRateLimitHandle.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a59df2ed0f5514ecd36cb6eb79560170a" name="a59df2ed0f5514ecd36cb6eb79560170a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59df2ed0f5514ecd36cb6eb79560170a">&#9670;&#160;</a></span>HttpRateLimitLeasePtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a59df2ed0f5514ecd36cb6eb79560170a">kurlyk::HttpRateLimitLeasePtr</a> = std::shared_ptr&lt;<a class="el" href="classkurlyk_1_1HttpRateLimitLease.html">HttpRateLimitLease</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shared RAII lease for serialized HTTP rate-limit ownership. </p>
+<p>Request contexts should store this pointer while they own serialized rate-limit resources. The lease should normally live across retry attempts and be released only when the request context is finally completed, cancelled, or destroyed. </p>
+
+<p class="definition">Definition at line <a class="el" href="HttpRateLimitLease_8hpp_source.html#l00120">120</a> of file <a class="el" href="HttpRateLimitLease_8hpp_source.html">HttpRateLimitLease.hpp</a>.</p>
+
+</div>
+</div>
 <a id="a563e39da6d8822827dbff7b371167cda" name="a563e39da6d8822827dbff7b371167cda"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a563e39da6d8822827dbff7b371167cda">&#9670;&#160;</a></span>HttpRequestPtr</h2>
 
@@ -342,7 +398,7 @@ Functions</h2></td></tr>
 
 <p>A unique pointer to an <a class="el" href="classkurlyk_1_1HttpRequest.html" title="Represents an HTTP request.">HttpRequest</a> object for memory management. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00290">290</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00291">291</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
 </div>
 </div>
@@ -657,7 +713,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <span class="tt">std::future&lt;void&gt;</span> that becomes ready when the cancellation process is complete. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00072">72</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00098">98</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -697,12 +753,12 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00064">64</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00090">90</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
-<a id="aeb07f74e95b281c14503060afd67763b" name="aeb07f74e95b281c14503060afd67763b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb07f74e95b281c14503060afd67763b">&#9670;&#160;</a></span>create_rate_limit()</h2>
+<a id="a2da7af3ac634138be6073b9bd4f33f5c" name="a2da7af3ac634138be6073b9bd4f33f5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2da7af3ac634138be6073b9bd4f33f5c">&#9670;&#160;</a></span>cancel_requests_by_group_id() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -711,14 +767,95 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">long kurlyk::create_rate_limit </td>
+          <td class="memname">std::future&lt; void &gt; kurlyk::cancel_requests_by_group_id </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>group_id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cancels all requests with the specified group ID and returns a future. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">group_id</td><td>The group identifier of requests to cancel. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <span class="tt">std::future&lt;void&gt;</span> that becomes ready when the cancellation process is complete. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00131">131</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a7ef5f6c72118ed0a25193bc87613191d" name="a7ef5f6c72118ed0a25193bc87613191d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ef5f6c72118ed0a25193bc87613191d">&#9670;&#160;</a></span>cancel_requests_by_group_id() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kurlyk::cancel_requests_by_group_id </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>group_id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; void()&gt;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cancels all requests with the specified group ID. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">group_id</td><td>The group identifier of requests to cancel. </td></tr>
+    <tr><td class="paramname">callback</td><td>An optional callback function to execute after cancellation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00123">123</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a05093698df5a2f4d1c1a951acc87a570" name="a05093698df5a2f4d1c1a951acc87a570"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05093698df5a2f4d1c1a951acc87a570">&#9670;&#160;</a></span>create_rate_limit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> kurlyk::create_rate_limit </td>
           <td>(</td>
           <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>requests_per_period</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>period_ms</em></span>&#160;)</td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>period_ms</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>sequential</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -728,22 +865,23 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a rate limit with specified parameters. </p>
+<p>Creates a RAII rate-limit handle with specified parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">requests_per_period</td><td>Maximum number of requests allowed within the specified period. </td></tr>
     <tr><td class="paramname">period_ms</td><td>Time period in milliseconds for the rate limit. </td></tr>
+    <tr><td class="paramname">sequential</td><td>When true, no other request sharing this limit may start until the current request (including all its retries) has finished. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A unique identifier for the created rate limit. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Handle for the created rate limit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00016">16</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00018">18</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
-<a id="a78ab3dbb673bfc2367b319d26bc54476" name="a78ab3dbb673bfc2367b319d26bc54476"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78ab3dbb673bfc2367b319d26bc54476">&#9670;&#160;</a></span>create_rate_limit_rpm()</h2>
+<a id="add9d09fa6395c22f4ed07b50d5e61e07" name="add9d09fa6395c22f4ed07b50d5e61e07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add9d09fa6395c22f4ed07b50d5e61e07">&#9670;&#160;</a></span>create_rate_limit_rpm()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -752,10 +890,14 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">long kurlyk::create_rate_limit_rpm </td>
+          <td class="memname"><a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> kurlyk::create_rate_limit_rpm </td>
           <td>(</td>
-          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>requests_per_minute</em></span></td><td>)</td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>requests_per_minute</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>sequential</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -765,21 +907,22 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a rate limit based on Requests Per Minute (RPM). </p>
+<p>Creates a RAII rate-limit based on Requests Per Minute (RPM). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">requests_per_minute</td><td>Maximum number of requests allowed per minute. </td></tr>
+    <tr><td class="paramname">sequential</td><td>When true, no other request sharing this limit may start until the current request (including all its retries) has finished. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A unique identifier for the created rate limit. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Handle for the created rate limit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00023">23</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00027">27</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
-<a id="aa7df4dbbd3e7e1747faeb0460cb6a71f" name="aa7df4dbbd3e7e1747faeb0460cb6a71f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7df4dbbd3e7e1747faeb0460cb6a71f">&#9670;&#160;</a></span>create_rate_limit_rps()</h2>
+<a id="acef313e32a8c115a160b92cd6cbc3682" name="acef313e32a8c115a160b92cd6cbc3682"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acef313e32a8c115a160b92cd6cbc3682">&#9670;&#160;</a></span>create_rate_limit_rps()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -788,10 +931,14 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">long kurlyk::create_rate_limit_rps </td>
+          <td class="memname"><a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> kurlyk::create_rate_limit_rps </td>
           <td>(</td>
-          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>requests_per_second</em></span></td><td>)</td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>requests_per_second</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>sequential</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -801,16 +948,17 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a rate limit based on Requests Per Second (RPS). </p>
+<p>Creates a RAII rate-limit based on Requests Per Second (RPS). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">requests_per_second</td><td>Maximum number of requests allowed per second. </td></tr>
+    <tr><td class="paramname">sequential</td><td>When true, no other request sharing this limit may start until the current request (including all its retries) has finished. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A unique identifier for the created rate limit. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Handle for the created rate limit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00031">31</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00037">37</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -844,6 +992,36 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aa6e7947ad409eb0e9d7202498b2002cf" name="aa6e7947ad409eb0e9d7202498b2002cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6e7947ad409eb0e9d7202498b2002cf">&#9670;&#160;</a></span>generate_group_id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t kurlyk::generate_group_id </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generates a new group ID. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new group ID. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00071">71</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
 <a id="aa01eb3e3c8b5a6c6506e25de1bbb43c5" name="aa01eb3e3c8b5a6c6506e25de1bbb43c5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa01eb3e3c8b5a6c6506e25de1bbb43c5">&#9670;&#160;</a></span>generate_request_id()</h2>
 
@@ -870,7 +1048,37 @@ Functions</h2></td></tr>
 <p>Generates a new unique request ID. </p>
 <dl class="section return"><dt>Returns</dt><dd>A new unique request ID. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00045">45</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00065">65</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a645d2b32b9bcc5e0d6de78dadb3052e0" name="a645d2b32b9bcc5e0d6de78dadb3052e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a645d2b32b9bcc5e0d6de78dadb3052e0">&#9670;&#160;</a></span>get_rate_limit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> kurlyk::get_rate_limit </td>
+          <td>(</td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>limit_id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a manager-owned rate-limit handle by ID. </p>
+<dl class="section note"><dt>Note</dt><dd>Returns empty if the manager-owned handle was already released. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00044">44</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -917,7 +1125,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair containing the unique request ID and a future with the response details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00391">391</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00450">450</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -976,7 +1184,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00377">377</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00436">436</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1029,7 +1237,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00362">362</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00421">421</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1082,7 +1290,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair containing the unique request ID and a future with the response details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00463">463</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00522">522</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1147,7 +1355,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00447">447</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00506">506</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1206,7 +1414,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00430">430</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00489">489</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1283,7 +1491,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00329">329</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00388">388</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1354,7 +1562,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00294">294</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00353">353</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1413,7 +1621,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair containing the unique request ID and a future with the response details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00250">250</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00309">309</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1484,7 +1692,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00218">218</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00277">277</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1549,7 +1757,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The unique identifier of the HTTP request if successfully added, or 0 on failure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00186">186</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00245">245</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1585,7 +1793,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> with the response details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00160">160</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00219">219</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1626,7 +1834,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the request was successfully added to the manager, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00151">151</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00210">210</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1697,7 +1905,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A ready <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> describing the rejection. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00097">97</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00156">156</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1727,7 +1935,7 @@ Functions</h2></td></tr>
 <p>Returns the current global pending queue limit. </p>
 <dl class="section return"><dt>Returns</dt><dd>Configured queue limit, or <span class="tt">0</span> if the queue is unbounded. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00057">57</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00083">83</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1854,8 +2062,39 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a188c29dde9ea6118fe9a821ace7dfd9e" name="a188c29dde9ea6118fe9a821ace7dfd9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a188c29dde9ea6118fe9a821ace7dfd9e">&#9670;&#160;</a></span>remove_limit() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool kurlyk::remove_limit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>limit</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Releases manager-owned rate-limit handle. </p>
+<dl class="section note"><dt>Note</dt><dd>Physical limit data may remain alive while requests still hold handles. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the rate limit was successfully removed, or false if the rate limit ID was not found. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00059">59</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+
+</div>
+</div>
 <a id="abe5ef66530eb2fa86cda3acd58e88c5d" name="abe5ef66530eb2fa86cda3acd58e88c5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe5ef66530eb2fa86cda3acd58e88c5d">&#9670;&#160;</a></span>remove_limit()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abe5ef66530eb2fa86cda3acd58e88c5d">&#9670;&#160;</a></span>remove_limit() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1877,7 +2116,8 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Removes an existing rate limit with the specified identifier. </p>
+<p>Releases manager-owned rate-limit handle by ID. </p>
+<dl class="section note"><dt>Note</dt><dd>Physical limit data may remain alive while requests still hold handles. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">limit_id</td><td>The unique identifier of the rate limit to be removed. </td></tr>
@@ -1886,7 +2126,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the rate limit was successfully removed, or false if the rate limit ID was not found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00039">39</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00052">52</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1926,7 +2166,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00113">113</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00172">172</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -1961,7 +2201,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00051">51</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00077">77</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -2032,7 +2272,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structkurlyk_1_1SubmitResult.html" title="Represents the synchronous result of trying to enqueue or submit work.">SubmitResult</a> describing whether the request was accepted into the queue. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00136">136</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00195">195</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
 </div>
 </div>

@@ -11,6 +11,7 @@ var classkurlyk_1_1core_1_1NetworkWorker =
     [ "handle_error", "classkurlyk_1_1core_1_1NetworkWorker.html#a6371b46b732d5f1208ca92f87b7b3819", null ],
     [ "has_pending_tasks", "classkurlyk_1_1core_1_1NetworkWorker.html#aa3723ca939c54949dcc365a9c7afc0ff", null ],
     [ "is_loaded", "classkurlyk_1_1core_1_1NetworkWorker.html#a3132fc5004942530f49170193a776abf", null ],
+    [ "is_worker_thread", "classkurlyk_1_1core_1_1NetworkWorker.html#ad4ae7f9325100827d9bef4467cc5e064", null ],
     [ "notify", "classkurlyk_1_1core_1_1NetworkWorker.html#a05248e914a6f70ffc8cb678835c86c91", null ],
     [ "operator=", "classkurlyk_1_1core_1_1NetworkWorker.html#a755d42c6d621c1b3d023c7efc405e2fc", null ],
     [ "process", "classkurlyk_1_1core_1_1NetworkWorker.html#a66c599a6b1995dc77f96567fadb831ae", null ],
@@ -31,5 +32,6 @@ var classkurlyk_1_1core_1_1NetworkWorker =
     [ "m_notify_mutex", "classkurlyk_1_1core_1_1NetworkWorker.html#ae743a4e2ea17391b54fe3f419641a469", null ],
     [ "m_shutdown", "classkurlyk_1_1core_1_1NetworkWorker.html#a587df508f64aa9789e7df5a2099e5e24", null ],
     [ "m_tasks_list", "classkurlyk_1_1core_1_1NetworkWorker.html#aa051a021a4c6b1294ad5dd3af5d594e7", null ],
-    [ "m_tasks_list_mutex", "classkurlyk_1_1core_1_1NetworkWorker.html#acc24d046048d6c198b9f4955bf4e5610", null ]
+    [ "m_tasks_list_mutex", "classkurlyk_1_1core_1_1NetworkWorker.html#acc24d046048d6c198b9f4955bf4e5610", null ],
+    [ "m_worker_thread_id", "classkurlyk_1_1core_1_1NetworkWorker.html#ad4ba30eb4587cefb56128143c0ef90f2", null ]
 ];

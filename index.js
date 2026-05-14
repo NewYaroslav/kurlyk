@@ -9,6 +9,8 @@ var index =
         [ "Using a proxy", "index.html#http_proxy", null ],
         [ "Measuring latency", "index.html#http_ping", null ],
         [ "Calling HTTP requests", "index.html#http_variants", null ],
+        [ "Cancellation scopes", "index.html#http_cancellation", null ],
+        [ "HTTP rate limit lifetime", "index.html#http_rate_limits", null ],
         [ "Streaming response chunks", "index.html#http_streaming", null ],
         [ "HTTP admission and queue limits", "index.html#http_backpressure", null ]
       ] ],

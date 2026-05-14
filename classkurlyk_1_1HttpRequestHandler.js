@@ -7,6 +7,7 @@ var classkurlyk_1_1HttpRequestHandler =
     [ "fill_response_timings", "classkurlyk_1_1HttpRequestHandler.html#a02395820d729562851235878f6a3ec6f", null ],
     [ "get_ca_file_path", "classkurlyk_1_1HttpRequestHandler.html#a32f9dde0cb3b990844fc60974e484d04", null ],
     [ "get_curl", "classkurlyk_1_1HttpRequestHandler.html#aa0ca7f724937e6fe0eac40424086acb4", null ],
+    [ "get_group_id", "classkurlyk_1_1HttpRequestHandler.html#a6e8d2b09d449255bbdd79d657c1cf1f7", null ],
     [ "get_request_context", "classkurlyk_1_1HttpRequestHandler.html#aab7c88822952c44e00f8db3fe8037fcf", null ],
     [ "get_request_id", "classkurlyk_1_1HttpRequestHandler.html#a90904611661f76a0774c3e8a8fa22efb", null ],
     [ "handle_curl_message", "classkurlyk_1_1HttpRequestHandler.html#a6c1efa9457f52e9ea2c48de751fe80d0", null ],

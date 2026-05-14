@@ -121,6 +121,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a57ed914c2e94943bf48b59b2fc582079"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispatches an exception to all registered error handlers.  <br /></td></tr>
 <tr class="memitem:a6371b46b732d5f1208ca92f87b7b3819" id="r_a6371b46b732d5f1208ca92f87b7b3819"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a6371b46b732d5f1208ca92f87b7b3819">handle_error</a> (std::exception_ptr eptr, const char *msg, const char *file, int line, const char *func)</td></tr>
 <tr class="memdesc:a6371b46b732d5f1208ca92f87b7b3819"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles an exception captured as exception_ptr.  <br /></td></tr>
+<tr class="memitem:ad4ae7f9325100827d9bef4467cc5e064" id="r_ad4ae7f9325100827d9bef4467cc5e064"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ad4ae7f9325100827d9bef4467cc5e064">is_worker_thread</a> () const</td></tr>
+<tr class="memdesc:ad4ae7f9325100827d9bef4467cc5e064"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the calling thread is the worker thread.  <br /></td></tr>
 <tr class="memitem:a3aaf9e4b556c1696075611b20dddd1c1" id="r_a3aaf9e4b556c1696075611b20dddd1c1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3aaf9e4b556c1696075611b20dddd1c1">add_task</a> (std::function&lt; void()&gt; task)</td></tr>
 <tr class="memdesc:a3aaf9e4b556c1696075611b20dddd1c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a task to the queue and notifies the worker thread.  <br /></td></tr>
 <tr class="memitem:aa6b6444e9bcf7eb28f35473d16059fcb" id="r_aa6b6444e9bcf7eb28f35473d16059fcb"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa6b6444e9bcf7eb28f35473d16059fcb">register_manager</a> (<a class="el" href="classkurlyk_1_1core_1_1INetworkTaskManager.html">INetworkTaskManager</a> *manager)</td></tr>
@@ -164,12 +166,14 @@ Private Attributes</h2></td></tr>
 <tr class="memdesc:a831cb2e64d4af46292c4ad30415ac27e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Future for managing asynchronous worker execution.  <br /></td></tr>
 <tr class="memitem:a587df508f64aa9789e7df5a2099e5e24" id="r_a587df508f64aa9789e7df5a2099e5e24"><td class="memItemLeft">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a587df508f64aa9789e7df5a2099e5e24">m_shutdown</a> = ATOMIC_VAR_INIT(false)</td></tr>
 <tr class="memdesc:a587df508f64aa9789e7df5a2099e5e24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating if shutdown has been requested.  <br /></td></tr>
+<tr class="memitem:ad4ba30eb4587cefb56128143c0ef90f2" id="r_ad4ba30eb4587cefb56128143c0ef90f2"><td class="memItemLeft">std::thread::id&#160;</td><td class="memItemRight"><a class="el" href="#ad4ba30eb4587cefb56128143c0ef90f2">m_worker_thread_id</a></td></tr>
+<tr class="memdesc:ad4ba30eb4587cefb56128143c0ef90f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of the async worker thread, if started.  <br /></td></tr>
 <tr class="memitem:ae743a4e2ea17391b54fe3f419641a469" id="r_ae743a4e2ea17391b54fe3f419641a469"><td class="memItemLeft">std::mutex&#160;</td><td class="memItemRight"><a class="el" href="#ae743a4e2ea17391b54fe3f419641a469">m_notify_mutex</a></td></tr>
 <tr class="memdesc:ae743a4e2ea17391b54fe3f419641a469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex for managing worker notifications.  <br /></td></tr>
 <tr class="memitem:a6b054713838d5eaaa5a95981bcfb79f3" id="r_a6b054713838d5eaaa5a95981bcfb79f3"><td class="memItemLeft">std::condition_variable&#160;</td><td class="memItemRight"><a class="el" href="#a6b054713838d5eaaa5a95981bcfb79f3">m_notify_condition</a></td></tr>
 <tr class="memdesc:a6b054713838d5eaaa5a95981bcfb79f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Condition variable for notifying the worker.  <br /></td></tr>
 <tr class="memitem:a9ff5628fab1aea72f25ace7f250bd52a" id="r_a9ff5628fab1aea72f25ace7f250bd52a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a9ff5628fab1aea72f25ace7f250bd52a">m_notify</a> = false</td></tr>
-<tr class="memdesc:a9ff5628fab1aea72f25ace7f250bd52a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating whether a notification is pending.  <br /></td></tr>
+<tr class="memdesc:a9ff5628fab1aea72f25ace7f250bd52a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating whether a notification is pending. Access is always guarded by m_notify_mutex; atomic is unnecessary because the mutex provides the happens-before relation.  <br /></td></tr>
 <tr class="memitem:ad08056bd53e46f3ebc9f1eaf1b51f194" id="r_ad08056bd53e46f3ebc9f1eaf1b51f194"><td class="memItemLeft">std::mutex&#160;</td><td class="memItemRight"><a class="el" href="#ad08056bd53e46f3ebc9f1eaf1b51f194">m_is_worker_started_mutex</a></td></tr>
 <tr class="memdesc:ad08056bd53e46f3ebc9f1eaf1b51f194"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex to control worker thread initialization.  <br /></td></tr>
 <tr class="memitem:a2509769245f89a76777cd635cdd8a359" id="r_a2509769245f89a76777cd635cdd8a359"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a2509769245f89a76777cd635cdd8a359">m_is_worker_started</a> = false</td></tr>
@@ -191,7 +195,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p>Singleton worker that manages asynchronous network operations, including HTTP requests and WebSocket events. </p>
 <p>The <span class="tt"><a class="el" href="classkurlyk_1_1core_1_1NetworkWorker.html" title="Singleton worker that manages asynchronous network operations, including HTTP requests and WebSocket ...">NetworkWorker</a></span> is responsible for managing and processing network-related tasks in a separate thread. It supports adding tasks to a queue, notifying and starting the worker thread, and handling graceful shutdown. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00018">18</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00020">20</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 </div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="adb3a3f6ee021097470f74ec38fdfdfb9" name="adb3a3f6ee021097470f74ec38fdfdfb9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adb3a3f6ee021097470f74ec38fdfdfb9">&#9670;&#160;</a></span>ErrorHandler</h2>
@@ -205,7 +209,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00020">20</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00022">22</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -235,7 +239,7 @@ Private Attributes</h2></td></tr>
 
 <p>Private constructor to enforce singleton pattern. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00230">230</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00239">239</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -264,7 +268,7 @@ Private Attributes</h2></td></tr>
 
 <p>Private destructor, ensuring the worker thread stops on destruction. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00236">236</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00245">245</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -327,7 +331,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00031">31</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00033">33</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -362,7 +366,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00090">90</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00097">97</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -392,7 +396,7 @@ Private Attributes</h2></td></tr>
 <p>Get the singleton instance of <a class="el" href="classkurlyk_1_1core_1_1NetworkWorker.html" title="Singleton worker that manages asynchronous network operations, including HTTP requests and WebSocket ...">NetworkWorker</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the singleton instance. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00024">24</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00026">26</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -450,7 +454,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00042">42</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00044">44</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -508,7 +512,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00069">69</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00071">71</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -538,7 +542,7 @@ Private Attributes</h2></td></tr>
 <p>Checks if there are any pending tasks in the task list. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if there are pending tasks, otherwise false. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00263">263</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00272">272</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -568,7 +572,36 @@ Private Attributes</h2></td></tr>
 <p>Checks if the <a class="el" href="classkurlyk_1_1core_1_1NetworkWorker.html" title="Singleton worker that manages asynchronous network operations, including HTTP requests and WebSocket ...">NetworkWorker</a> has pending tasks or active network events. </p>
 <p>Checks if there are any tasks or events in the HTTP or WebSocket manager or in the task list. </p><dl class="section return"><dt>Returns</dt><dd>True if there are tasks or events to process; otherwise, false. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00272">272</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00281">281</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ad4ae7f9325100827d9bef4467cc5e064" name="ad4ae7f9325100827d9bef4467cc5e064"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4ae7f9325100827d9bef4467cc5e064">&#9670;&#160;</a></span>is_worker_thread()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool kurlyk::core::NetworkWorker::is_worker_thread </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if the calling thread is the worker thread. </p>
+
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00091">91</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -598,7 +631,7 @@ Private Attributes</h2></td></tr>
 <p>Notifies the worker to begin processing requests or tasks. </p>
 <p>Signals the condition variable to wake up the worker thread if it is waiting, allowing tasks to be processed. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00119">119</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00126">126</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -655,7 +688,7 @@ Private Attributes</h2></td></tr>
 <p>Processes all queued tasks and active HTTP and WebSocket requests. </p>
 <p>Processes pending tasks in the task list and manages network requests in both HTTP and WebSocket managers. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00109">109</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00116">116</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -685,7 +718,7 @@ Private Attributes</h2></td></tr>
 <p>Processes all tasks in the task list, then clears the list. </p>
 <p>This method moves tasks from the task list to a local list, processes each one, and then clears the local list. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00249">249</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00258">258</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -720,7 +753,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00099">99</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00106">106</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -750,7 +783,7 @@ Private Attributes</h2></td></tr>
 <p>Shuts down the worker, clearing all active requests and pending tasks. </p>
 <p>Stops both HTTP and WebSocket managers and processes any remaining tasks in the queue. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00206">206</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00214">214</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -785,7 +818,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00130">130</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00137">137</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -815,7 +848,7 @@ Private Attributes</h2></td></tr>
 <p>Stops the worker thread, ensuring all tasks are completed. </p>
 <p>Signals the worker thread to stop and waits for it to complete all tasks before fully shutting down. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00182">182</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00190">190</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -842,7 +875,7 @@ Private Attributes</h2></td></tr>
 
 <p>Collection of registered error handlers. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00226">226</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00235">235</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -868,7 +901,7 @@ Private Attributes</h2></td></tr>
 
 <p>Mutex guarding the error handler list. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00225">225</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00234">234</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -894,7 +927,7 @@ Private Attributes</h2></td></tr>
 
 <p>Future for managing asynchronous worker execution. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00214">214</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00222">222</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -920,7 +953,7 @@ Private Attributes</h2></td></tr>
 
 <p>Flag indicating if the worker thread is started. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00220">220</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00229">229</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -946,7 +979,7 @@ Private Attributes</h2></td></tr>
 
 <p>Mutex to control worker thread initialization. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00219">219</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00228">228</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -972,7 +1005,7 @@ Private Attributes</h2></td></tr>
 
 <p>List of registered network task managers. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00224">224</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00233">233</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -998,7 +1031,7 @@ Private Attributes</h2></td></tr>
 
 <p>Mutex protecting access to registered managers. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00223">223</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00232">232</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -1022,9 +1055,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Flag indicating whether a notification is pending. </p>
+<p>Flag indicating whether a notification is pending. Access is always guarded by m_notify_mutex; atomic is unnecessary because the mutex provides the happens-before relation. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00218">218</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00227">227</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -1050,7 +1083,7 @@ Private Attributes</h2></td></tr>
 
 <p>Condition variable for notifying the worker. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00217">217</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00226">226</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -1076,7 +1109,7 @@ Private Attributes</h2></td></tr>
 
 <p>Mutex for managing worker notifications. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00216">216</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00225">225</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -1102,7 +1135,7 @@ Private Attributes</h2></td></tr>
 
 <p>Flag indicating if shutdown has been requested. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00215">215</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00223">223</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -1128,7 +1161,7 @@ Private Attributes</h2></td></tr>
 
 <p>List of tasks queued for processing by the worker. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00222">222</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00231">231</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>
@@ -1154,7 +1187,33 @@ Private Attributes</h2></td></tr>
 
 <p>Mutex for protecting access to the task list. </p>
 
-<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00221">221</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00230">230</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ad4ba30eb4587cefb56128143c0ef90f2" name="ad4ba30eb4587cefb56128143c0ef90f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4ba30eb4587cefb56128143c0ef90f2">&#9670;&#160;</a></span>m_worker_thread_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::thread::id kurlyk::core::NetworkWorker::m_worker_thread_id</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ID of the async worker thread, if started. </p>
+
+<p class="definition">Definition at line <a class="el" href="NetworkWorker_8hpp_source.html#l00224">224</a> of file <a class="el" href="NetworkWorker_8hpp_source.html">NetworkWorker.hpp</a>.</p>
 
 </div>
 </div>

@@ -1,19 +1,9 @@
 var searchData=
 [
-  ['_7eautoinitializer_0',['~AutoInitializer',['../classkurlyk_1_1startup_1_1AutoInitializer.html#ae380b9f56a9b52f31ce78bd350912ba3',1,'kurlyk::startup::AutoInitializer']]],
-  ['_7ebasewebsocketclient_1',['~BaseWebSocketClient',['../classkurlyk_1_1BaseWebSocketClient.html#a05ab6b2d026133ebddb8961376b01489',1,'kurlyk::BaseWebSocketClient']]],
-  ['_7eemscriptenwebsocketclientadapter_2',['~EmscriptenWebSocketClientAdapter',['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#a9ffe5575d8e3b97e6ddceefb2b770949',1,'kurlyk::EmscriptenWebSocketClientAdapter']]],
-  ['_7ehttpbatchrequesthandler_3',['~HttpBatchRequestHandler',['../classkurlyk_1_1HttpBatchRequestHandler.html#ac775d9e4f5a9a8deafa71effe6deb72d',1,'kurlyk::HttpBatchRequestHandler']]],
-  ['_7ehttpclient_4',['~HttpClient',['../classkurlyk_1_1HttpClient.html#a0ea2bc6276f2caa9019280de6820c9fd',1,'kurlyk::HttpClient']]],
-  ['_7ehttprequesthandler_5',['~HttpRequestHandler',['../classkurlyk_1_1HttpRequestHandler.html#a037b47d5379c26810e8538a78014236c',1,'kurlyk::HttpRequestHandler']]],
-  ['_7ehttprequestmanager_6',['~HttpRequestManager',['../classkurlyk_1_1HttpRequestManager.html#a74758f6e78a33bd9a61abd2f69e6dd22',1,'kurlyk::HttpRequestManager']]],
-  ['_7einetworktaskmanager_7',['~INetworkTaskManager',['../classkurlyk_1_1core_1_1INetworkTaskManager.html#a91c2fb48a15fb0ebc693c2c76c817055',1,'kurlyk::core::INetworkTaskManager']]],
-  ['_7eiwebsocketclient_8',['~IWebSocketClient',['../classkurlyk_1_1IWebSocketClient.html#ab5e16e901b0beec2ddd2724ee41308cd',1,'kurlyk::IWebSocketClient']]],
-  ['_7eiwebsocketsender_9',['~IWebSocketSender',['../classkurlyk_1_1IWebSocketSender.html#ac2530fb72f28a66de3243a40b78c1413',1,'kurlyk::IWebSocketSender']]],
-  ['_7enetworkworker_10',['~NetworkWorker',['../classkurlyk_1_1core_1_1NetworkWorker.html#abb2b3a00d293db5c7c9ddf4182516d48',1,'kurlyk::core::NetworkWorker']]],
-  ['_7esimplewebsocketclientadapter_11',['~SimpleWebSocketClientAdapter',['../classkurlyk_1_1SimpleWebSocketClientAdapter.html#abc783896a7c0120201888f7099558393',1,'kurlyk::SimpleWebSocketClientAdapter']]],
-  ['_7esimplewebsocketworker_12',['~SimpleWebSocketWorker',['../classkurlyk_1_1SimpleWebSocketWorker.html#a1e7da71773f7740fde70999bcd83a0eb',1,'kurlyk::SimpleWebSocketWorker']]],
-  ['_7ethreadsafeprintstream_13',['~ThreadSafePrintStream',['../classkurlyk_1_1utils_1_1ThreadSafePrintStream.html#adcefa1a2ce07227e1b964e00c4c278b2',1,'kurlyk::utils::ThreadSafePrintStream']]],
-  ['_7ewebsocketclient_14',['~WebSocketClient',['../classkurlyk_1_1WebSocketClient.html#ae6898756b40fc593ce22521954f049c7',1,'kurlyk::WebSocketClient']]],
-  ['_7ewebsocketmanager_15',['~WebSocketManager',['../classkurlyk_1_1WebSocketManager.html#a8ec506304fc4077bff4ae307af8f6ecf',1,'kurlyk::WebSocketManager']]]
+  ['websocket_5ferror_5fcategory_0',['websocket_error_category',['../namespacekurlyk_1_1utils.html#a8725dcec07ab6f52f4e6be5b150b8a85',1,'kurlyk::utils']]],
+  ['websocketclient_1',['WebSocketClient',['../classkurlyk_1_1WebSocketClient.html#af45439eff5614a8796b838da6a45b106',1,'kurlyk::WebSocketClient::WebSocketClient()'],['../classkurlyk_1_1WebSocketClient.html#aaf33b6dfd7900849fe03c99231fcf07e',1,'kurlyk::WebSocketClient::WebSocketClient(std::unique_ptr&lt; WebSocketConfig &gt; config, std::function&lt; void(bool)&gt; callback=nullptr)'],['../classkurlyk_1_1WebSocketClient.html#a623e9f67df1682978551d7d78feb29ec',1,'kurlyk::WebSocketClient::WebSocketClient(const std::string &amp;url, const Headers &amp;headers=Headers(), const std::string &amp;proxy_server=std::string(), const std::string &amp;proxy_auth=std::string(), ProxyType proxy_type=ProxyType::PROXY_HTTP, long request_timeout=20, bool reconnect=true, bool verify_cert=true, const std::string &amp;ca_file=std::string(), int rpm=200)'],['../classkurlyk_1_1WebSocketClient.html#aa832fdb8cbf485237bdcfb97e943a6bc',1,'kurlyk::WebSocketClient::WebSocketClient(const WebSocketClient &amp;)=delete']]],
+  ['websocketmanager_2',['WebSocketManager',['../classkurlyk_1_1WebSocketManager.html#a143978182276830af6d6d7742059eaae',1,'kurlyk::WebSocketManager::WebSocketManager()=default'],['../classkurlyk_1_1WebSocketManager.html#a9325b8be9f3b1cfcfcd5b4168d46c4a8',1,'kurlyk::WebSocketManager::WebSocketManager(const WebSocketManager &amp;)=delete']]],
+  ['websocketsendinfo_3',['WebSocketSendInfo',['../classkurlyk_1_1WebSocketSendInfo.html#ae1dbae1f1b510a80f4e19088439d533a',1,'kurlyk::WebSocketSendInfo']]],
+  ['write_5fhttp_5fresponse_5fbody_4',['write_http_response_body',['../classkurlyk_1_1HttpRequestHandler.html#a2cbcadf813fd1a419a0110556ae59596',1,'kurlyk::HttpRequestHandler']]],
+  ['write_5fresponse_5fbody_5',['write_response_body',['../classkurlyk_1_1HttpRequestHandler.html#a1a110c020b10057ecb41ccb29be8d5db',1,'kurlyk::HttpRequestHandler']]]
 ];
