@@ -284,7 +284,7 @@ namespace kurlyk {
 
             auto it = general_id != 0 ? m_limits.find(general_id) : m_limits.end();
             if (it != m_limits.end()) {
-                max_delay = std::max(
+                max_delay = (std::max)(
                     max_delay,
                     time_until_limit_allows<Duration>(it->second, general_key, now)
                 );
@@ -292,7 +292,7 @@ namespace kurlyk {
 
             it = specific_id != 0 ? m_limits.find(specific_id) : m_limits.end();
             if (it != m_limits.end()) {
-                max_delay = std::max(
+                max_delay = (std::max)(
                     max_delay,
                     time_until_limit_allows<Duration>(it->second, specific_key, now)
                 );
@@ -327,7 +327,7 @@ namespace kurlyk {
             std::lock_guard<std::mutex> lock(m_mutex);
 
             const auto now = std::chrono::steady_clock::now();
-            Duration min_delay = Duration::max();
+            Duration min_delay = (Duration::max)();
             bool has_blocking_delay = false;
 
             for (const auto& pair : m_limits) {
@@ -518,7 +518,7 @@ namespace kurlyk {
         ) const {
             if (limit.sequential &&
                 !state.in_flight_tokens.empty()) {
-                return Duration::max();
+                return (Duration::max)();
             }
 
             if (limit.requests_per_period == 0) {
