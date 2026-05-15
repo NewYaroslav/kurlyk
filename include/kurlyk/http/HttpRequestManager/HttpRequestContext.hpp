@@ -5,10 +5,6 @@
 /// \file HttpRequestContext.hpp
 /// \brief Defines the HttpRequestContext class for managing HTTP request context, including retries and timing.
 
-#include <atomic>
-#include <cstdint>
-#include <functional>
-
 namespace kurlyk {
 
     /// \class HttpRequestContext

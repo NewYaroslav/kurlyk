@@ -7,7 +7,9 @@
 
 // Standard library
 #include <atomic>
+#include <algorithm>
 #include <chrono>
+#include <cstdint>
 #include <string>
 #include <cstring>
 #include <functional>
@@ -16,12 +18,14 @@
 #include <list>
 #include <set>
 #include <unordered_map>
+#include <unordered_set>
 #include <system_error>
 #include <memory>
 #include <atomic>
 #include <mutex>
 #include <condition_variable>
 #include <thread>
+
 
 // Internal modules
 #include "types.hpp"
