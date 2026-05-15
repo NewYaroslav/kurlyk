@@ -138,6 +138,9 @@ Use this when adding a compile-time feature toggle.
 - Do not edit vendored code under `libs/` except for an explicit dependency
   update task.
 
+See `guides/concurrency.md` for full thread-safety contracts, callback/mutex
+ordering rules, and shutdown/cancellation invariants.
+
 ## Project Map
 
 | Path | Purpose | Edit when |

@@ -6,14 +6,18 @@ access these playbooks through `AGENTS.md`.
 ## Reading Order
 
 1. `codebase-orientation.md` for the library model, public API, and source layout.
-2. `rate-limiting-and-streaming.md` for rate-limiter architecture, partitioned
+2. `concurrency.md` for thread-safety contracts, callback/mutex ordering,
+   and shutdown invariants.
+3. `rate-limiting-and-streaming.md` for rate-limiter architecture, partitioned
    limits, streaming callbacks, and backpressure.
-3. The task-specific playbook for build, C++, headers, dependencies, or commits.
+4. The task-specific playbook for build, C++, headers, dependencies, or commits.
 
 ## Files
 
 - `codebase-orientation.md` — project map, subsystem model, extension recipes,
   safety invariants, and utility inventory.
+- `concurrency.md` — thread-safety contracts, callback/mutex ordering rules,
+  exception safety, and shutdown/cancellation invariants.
 - `rate-limiting-and-streaming.md` — `HttpRateLimiter`, `HttpRateLimitHandle`,
   `HttpBatchRequestHandler`, streaming callbacks, and backpressure design.
 - `dependencies.md` — dependency policy for libcurl, OpenSSL, Asio,

@@ -22,6 +22,17 @@ with rate limiting, automatic reconnection, and proxy support.
 - Use Doxygen comments for public APIs and non-obvious contracts.
 - Use Conventional Commits for commit messages.
 
+## Before Editing
+
+Match the task to the guide and read it before changing code:
+
+| Task area | Read first |
+| --- | --- |
+| HTTP request manager, rate limiter, retry, cancellation, streaming | `guides/concurrency.md` + `guides/rate-limiting-and-streaming.md` |
+| CMake, build, integration tests | `guides/build-and-test.md` |
+| Public API, headers, naming, Doxygen style | `guides/codebase-orientation.md` + `guides/cpp-development-guidelines.md` |
+| Commit messages | `guides/commit-conventions.md` |
+
 ## Critical Defaults
 
 - Check `git status --short` before editing and do not overwrite user changes.

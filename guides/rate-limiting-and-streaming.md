@@ -208,6 +208,9 @@ the error path, and continues.
   the model is cooperative: callbacks run on `NetworkWorker` and must return
   quickly.
 
+For general thread-safety rules — callback/mutex ordering, worker blocking,
+exception safety, and shutdown invariants — see `guides/concurrency.md`.
+
 ## Extension Recipes
 
 ### Add a New Rate-Limit Dimension
