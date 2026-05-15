@@ -231,6 +231,38 @@ namespace kurlyk {
             set_rate_limit(requests_per_second, period_ms, type, sequential);
         }
 
+        /// \brief Sets the partition key for both rate limits (general and specific).
+        /// \param key Partition key used to separate rate-limit state within the same limit ID.
+        ///        Empty string means the default shared state.
+        void set_rate_limit_key(const std::string& key) {
+            m_request.general_rate_limit_key = key;
+            m_request.specific_rate_limit_key = key;
+        }
+
+        /// \brief Sets the partition key for the general rate limit.
+        /// \param key Partition key used to separate general rate-limit state.
+        ///        Empty string means the default shared state.
+        void set_general_rate_limit_key(const std::string& key) {
+            m_request.general_rate_limit_key = key;
+        }
+
+        /// \brief Sets the partition key for the specific rate limit.
+        /// \param key Partition key used to separate specific rate-limit state.
+        ///        Empty string means the default shared state.
+        void set_specific_rate_limit_key(const std::string& key) {
+            m_request.specific_rate_limit_key = key;
+        }
+
+        /// \brief Sets independent partition keys for general and specific rate limits.
+        /// \param general_key Partition key for the general rate limit.
+        /// \param specific_key Partition key for the specific rate limit.
+        void set_rate_limit_keys(
+                const std::string& general_key,
+                const std::string& specific_key) {
+            m_request.general_rate_limit_key = general_key;
+            m_request.specific_rate_limit_key = specific_key;
+        }
+
         /// \brief Sets the Accept-Encoding header.
         /// \param identity Enable identity encoding.
         /// \param deflate Enable deflate encoding.

@@ -23,7 +23,7 @@ If, for some reason, other libraries such as *easyhttp-cpp, curl_request, curlpp
 - Asynchronous HTTP and WebSocket requests.
 - Background worker or synchronous processing via `kurlyk::process()`.
 - HTTP callback API and `std::future` API.
-- Rate limits, retry, proxy, custom headers, cookies, and timeouts.
+- Rate limits (partitioned by key), retry, proxy, custom headers, cookies, and timeouts.
 - Streaming HTTP responses with a callback for each chunk.
 - WebSocket events, message sending, and automatic reconnection.
 - Bounded admission/backpressure for the HTTP pending queue and WebSocket send queue.

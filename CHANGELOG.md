@@ -26,6 +26,9 @@ All notable changes to this project will be documented in this file.
 - Added optional sequential rate-limit mode (`create_rate_limit(..., sequential=true)`) so no other request sharing the limit may start while any request (including retries) is still in-flight.
 - Added in-flight token tracking so sequential rate-limit locks are only released when `HttpRequestContext::complete()` is called (success, retry exhaustion, cancellation, or handler destruction).
 - Added integration test and example coverage for the sequential rate-limit feature.
+- Added partitioned rate-limit keys so a single rate-limit ID can be split by string key. Requests with the same key share state; different keys are independent. Empty key preserves backward-compatible global behavior.
+- Added `HttpClient::set_rate_limit_key(...)`, `set_general_rate_limit_key(...)`, `set_specific_rate_limit_key(...)`, and `set_rate_limit_keys(...)` for setting partition keys on outgoing requests.
+- Added integration test coverage for partitioned rate limits covering key independence, same-key blocking, empty-key global fallback, sequential partitioning, per-key release, and per-key delay calculation.
 
 ## [v1.0.1] - 2025-08-16
 - Documented automatic initialization behavior on the Doxygen mainpage.

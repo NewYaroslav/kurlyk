@@ -36,6 +36,10 @@ add_executable(http_client_rate_limit_api_test
 add_executable(sequential_rate_limit_test
 	sequential_rate_limit_main.cpp
 )
+
+add_executable(rate_limit_partition_test
+	rate_limit_partition_main.cpp
+)
 list(APPEND CMAKE_MODULE_PATH 
 	"${CMAKE_CURRENT_LIST_DIR}/../../cmake/deps"
 	"${CMAKE_CURRENT_LIST_DIR}/../../cmake"
@@ -76,6 +80,7 @@ target_link_libraries(rate_limit_lifetime_test PRIVATE kurlyk)
 target_link_libraries(request_group_cancel_test PRIVATE kurlyk)
 target_link_libraries(http_client_rate_limit_api_test PRIVATE kurlyk)
 target_link_libraries(sequential_rate_limit_test PRIVATE kurlyk)
+target_link_libraries(rate_limit_partition_test PRIVATE kurlyk)
 
 target_compile_features(integr_test PRIVATE cxx_std_17)
 target_compile_features(ws_local_test PRIVATE cxx_std_17)
@@ -84,6 +89,7 @@ target_compile_features(rate_limit_lifetime_test PRIVATE cxx_std_17)
 target_compile_features(request_group_cancel_test PRIVATE cxx_std_17)
 target_compile_features(http_client_rate_limit_api_test PRIVATE cxx_std_17)
 target_compile_features(sequential_rate_limit_test PRIVATE cxx_std_17)
+target_compile_features(rate_limit_partition_test PRIVATE cxx_std_17)
 
 if(MINGW)
 	target_compile_options(ws_local_test PRIVATE -Wa,-mbig-obj)
@@ -97,6 +103,7 @@ copy_runtime_dlls(rate_limit_lifetime_test)
 copy_runtime_dlls(request_group_cancel_test)
 copy_runtime_dlls(http_client_rate_limit_api_test)
 copy_runtime_dlls(sequential_rate_limit_test)
+copy_runtime_dlls(rate_limit_partition_test)
 
 add_test(NAME integr_test COMMAND integr_test)
 add_test(NAME ws_local_test COMMAND ws_local_test)
@@ -105,3 +112,4 @@ add_test(NAME rate_limit_lifetime_test COMMAND rate_limit_lifetime_test)
 add_test(NAME request_group_cancel_test COMMAND request_group_cancel_test)
 add_test(NAME http_client_rate_limit_api_test COMMAND http_client_rate_limit_api_test)
 add_test(NAME sequential_rate_limit_test COMMAND sequential_rate_limit_test)
+add_test(NAME rate_limit_partition_test COMMAND rate_limit_partition_test)

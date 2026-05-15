@@ -23,7 +23,7 @@
 - Асинхронное выполнение HTTP и WebSocket запросов.
 - Фоновый worker или синхронная обработка через `kurlyk::process()`.
 - HTTP callback API и `std::future` API.
-- Rate limits, retry, proxy, пользовательские заголовки, cookie и таймауты.
+- Rate limits (с разбиением по ключу), retry, proxy, пользовательские заголовки, cookie и таймауты.
 - Streaming HTTP responses с callback'ом на каждый chunk.
 - WebSocket events, отправка сообщений и автоматическое переподключение.
 - Bounded admission/backpressure для HTTP pending queue и WebSocket send queue.

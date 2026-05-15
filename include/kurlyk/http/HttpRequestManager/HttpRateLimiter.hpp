@@ -18,6 +18,10 @@ namespace kurlyk {
     /// remove_limit(id) only releases the manager-owned handle. If pending or
     /// active requests still hold copied handles, the limit remains active until
     /// those requests are destroyed.
+    ///
+    /// Each limit can be partitioned by string keys. Requests sharing the same key
+    /// within the same limit ID share rate-limit state; different keys are independent.
+    /// An empty key maps to the default shared state.
     class HttpRateLimiter {
     public:
         /// \brief Creates a new rate limit and returns its RAII handle.
@@ -34,11 +38,9 @@ namespace kurlyk {
             m_limits[id] = LimitData{
                 requests_per_period,
                 period_ms,
-                0,
-                std::chrono::steady_clock::now(),
                 sequential,
                 false,
-                std::unordered_set<uint64_t>()
+                {}
             };
 
             // Do not use make_shared here: private constructor access through
@@ -123,11 +125,15 @@ namespace kurlyk {
         /// \param general_limit General rate-limit handle (may be empty).
         /// \param specific_limit Specific rate-limit handle (may be empty).
         /// \param in_flight_token Token identifying the in-flight request; 0 skips sequential checks.
+        /// \param general_key Partition key for the general limit; empty means default state.
+        /// \param specific_key Partition key for the specific limit; empty means default state.
         /// \return True if the request is allowed, false otherwise (state unchanged on failure).
         bool allow_request(
                 const HttpRateLimitHandlePtr& general_limit,
                 const HttpRateLimitHandlePtr& specific_limit,
-                uint64_t in_flight_token
+                uint64_t in_flight_token,
+                const std::string& general_key,
+                const std::string& specific_key
             ) {
             std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -150,7 +156,7 @@ namespace kurlyk {
                 if (general_it->second.removed) {
                     general_limit_allowed = true;
                 } else {
-                    general_limit_allowed = can_pass(general_it->second, in_flight_token, now);
+                    general_limit_allowed = can_pass(general_it->second, general_key, in_flight_token, now);
                 }
             }
 
@@ -158,7 +164,7 @@ namespace kurlyk {
                 if (specific_it->second.removed) {
                     specific_limit_allowed = true;
                 } else {
-                    specific_limit_allowed = can_pass(specific_it->second, in_flight_token, now);
+                    specific_limit_allowed = can_pass(specific_it->second, specific_key, in_flight_token, now);
                 }
             }
 
@@ -168,25 +174,31 @@ namespace kurlyk {
 
             const bool same_limit =
                 general_id != 0 &&
-                general_id == specific_id;
+                general_id == specific_id &&
+                general_key == specific_key;
 
             if (general_it != m_limits.end() && !general_it->second.removed) {
-                commit_limit(general_it->second, in_flight_token, now);
+                commit_limit(general_it->second, general_key, in_flight_token, now);
             }
 
             if (!same_limit && specific_it != m_limits.end() && !specific_it->second.removed) {
-                commit_limit(specific_it->second, in_flight_token, now);
+                commit_limit(specific_it->second, specific_key, in_flight_token, now);
+            }
+
+            // Periodic garbage collection of stale keys.
+            if ((++m_gc_counter & 63) == 0) {
+                gc_stale_keys(now);
             }
 
             return true;
         }
 
-        /// \brief Handle-based overload without explicit token (token = 0, skips sequential checks).
+        /// \brief Handle-based overload without explicit token or keys (token = 0, keys empty).
         bool allow_request(
                 const HttpRateLimitHandlePtr& general_limit,
                 const HttpRateLimitHandlePtr& specific_limit
             ) {
-            return allow_request(general_limit, specific_limit, 0);
+            return allow_request(general_limit, specific_limit, 0, std::string(), std::string());
         }
 
         /// \brief Legacy API: checks if request is allowed by two limit IDs.
@@ -197,7 +209,9 @@ namespace kurlyk {
             return allow_request(
                 get_limit(general_rate_limit_id),
                 get_limit(specific_rate_limit_id),
-                0
+                0,
+                std::string(),
+                std::string()
             );
         }
 
@@ -207,10 +221,14 @@ namespace kurlyk {
         /// \param general_limit General rate-limit handle (may be empty).
         /// \param specific_limit Specific rate-limit handle (may be empty).
         /// \param in_flight_token Token identifying the in-flight request; 0 is a no-op.
+        /// \param general_key Partition key for the general limit.
+        /// \param specific_key Partition key for the specific limit.
         void release_request(
                 const HttpRateLimitHandlePtr& general_limit,
                 const HttpRateLimitHandlePtr& specific_limit,
-                uint64_t in_flight_token) {
+                uint64_t in_flight_token,
+                const std::string& general_key,
+                const std::string& specific_key) {
             if (in_flight_token == 0) return;
 
             std::lock_guard<std::mutex> lock(m_mutex);
@@ -222,25 +240,29 @@ namespace kurlyk {
             auto specific_it = specific_id != 0 ? m_limits.find(specific_id) : m_limits.end();
 
             if (general_it != m_limits.end() && general_it->second.sequential) {
-                general_it->second.in_flight_tokens.erase(in_flight_token);
-                if (general_it->second.removed && general_it->second.in_flight_tokens.empty()) {
-                    m_limits.erase(general_it);
-                }
+                release_key(general_it->second, general_key, in_flight_token);
             }
 
             if (specific_it != m_limits.end() && specific_it->second.sequential) {
-                specific_it->second.in_flight_tokens.erase(in_flight_token);
-                if (specific_it->second.removed && specific_it->second.in_flight_tokens.empty()) {
-                    m_limits.erase(specific_it);
-                }
+                release_key(specific_it->second, specific_key, in_flight_token);
             }
+        }
+
+        /// \brief Legacy overload without keys.
+        void release_request(
+                const HttpRateLimitHandlePtr& general_limit,
+                const HttpRateLimitHandlePtr& specific_limit,
+                uint64_t in_flight_token) {
+            release_request(general_limit, specific_limit, in_flight_token, std::string(), std::string());
         }
 
         /// \brief Calculates delay until request is allowed by two handles.
         template<typename Duration = std::chrono::milliseconds>
         Duration time_until_next_allowed(
             const HttpRateLimitHandlePtr& general_limit,
-            const HttpRateLimitHandlePtr& specific_limit
+            const HttpRateLimitHandlePtr& specific_limit,
+            const std::string& general_key,
+            const std::string& specific_key
             ) {
             std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -254,7 +276,7 @@ namespace kurlyk {
             if (it != m_limits.end()) {
                 max_delay = std::max(
                     max_delay,
-                    time_until_limit_allows<Duration>(it->second, now)
+                    time_until_limit_allows<Duration>(it->second, general_key, now)
                 );
             }
 
@@ -262,11 +284,20 @@ namespace kurlyk {
             if (it != m_limits.end()) {
                 max_delay = std::max(
                     max_delay,
-                    time_until_limit_allows<Duration>(it->second, now)
+                    time_until_limit_allows<Duration>(it->second, specific_key, now)
                 );
             }
 
             return max_delay;
+        }
+
+        /// \brief Legacy overload without keys.
+        template<typename Duration = std::chrono::milliseconds>
+        Duration time_until_next_allowed(
+            const HttpRateLimitHandlePtr& general_limit,
+            const HttpRateLimitHandlePtr& specific_limit
+            ) {
+            return time_until_next_allowed<Duration>(general_limit, specific_limit, std::string(), std::string());
         }
 
         /// \brief Legacy API: calculates delay by limit IDs.
@@ -274,7 +305,9 @@ namespace kurlyk {
         Duration time_until_next_allowed(long general_rate_limit_id, long specific_rate_limit_id) {
             return time_until_next_allowed<Duration>(
                 get_limit(general_rate_limit_id),
-                get_limit(specific_rate_limit_id)
+                get_limit(specific_rate_limit_id),
+                std::string(),
+                std::string()
             );
         }
 
@@ -290,15 +323,17 @@ namespace kurlyk {
             for (const auto& pair : m_limits) {
                 const auto& limit = pair.second;
 
-                const Duration delay = time_until_limit_allows<Duration>(limit, now);
-                if (delay.count() <= 0) {
-                    continue;
-                }
+                for (const auto& key_pair : limit.keys) {
+                    const Duration delay = time_until_key_allows<Duration>(limit, key_pair.second, now);
+                    if (delay.count() <= 0) {
+                        continue;
+                    }
 
-                has_blocking_delay = true;
+                    has_blocking_delay = true;
 
-                if (delay < min_delay) {
-                    min_delay = delay;
+                    if (delay < min_delay) {
+                        min_delay = delay;
+                    }
                 }
             }
 
@@ -308,16 +343,22 @@ namespace kurlyk {
     private:
         using time_point_t = std::chrono::steady_clock::time_point;
 
+        /// \struct KeyState
+        /// \brief Per-key mutable runtime state inside a rate limit.
+        struct KeyState {
+            long count = 0;
+            time_point_t start_time;
+            std::unordered_set<uint64_t> in_flight_tokens;
+        };
+
         /// \struct LimitData
-        /// \brief Internal state for one rate limit.
+        /// \brief Immutable limit parameters plus per-key mutable state.
         struct LimitData {
             long requests_per_period = 0;
             long period_ms = 0;
-            long count = 0;
-            time_point_t start_time;
             bool sequential = false;                               ///< When true, blocks other requests until the current one finishes.
-            bool removed = false;                                   ///< True when the manager-owned handle has been released; physical erase is deferred until in_flight_tokens is empty.
-            std::unordered_set<uint64_t> in_flight_tokens;        ///< Tokens of requests currently owning this sequential limit.
+            bool removed = false;                                   ///< True when the manager-owned handle has been released; physical erase is deferred until all keys are empty.
+            std::unordered_map<std::string, KeyState> keys;       ///< Mutable state per partition key.
         };
 
         /// \brief Physically removes LimitData from m_limits.
@@ -336,101 +377,189 @@ namespace kurlyk {
             }
             auto& limit = it->second;
             limit.removed = true;
-            if (!limit.in_flight_tokens.empty()) {
+            // Erase only if no keys hold runtime state.
+            if (!limit.keys.empty()) {
                 return false;
             }
             return m_limits.erase(limit_id) > 0;
         }
 
-        bool check_limit(const LimitData& limit_data, const time_point_t& now) const {
+        /// \brief Looks up a KeyState by key, creating it lazily if necessary.
+        KeyState& get_key_state(LimitData& limit, const std::string& key) {
+            return limit.keys[key];
+        }
+
+        /// \brief Looks up a KeyState by key for read-only access (no insertion).
+        const KeyState* find_key_state(const LimitData& limit, const std::string& key) const {
+            auto it = limit.keys.find(key);
+            if (it == limit.keys.end()) {
+                return nullptr;
+            }
+            return &it->second;
+        }
+
+        /// \brief Checks if a key within a limit can pass both sequential and count/period constraints.
+        bool can_pass(const LimitData& limit, const std::string& key, uint64_t token, const time_point_t& now) const {
+            const KeyState* state = find_key_state(limit, key);
+            if (!state) {
+                // No state yet: only need to check the base limit parameters.
+                if (limit.requests_per_period == 0) {
+                    return true;
+                }
+                return true; // count is 0, so always under limit.
+            }
+            if (limit.sequential && token != 0) {
+                if (!state->in_flight_tokens.empty() &&
+                    state->in_flight_tokens.count(token) == 0) {
+                    return false;
+                }
+            }
+            return check_key(limit, *state, now);
+        }
+
+        bool check_key(const LimitData& limit_data, const KeyState& state, const time_point_t& now) const {
             if (limit_data.requests_per_period == 0) {
                 return true;
             }
 
             const auto elapsed_time =
                 std::chrono::duration_cast<std::chrono::milliseconds>(
-                    now - limit_data.start_time
+                    now - state.start_time
                 );
 
             if (elapsed_time.count() >= limit_data.period_ms) {
                 return true;
             }
 
-            return limit_data.count < limit_data.requests_per_period;
-        }
-
-        /// \brief Checks if a request can pass both sequential and count/period constraints.
-        ///
-        /// Sequential logic:
-        /// - If !limit.sequential || token == 0 -> ignore sequential.
-        /// - Else if limit.in_flight_tokens.empty() -> pass sequential.
-        /// - Else if limit.in_flight_tokens.count(token) -> pass sequential (our retry).
-        /// - Else -> fail sequential.
-        /// Then check existing count/period logic.
-        bool can_pass(const LimitData& limit_data, uint64_t token, const time_point_t& now) const {
-            if (limit_data.sequential && token != 0) {
-                if (!limit_data.in_flight_tokens.empty() &&
-                    limit_data.in_flight_tokens.count(token) == 0) {
-                    return false;
-                }
-            }
-            return check_limit(limit_data, now);
+            return state.count < limit_data.requests_per_period;
         }
 
         /// \brief Commits in-flight token and count/period state after a successful can_pass.
-        void commit_limit(LimitData& limit_data, uint64_t token, const time_point_t& now) {
-            if (limit_data.sequential && token != 0) {
-                limit_data.in_flight_tokens.insert(token);
+        void commit_limit(LimitData& limit, const std::string& key, uint64_t token, const time_point_t& now) {
+            KeyState& state = get_key_state(limit, key);
+            if (limit.sequential && token != 0) {
+                state.in_flight_tokens.insert(token);
             }
-            update_limit(limit_data, now);
+            update_key(limit, state, now);
         }
 
-        void update_limit(LimitData& limit_data, const time_point_t& now) {
+        void update_key(LimitData& limit_data, KeyState& state, const time_point_t& now) {
             if (limit_data.requests_per_period == 0) {
                 return;
             }
 
             const auto elapsed_time =
                 std::chrono::duration_cast<std::chrono::milliseconds>(
-                    now - limit_data.start_time
+                    now - state.start_time
                 );
 
             if (elapsed_time.count() >= limit_data.period_ms) {
-                limit_data.start_time = now;
-                limit_data.count = 0;
+                state.start_time = now;
+                state.count = 0;
             }
 
-            ++limit_data.count;
+            ++state.count;
+        }
+
+        /// \brief Releases an in-flight token from a specific key and erases the key if it becomes empty and stale.
+        void release_key(LimitData& limit, const std::string& key, uint64_t token) {
+            auto it = limit.keys.find(key);
+            if (it == limit.keys.end()) {
+                return;
+            }
+            auto& state = it->second;
+            state.in_flight_tokens.erase(token);
+            if (state.in_flight_tokens.empty() && state.count == 0) {
+                limit.keys.erase(it);
+            }
+            if (limit.removed && limit.keys.empty()) {
+                // We cannot erase `limit` here because we are iterating or
+                // the caller holds a reference. Deferred to remove_limit_internal
+                // or next gc pass. In practice remove_limit_internal already
+                // tries; here we rely on gc_stale_keys or the next remove_limit_internal.
+            }
         }
 
         template<typename Duration>
         Duration time_until_limit_allows(
-            const LimitData& limit_data,
+            const LimitData& limit,
+            const std::string& key,
             const time_point_t& now
         ) const {
-            if (limit_data.sequential &&
-                !limit_data.in_flight_tokens.empty()) {
+            const KeyState* state = find_key_state(limit, key);
+            if (!state) {
+                // No state means no in-flight tokens and count is 0.
+                if (limit.sequential) {
+                    return Duration{0};
+                }
+                if (limit.requests_per_period == 0) {
+                    return Duration{0};
+                }
+                return Duration{0};
+            }
+            return time_until_key_allows<Duration>(limit, *state, now);
+        }
+
+        template<typename Duration>
+        Duration time_until_key_allows(
+            const LimitData& limit,
+            const KeyState& state,
+            const time_point_t& now
+        ) const {
+            if (limit.sequential &&
+                !state.in_flight_tokens.empty()) {
                 return Duration::max();
             }
 
-            if (limit_data.requests_per_period == 0) {
+            if (limit.requests_per_period == 0) {
                 return Duration{0};
             }
 
             const auto elapsed =
-                std::chrono::duration_cast<Duration>(now - limit_data.start_time);
+                std::chrono::duration_cast<Duration>(now - state.start_time);
 
             const auto period_duration =
                 std::chrono::duration_cast<Duration>(
-                    std::chrono::milliseconds(limit_data.period_ms)
+                    std::chrono::milliseconds(limit.period_ms)
                 );
 
             if (elapsed >= period_duration ||
-                limit_data.count < limit_data.requests_per_period) {
+                state.count < limit.requests_per_period) {
                 return Duration{0};
             }
 
             return period_duration - elapsed;
+        }
+
+        /// \brief Erases keys that are empty and whose period has expired.
+        void gc_stale_keys(const time_point_t& now) {
+            for (auto limit_it = m_limits.begin(); limit_it != m_limits.end(); ) {
+                auto& limit = limit_it->second;
+                for (auto key_it = limit.keys.begin(); key_it != limit.keys.end(); ) {
+                    const auto& state = key_it->second;
+                    if (state.in_flight_tokens.empty() && state.count == 0) {
+                        key_it = limit.keys.erase(key_it);
+                    } else if (state.in_flight_tokens.empty()) {
+                        const auto elapsed =
+                            std::chrono::duration_cast<std::chrono::milliseconds>(
+                                now - state.start_time
+                            );
+                        if (elapsed.count() >= limit.period_ms) {
+                            key_it = limit.keys.erase(key_it);
+                        } else {
+                            ++key_it;
+                        }
+                    } else {
+                        ++key_it;
+                    }
+                }
+
+                if (limit.removed && limit.keys.empty()) {
+                    limit_it = m_limits.erase(limit_it);
+                } else {
+                    ++limit_it;
+                }
+            }
         }
 
     private:
@@ -448,6 +577,8 @@ namespace kurlyk {
         /// remove_limit(id) releases the handle from this map. If requests still
         /// hold copies, physical data stays alive until the last copy is destroyed.
         std::unordered_map<long, HttpRateLimitHandlePtr> m_owned_handles;
+
+        size_t m_gc_counter = 0;
     };
 
 } // namespace kurlyk

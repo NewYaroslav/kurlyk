@@ -94,6 +94,51 @@ namespace kurlyk {
             return m_rate_limiter.remove_limit(limit);
         }
 
+        /// \brief Checks if a request is allowed by two optional rate-limit handles.
+        /// \param general_limit General rate-limit handle (may be empty).
+        /// \param specific_limit Specific rate-limit handle (may be empty).
+        /// \param in_flight_token Token identifying the in-flight request; 0 skips sequential checks.
+        /// \param general_key Partition key for the general limit; empty means default shared state.
+        /// \param specific_key Partition key for the specific limit; empty means default shared state.
+        /// \return True if the request is allowed, false otherwise.
+        bool allow_request(
+                const HttpRateLimitHandlePtr& general_limit,
+                const HttpRateLimitHandlePtr& specific_limit,
+                uint64_t in_flight_token,
+                const std::string& general_key,
+                const std::string& specific_key) {
+            return m_rate_limiter.allow_request(
+                general_limit, specific_limit, in_flight_token, general_key, specific_key);
+        }
+
+        /// \brief Releases in-flight tokens for sequential rate limits.
+        /// \param general_limit General rate-limit handle (may be empty).
+        /// \param specific_limit Specific rate-limit handle (may be empty).
+        /// \param in_flight_token Token identifying the in-flight request; 0 is a no-op.
+        /// \param general_key Partition key for the general limit.
+        /// \param specific_key Partition key for the specific limit.
+        void release_request(
+                const HttpRateLimitHandlePtr& general_limit,
+                const HttpRateLimitHandlePtr& specific_limit,
+                uint64_t in_flight_token,
+                const std::string& general_key,
+                const std::string& specific_key) {
+            m_rate_limiter.release_request(
+                general_limit, specific_limit, in_flight_token, general_key, specific_key);
+        }
+
+        /// \brief Calculates delay until request is allowed by two handles.
+        template<typename Duration = std::chrono::milliseconds>
+        Duration time_until_next_allowed(
+            const HttpRateLimitHandlePtr& general_limit,
+            const HttpRateLimitHandlePtr& specific_limit,
+            const std::string& general_key,
+            const std::string& specific_key
+            ) {
+            return m_rate_limiter.time_until_next_allowed<Duration>(
+                general_limit, specific_limit, general_key, specific_key);
+        }
+
         /// \brief Generates a new unique request ID.
         /// \return A new unique request ID.
         uint64_t generate_request_id() {
@@ -218,15 +263,19 @@ namespace kurlyk {
                 auto general_limit = request->general_rate_limit;
                 auto specific_limit = request->specific_rate_limit;
                 uint64_t token = context->in_flight_token;
-                context->on_complete = [this, general_limit, specific_limit, token]() {
-                    m_rate_limiter.release_request(general_limit, specific_limit, token);
+                auto general_key = request->general_rate_limit_key;
+                auto specific_key = request->specific_rate_limit_key;
+                context->on_complete = [this, general_limit, specific_limit, token, general_key, specific_key]() {
+                    m_rate_limiter.release_request(general_limit, specific_limit, token, general_key, specific_key);
                 };
 
                 // Check if the request is allowed by the rate limiter.
                 const bool allowed = m_rate_limiter.allow_request(
                     general_limit,
                     specific_limit,
-                    token);
+                    token,
+                    request->general_rate_limit_key,
+                    request->specific_rate_limit_key);
                 if (!allowed) {
                     context->on_complete = nullptr;
                     ++it;

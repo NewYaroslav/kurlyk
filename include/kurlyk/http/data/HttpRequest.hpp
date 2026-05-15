@@ -46,6 +46,8 @@ namespace kurlyk {
         long connect_timeout = 10;       ///< Connection timeout in seconds.
         HttpRateLimitHandlePtr general_rate_limit;  ///< General rate limit handle.
         HttpRateLimitHandlePtr specific_rate_limit; ///< Specific rate limit handle.
+        std::string general_rate_limit_key;         ///< Key used to separate general rate limit state; empty means default shared state.
+        std::string specific_rate_limit_key;        ///< Key used to separate specific rate limit state; empty means default shared state.
         std::set<long> valid_statuses = {200}; ///< Set of valid HTTP response status codes.
         long retry_attempts = 0;         ///< Number of retry attempts in case of failure.
         long retry_delay_ms = 0;         ///< Delay between retry attempts in milliseconds.
