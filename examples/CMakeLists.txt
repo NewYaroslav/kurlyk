@@ -31,7 +31,7 @@ foreach(example_source IN LISTS KURLYK_EXAMPLE_SOURCES)
 
 	if(example_target STREQUAL "chatgpt_request_example")
 		target_include_directories(${example_target} PRIVATE
-			"${PROJECT_SOURCE_DIR}/libs/json/include"
+			"${PROJECT_SOURCE_DIR}/external/json/include"
 		)
 	endif()
 

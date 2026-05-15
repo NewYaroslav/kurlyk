@@ -13,9 +13,9 @@
 
 ## Policy
 
-- Prefer system packages; use bundled copies in `libs/` only when the system
+- Prefer system packages; use bundled copies in `external/` only when the system
   package is unavailable.
-- Do not edit vendored code under `libs/` unless the task is an explicit
+- Do not edit vendored code under `external/` unless the task is an explicit
   dependency update.
 - Optional features stay behind compile definitions:
   `KURLYK_ENABLE_JSON`, `KURLYK_WEBSOCKET_SUPPORT`.

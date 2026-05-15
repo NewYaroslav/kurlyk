@@ -135,7 +135,7 @@ Use this when adding a compile-time feature toggle.
   denies a retried request.
 - Code remains portable across C++11/17 compilers and network stacks.
 - Optional dependency features must stay behind compile definitions.
-- Do not edit vendored code under `libs/` except for an explicit dependency
+- Do not edit vendored code under `external/` except for an explicit dependency
   update task.
 
 See `guides/concurrency.md` for full thread-safety contracts, callback/mutex
@@ -159,11 +159,11 @@ ordering rules, and shutdown/cancellation invariants.
 | `examples/` | Usage examples. | Public workflow or new feature examples. |
 | `docs/` | Doxygen mainpage and architecture notes. | Public documentation or deeper design notes. |
 | `.github/workflows/` | CI and publishing workflows. | Build matrix, verification, or release automation changes. |
-| `libs/` | Vendored fallback dependencies. | Explicit dependency updates only. |
+| `external/` | Vendored fallback dependencies. | Explicit dependency updates only. |
 
 ## Usually Avoid Editing Without Need
 
-- `libs/` vendor trees.
+- `external/` vendor trees.
 - Generated or local build trees such as `build/`, `build-mingw*/`, and `tmp/`.
 - `docs/html/` or `docs/latex/` generated Doxygen output.
 - Public macro names, enum values, and include paths unless the task is a
