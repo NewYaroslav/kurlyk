@@ -31,7 +31,7 @@ var classkurlyk_1_1HttpRequestManager =
     [ "set_max_pending_requests", "classkurlyk_1_1HttpRequestManager.html#a3aa13410e28d2a33cb48867192a0df27", null ],
     [ "shutdown", "classkurlyk_1_1HttpRequestManager.html#ae3479e04261351ce34a7c367e3eb7b27", null ],
     [ "submit_request", "classkurlyk_1_1HttpRequestManager.html#a83264905f878949114168d2b69f67533", null ],
-    [ "time_until_next_allowed", "classkurlyk_1_1HttpRequestManager.html#a0bfb36fd6654aada626e455347786a80", null ],
+    [ "time_until_next_allowed", "classkurlyk_1_1HttpRequestManager.html#a7c07919226bfc36a87bccc034fb32ee9", null ],
     [ "~HttpRequestManager", "classkurlyk_1_1HttpRequestManager.html#a74758f6e78a33bd9a61abd2f69e6dd22", null ],
     [ "m_active_request_batches", "classkurlyk_1_1HttpRequestManager.html#a60031cd9f921ad9c8d57113b1d053687", null ],
     [ "m_failed_requests", "classkurlyk_1_1HttpRequestManager.html#a47282135a13c1319bd53dac2aae29a42", null ],

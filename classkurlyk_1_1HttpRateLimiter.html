@@ -138,18 +138,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6d11408df7a7b64219e96e35c12ae17e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases in-flight tokens for sequential rate limits.  <br /></td></tr>
 <tr class="memitem:afc74a4205ceaf1adc4caf404ba3f9861" id="r_afc74a4205ceaf1adc4caf404ba3f9861"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afc74a4205ceaf1adc4caf404ba3f9861">release_request</a> (const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;general_limit, const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;specific_limit, uint64_t in_flight_token)</td></tr>
 <tr class="memdesc:afc74a4205ceaf1adc4caf404ba3f9861"><td class="mdescLeft">&#160;</td><td class="mdescRight">Legacy overload without keys.  <br /></td></tr>
-<tr class="memitem:a26781167bb6cc181ad914bca75a8ea4b" id="r_a26781167bb6cc181ad914bca75a8ea4b"><td class="memTemplParams" colspan="2">template&lt;typename Duration = std::chrono::milliseconds&gt; </td></tr>
-<tr class="memitem:a26781167bb6cc181ad914bca75a8ea4b template"><td class="memItemLeft">Duration&#160;</td><td class="memItemRight"><a class="el" href="#a26781167bb6cc181ad914bca75a8ea4b">time_until_next_allowed</a> (const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;general_limit, const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;specific_limit, const std::string &amp;general_key, const std::string &amp;specific_key)</td></tr>
-<tr class="memdesc:a26781167bb6cc181ad914bca75a8ea4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates delay until request is allowed by two handles.  <br /></td></tr>
-<tr class="memitem:a68bcf44afc12533e37039bf2baa3013a" id="r_a68bcf44afc12533e37039bf2baa3013a"><td class="memTemplParams" colspan="2">template&lt;typename Duration = std::chrono::milliseconds&gt; </td></tr>
-<tr class="memitem:a68bcf44afc12533e37039bf2baa3013a template"><td class="memItemLeft">Duration&#160;</td><td class="memItemRight"><a class="el" href="#a68bcf44afc12533e37039bf2baa3013a">time_until_next_allowed</a> (const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;general_limit, const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;specific_limit)</td></tr>
-<tr class="memdesc:a68bcf44afc12533e37039bf2baa3013a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Legacy overload without keys.  <br /></td></tr>
-<tr class="memitem:a335ca05cd7a5141f4e2750af5fc3ba63" id="r_a335ca05cd7a5141f4e2750af5fc3ba63"><td class="memTemplParams" colspan="2">template&lt;typename Duration = std::chrono::milliseconds&gt; </td></tr>
-<tr class="memitem:a335ca05cd7a5141f4e2750af5fc3ba63 template"><td class="memItemLeft">Duration&#160;</td><td class="memItemRight"><a class="el" href="#a335ca05cd7a5141f4e2750af5fc3ba63">time_until_next_allowed</a> (long general_rate_limit_id, long specific_rate_limit_id)</td></tr>
-<tr class="memdesc:a335ca05cd7a5141f4e2750af5fc3ba63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Legacy API: calculates delay by limit IDs.  <br /></td></tr>
-<tr class="memitem:a70b2b7c223520c542ef90c417ad281e4" id="r_a70b2b7c223520c542ef90c417ad281e4"><td class="memTemplParams" colspan="2">template&lt;typename Duration = std::chrono::milliseconds&gt; </td></tr>
-<tr class="memitem:a70b2b7c223520c542ef90c417ad281e4 template"><td class="memItemLeft">Duration&#160;</td><td class="memItemRight"><a class="el" href="#a70b2b7c223520c542ef90c417ad281e4">time_until_any_limit_allows</a> ()</td></tr>
-<tr class="memdesc:a70b2b7c223520c542ef90c417ad281e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the shortest delay among all physically alive limits.  <br /></td></tr>
+<tr class="memitem:af183dde96bb9f7e56f29336bd0141996" id="r_af183dde96bb9f7e56f29336bd0141996"><td class="memTemplParams" colspan="2">template&lt;typename Duration = std::chrono::milliseconds&gt; </td></tr>
+<tr class="memitem:af183dde96bb9f7e56f29336bd0141996 template"><td class="memItemLeft"><a class="el" href="structkurlyk_1_1RateLimitDelay.html">RateLimitDelay</a>&lt; Duration &gt;&#160;</td><td class="memItemRight"><a class="el" href="#af183dde96bb9f7e56f29336bd0141996">time_until_next_allowed</a> (const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;general_limit, const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;specific_limit, const std::string &amp;general_key, const std::string &amp;specific_key)</td></tr>
+<tr class="memitem:aeb42e3044d8b3fe4169496e7442ab279" id="r_aeb42e3044d8b3fe4169496e7442ab279"><td class="memTemplParams" colspan="2">template&lt;typename Duration = std::chrono::milliseconds&gt; </td></tr>
+<tr class="memitem:aeb42e3044d8b3fe4169496e7442ab279 template"><td class="memItemLeft"><a class="el" href="structkurlyk_1_1RateLimitDelay.html">RateLimitDelay</a>&lt; Duration &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aeb42e3044d8b3fe4169496e7442ab279">time_until_next_allowed</a> (const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;general_limit, const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;specific_limit)</td></tr>
+<tr class="memdesc:aeb42e3044d8b3fe4169496e7442ab279"><td class="mdescLeft">&#160;</td><td class="mdescRight">Legacy overload without explicit partition keys (uses default shared state).  <br /></td></tr>
+<tr class="memitem:a62ff796dce724353f30b009138c9638d" id="r_a62ff796dce724353f30b009138c9638d"><td class="memTemplParams" colspan="2">template&lt;typename Duration = std::chrono::milliseconds&gt; </td></tr>
+<tr class="memitem:a62ff796dce724353f30b009138c9638d template"><td class="memItemLeft"><a class="el" href="structkurlyk_1_1RateLimitDelay.html">RateLimitDelay</a>&lt; Duration &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a62ff796dce724353f30b009138c9638d">time_until_next_allowed</a> (long general_rate_limit_id, long specific_rate_limit_id)</td></tr>
+<tr class="memdesc:a62ff796dce724353f30b009138c9638d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Legacy API: calculates delay by limit IDs.  <br /></td></tr>
+<tr class="memitem:a796604460d20ad990d3237fe2efe0c41" id="r_a796604460d20ad990d3237fe2efe0c41"><td class="memTemplParams" colspan="2">template&lt;typename Duration = std::chrono::milliseconds&gt; </td></tr>
+<tr class="memitem:a796604460d20ad990d3237fe2efe0c41 template"><td class="memItemLeft"><a class="el" href="structkurlyk_1_1RateLimitDelay.html">RateLimitDelay</a>&lt; Duration &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a796604460d20ad990d3237fe2efe0c41">time_until_any_limit_allows</a> ()</td></tr>
+<tr class="memdesc:a796604460d20ad990d3237fe2efe0c41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the shortest delay among all physically alive limits.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-types" class="groupheader"><a id="pri-types" name="pri-types"></a>
 Private Types</h2></td></tr>
@@ -193,7 +192,7 @@ Private Attributes</h2></td></tr>
 <p>Rate limits are referenced by RAII handles. A limit remains physically present while at least one <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d" title="Shared RAII handle for HTTP rate limits.">HttpRateLimitHandlePtr</a> exists. Calling remove_limit(id) only releases the manager-owned handle. If pending or active requests still hold copied handles, the limit remains active until those requests are destroyed.</p>
 <p>Each limit can be partitioned by string keys. Requests sharing the same key within the same limit ID share rate-limit state; different keys are independent. An empty key maps to the default shared state. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00030">30</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00022">22</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 </div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="a26bad67a0d2892271ae462119f516911" name="a26bad67a0d2892271ae462119f516911"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a26bad67a0d2892271ae462119f516911">&#9670;&#160;</a></span>time_point_t</h2>
@@ -215,7 +214,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00354">354</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00376">376</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -249,7 +248,7 @@ Private Attributes</h2></td></tr>
 
 <p>Handle-based overload without explicit token or keys (token = 0, keys empty). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00202">202</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00194">194</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -308,7 +307,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the request is allowed, false otherwise (state unchanged on failure). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00136">136</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00128">128</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -342,7 +341,7 @@ Private Attributes</h2></td></tr>
 <p>Legacy API: checks if request is allowed by two limit IDs. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Prefer handle-based overload. ID-based requests do not keep limits alive by themselves. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00213">213</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00205">205</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -385,7 +384,7 @@ Private Attributes</h2></td></tr>
 
 <p>Checks if a key within a limit can pass both sequential and count/period constraints. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00412">412</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00434">434</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -421,7 +420,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00430">430</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00452">452</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -464,7 +463,7 @@ Private Attributes</h2></td></tr>
 
 <p>Commits in-flight token and count/period state after a successful can_pass. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00448">448</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00470">470</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -498,7 +497,7 @@ Private Attributes</h2></td></tr>
 <p>Legacy API: creates a new rate limit and returns only its ID. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Prefer <a class="el" href="#a2c27c1cd2d699969070a4f3e62452b02" title="Creates a new rate limit and returns its RAII handle.">create_limit_handle()</a>. Requests that only store the ID do not keep the limit alive by themselves. The manager-owned handle keeps the limit alive until remove_limit(id) is called. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00071">71</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00063">63</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -545,7 +544,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Shared RAII handle for the created limit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00038">38</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00030">30</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -578,7 +577,7 @@ Private Attributes</h2></td></tr>
 
 <p>Looks up a <a class="el" href="structkurlyk_1_1HttpRateLimiter_1_1KeyState.html" title="Per-key mutable runtime state inside a rate limit.">KeyState</a> by key for read-only access (no insertion). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00403">403</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00425">425</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -607,7 +606,7 @@ Private Attributes</h2></td></tr>
 
 <p>Erases keys that are empty and whose period has expired. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00545">545</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00567">567</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -640,7 +639,7 @@ Private Attributes</h2></td></tr>
 
 <p>Looks up a <a class="el" href="structkurlyk_1_1HttpRateLimiter_1_1KeyState.html" title="Per-key mutable runtime state inside a rate limit.">KeyState</a> by key, creating it lazily if necessary. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00398">398</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00420">420</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -670,7 +669,7 @@ Private Attributes</h2></td></tr>
 <p>Returns manager-owned handle by ID. </p>
 <dl class="section note"><dt>Note</dt><dd>This is mainly for compatibility with legacy ID-based API. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00115">115</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00107">107</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -708,7 +707,7 @@ Private Attributes</h2></td></tr>
 
 <p>Releases an in-flight token from a specific key and erases the key if it becomes empty and stale. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00475">475</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00497">497</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -746,7 +745,7 @@ Private Attributes</h2></td></tr>
 
 <p>Legacy overload without keys. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00262">262</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00254">254</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -804,7 +803,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00231">231</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00223">223</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -840,7 +839,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if manager-owned handle was found and released. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00108">108</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00100">100</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -877,7 +876,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if manager-owned handle was found and released. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00084">84</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00076">76</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -907,12 +906,12 @@ Private Attributes</h2></td></tr>
 <p>Physically removes <a class="el" href="structkurlyk_1_1HttpRateLimiter_1_1LimitData.html" title="Immutable limit parameters plus per-key mutable state.">LimitData</a> from m_limits. </p>
 <p>This method is intentionally private. It must be called only from <a class="el" href="classkurlyk_1_1HttpRateLimitHandle.html" title="RAII handle that owns a registered HTTP rate-limit ID.">HttpRateLimitHandle</a> destruction path. </p><dl class="section note"><dt>Note</dt><dd><a class="el" href="classkurlyk_1_1HttpRequestManager.html" title="Manages and processes HTTP requests using a singleton pattern.">HttpRequestManager</a> (and its embedded <a class="el" href="classkurlyk_1_1HttpRateLimiter.html" title="Manages rate limits for HTTP requests.">HttpRateLimiter</a>) is intentionally never destroyed. The <span class="tt">this</span> captured in <a class="el" href="classkurlyk_1_1HttpRateLimitHandle.html" title="RAII handle that owns a registered HTTP rate-limit ID.">HttpRateLimitHandle</a> destructor is therefore always valid. Changing the singleton to a destructible form requires replacing this raw capture. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00382">382</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00404">404</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
-<a id="a70b2b7c223520c542ef90c417ad281e4" name="a70b2b7c223520c542ef90c417ad281e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70b2b7c223520c542ef90c417ad281e4">&#9670;&#160;</a></span>time_until_any_limit_allows()</h2>
+<a id="a796604460d20ad990d3237fe2efe0c41" name="a796604460d20ad990d3237fe2efe0c41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a796604460d20ad990d3237fe2efe0c41">&#9670;&#160;</a></span>time_until_any_limit_allows()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -923,7 +922,7 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Duration kurlyk::HttpRateLimiter::time_until_any_limit_allows </td>
+          <td class="memname"><a class="el" href="structkurlyk_1_1RateLimitDelay.html">RateLimitDelay</a>&lt; Duration &gt; kurlyk::HttpRateLimiter::time_until_any_limit_allows </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -937,8 +936,15 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
 </div><div class="memdoc">
 
 <p>Finds the shortest delay among all physically alive limits. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Duration</td><td>Duration type; defaults to <span class="tt">std::chrono::milliseconds</span>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structkurlyk_1_1RateLimitDelay.html" title="Result type for time-until-allowed queries.">RateLimitDelay</a> where <span class="tt">duration</span> is the minimum positive delay across all keys of all limits. If no limit reports a positive delay, <span class="tt">duration</span> is 0. <span class="tt">sequential_blocked</span> is true only when the minimum positive delay is <span class="tt">Duration::max()</span>, i.e. every live key is blocked by a sequential in-flight request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00326">326</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00341">341</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -976,7 +982,7 @@ template&lt;typename Duration&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00514">514</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00536">536</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -1014,12 +1020,12 @@ template&lt;typename Duration&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00494">494</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00516">516</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
-<a id="a68bcf44afc12533e37039bf2baa3013a" name="a68bcf44afc12533e37039bf2baa3013a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68bcf44afc12533e37039bf2baa3013a">&#9670;&#160;</a></span>time_until_next_allowed() <span class="overload">[1/3]</span></h2>
+<a id="aeb42e3044d8b3fe4169496e7442ab279" name="aeb42e3044d8b3fe4169496e7442ab279"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb42e3044d8b3fe4169496e7442ab279">&#9670;&#160;</a></span>time_until_next_allowed() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1030,7 +1036,7 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Duration kurlyk::HttpRateLimiter::time_until_next_allowed </td>
+          <td class="memname"><a class="el" href="structkurlyk_1_1RateLimitDelay.html">RateLimitDelay</a>&lt; Duration &gt; kurlyk::HttpRateLimiter::time_until_next_allowed </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>general_limit</em></span>, </td>
         </tr>
@@ -1047,14 +1053,14 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Legacy overload without keys. </p>
+<p>Legacy overload without explicit partition keys (uses default shared state). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00306">306</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00310">310</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
-<a id="a26781167bb6cc181ad914bca75a8ea4b" name="a26781167bb6cc181ad914bca75a8ea4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26781167bb6cc181ad914bca75a8ea4b">&#9670;&#160;</a></span>time_until_next_allowed() <span class="overload">[2/3]</span></h2>
+<a id="af183dde96bb9f7e56f29336bd0141996" name="af183dde96bb9f7e56f29336bd0141996"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af183dde96bb9f7e56f29336bd0141996">&#9670;&#160;</a></span>time_until_next_allowed() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1065,7 +1071,7 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Duration kurlyk::HttpRateLimiter::time_until_next_allowed </td>
+          <td class="memname"><a class="el" href="structkurlyk_1_1RateLimitDelay.html">RateLimitDelay</a>&lt; Duration &gt; kurlyk::HttpRateLimiter::time_until_next_allowed </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>general_limit</em></span>, </td>
         </tr>
@@ -1091,15 +1097,29 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Calculates delay until request is allowed by two handles. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Duration</td><td>Duration type; defaults to <span class="tt">std::chrono::milliseconds</span>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">general_limit</td><td>General rate-limit handle (may be empty). </td></tr>
+    <tr><td class="paramname">specific_limit</td><td>Specific rate-limit handle (may be empty). </td></tr>
+    <tr><td class="paramname">general_key</td><td>Partition key for the general limit; empty means default shared state. </td></tr>
+    <tr><td class="paramname">specific_key</td><td>Partition key for the specific limit; empty means default shared state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structkurlyk_1_1RateLimitDelay.html" title="Result type for time-until-allowed queries.">RateLimitDelay</a> describing the maximum delay across both dimensions. <span class="tt">duration</span> is 0 if either dimension allows immediately. <span class="tt">sequential_blocked</span> is true when at least one dimension is blocked by a sequential in-flight request (<span class="tt">duration == Duration::max()</span>). </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00271">271</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
-<a id="a335ca05cd7a5141f4e2750af5fc3ba63" name="a335ca05cd7a5141f4e2750af5fc3ba63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a335ca05cd7a5141f4e2750af5fc3ba63">&#9670;&#160;</a></span>time_until_next_allowed() <span class="overload">[3/3]</span></h2>
+<a id="a62ff796dce724353f30b009138c9638d" name="a62ff796dce724353f30b009138c9638d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62ff796dce724353f30b009138c9638d">&#9670;&#160;</a></span>time_until_next_allowed() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1110,7 +1130,7 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Duration kurlyk::HttpRateLimiter::time_until_next_allowed </td>
+          <td class="memname"><a class="el" href="structkurlyk_1_1RateLimitDelay.html">RateLimitDelay</a>&lt; Duration &gt; kurlyk::HttpRateLimiter::time_until_next_allowed </td>
           <td>(</td>
           <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>general_rate_limit_id</em></span>, </td>
         </tr>
@@ -1128,8 +1148,23 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
 </div><div class="memdoc">
 
 <p>Legacy API: calculates delay by limit IDs. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Duration</td><td>Duration type; defaults to <span class="tt">std::chrono::milliseconds</span>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">general_rate_limit_id</td><td>General rate-limit ID. </td></tr>
+    <tr><td class="paramname">specific_rate_limit_id</td><td>Specific rate-limit ID. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structkurlyk_1_1RateLimitDelay.html" title="Result type for time-until-allowed queries.">RateLimitDelay</a> describing the maximum delay across both dimensions. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Prefer handle-based overload. ID-based requests do not keep limits alive. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00315">315</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00324">324</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -1165,7 +1200,7 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00456">456</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00478">478</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -1190,7 +1225,7 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00591">591</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00613">613</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -1217,7 +1252,7 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
 <p>Physically alive limit data. </p>
 <p>A record remains here while at least one <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d" title="Shared RAII handle for HTTP rate limits.">HttpRateLimitHandlePtr</a> exists. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00583">583</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00605">605</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -1241,7 +1276,7 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00576">576</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00598">598</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -1265,7 +1300,7 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00578">578</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00600">600</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -1292,7 +1327,7 @@ template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
 <p>Manager-owned handles for limits created through <a class="el" href="#a2c27c1cd2d699969070a4f3e62452b02" title="Creates a new rate limit and returns its RAII handle.">create_limit_handle()</a>. </p>
 <p>remove_limit(id) releases the handle from this map. If requests still hold copies, physical data stays alive until the last copy is destroyed. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00589">589</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00611">611</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>

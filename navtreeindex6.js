@@ -1,5 +1,8 @@
 var NAVTREEINDEX6 =
 {
+"classkurlyk_1_1core_1_1INetworkTaskManager.html":[2,0,1,0,0],
+"classkurlyk_1_1core_1_1INetworkTaskManager.html#a4ac0ffcbcafb3049f0de7211ffbe7d3a":[1,0,2,0,0,2],
+"classkurlyk_1_1core_1_1INetworkTaskManager.html#a4ac0ffcbcafb3049f0de7211ffbe7d3a":[2,0,1,0,0,2],
 "classkurlyk_1_1core_1_1INetworkTaskManager.html#a91c2fb48a15fb0ebc693c2c76c817055":[1,0,2,0,0,0],
 "classkurlyk_1_1core_1_1INetworkTaskManager.html#a91c2fb48a15fb0ebc693c2c76c817055":[2,0,1,0,0,0],
 "classkurlyk_1_1core_1_1INetworkTaskManager.html#a926caeba983919fd4916d2c3903ad912":[1,0,2,0,0,3],
@@ -246,8 +249,5 @@ var NAVTREEINDEX6 =
 "functions_w.html":[2,3,0,20],
 "functions_~.html":[2,3,0,21],
 "globals.html":[3,1,0],
-"globals_defs.html":[3,1,3],
-"globals_func.html":[3,1,1],
-"globals_type.html":[3,1,2],
-"hierarchy.html":[2,2]
+"globals_defs.html":[3,1,3]
 };

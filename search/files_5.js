@@ -9,11 +9,12 @@ var searchData=
   ['httpbatchrequesthandler_2ehpp_6',['HttpBatchRequestHandler.hpp',['../HttpBatchRequestHandler_8hpp.html',1,'']]],
   ['httpclient_2ehpp_7',['HttpClient.hpp',['../HttpClient_8hpp.html',1,'']]],
   ['httperrorcategory_2ehpp_8',['HttpErrorCategory.hpp',['../HttpErrorCategory_8hpp.html',1,'']]],
-  ['httpratelimiter_2ehpp_9',['HttpRateLimiter.hpp',['../HttpRateLimiter_8hpp.html',1,'']]],
-  ['httpratelimithandle_2ehpp_10',['HttpRateLimitHandle.hpp',['../HttpRateLimitHandle_8hpp.html',1,'']]],
-  ['httprequest_2ehpp_11',['HttpRequest.hpp',['../HttpRequest_8hpp.html',1,'']]],
-  ['httprequestcontext_2ehpp_12',['HttpRequestContext.hpp',['../HttpRequestContext_8hpp.html',1,'']]],
-  ['httprequesthandler_2ehpp_13',['HttpRequestHandler.hpp',['../HttpRequestHandler_8hpp.html',1,'']]],
-  ['httprequestmanager_2ehpp_14',['HttpRequestManager.hpp',['../HttpRequestManager_8hpp.html',1,'']]],
-  ['httpresponse_2ehpp_15',['HttpResponse.hpp',['../HttpResponse_8hpp.html',1,'']]]
+  ['httpratelimitdelay_2ehpp_9',['HttpRateLimitDelay.hpp',['../HttpRateLimitDelay_8hpp.html',1,'']]],
+  ['httpratelimiter_2ehpp_10',['HttpRateLimiter.hpp',['../HttpRateLimiter_8hpp.html',1,'']]],
+  ['httpratelimithandle_2ehpp_11',['HttpRateLimitHandle.hpp',['../HttpRateLimitHandle_8hpp.html',1,'']]],
+  ['httprequest_2ehpp_12',['HttpRequest.hpp',['../HttpRequest_8hpp.html',1,'']]],
+  ['httprequestcontext_2ehpp_13',['HttpRequestContext.hpp',['../HttpRequestContext_8hpp.html',1,'']]],
+  ['httprequesthandler_2ehpp_14',['HttpRequestHandler.hpp',['../HttpRequestHandler_8hpp.html',1,'']]],
+  ['httprequestmanager_2ehpp_15',['HttpRequestManager.hpp',['../HttpRequestManager_8hpp.html',1,'']]],
+  ['httpresponse_2ehpp_16',['HttpResponse.hpp',['../HttpResponse_8hpp.html',1,'']]]
 ];

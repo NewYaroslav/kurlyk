@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.16.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Kurlyk: kurlyk::HttpRateLimiter::KeyState Struct Reference</title>
+<title>Kurlyk: kurlyk::RateLimitDelay&lt; Duration &gt; Struct Template Reference</title>
 <link rel="icon" href="logo.png" type="image/x-icon" />
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -74,7 +74,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('structkurlyk_1_1HttpRateLimiter_1_1KeyState.html','','structkurlyk_1_1HttpRateLimiter_1_1KeyState-members'); });
+$(function(){initNavTree('structkurlyk_1_1RateLimitDelay.html','','structkurlyk_1_1RateLimitDelay-members'); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -100,74 +100,73 @@ $(function(){initNavTree('structkurlyk_1_1HttpRateLimiter_1_1KeyState.html','','
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">kurlyk::HttpRateLimiter::KeyState Struct Reference</div></div>
+  <div class="headertitle"><div class="title">kurlyk::RateLimitDelay&lt; Duration &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Per-key mutable runtime state inside a rate limit.  
+<p>Result type for time-until-allowed queries.  
  <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="HttpRateLimitDelay_8hpp_source.html">HttpRateLimitDelay.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a24ff66d1eb972a3f6e45355fb2705b6f" id="r_a24ff66d1eb972a3f6e45355fb2705b6f"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#a24ff66d1eb972a3f6e45355fb2705b6f">count</a> = 0</td></tr>
-<tr class="memitem:a7fba5cf9e37392a72206795e2bd5b0d6" id="r_a7fba5cf9e37392a72206795e2bd5b0d6"><td class="memItemLeft"><a class="el" href="classkurlyk_1_1HttpRateLimiter.html#a26bad67a0d2892271ae462119f516911">time_point_t</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7fba5cf9e37392a72206795e2bd5b0d6">start_time</a></td></tr>
-<tr class="memitem:a23b14b60bdd30a15c56e2baee9b4b215" id="r_a23b14b60bdd30a15c56e2baee9b4b215"><td class="memItemLeft">std::unordered_set&lt; uint64_t &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a23b14b60bdd30a15c56e2baee9b4b215">in_flight_tokens</a></td></tr>
+<tr class="memitem:a1a54b30a47ab039443081b5c95e5f14e" id="r_a1a54b30a47ab039443081b5c95e5f14e"><td class="memItemLeft">Duration&#160;</td><td class="memItemRight"><a class="el" href="#a1a54b30a47ab039443081b5c95e5f14e">duration</a></td></tr>
+<tr class="memdesc:a1a54b30a47ab039443081b5c95e5f14e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delay until the limit allows a request. 0 means ready now.  <br /></td></tr>
+<tr class="memitem:af4bbbe0f84ae20ee20323d5b70ab8df7" id="r_af4bbbe0f84ae20ee20323d5b70ab8df7"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#af4bbbe0f84ae20ee20323d5b70ab8df7">sequential_blocked</a></td></tr>
+<tr class="memdesc:af4bbbe0f84ae20ee20323d5b70ab8df7"><td class="mdescLeft">&#160;</td><td class="mdescRight">true if <span class="tt"><a class="el" href="#a1a54b30a47ab039443081b5c95e5f14e" title="Delay until the limit allows a request. 0 means ready now.">duration</a></span> reflects <span class="tt">Duration::max()</span> because a sequential in-flight request is blocking.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Per-key mutable runtime state inside a rate limit. </p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Duration = std::chrono::milliseconds&gt;<br />
+struct kurlyk::RateLimitDelay&lt; Duration &gt;</div><p>Result type for time-until-allowed queries. </p>
+<p>Carries both a numeric delay and a semantic flag that distinguishes time-based blocking (count/period limits) from sequential blocking (an in-flight request must finish before the next one may start).</p>
+<p>When <span class="tt"><a class="el" href="#af4bbbe0f84ae20ee20323d5b70ab8df7" title="true if duration reflects Duration::max() because a sequential in-flight request is blocking.">sequential_blocked</a> == true</span>, <span class="tt"><a class="el" href="#a1a54b30a47ab039443081b5c95e5f14e" title="Delay until the limit allows a request. 0 means ready now.">duration</a></span> equals <span class="tt">Duration::max()</span>. Callers must wait for <span class="tt">release_request()</span> or an explicit notification instead of calling <span class="tt">sleep_for(duration)</span>. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00380">380</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimitDelay_8hpp_source.html#l00021">21</a> of file <a class="el" href="HttpRateLimitDelay_8hpp_source.html">HttpRateLimitDelay.hpp</a>.</p>
 </div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="a24ff66d1eb972a3f6e45355fb2705b6f" name="a24ff66d1eb972a3f6e45355fb2705b6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24ff66d1eb972a3f6e45355fb2705b6f">&#9670;&#160;</a></span>count</h2>
+<a id="a1a54b30a47ab039443081b5c95e5f14e" name="a1a54b30a47ab039443081b5c95e5f14e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a54b30a47ab039443081b5c95e5f14e">&#9670;&#160;</a></span>duration</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">long kurlyk::HttpRateLimiter::KeyState::count = 0</td>
+          <td class="memname">Duration <a class="el" href="structkurlyk_1_1RateLimitDelay.html">kurlyk::RateLimitDelay</a>&lt; Duration &gt;::duration</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00381">381</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p>Delay until the limit allows a request. 0 means ready now. </p>
+
+<p class="definition">Definition at line <a class="el" href="HttpRateLimitDelay_8hpp_source.html#l00022">22</a> of file <a class="el" href="HttpRateLimitDelay_8hpp_source.html">HttpRateLimitDelay.hpp</a>.</p>
 
 </div>
 </div>
-<a id="a23b14b60bdd30a15c56e2baee9b4b215" name="a23b14b60bdd30a15c56e2baee9b4b215"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23b14b60bdd30a15c56e2baee9b4b215">&#9670;&#160;</a></span>in_flight_tokens</h2>
+<a id="af4bbbe0f84ae20ee20323d5b70ab8df7" name="af4bbbe0f84ae20ee20323d5b70ab8df7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4bbbe0f84ae20ee20323d5b70ab8df7">&#9670;&#160;</a></span>sequential_blocked</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::unordered_set&lt;uint64_t&gt; kurlyk::HttpRateLimiter::KeyState::in_flight_tokens</td>
+          <td class="memname">bool <a class="el" href="structkurlyk_1_1RateLimitDelay.html">kurlyk::RateLimitDelay</a>&lt; Duration &gt;::sequential_blocked</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00383">383</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p>true if <span class="tt"><a class="el" href="#a1a54b30a47ab039443081b5c95e5f14e" title="Delay until the limit allows a request. 0 means ready now.">duration</a></span> reflects <span class="tt">Duration::max()</span> because a sequential in-flight request is blocking. </p>
+<p>Callers must treat this as "wait for release_request(), not sleep_for()". </p>
 
-</div>
-</div>
-<a id="a7fba5cf9e37392a72206795e2bd5b0d6" name="a7fba5cf9e37392a72206795e2bd5b0d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7fba5cf9e37392a72206795e2bd5b0d6">&#9670;&#160;</a></span>start_time</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classkurlyk_1_1HttpRateLimiter.html#a26bad67a0d2892271ae462119f516911">time_point_t</a> kurlyk::HttpRateLimiter::KeyState::start_time</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00382">382</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimitDelay_8hpp_source.html#l00023">23</a> of file <a class="el" href="HttpRateLimitDelay_8hpp_source.html">HttpRateLimitDelay.hpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>include/kurlyk/http/HttpRequestManager/<a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a></li>
+<li>include/kurlyk/http/HttpRequestManager/<a class="el" href="HttpRateLimitDelay_8hpp_source.html">HttpRateLimitDelay.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -182,7 +181,7 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespacekurlyk.html">kurlyk</a></li><li class="navelem"><a href="classkurlyk_1_1HttpRateLimiter.html">HttpRateLimiter</a></li><li class="navelem"><a href="structkurlyk_1_1HttpRateLimiter_1_1KeyState.html">KeyState</a></li>
+    <li class="navelem"><a href="namespacekurlyk.html">kurlyk</a></li><li class="navelem"><a href="structkurlyk_1_1RateLimitDelay.html">RateLimitDelay</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
   </ul>
 </div>
