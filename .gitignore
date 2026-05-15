@@ -4,3 +4,5 @@
 /header_smoke
 /header_smoke.exe
 /tests/**/build*/
+/.omc/
+.claude/proxy-config.json
