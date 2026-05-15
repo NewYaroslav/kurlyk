@@ -5,7 +5,12 @@
 /// \file HttpRateLimiter.hpp
 /// \brief Defines the HttpRateLimiter class for managing rate limits on HTTP requests.
 
+#include <algorithm>
+#include <chrono>
 #include <cstdint>
+#include <mutex>
+#include <string>
+#include <unordered_map>
 #include <unordered_set>
 
 namespace kurlyk {
@@ -236,6 +241,11 @@ namespace kurlyk {
             const long general_id = general_limit ? general_limit->id() : 0;
             const long specific_id = specific_limit ? specific_limit->id() : 0;
 
+            const bool same_limit =
+                general_id != 0 &&
+                general_id == specific_id &&
+                general_key == specific_key;
+
             auto general_it = general_id != 0 ? m_limits.find(general_id) : m_limits.end();
             auto specific_it = specific_id != 0 ? m_limits.find(specific_id) : m_limits.end();
 
@@ -243,7 +253,7 @@ namespace kurlyk {
                 release_key(general_it->second, general_key, in_flight_token);
             }
 
-            if (specific_it != m_limits.end() && specific_it->second.sequential) {
+            if (!same_limit && specific_it != m_limits.end() && specific_it->second.sequential) {
                 release_key(specific_it->second, specific_key, in_flight_token);
             }
         }

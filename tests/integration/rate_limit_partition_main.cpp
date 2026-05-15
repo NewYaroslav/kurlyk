@@ -128,6 +128,41 @@ int main() {
         manager.release_request(limit, limit, 17, "time_key_a", "time_key_a");
     }
 
+    // --- Test 7: different general/specific handles with different keys ---
+    {
+        auto general = manager.create_rate_limit(1, 60000);
+        auto specific = manager.create_rate_limit(10, 60000); // high count so specific never blocks
+
+        bool a = manager.allow_request(general, specific, 18, "gen_k", "spec_k");
+        require(a, "First request with different handles should be allowed");
+
+        // Same general key should block even with different specific key
+        bool b = manager.allow_request(general, specific, 19, "gen_k", "spec_k2");
+        require(!b, "Same general key should block despite different specific key");
+
+        // Different general key should pass (specific has high count)
+        bool c = manager.allow_request(general, specific, 20, "gen_k2", "spec_k");
+        require(c, "Different general key should pass when specific limit allows");
+
+        manager.release_request(general, specific, 18, "gen_k", "spec_k");
+        manager.release_request(general, specific, 20, "gen_k2", "spec_k");
+    }
+
+    // --- Test 8: double-release of same limit/key is idempotent ---
+    {
+        auto limit = manager.create_rate_limit(10, 60000, true);
+        bool a = manager.allow_request(limit, limit, 21, "double_rel", "double_rel");
+        require(a, "First request for double-release test should be allowed");
+
+        manager.release_request(limit, limit, 21, "double_rel", "double_rel");
+        manager.release_request(limit, limit, 21, "double_rel", "double_rel");
+
+        bool b = manager.allow_request(limit, limit, 22, "double_rel", "double_rel");
+        require(b, "After double-release, new request should be allowed");
+
+        manager.release_request(limit, limit, 22, "double_rel", "double_rel");
+    }
+
     kurlyk::deinit();
 
     std::cout << "Partitioned rate limit integration test passed" << std::endl;

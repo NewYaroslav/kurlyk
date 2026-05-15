@@ -265,6 +265,10 @@ namespace kurlyk {
                 uint64_t token = context->in_flight_token;
                 auto general_key = request->general_rate_limit_key;
                 auto specific_key = request->specific_rate_limit_key;
+
+                // Preserve any previous on_complete so a retry that already owns
+                // a sequential token does not lose its cleanup callback.
+                auto old_on_complete = std::move(context->on_complete);
                 context->on_complete = [this, general_limit, specific_limit, token, general_key, specific_key]() {
                     m_rate_limiter.release_request(general_limit, specific_limit, token, general_key, specific_key);
                 };
@@ -277,7 +281,7 @@ namespace kurlyk {
                     request->general_rate_limit_key,
                     request->specific_rate_limit_key);
                 if (!allowed) {
-                    context->on_complete = nullptr;
+                    context->on_complete = std::move(old_on_complete);
                     ++it;
                     continue;
                 }
