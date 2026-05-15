@@ -171,8 +171,48 @@ void release_request(const HttpRateLimitHandlePtr& general,
                      const std::string& specific_key);
 
 template<typename Duration = std::chrono::milliseconds>
-Duration time_until_next_allowed(...);
+RateLimitDelay<Duration> time_until_next_allowed(...);
 ```
+
+### time_until_* queries
+
+Two query functions let callers know how long they must wait before a request
+will be accepted. Both return `RateLimitDelay<Duration>`, which carries both a
+delay value and a semantic flag.
+
+```cpp
+template<typename Duration = std::chrono::milliseconds>
+RateLimitDelay<Duration> time_until_next_allowed(general, specific, general_key, specific_key);
+
+template<typename Duration = std::chrono::milliseconds>
+RateLimitDelay<Duration> time_until_any_limit_allows();
+```
+
+**`duration`**
+- `0` — at least one limit allows a request immediately.
+- Positive finite value — a count/period limit is temporarily exhausted; the
+caller may `sleep_for(duration)` and retry.
+- `Duration::max()` — the delay is unbounded because a **sequential** in-flight
+request is still running. The caller must **not** `sleep_for(duration)`; instead
+it should wait for `release_request()` (or for the corresponding request to
+finish) and query again.
+
+**`sequential_blocked`**
+- `false` — the delay is a normal time-based value (0 or positive finite).
+- `true` — `duration == Duration::max()` because at least one relevant limit is
+blocked by a sequential in-flight token. This is a signal to use event-driven
+waiting rather than `sleep_for`.
+
+Differences between the two functions:
+
+- `time_until_next_allowed(general, specific, ...)` looks at **two specific**
+limits (general + specific) and returns the **maximum** of their delays. A
+request will be allowed only when *both* dimensions are ready, so the caller
+must wait for the larger delay.
+- `time_until_any_limit_allows()` scans **all** physically alive limits and
+returns the **minimum** positive delay among them. It answers the question
+"when will at least one limit become ready?" rather than "when will my
+particular request be allowed".
 
 ## Streaming Callbacks
 
@@ -204,6 +244,9 @@ the error path, and continues.
   avoid double-release when general and specific point to the same limit with
   identical keys.
 - `time_until_next_allowed()` reports the maximum delay across both dimensions.
+  When `sequential_blocked == true`, the delay reflects `Duration::max()` because a
+  sequential in-flight request is blocking. Callers must wait for
+  `release_request()` rather than `sleep_for(duration)`.
 - Do not add blocking drains or `close_and_wait()` to rate-limit callbacks;
   the model is cooperative: callbacks run on `NetworkWorker` and must return
   quickly.

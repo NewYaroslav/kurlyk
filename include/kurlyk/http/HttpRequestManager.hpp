@@ -7,6 +7,7 @@
 
 #include "HttpRequestManager/HttpRequestContext.hpp"
 #include "HttpRequestManager/HttpRequestHandler.hpp"
+#include "HttpRequestManager/HttpRateLimitDelay.hpp"
 #include "HttpRequestManager/HttpRateLimitHandle.hpp"
 #include "HttpRequestManager/HttpRateLimiter.hpp"
 #include "HttpRequestManager/HttpBatchRequestHandler.hpp"
@@ -128,8 +129,14 @@ namespace kurlyk {
         }
 
         /// \brief Calculates delay until request is allowed by two handles.
+        /// \tparam Duration Duration type; defaults to `std::chrono::milliseconds`.
+        /// \param general_limit General rate-limit handle (may be empty).
+        /// \param specific_limit Specific rate-limit handle (may be empty).
+        /// \param general_key Partition key for the general limit; empty means default shared state.
+        /// \param specific_key Partition key for the specific limit; empty means default shared state.
+        /// \return RateLimitDelay describing the maximum delay across both dimensions.
         template<typename Duration = std::chrono::milliseconds>
-        Duration time_until_next_allowed(
+        RateLimitDelay<Duration> time_until_next_allowed(
             const HttpRateLimitHandlePtr& general_limit,
             const HttpRateLimitHandlePtr& specific_limit,
             const std::string& general_key,

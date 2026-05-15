@@ -5,14 +5,6 @@
 /// \file HttpRateLimiter.hpp
 /// \brief Defines the HttpRateLimiter class for managing rate limits on HTTP requests.
 
-#include <algorithm>
-#include <chrono>
-#include <cstdint>
-#include <mutex>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-
 namespace kurlyk {
 
     /// \class HttpRateLimiter
@@ -266,9 +258,17 @@ namespace kurlyk {
             release_request(general_limit, specific_limit, in_flight_token, std::string(), std::string());
         }
 
-        /// \brief Calculates delay until request is allowed by two handles.
+        /// \tparam Duration Duration type; defaults to `std::chrono::milliseconds`.
+        /// \param general_limit General rate-limit handle (may be empty).
+        /// \param specific_limit Specific rate-limit handle (may be empty).
+        /// \param general_key Partition key for the general limit; empty means default shared state.
+        /// \param specific_key Partition key for the specific limit; empty means default shared state.
+        /// \return RateLimitDelay describing the maximum delay across both dimensions.
+        ///         `duration` is 0 if either dimension allows immediately.
+        ///         `sequential_blocked` is true when at least one dimension is blocked
+        ///         by a sequential in-flight request (`duration == Duration::max()`).
         template<typename Duration = std::chrono::milliseconds>
-        Duration time_until_next_allowed(
+        RateLimitDelay<Duration> time_until_next_allowed(
             const HttpRateLimitHandlePtr& general_limit,
             const HttpRateLimitHandlePtr& specific_limit,
             const std::string& general_key,
@@ -277,33 +277,37 @@ namespace kurlyk {
             std::lock_guard<std::mutex> lock(m_mutex);
 
             const auto now = std::chrono::steady_clock::now();
-            Duration max_delay{0};
+            RateLimitDelay<Duration> result;
+            result.duration = Duration{0};
+            result.sequential_blocked = false;
 
             const long general_id = general_limit ? general_limit->id() : 0;
             const long specific_id = specific_limit ? specific_limit->id() : 0;
 
             auto it = general_id != 0 ? m_limits.find(general_id) : m_limits.end();
             if (it != m_limits.end()) {
-                max_delay = (std::max)(
-                    max_delay,
-                    time_until_limit_allows<Duration>(it->second, general_key, now)
-                );
+                const Duration general_delay = time_until_limit_allows<Duration>(it->second, general_key, now);
+                result.duration = (std::max)(result.duration, general_delay);
+                if (general_delay == (Duration::max)()) {
+                    result.sequential_blocked = true;
+                }
             }
 
             it = specific_id != 0 ? m_limits.find(specific_id) : m_limits.end();
             if (it != m_limits.end()) {
-                max_delay = (std::max)(
-                    max_delay,
-                    time_until_limit_allows<Duration>(it->second, specific_key, now)
-                );
+                const Duration specific_delay = time_until_limit_allows<Duration>(it->second, specific_key, now);
+                result.duration = (std::max)(result.duration, specific_delay);
+                if (specific_delay == (Duration::max)()) {
+                    result.sequential_blocked = true;
+                }
             }
 
-            return max_delay;
+            return result;
         }
 
-        /// \brief Legacy overload without keys.
+        /// \brief Legacy overload without explicit partition keys (uses default shared state).
         template<typename Duration = std::chrono::milliseconds>
-        Duration time_until_next_allowed(
+        RateLimitDelay<Duration> time_until_next_allowed(
             const HttpRateLimitHandlePtr& general_limit,
             const HttpRateLimitHandlePtr& specific_limit
             ) {
@@ -311,8 +315,13 @@ namespace kurlyk {
         }
 
         /// \brief Legacy API: calculates delay by limit IDs.
+        /// \tparam Duration Duration type; defaults to `std::chrono::milliseconds`.
+        /// \param general_rate_limit_id General rate-limit ID.
+        /// \param specific_rate_limit_id Specific rate-limit ID.
+        /// \return RateLimitDelay describing the maximum delay across both dimensions.
+        /// \warning Prefer handle-based overload. ID-based requests do not keep limits alive.
         template<typename Duration = std::chrono::milliseconds>
-        Duration time_until_next_allowed(long general_rate_limit_id, long specific_rate_limit_id) {
+        RateLimitDelay<Duration> time_until_next_allowed(long general_rate_limit_id, long specific_rate_limit_id) {
             return time_until_next_allowed<Duration>(
                 get_limit(general_rate_limit_id),
                 get_limit(specific_rate_limit_id),
@@ -322,32 +331,45 @@ namespace kurlyk {
         }
 
         /// \brief Finds the shortest delay among all physically alive limits.
+        /// \tparam Duration Duration type; defaults to `std::chrono::milliseconds`.
+        /// \return RateLimitDelay where `duration` is the minimum positive delay across
+        ///         all keys of all limits. If no limit reports a positive delay,
+        ///         `duration` is 0. `sequential_blocked` is true only when the minimum
+        ///         positive delay is `Duration::max()`, i.e. every live key is blocked
+        ///         by a sequential in-flight request.
         template<typename Duration = std::chrono::milliseconds>
-        Duration time_until_any_limit_allows() {
+        RateLimitDelay<Duration> time_until_any_limit_allows() {
             std::lock_guard<std::mutex> lock(m_mutex);
 
             const auto now = std::chrono::steady_clock::now();
+
+            RateLimitDelay<Duration> result;
+            result.duration = Duration{0};
+            result.sequential_blocked = false;
+
             Duration min_delay = (Duration::max)();
-            bool has_blocking_delay = false;
+            bool has_positive_delay = false;
 
             for (const auto& pair : m_limits) {
                 const auto& limit = pair.second;
-
                 for (const auto& key_pair : limit.keys) {
                     const Duration delay = time_until_key_allows<Duration>(limit, key_pair.second, now);
                     if (delay.count() <= 0) {
                         continue;
                     }
-
-                    has_blocking_delay = true;
-
+                    has_positive_delay = true;
                     if (delay < min_delay) {
                         min_delay = delay;
                     }
                 }
             }
 
-            return has_blocking_delay ? min_delay : Duration{0};
+            if (has_positive_delay) {
+                result.duration = min_delay;
+                result.sequential_blocked = (min_delay == (Duration::max)());
+            }
+
+            return result;
         }
 
     private:
