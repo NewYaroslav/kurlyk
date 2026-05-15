@@ -1,0 +1,11 @@
+# Codex project configuration for kurlyk
+# https://developers.openai.com/codex
+
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+web_search = "cached"
+project_doc_max_bytes = 65536
+
+[features]
+multi_agent = true
+shell_tool = true
