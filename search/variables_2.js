@@ -13,5 +13,5 @@ var searchData=
   ['context_10',['context',['../classSimpleWeb_1_1SocketClient_3_01WSS_01_4.html#aedac42c87ed0cb7c2be5256cf3a145c7',1,'SimpleWeb::SocketClient&lt; WSS &gt;']]],
   ['cookie_11',['cookie',['../classkurlyk_1_1HttpRequest.html#a75071134b205634e21e5292d843a75dd',1,'kurlyk::HttpRequest::cookie'],['../classkurlyk_1_1WebSocketConfig.html#a9b91ffb65b8f4bab5701cd0ca4f687f1',1,'kurlyk::WebSocketConfig::cookie']]],
   ['cookie_5ffile_12',['cookie_file',['../classkurlyk_1_1HttpRequest.html#a647f90069e13b93a0d1317fc8f7bd2c8',1,'kurlyk::HttpRequest']]],
-  ['count_13',['count',['../structkurlyk_1_1HttpRateLimiter_1_1LimitData.html#a496256f25c7a5236bfcd4687e1646378',1,'kurlyk::HttpRateLimiter::LimitData::count'],['../structkurlyk_1_1WebSocketRateLimiter_1_1LimitData.html#a4ec79aac4a32b8df881ab6a686d6c37e',1,'kurlyk::WebSocketRateLimiter::LimitData::count']]]
+  ['count_13',['count',['../structkurlyk_1_1HttpRateLimiter_1_1KeyState.html#a24ff66d1eb972a3f6e45355fb2705b6f',1,'kurlyk::HttpRateLimiter::KeyState::count'],['../structkurlyk_1_1WebSocketRateLimiter_1_1LimitData.html#a4ec79aac4a32b8df881ab6a686d6c37e',1,'kurlyk::WebSocketRateLimiter::LimitData::count']]]
 ];

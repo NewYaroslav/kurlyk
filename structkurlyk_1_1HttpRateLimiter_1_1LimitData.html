@@ -104,58 +104,40 @@ $(function(){initNavTree('structkurlyk_1_1HttpRateLimiter_1_1LimitData.html','',
 </div><!--header-->
 <div class="contents">
 
-<p>Internal state for one rate limit.  
+<p>Immutable limit parameters plus per-key mutable state.  
  <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:aa0e34b6deb26a4c981d25fdb126d8485" id="r_aa0e34b6deb26a4c981d25fdb126d8485"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#aa0e34b6deb26a4c981d25fdb126d8485">requests_per_period</a> = 0</td></tr>
 <tr class="memitem:ae302a4d697755142c5e64d82cf544951" id="r_ae302a4d697755142c5e64d82cf544951"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#ae302a4d697755142c5e64d82cf544951">period_ms</a> = 0</td></tr>
-<tr class="memitem:a496256f25c7a5236bfcd4687e1646378" id="r_a496256f25c7a5236bfcd4687e1646378"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#a496256f25c7a5236bfcd4687e1646378">count</a> = 0</td></tr>
-<tr class="memitem:a41b3dc33b8e4247801e7b2512d3f6288" id="r_a41b3dc33b8e4247801e7b2512d3f6288"><td class="memItemLeft"><a class="el" href="classkurlyk_1_1HttpRateLimiter.html#a26bad67a0d2892271ae462119f516911">time_point_t</a>&#160;</td><td class="memItemRight"><a class="el" href="#a41b3dc33b8e4247801e7b2512d3f6288">start_time</a></td></tr>
 <tr class="memitem:ac1a59549bb679d2e3a7c1a3952fca3ef" id="r_ac1a59549bb679d2e3a7c1a3952fca3ef"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ac1a59549bb679d2e3a7c1a3952fca3ef">sequential</a> = false</td></tr>
 <tr class="memdesc:ac1a59549bb679d2e3a7c1a3952fca3ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">When true, blocks other requests until the current one finishes.  <br /></td></tr>
 <tr class="memitem:a47fbcdcf672abdf2a274c1ed686c0a19" id="r_a47fbcdcf672abdf2a274c1ed686c0a19"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a47fbcdcf672abdf2a274c1ed686c0a19">removed</a> = false</td></tr>
-<tr class="memdesc:a47fbcdcf672abdf2a274c1ed686c0a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">True when the manager-owned handle has been released; physical erase is deferred until in_flight_tokens is empty.  <br /></td></tr>
-<tr class="memitem:afdcdaaf3473fd5d6c10f3f2f2f3e4935" id="r_afdcdaaf3473fd5d6c10f3f2f2f3e4935"><td class="memItemLeft">std::unordered_set&lt; uint64_t &gt;&#160;</td><td class="memItemRight"><a class="el" href="#afdcdaaf3473fd5d6c10f3f2f2f3e4935">in_flight_tokens</a></td></tr>
-<tr class="memdesc:afdcdaaf3473fd5d6c10f3f2f2f3e4935"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tokens of requests currently owning this sequential limit.  <br /></td></tr>
+<tr class="memdesc:a47fbcdcf672abdf2a274c1ed686c0a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">True when the manager-owned handle has been released; physical erase is deferred until all keys are empty.  <br /></td></tr>
+<tr class="memitem:a6236f06540e3da7a8fed7888d6ed7e40" id="r_a6236f06540e3da7a8fed7888d6ed7e40"><td class="memItemLeft">std::unordered_map&lt; std::string, <a class="el" href="structkurlyk_1_1HttpRateLimiter_1_1KeyState.html">KeyState</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a6236f06540e3da7a8fed7888d6ed7e40">keys</a></td></tr>
+<tr class="memdesc:a6236f06540e3da7a8fed7888d6ed7e40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutable state per partition key.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Internal state for one rate limit. </p>
+<div class="textblock"><p>Immutable limit parameters plus per-key mutable state. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00313">313</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00356">356</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 </div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="a496256f25c7a5236bfcd4687e1646378" name="a496256f25c7a5236bfcd4687e1646378"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a496256f25c7a5236bfcd4687e1646378">&#9670;&#160;</a></span>count</h2>
+<a id="a6236f06540e3da7a8fed7888d6ed7e40" name="a6236f06540e3da7a8fed7888d6ed7e40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6236f06540e3da7a8fed7888d6ed7e40">&#9670;&#160;</a></span>keys</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long kurlyk::HttpRateLimiter::LimitData::count = 0</td>
+          <td class="memname">std::unordered_map&lt;std::string, <a class="el" href="structkurlyk_1_1HttpRateLimiter_1_1KeyState.html">KeyState</a>&gt; kurlyk::HttpRateLimiter::LimitData::keys</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00316">316</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p>Mutable state per partition key. </p>
 
-</div>
-</div>
-<a id="afdcdaaf3473fd5d6c10f3f2f2f3e4935" name="afdcdaaf3473fd5d6c10f3f2f2f3e4935"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afdcdaaf3473fd5d6c10f3f2f2f3e4935">&#9670;&#160;</a></span>in_flight_tokens</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::unordered_set&lt;uint64_t&gt; kurlyk::HttpRateLimiter::LimitData::in_flight_tokens</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Tokens of requests currently owning this sequential limit. </p>
-
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00320">320</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00361">361</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -171,7 +153,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00315">315</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00358">358</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -187,9 +169,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>True when the manager-owned handle has been released; physical erase is deferred until in_flight_tokens is empty. </p>
+<p>True when the manager-owned handle has been released; physical erase is deferred until all keys are empty. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00319">319</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00360">360</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -205,7 +187,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00314">314</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00357">357</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>
@@ -223,23 +205,7 @@ Public Attributes</h2></td></tr>
 
 <p>When true, blocks other requests until the current one finishes. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00318">318</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
-
-</div>
-</div>
-<a id="a41b3dc33b8e4247801e7b2512d3f6288" name="a41b3dc33b8e4247801e7b2512d3f6288"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41b3dc33b8e4247801e7b2512d3f6288">&#9670;&#160;</a></span>start_time</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classkurlyk_1_1HttpRateLimiter.html#a26bad67a0d2892271ae462119f516911">time_point_t</a> kurlyk::HttpRateLimiter::LimitData::start_time</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00317">317</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRateLimiter_8hpp_source.html#l00359">359</a> of file <a class="el" href="HttpRateLimiter_8hpp_source.html">HttpRateLimiter.hpp</a>.</p>
 
 </div>
 </div>

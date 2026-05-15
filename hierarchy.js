@@ -37,6 +37,7 @@ var hierarchy =
         [ "kurlyk::BaseWebSocketClient", "classkurlyk_1_1BaseWebSocketClient.html", null ]
       ] ]
     ] ],
+    [ "kurlyk::HttpRateLimiter::KeyState", "structkurlyk_1_1HttpRateLimiter_1_1KeyState.html", null ],
     [ "kurlyk::HttpRateLimiter::LimitData", "structkurlyk_1_1HttpRateLimiter_1_1LimitData.html", null ],
     [ "kurlyk::WebSocketRateLimiter::LimitData", "structkurlyk_1_1WebSocketRateLimiter_1_1LimitData.html", null ],
     [ "kurlyk::HttpRateLimitLease::LimitLock", "structkurlyk_1_1HttpRateLimitLease_1_1LimitLock.html", null ],

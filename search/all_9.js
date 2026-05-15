@@ -3,7 +3,7 @@ var searchData=
   ['id_0',['id',['../classkurlyk_1_1HttpRateLimitHandle.html#abfc831bf33236474444cccb21fd197e3',1,'kurlyk::HttpRateLimitHandle']]],
   ['idle_5ftimeout_1',['idle_timeout',['../classkurlyk_1_1WebSocketConfig.html#a51d6dca089e4e219a3ff325209a07576',1,'kurlyk::WebSocketConfig']]],
   ['in_5fflight_5ftoken_2',['in_flight_token',['../classkurlyk_1_1HttpRequestContext.html#aab248d756472d3bb87659489a2b67825',1,'kurlyk::HttpRequestContext']]],
-  ['in_5fflight_5ftokens_3',['in_flight_tokens',['../structkurlyk_1_1HttpRateLimiter_1_1LimitData.html#afdcdaaf3473fd5d6c10f3f2f2f3e4935',1,'kurlyk::HttpRateLimiter::LimitData']]],
+  ['in_5fflight_5ftokens_3',['in_flight_tokens',['../structkurlyk_1_1HttpRateLimiter_1_1KeyState.html#a23b14b60bdd30a15c56e2baee9b4b215',1,'kurlyk::HttpRateLimiter::KeyState']]],
   ['inetworktaskmanager_4',['INetworkTaskManager',['../classkurlyk_1_1core_1_1INetworkTaskManager.html',1,'kurlyk::core']]],
   ['inetworktaskmanager_2ehpp_5',['INetworkTaskManager.hpp',['../INetworkTaskManager_8hpp.html',1,'']]],
   ['init_6',['INIT',['../classkurlyk_1_1BaseWebSocketClient.html#a90b3688aedeb9c7a6d8fea9083f8c43fafaee4ca3c30ee18148ce3ada37466498',1,'kurlyk::BaseWebSocketClient::INIT'],['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#addc863707fa6f03603297732a1207a0fafaee4ca3c30ee18148ce3ada37466498',1,'kurlyk::EmscriptenWebSocketClientAdapter::INIT']]],

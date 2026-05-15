@@ -132,6 +132,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aadc1ec9aedf83388fdb9440e55b64090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an existing rate limit with the specified identifier.  <br /></td></tr>
 <tr class="memitem:a580904f171dd66ee02010bfb94b51bf7" id="r_a580904f171dd66ee02010bfb94b51bf7"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a580904f171dd66ee02010bfb94b51bf7">remove_limit</a> (const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;limit)</td></tr>
 <tr class="memdesc:a580904f171dd66ee02010bfb94b51bf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases manager-owned handle for the specified rate-limit handle.  <br /></td></tr>
+<tr class="memitem:ab5fa35b00c9f7ef2fcfb14d7bf03473b" id="r_ab5fa35b00c9f7ef2fcfb14d7bf03473b"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab5fa35b00c9f7ef2fcfb14d7bf03473b">allow_request</a> (const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;general_limit, const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;specific_limit, uint64_t in_flight_token, const std::string &amp;general_key, const std::string &amp;specific_key)</td></tr>
+<tr class="memdesc:ab5fa35b00c9f7ef2fcfb14d7bf03473b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a request is allowed by two optional rate-limit handles.  <br /></td></tr>
+<tr class="memitem:acbd9a7b47f5c0204b779abdd0bda608b" id="r_acbd9a7b47f5c0204b779abdd0bda608b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acbd9a7b47f5c0204b779abdd0bda608b">release_request</a> (const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;general_limit, const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;specific_limit, uint64_t in_flight_token, const std::string &amp;general_key, const std::string &amp;specific_key)</td></tr>
+<tr class="memdesc:acbd9a7b47f5c0204b779abdd0bda608b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases in-flight tokens for sequential rate limits.  <br /></td></tr>
+<tr class="memitem:a0bfb36fd6654aada626e455347786a80" id="r_a0bfb36fd6654aada626e455347786a80"><td class="memTemplParams" colspan="2">template&lt;typename Duration = std::chrono::milliseconds&gt; </td></tr>
+<tr class="memitem:a0bfb36fd6654aada626e455347786a80 template"><td class="memItemLeft">Duration&#160;</td><td class="memItemRight"><a class="el" href="#a0bfb36fd6654aada626e455347786a80">time_until_next_allowed</a> (const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;general_limit, const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;specific_limit, const std::string &amp;general_key, const std::string &amp;specific_key)</td></tr>
+<tr class="memdesc:a0bfb36fd6654aada626e455347786a80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates delay until request is allowed by two handles.  <br /></td></tr>
 <tr class="memitem:ad7f4e416b72e1cff0b400101351bcb51" id="r_ad7f4e416b72e1cff0b400101351bcb51"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#ad7f4e416b72e1cff0b400101351bcb51">generate_request_id</a> ()</td></tr>
 <tr class="memdesc:ad7f4e416b72e1cff0b400101351bcb51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a new unique request ID.  <br /></td></tr>
 <tr class="memitem:a32ce938812059e06f50fcc3f1af684eb" id="r_a32ce938812059e06f50fcc3f1af684eb"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#a32ce938812059e06f50fcc3f1af684eb">generate_group_id</a> ()</td></tr>
@@ -243,7 +250,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00186">186</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00231">231</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -267,7 +274,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00187">187</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00232">232</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -297,7 +304,7 @@ Private Attributes</h2></td></tr>
 
 <p>Private constructor to initialize global resources (e.g., cURL). </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00427">427</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00476">476</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -370,6 +377,65 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ab5fa35b00c9f7ef2fcfb14d7bf03473b" name="ab5fa35b00c9f7ef2fcfb14d7bf03473b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5fa35b00c9f7ef2fcfb14d7bf03473b">&#9670;&#160;</a></span>allow_request()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool kurlyk::HttpRequestManager::allow_request </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>general_limit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>specific_limit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>in_flight_token</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>general_key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>specific_key</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if a request is allowed by two optional rate-limit handles. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">general_limit</td><td>General rate-limit handle (may be empty). </td></tr>
+    <tr><td class="paramname">specific_limit</td><td>Specific rate-limit handle (may be empty). </td></tr>
+    <tr><td class="paramname">in_flight_token</td><td>Token identifying the in-flight request; 0 skips sequential checks. </td></tr>
+    <tr><td class="paramname">general_key</td><td>Partition key for the general limit; empty means default shared state. </td></tr>
+    <tr><td class="paramname">specific_key</td><td>Partition key for the specific limit; empty means default shared state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the request is allowed, false otherwise. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00104">104</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+
+</div>
+</div>
 <a id="a5e8849699dbbb491da1e735173a166ef" name="a5e8849699dbbb491da1e735173a166ef"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5e8849699dbbb491da1e735173a166ef">&#9670;&#160;</a></span>cancel_request_by_id()</h2>
 
@@ -406,7 +472,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00124">124</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00169">169</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -446,7 +512,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00136">136</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00181">181</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -475,7 +541,7 @@ Private Attributes</h2></td></tr>
 
 <p>Cleans up pending requests, marking each as failed and invoking its callback. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00390">390</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00439">439</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -552,7 +618,7 @@ Private Attributes</h2></td></tr>
 <p>Generates a new group ID. </p>
 <dl class="section return"><dt>Returns</dt><dd>A new group ID. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00105">105</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00150">150</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -582,7 +648,7 @@ Private Attributes</h2></td></tr>
 <p>Generates a new unique request ID. </p>
 <dl class="section return"><dt>Returns</dt><dd>A new unique request ID. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00099">99</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00144">144</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -669,7 +735,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00381">381</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00430">430</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -701,7 +767,7 @@ Private Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="classkurlyk_1_1core_1_1INetworkTaskManager.html#abb8aca1498e188f975d99c21029c5f99">kurlyk::core::INetworkTaskManager</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00171">171</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00216">216</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -728,7 +794,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00369">369</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00418">418</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -764,7 +830,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00357">357</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00406">406</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -794,7 +860,7 @@ Private Attributes</h2></td></tr>
 <p>Returns the current maximum pending request count. </p>
 <dl class="section return"><dt>Returns</dt><dd>Configured queue limit, or <span class="tt">0</span> if the queue is unbounded. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00117">117</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00162">162</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -853,7 +919,7 @@ Private Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="classkurlyk_1_1core_1_1INetworkTaskManager.html#a4ac0ffcbcafb3049f0de7211ffbe7d3a">kurlyk::core::INetworkTaskManager</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00148">148</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00193">193</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -882,7 +948,7 @@ Private Attributes</h2></td></tr>
 
 <p>Processes active requests, moving failed ones to the failed requests list for retrying. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00269">269</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00318">318</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -911,7 +977,7 @@ Private Attributes</h2></td></tr>
 
 <p>Processes and cancels HTTP requests based on their request or group IDs. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00310">310</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00359">359</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -940,7 +1006,7 @@ Private Attributes</h2></td></tr>
 
 <p>Processes all pending requests, moving valid requests to active batches or marking them as failed. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00198">198</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00243">243</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -969,7 +1035,65 @@ Private Attributes</h2></td></tr>
 
 <p>Attempts to retry failed requests if their retry delay has passed. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00286">286</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00335">335</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+
+</div>
+</div>
+<a id="acbd9a7b47f5c0204b779abdd0bda608b" name="acbd9a7b47f5c0204b779abdd0bda608b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbd9a7b47f5c0204b779abdd0bda608b">&#9670;&#160;</a></span>release_request()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kurlyk::HttpRequestManager::release_request </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>general_limit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>specific_limit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>in_flight_token</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>general_key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>specific_key</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Releases in-flight tokens for sequential rate limits. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">general_limit</td><td>General rate-limit handle (may be empty). </td></tr>
+    <tr><td class="paramname">specific_limit</td><td>Specific rate-limit handle (may be empty). </td></tr>
+    <tr><td class="paramname">in_flight_token</td><td>Token identifying the in-flight request; 0 is a no-op. </td></tr>
+    <tr><td class="paramname">general_key</td><td>Partition key for the general limit. </td></tr>
+    <tr><td class="paramname">specific_key</td><td>Partition key for the specific limit. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00120">120</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1070,7 +1194,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00111">111</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00156">156</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1102,7 +1226,7 @@ Private Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="classkurlyk_1_1core_1_1INetworkTaskManager.html#a926caeba983919fd4916d2c3903ad912">kurlyk::core::INetworkTaskManager</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00160">160</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00205">205</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1147,6 +1271,51 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a0bfb36fd6654aada626e455347786a80" name="a0bfb36fd6654aada626e455347786a80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bfb36fd6654aada626e455347786a80">&#9670;&#160;</a></span>time_until_next_allowed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Duration = std::chrono::milliseconds&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Duration kurlyk::HttpRequestManager::time_until_next_allowed </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>general_limit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacekurlyk.html#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>specific_limit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>general_key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>specific_key</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculates delay until request is allowed by two handles. </p>
+
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00132">132</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+
+</div>
+</div>
 <a id="a74758f6e78a33bd9a61abd2f69e6dd22" name="a74758f6e78a33bd9a61abd2f69e6dd22"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a74758f6e78a33bd9a61abd2f69e6dd22">&#9670;&#160;</a></span>~HttpRequestManager()</h2>
 
@@ -1172,7 +1341,7 @@ Private Attributes</h2></td></tr>
 
 <p>Private destructor to clean up global resources. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00432">432</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00481">481</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1199,7 +1368,7 @@ Private Attributes</h2></td></tr>
 
 <p>List of currently active HTTP request batches. Protected by NetworkWorker thread serialization, NOT by m_mutex. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00185">185</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00230">230</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1225,7 +1394,7 @@ Private Attributes</h2></td></tr>
 
 <p>List of failed HTTP requests for retrying. Protected by NetworkWorker thread serialization, NOT by m_mutex. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00184">184</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00229">229</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1251,7 +1420,7 @@ Private Attributes</h2></td></tr>
 
 <p>Atomic counter for group IDs. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00193">193</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00238">238</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1277,7 +1446,7 @@ Private Attributes</h2></td></tr>
 
 <p>Map of group IDs to their associated cancellation callbacks. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00189">189</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00234">234</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1303,7 +1472,7 @@ Private Attributes</h2></td></tr>
 
 <p>Maximum number of requests accepted into the pending queue, or zero if unbounded. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00195">195</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00240">240</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1329,7 +1498,7 @@ Private Attributes</h2></td></tr>
 
 <p>Mutex to protect access to the pending requests list and requests-to-cancel map. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00182">182</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00227">227</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1355,7 +1524,7 @@ Private Attributes</h2></td></tr>
 
 <p>Atomic counter for sequential rate-limit tokens. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00191">191</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00236">236</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1381,7 +1550,7 @@ Private Attributes</h2></td></tr>
 
 <p>List of pending HTTP requests awaiting processing. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00183">183</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00228">228</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1407,7 +1576,7 @@ Private Attributes</h2></td></tr>
 
 <p>Rate limiter for controlling request frequency. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00190">190</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00235">235</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1433,7 +1602,7 @@ Private Attributes</h2></td></tr>
 
 <p>Atomic counter for unique request IDs. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00192">192</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00237">237</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1459,7 +1628,7 @@ Private Attributes</h2></td></tr>
 
 <p>Map of request IDs to their associated cancellation callbacks. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00188">188</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00233">233</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>
@@ -1485,7 +1654,7 @@ Private Attributes</h2></td></tr>
 
 <p>Flag indicating if shutdown has been requested. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00194">194</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestManager_8hpp_source.html#l00239">239</a> of file <a class="el" href="HttpRequestManager_8hpp_source.html">HttpRequestManager.hpp</a>.</p>
 
 </div>
 </div>

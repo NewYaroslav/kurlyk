@@ -143,6 +143,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a8ae01dbf9fa7c217a6a934a0e4c07cbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the rate limit based on requests per minute (RPM).  <br /></td></tr>
 <tr class="memitem:a865f21e4ce5ad4807be278efb64354b4" id="r_a865f21e4ce5ad4807be278efb64354b4"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a865f21e4ce5ad4807be278efb64354b4">set_rate_limit_rps</a> (long requests_per_second, <a class="el" href="namespacekurlyk.html#a23c88f8eb4092642746144a019793ccf">RateLimitType</a> type=<a class="el" href="namespacekurlyk.html#a23c88f8eb4092642746144a019793ccface1b45fae7118ee510d863ac32a3a5d0">RateLimitType::RL_GENERAL</a>, bool sequential=false)</td></tr>
 <tr class="memdesc:a865f21e4ce5ad4807be278efb64354b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the rate limit based on requests per second (RPS).  <br /></td></tr>
+<tr class="memitem:acc71c05a1bbbc9cf27c105d855b3a79c" id="r_acc71c05a1bbbc9cf27c105d855b3a79c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acc71c05a1bbbc9cf27c105d855b3a79c">set_rate_limit_key</a> (const std::string &amp;key)</td></tr>
+<tr class="memdesc:acc71c05a1bbbc9cf27c105d855b3a79c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the partition key for both rate limits (general and specific).  <br /></td></tr>
+<tr class="memitem:aa4835489fabacc96aa4504f761999e82" id="r_aa4835489fabacc96aa4504f761999e82"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa4835489fabacc96aa4504f761999e82">set_general_rate_limit_key</a> (const std::string &amp;key)</td></tr>
+<tr class="memdesc:aa4835489fabacc96aa4504f761999e82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the partition key for the general rate limit.  <br /></td></tr>
+<tr class="memitem:a9482ff94f042d770a430777b03655610" id="r_a9482ff94f042d770a430777b03655610"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9482ff94f042d770a430777b03655610">set_specific_rate_limit_key</a> (const std::string &amp;key)</td></tr>
+<tr class="memdesc:a9482ff94f042d770a430777b03655610"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the partition key for the specific rate limit.  <br /></td></tr>
+<tr class="memitem:add28a66979c93f1c2fa68bad28b49175" id="r_add28a66979c93f1c2fa68bad28b49175"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#add28a66979c93f1c2fa68bad28b49175">set_rate_limit_keys</a> (const std::string &amp;general_key, const std::string &amp;specific_key)</td></tr>
+<tr class="memdesc:add28a66979c93f1c2fa68bad28b49175"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets independent partition keys for general and specific rate limits.  <br /></td></tr>
 <tr class="memitem:af22949acecaf07f9acd53afe982a1b1d" id="r_af22949acecaf07f9acd53afe982a1b1d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af22949acecaf07f9acd53afe982a1b1d">set_accept_encoding</a> (bool identity=false, bool deflate=false, bool gzip=false, bool brotli=false)</td></tr>
 <tr class="memdesc:af22949acecaf07f9acd53afe982a1b1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the Accept-Encoding header.  <br /></td></tr>
 <tr class="memitem:a9f07d0164b920fb183f47d1a88ee02b8" id="r_a9f07d0164b920fb183f47d1a88ee02b8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9f07d0164b920fb183f47d1a88ee02b8">set_accept_encoding</a> (const std::string &amp;value)</td></tr>
@@ -456,7 +464,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00377">377</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00409">409</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -634,7 +642,7 @@ Private Attributes</h2></td></tr>
 
 <p>Clears the set of valid HTTP status codes for the request. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00388">388</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00420">420</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -663,7 +671,7 @@ Private Attributes</h2></td></tr>
 
 <p>Ensures that the network worker and request manager are initialized. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00896">896</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00928">928</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -710,7 +718,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00695">695</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00727">727</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -763,7 +771,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00754">754</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00786">786</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -822,7 +830,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the request was accepted into the queue. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00583">583</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00615">615</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -875,7 +883,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00535">535</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00567">567</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -929,7 +937,7 @@ Private Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>If the ID is not found, the request is submitted without an additional specific limit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00723">723</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00755">755</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -989,7 +997,7 @@ Private Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>If the ID is not found, the request is submitted without an additional specific limit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00567">567</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00599">599</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1035,7 +1043,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00799">799</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00831">831</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1071,7 +1079,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A ready <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> describing the rejection. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00856">856</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00888">888</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1174,7 +1182,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00708">708</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00740">740</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1233,7 +1241,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00769">769</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00801">801</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1298,7 +1306,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the request was accepted into the queue. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00619">619</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00651">651</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1357,7 +1365,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00550">550</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00582">582</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1417,7 +1425,7 @@ Private Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>If the ID is not found, the request is submitted without an additional specific limit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00739">739</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00771">771</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1483,7 +1491,7 @@ Private Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>If the ID is not found, the request is submitted without an additional specific limit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00601">601</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00633">633</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1542,7 +1550,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00636">636</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00668">668</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1607,7 +1615,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00678">678</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00710">710</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1678,7 +1686,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the request was accepted into the queue. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00516">516</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00548">548</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1743,7 +1751,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was accepted into the queue; false if admission was rejected. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00469">469</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00501">501</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1809,7 +1817,7 @@ Private Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> object. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>If the ID is not found, the request is submitted without an additional specific limit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00654">654</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00686">686</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1881,7 +1889,7 @@ Private Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was accepted into the queue; false if admission was rejected. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>If the ID is not found, the request is submitted without an additional specific limit. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00489">489</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00521">521</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1922,7 +1930,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the request was successfully added to the RequestManager; false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00788">788</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00820">820</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -1962,7 +1970,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00834">834</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00866">866</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2008,7 +2016,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00873">873</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00905">905</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2060,7 +2068,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00239">239</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00271">271</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2095,7 +2103,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00249">249</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00281">281</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2130,7 +2138,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00255">255</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00287">287</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2165,7 +2173,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00292">292</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00324">324</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2200,7 +2208,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00412">412</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00444">444</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2235,7 +2243,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00406">406</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00438">438</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2270,7 +2278,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00424">424</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00456">456</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2305,7 +2313,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00261">261</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00293">293</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2340,7 +2348,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00400">400</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00432">432</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2375,7 +2383,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00436">436</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00468">468</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2410,7 +2418,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00279">279</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00311">311</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2445,7 +2453,42 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00286">286</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00318">318</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+
+</div>
+</div>
+<a id="aa4835489fabacc96aa4504f761999e82" name="aa4835489fabacc96aa4504f761999e82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4835489fabacc96aa4504f761999e82">&#9670;&#160;</a></span>set_general_rate_limit_key()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kurlyk::HttpClient::set_general_rate_limit_key </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the partition key for the general rate limit. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Partition key used to separate general rate-limit state. Empty string means the default shared state. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00245">245</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2480,7 +2523,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00305">305</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00337">337</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2511,7 +2554,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00794">794</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00826">826</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2616,7 +2659,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00442">442</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00474">474</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2651,7 +2694,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00267">267</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00299">299</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2709,7 +2752,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00332">332</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00364">364</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2755,7 +2798,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00319">319</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00351">351</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2790,7 +2833,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00358">358</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00390">390</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2830,7 +2873,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00344">344</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00376">376</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2865,7 +2908,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00352">352</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00384">384</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2900,7 +2943,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00298">298</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00330">330</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -2935,7 +2978,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00364">364</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00396">396</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3074,6 +3117,81 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="acc71c05a1bbbc9cf27c105d855b3a79c" name="acc71c05a1bbbc9cf27c105d855b3a79c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc71c05a1bbbc9cf27c105d855b3a79c">&#9670;&#160;</a></span>set_rate_limit_key()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kurlyk::HttpClient::set_rate_limit_key </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the partition key for both rate limits (general and specific). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Partition key used to separate rate-limit state within the same limit ID. Empty string means the default shared state. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00237">237</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+
+</div>
+</div>
+<a id="add28a66979c93f1c2fa68bad28b49175" name="add28a66979c93f1c2fa68bad28b49175"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add28a66979c93f1c2fa68bad28b49175">&#9670;&#160;</a></span>set_rate_limit_keys()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kurlyk::HttpClient::set_rate_limit_keys </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>general_key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>specific_key</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets independent partition keys for general and specific rate limits. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">general_key</td><td>Partition key for the general rate limit. </td></tr>
+    <tr><td class="paramname">specific_key</td><td>Partition key for the specific rate limit. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00259">259</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+
+</div>
+</div>
 <a id="a8ae01dbf9fa7c217a6a934a0e4c07cbd" name="a8ae01dbf9fa7c217a6a934a0e4c07cbd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8ae01dbf9fa7c217a6a934a0e4c07cbd">&#9670;&#160;</a></span>set_rate_limit_rpm()</h2>
 
@@ -3197,7 +3315,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00273">273</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00305">305</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3237,7 +3355,42 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00371">371</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00403">403</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a9482ff94f042d770a430777b03655610" name="a9482ff94f042d770a430777b03655610"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9482ff94f042d770a430777b03655610">&#9670;&#160;</a></span>set_specific_rate_limit_key()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kurlyk::HttpClient::set_specific_rate_limit_key </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the partition key for the specific rate limit. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Partition key used to separate specific rate-limit state. Empty string means the default shared state. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00252">252</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3272,7 +3425,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00311">311</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00343">343</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3307,7 +3460,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00418">418</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00450">450</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3342,7 +3495,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00394">394</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00426">426</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3377,7 +3530,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00383">383</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00415">415</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3412,7 +3565,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00430">430</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00462">462</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3439,7 +3592,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00819">819</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00851">851</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3480,7 +3633,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structkurlyk_1_1SubmitResult.html" title="Represents the synchronous result of trying to enqueue or submit work.">SubmitResult</a> describing whether the request was accepted into the queue. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00450">450</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00482">482</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3507,7 +3660,7 @@ Private Attributes</h2></td></tr>
 
 <p>The base host URL for the HTTP client. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00780">780</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00812">812</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3533,7 +3686,7 @@ Private Attributes</h2></td></tr>
 
 <p>Flag indicating if the client owns the general rate limit. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00781">781</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00813">813</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3559,7 +3712,7 @@ Private Attributes</h2></td></tr>
 
 <p>Flag indicating if the client owns the specific rate limit. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00782">782</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00814">814</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>
@@ -3585,7 +3738,7 @@ Private Attributes</h2></td></tr>
 
 <p>Request defaults shared by requests created by this client. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00779">779</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpClient_8hpp_source.html#l00811">811</a> of file <a class="el" href="HttpClient_8hpp_source.html">HttpClient.hpp</a>.</p>
 
 </div>
 </div>

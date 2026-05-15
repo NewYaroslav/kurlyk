@@ -40,7 +40,7 @@ var NAVTREEINDEX0 =
 "HttpRateLimitLease_8hpp.html#a0f3407bb6b7e12d3b3d3f876b104bd64":[3,0,2,0,1,1,3,3],
 "HttpRateLimitLease_8hpp_source.html":[3,0,2,0,1,1,3],
 "HttpRateLimiter_8hpp.html":[3,0,2,0,1,1,1],
-"HttpRateLimiter_8hpp.html#a33b15b8797448f7890b256a87ce4e693":[3,0,2,0,1,1,1,2],
+"HttpRateLimiter_8hpp.html#a33b15b8797448f7890b256a87ce4e693":[3,0,2,0,1,1,1,3],
 "HttpRateLimiter_8hpp_source.html":[3,0,2,0,1,1,1],
 "HttpRequestContext_8hpp.html":[3,0,2,0,1,1,4],
 "HttpRequestContext_8hpp.html#aabd3933bef7fc7ffbc4e07dfe508fc5e":[3,0,2,0,1,1,4,1],
