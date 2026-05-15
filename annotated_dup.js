@@ -28,7 +28,6 @@ var annotated_dup =
       [ "HttpBatchRequestHandler", "classkurlyk_1_1HttpBatchRequestHandler.html", "classkurlyk_1_1HttpBatchRequestHandler" ],
       [ "HttpRateLimiter", "classkurlyk_1_1HttpRateLimiter.html", "classkurlyk_1_1HttpRateLimiter" ],
       [ "HttpRateLimitHandle", "classkurlyk_1_1HttpRateLimitHandle.html", "classkurlyk_1_1HttpRateLimitHandle" ],
-      [ "HttpRateLimitLease", "classkurlyk_1_1HttpRateLimitLease.html", "classkurlyk_1_1HttpRateLimitLease" ],
       [ "HttpRequestContext", "classkurlyk_1_1HttpRequestContext.html", "classkurlyk_1_1HttpRequestContext" ],
       [ "HttpRequestHandler", "classkurlyk_1_1HttpRequestHandler.html", "classkurlyk_1_1HttpRequestHandler" ],
       [ "Cookie", "classkurlyk_1_1Cookie.html", "classkurlyk_1_1Cookie" ],

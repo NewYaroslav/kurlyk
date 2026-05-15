@@ -1,11 +1,17 @@
 var searchData=
 [
-  ['path_0',['path',['../classkurlyk_1_1Cookie.html#af54b9b0a3c5ec898b19c2a3e0503d8ee',1,'kurlyk::Cookie']]],
-  ['period_5fms_1',['period_ms',['../structkurlyk_1_1HttpRateLimiter_1_1LimitData.html#ae302a4d697755142c5e64d82cf544951',1,'kurlyk::HttpRateLimiter::LimitData::period_ms'],['../structkurlyk_1_1WebSocketRateLimiter_1_1LimitData.html#abe9c03fb6c4c8645c52006b067bcd32e',1,'kurlyk::WebSocketRateLimiter::LimitData::period_ms'],['../structkurlyk_1_1WebSocketConfig_1_1RateLimitData.html#aaef21a340e8d5a0cf1ba43b0312b15b2',1,'kurlyk::WebSocketConfig::RateLimitData::period_ms']]],
-  ['pretransfer_5ftime_2',['pretransfer_time',['../classkurlyk_1_1HttpResponse.html#aa6ff73b2495f06c46073683022168f4d',1,'kurlyk::HttpResponse']]],
-  ['protocols_3',['protocols',['../classkurlyk_1_1WebSocketConfig.html#af6a785ebe98a7c4dc3431c9c1f50db93',1,'kurlyk::WebSocketConfig']]],
-  ['proxy_5fauth_4',['proxy_auth',['../classkurlyk_1_1HttpRequest.html#a1f1ee8834f9a1d75bbfcec9fd5ce93ef',1,'kurlyk::HttpRequest::proxy_auth'],['../structcryptox_1_1ProxyConfig.html#a1ad61612de9029e69e63dd9aa6027193',1,'cryptox::ProxyConfig::proxy_auth'],['../classkurlyk_1_1WebSocketConfig.html#ad605d2a76f321542a52039c3d1e10a0e',1,'kurlyk::WebSocketConfig::proxy_auth']]],
-  ['proxy_5fserver_5',['proxy_server',['../classkurlyk_1_1HttpRequest.html#a704085df4b959a296133b150c688d129',1,'kurlyk::HttpRequest::proxy_server'],['../structcryptox_1_1ProxyConfig.html#a9ef2fff4f38eb9c784e0a76c596f01c4',1,'cryptox::ProxyConfig::proxy_server'],['../classkurlyk_1_1WebSocketConfig.html#a324fde4f4f591ca81f7158cac3f9c741',1,'kurlyk::WebSocketConfig::proxy_server']]],
-  ['proxy_5ftunnel_6',['proxy_tunnel',['../classkurlyk_1_1HttpRequest.html#a055c4231b7404481090d3d7530be7d58',1,'kurlyk::HttpRequest']]],
-  ['proxy_5ftype_7',['proxy_type',['../classkurlyk_1_1HttpRequest.html#a8085a6d90cc32967e07898d6007b57aa',1,'kurlyk::HttpRequest::proxy_type'],['../structcryptox_1_1ProxyConfig.html#a688e34f6d618231c1c3ab06acd6c6b23',1,'cryptox::ProxyConfig::proxy_type'],['../classkurlyk_1_1WebSocketConfig.html#a1a9ffc792c68a11219e2819446f90f85',1,'kurlyk::WebSocketConfig::proxy_type']]]
+  ['rate_5flimit_5fid_0',['rate_limit_id',['../classkurlyk_1_1WebSocketSendInfo.html#a028206e40813a92c94b22d51f2d78f65',1,'kurlyk::WebSocketSendInfo']]],
+  ['rate_5flimits_1',['rate_limits',['../classkurlyk_1_1WebSocketConfig.html#a69ad6b109e288a9565016fa0688db218',1,'kurlyk::WebSocketConfig']]],
+  ['ready_2',['ready',['../classkurlyk_1_1HttpResponse.html#af806019492eb7f3db13324f768dc2e2d',1,'kurlyk::HttpResponse']]],
+  ['reconnect_3',['reconnect',['../classkurlyk_1_1WebSocketConfig.html#ae0ad7d538b3ad4f30b9e3a48e92e6009',1,'kurlyk::WebSocketConfig']]],
+  ['reconnect_5fattempts_4',['reconnect_attempts',['../classkurlyk_1_1WebSocketConfig.html#a64f6c677bade08036aefdf22803490ae',1,'kurlyk::WebSocketConfig']]],
+  ['reconnect_5fdelay_5',['reconnect_delay',['../classkurlyk_1_1WebSocketConfig.html#ad902d114383b7569691e627f4e49b4b5',1,'kurlyk::WebSocketConfig']]],
+  ['removed_6',['removed',['../structkurlyk_1_1HttpRateLimiter_1_1LimitData.html#a47fbcdcf672abdf2a274c1ed686c0a19',1,'kurlyk::HttpRateLimiter::LimitData']]],
+  ['request_7',['request',['../classkurlyk_1_1HttpRequestContext.html#a30c83e8c998d1f0bb35dfbe04f86d384',1,'kurlyk::HttpRequestContext']]],
+  ['request_5fid_8',['request_id',['../classkurlyk_1_1HttpRequest.html#a78ff7a6b8f0c081f1a7bbe41cc470406',1,'kurlyk::HttpRequest']]],
+  ['request_5ftimeout_9',['request_timeout',['../classkurlyk_1_1WebSocketConfig.html#ae539bf1796067b4b55c8ab79bd8878d3',1,'kurlyk::WebSocketConfig']]],
+  ['requests_5fper_5fperiod_10',['requests_per_period',['../structkurlyk_1_1HttpRateLimiter_1_1LimitData.html#aa0e34b6deb26a4c981d25fdb126d8485',1,'kurlyk::HttpRateLimiter::LimitData::requests_per_period'],['../structkurlyk_1_1WebSocketRateLimiter_1_1LimitData.html#a1055255e090ba931895e84213e7f6118',1,'kurlyk::WebSocketRateLimiter::LimitData::requests_per_period'],['../structkurlyk_1_1WebSocketConfig_1_1RateLimitData.html#acfed9ae17b4e25a007cb4ea61994295d',1,'kurlyk::WebSocketConfig::RateLimitData::requests_per_period']]],
+  ['retry_5fattempt_11',['retry_attempt',['../classkurlyk_1_1HttpResponse.html#a04053b260e4c788a826abe79bb530d82',1,'kurlyk::HttpResponse::retry_attempt'],['../classkurlyk_1_1HttpRequestContext.html#a76bebebc68d4df78b33fe881e92668e3',1,'kurlyk::HttpRequestContext::retry_attempt']]],
+  ['retry_5fattempts_12',['retry_attempts',['../classkurlyk_1_1HttpRequest.html#ac0d9f61c44eab9ce4e2fb1bac95f1d55',1,'kurlyk::HttpRequest']]],
+  ['retry_5fdelay_5fms_13',['retry_delay_ms',['../classkurlyk_1_1HttpRequest.html#a7df310a8040c23d71786147dbf561373',1,'kurlyk::HttpRequest']]]
 ];

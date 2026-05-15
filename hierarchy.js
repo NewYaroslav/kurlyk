@@ -4,7 +4,6 @@ var hierarchy =
     [ "kurlyk::utils::CaseInsensitiveEqual", "classkurlyk_1_1utils_1_1CaseInsensitiveEqual.html", null ],
     [ "kurlyk::utils::CaseInsensitiveHash", "classkurlyk_1_1utils_1_1CaseInsensitiveHash.html", null ],
     [ "kurlyk::Cookie", "classkurlyk_1_1Cookie.html", null ],
-    [ "kurlyk::HttpRateLimitLease::CooldownLock", "structkurlyk_1_1HttpRateLimitLease_1_1CooldownLock.html", null ],
     [ "kurlyk::EmscriptenWebSocketClientAdapter", "classkurlyk_1_1EmscriptenWebSocketClientAdapter.html", null ],
     [ "std::enable_shared_from_this", null, [
       [ "kurlyk::BaseWebSocketClient", "classkurlyk_1_1BaseWebSocketClient.html", [
@@ -23,7 +22,6 @@ var hierarchy =
     [ "kurlyk::HttpClient", "classkurlyk_1_1HttpClient.html", null ],
     [ "kurlyk::HttpRateLimiter", "classkurlyk_1_1HttpRateLimiter.html", null ],
     [ "kurlyk::HttpRateLimitHandle", "classkurlyk_1_1HttpRateLimitHandle.html", null ],
-    [ "kurlyk::HttpRateLimitLease", "classkurlyk_1_1HttpRateLimitLease.html", null ],
     [ "kurlyk::HttpRequest", "classkurlyk_1_1HttpRequest.html", null ],
     [ "kurlyk::HttpRequestContext", "classkurlyk_1_1HttpRequestContext.html", null ],
     [ "kurlyk::HttpRequestHandler", "classkurlyk_1_1HttpRequestHandler.html", null ],
@@ -40,7 +38,6 @@ var hierarchy =
     [ "kurlyk::HttpRateLimiter::KeyState", "structkurlyk_1_1HttpRateLimiter_1_1KeyState.html", null ],
     [ "kurlyk::HttpRateLimiter::LimitData", "structkurlyk_1_1HttpRateLimiter_1_1LimitData.html", null ],
     [ "kurlyk::WebSocketRateLimiter::LimitData", "structkurlyk_1_1WebSocketRateLimiter_1_1LimitData.html", null ],
-    [ "kurlyk::HttpRateLimitLease::LimitLock", "structkurlyk_1_1HttpRateLimitLease_1_1LimitLock.html", null ],
     [ "kurlyk::core::NetworkWorker", "classkurlyk_1_1core_1_1NetworkWorker.html", null ],
     [ "std::ostringstream", null, [
       [ "kurlyk::utils::ThreadSafePrintStream", "classkurlyk_1_1utils_1_1ThreadSafePrintStream.html", null ]
