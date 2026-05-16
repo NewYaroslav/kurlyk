@@ -84,7 +84,11 @@ $TestExecutables = @(
     "rate_limit_lifetime_test.exe",
     "request_group_cancel_test.exe",
     "http_client_rate_limit_api_test.exe",
-    "sequential_rate_limit_test.exe"
+    "sequential_rate_limit_test.exe",
+    "rate_limit_partition_test.exe",
+    "http_local_test.exe",
+    "http_retry_streaming_test.exe",
+    "http_client_destructor_test.exe"
 )
 
 foreach ($cfg in $configs) {
