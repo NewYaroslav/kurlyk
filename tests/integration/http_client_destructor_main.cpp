@@ -50,10 +50,18 @@ int main() {
         *response << make_response(200, "OK", "too-late");
     };
 
-    const unsigned short port = server.bind();
-    std::thread server_thread([&server]() {
-        server.accept_and_run();
+    std::promise<unsigned short> port_promise;
+    auto port_future = port_promise.get_future();
+    std::thread server_thread([&server, &port_promise]() {
+        server.start([&port_promise](unsigned short port) {
+            try {
+                port_promise.set_value(port);
+            } catch (...) {
+            }
+        });
     });
+
+    const unsigned short port = port_future.get();
     const std::string host = "http://127.0.0.1:" + std::to_string(port);
 
     std::mutex mutex;
