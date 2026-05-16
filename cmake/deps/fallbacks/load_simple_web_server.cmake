@@ -18,6 +18,6 @@ function(load_simple_web_server target)
 		add_library(simple_web_server INTERFACE)
 		target_include_directories(simple_web_server INTERFACE "${simple_web_server_SOURCE_DIR}")
 	endif()
-	target_link_libraries(${target} INTERFACE simple_web_server)
+	target_link_libraries(${target} PRIVATE simple_web_server)
 
 endfunction()
