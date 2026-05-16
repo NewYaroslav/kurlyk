@@ -121,7 +121,25 @@ cmake -S . -B build-examples-mingw -G "MinGW Makefiles" `
 cmake --build build-examples-mingw --config Release
 ```
 
-Для MinGW зависимости уже есть в репозитории как git submodules в папке `libs`, а fallback CMake-опции ниже позволяют собрать отсутствующие зависимости автоматически.
+В Windows/MinGW зависимости можно предоставить через системные пути, субмодули репозитория или fallback-опции CMake.
+
+В Linux перед конфигурацией проекта установите development-пакеты OpenSSL и libcurl. Asio и Simple-WebSocket-Server можно загрузить через fallback-опции CMake.
+
+Для Linux:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y libcurl4-openssl-dev libssl-dev ninja-build
+
+cmake -S . -B build-linux -G Ninja \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+    -DKURLYK_BUILD_EXAMPLES=ON \
+    -DKURLYK_USE_FALLBACK_ASIO=ON \
+    -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON
+
+cmake --build build-linux
+```
 
 ## Базовое использование HTTP
 
@@ -556,12 +574,13 @@ client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::P
 
 ### Поддерживаемые toolchains
 
-Полная CMake-сборка с HTTP/WebSocket сейчас доступна только под Windows:
+Полная CMake-сборка с HTTP/WebSocket сейчас поддерживается для:
 
-- **MinGW (GCC)**
-- **MSVC / Visual Studio 2022** — экспериментально
+- **Windows / MinGW (GCC)**
+- **Windows / MSVC / Visual Studio 2022** — экспериментально
+- **Linux / GCC или Clang**
 
-Linux и macOS используются в CI только для portable header smoke tests с отключёнными HTTP/WebSocket.
+macOS пока используется в CI только для portable header smoke tests с отключёнными HTTP/WebSocket.
 
 ### Подключение kurlyk
 
@@ -575,21 +594,32 @@ kurlyk/include
 
 ### Зависимости
 
-Для работы библиотеки **kurlyk** в среде MinGW потребуются следующие зависимости:
+Для работы **kurlyk** с включёнными HTTP/WebSocket потребуются следующие зависимости:
 
 1. Для WebSocket:
    - [Simple-WebSocket-Server](https://gitlab.com/eidheim/Simple-WebSocket-Server)
    - Boost.Asio или [standalone Asio](https://github.com/chriskohlhoff/asio/tree/master)
-   - [OpenSSL](https://slproweb.com/products/Win32OpenSSL.html) (*LTS версия Win64 OpenSSL v3.0.15*)
+   - [OpenSSL](https://www.openssl.org/)
 
 2. Для HTTP:
-   - [libcurl](https://curl.se/windows/)
+   - [libcurl](https://curl.se/)
 
-Все зависимости также добавлены в проект в виде субмодулей, находящихся в папке `libs`.
+Часть зависимостей доступна в виде субмодулей в папке `external`.
+
+### Пакеты Linux
+
+В Debian/Ubuntu-based системах установите development-пакеты OpenSSL и libcurl:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y libcurl4-openssl-dev libssl-dev
+```
+
+Linux CMake-сборка использует системные пакеты OpenSSL/libcurl. Binary fallback packages для OpenSSL и libcurl сейчас доступны только для Windows.
 
 ### OpenSSL
 
-Добавьте в проект пути к OpenSSL, например для версии *3.4.0*:
+В Windows добавьте в проект пути к OpenSSL, например для версии *3.4.0*:
 
 ```text
 OpenSSL-Win64/include
@@ -625,7 +655,7 @@ asio/asio/include
 
 ### curl
 
-Добавьте в проект пути для `curl`, например для версии *8.11.0*:
+В Windows добавьте в проект пути для `curl`, например для версии *8.11.0*:
 
 ```text
 curl-8.11.0_1-win64-mingw/bin
@@ -650,7 +680,7 @@ Simple-WebSocket-Server
 
 ### Остальные зависимости
 
-Также добавьте следующие библиотеки в линкер:
+В Windows также добавьте следующие библиотеки в линкер:
 
 ```text
 ws2_32
@@ -660,14 +690,16 @@ crypt32
 
 ### Fallback зависимости
 
-Библиотека поддерживает автоматическую загрузку зависимостей в случае их отсутствия. Наличие fallback'а зависит от компилятора и типа линковки.
+Библиотека поддерживает автоматическую загрузку части зависимостей в случае их отсутствия. Наличие fallback'а зависит от платформы, компилятора и типа линковки.
+
+Binary fallback packages для OpenSSL и libcurl сейчас доступны только для Windows. В Linux используйте системные пакеты OpenSSL и libcurl.
 
 | Dependency | MinGW (Shared) | MinGW (Static) | MSVC (Shared) | MSVC (Static) |
 |------------|---------------|---------------|---------------|---------------|
 | OpenSSL    | yes           | yes           | yes           | yes           |
 | curl       | yes           | yes           | yes           | no            |
 
-Asio и Simple-WebSocket-Server — header-only библиотеки и подходят для всех указанных вариантов сборок.
+Asio и Simple-WebSocket-Server — header-only библиотеки, которые можно загрузить через fallback-опции CMake на поддерживаемых платформах.
 
 #### Опции CMake fallback
 
@@ -709,6 +741,19 @@ cmake -S . -B build-mingw -G "MinGW Makefiles" `
 cmake --build build-mingw
 ```
 
+Для Linux с системными OpenSSL/libcurl и fallback header-only зависимостями:
+
+```bash
+cmake -S . -B build-linux -G Ninja \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+    -DKURLYK_BUILD_EXAMPLES=ON \
+    -DKURLYK_USE_FALLBACK_ASIO=ON \
+    -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON
+
+cmake --build build-linux
+```
+
 ## Конфигурационные макросы
 
 Перед подключением `kurlyk.hpp` можно определить следующие макросы для настройки библиотеки:
@@ -732,7 +777,8 @@ cmake --build build-mingw
 | `include/kurlyk/websocket` | WebSocket client и connection management. |
 | `include/kurlyk/types` | Общие enum, cookie, proxy config и helpers. |
 | `include/kurlyk/utils` | Encoding, URL, HTTP, path и error helpers. |
-| `tests/integration` | Windows dependency и integration build checks. |
+| `tests/integration` | Windows dependency и HTTP/WebSocket integration checks. |
+| `external/` | Опциональные субмодули зависимостей. |
 | `tests/odr` | Header-only ODR checks. |
 | `tests/smoke` | Portable header smoke checks. |
 | `examples/` | Примеры использования. |
@@ -765,10 +811,10 @@ c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++17 -o header_smoke
 
 | Платформа | Что проверяется |
 |-----------|-----------------|
-| Windows | Integration-сборки MinGW и MSVC с fallback-зависимостями, HTTP backpressure regression и локальным WebSocket integration coverage. |
+| Windows | Integration-сборки MinGW и MSVC с fallback-зависимостями, локальные HTTP integration tests, HTTP retry/streaming/destructor regression tests и локальное WebSocket integration coverage. |
 | Windows extras | ODR-проверки singleton и auto-init заголовков. |
-| Linux | C++11/C++17 header smoke test с отключенными HTTP/WebSocket. |
-| macOS | C++11/C++17 header smoke test с отключенными HTTP/WebSocket. |
+| Linux | C++11/C++17 header smoke test и полная CMake-сборка examples с включёнными HTTP/WebSocket. |
+| macOS | C++11/C++17 header smoke test с отключёнными HTTP/WebSocket. |
 
 ## Документация
 
