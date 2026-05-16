@@ -8,7 +8,10 @@
 namespace kurlyk {
 
     /// \class HttpResponse
-    /// \brief Represents an HTTP response, including headers, body, status, errors, and timing metrics.
+    /// \brief Represents an HTTP response.
+    ///
+    /// HttpResponse stores response headers, body, status, errors,
+    /// retry metadata, and timing metrics.
     class HttpResponse {
     public:
         Headers         headers;            ///< HTTP response headers.

@@ -8,9 +8,9 @@
 namespace kurlyk {
 
     /// \class HttpRequest
-    /// \brief Stores HTTP request parameters and settings.
+    /// \brief Represents an HTTP request configuration.
     ///
-    /// The HttpRequest class stores parameters for an HTTP request,
+    /// HttpRequest stores parameters for an HTTP request,
     /// including headers, URL, method, body, proxy, TLS, timeout, retry,
     /// and rate-limit options.
     class HttpRequest {

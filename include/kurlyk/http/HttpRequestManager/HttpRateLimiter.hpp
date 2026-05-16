@@ -24,7 +24,7 @@ namespace kurlyk {
         /// \brief Creates a new rate limit and returns its RAII handle.
         /// \param requests_per_period Maximum requests allowed within the period. 0 means unlimited.
         /// \param period_ms Period duration in milliseconds.
-        /// \param sequential When true, no other request sharing this limit may start until
+        /// \param sequential When \`true\`, no other request sharing this limit may start until
         ///        the current request (including all its retries) has finished.
         /// \return Shared RAII handle for the created limit.
         HttpRateLimitHandlePtr create_limit_handle(long requests_per_period, long period_ms, bool sequential = false) {
@@ -72,7 +72,7 @@ namespace kurlyk {
         /// Physical erase happens from HttpRateLimitHandle destructor.
         ///
         /// \param limit_id Rate-limit ID.
-        /// \return true if manager-owned handle was found and released.
+        /// \return \`true\` if manager-owned handle was found and released.
         bool remove_limit(long limit_id) {
             HttpRateLimitHandlePtr retired_handle;
 
@@ -96,7 +96,7 @@ namespace kurlyk {
 
         /// \brief Releases manager-owned handle for the specified limit handle.
         /// \param handle Rate-limit handle.
-        /// \return true if manager-owned handle was found and released.
+        /// \return \`true\` if manager-owned handle was found and released.
         bool remove_limit(const HttpRateLimitHandlePtr& handle) {
             return handle ? remove_limit(handle->id()) : false;
         }
@@ -124,7 +124,7 @@ namespace kurlyk {
         /// \param in_flight_token Token identifying the in-flight request; 0 skips sequential checks.
         /// \param general_key Partition key for the general limit; empty means default state.
         /// \param specific_key Partition key for the specific limit; empty means default state.
-        /// \return true if the request is allowed, false otherwise (state unchanged on failure).
+        /// \return \`true\` if the request is allowed, \`false\` otherwise (state unchanged on failure).
         bool allow_request(
                 const HttpRateLimitHandlePtr& general_limit,
                 const HttpRateLimitHandlePtr& specific_limit,
@@ -388,8 +388,8 @@ namespace kurlyk {
         struct LimitData {
             long requests_per_period = 0;
             long period_ms = 0;
-            bool sequential = false;                               ///< When true, blocks other requests until the current one finishes.
-            bool removed = false;                                   ///< True when the manager-owned handle has been released; physical erase is deferred until all keys are empty.
+            bool sequential = false;                               ///< When \`true\`, blocks other requests until the current one finishes.
+            bool removed = false;                                   ///< \`true\` when the manager-owned handle has been released; physical erase is deferred until all keys are empty.
             std::unordered_map<std::string, KeyState> keys;       ///< Mutable state per partition key.
         };
 
