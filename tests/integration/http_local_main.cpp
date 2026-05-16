@@ -1,17 +1,11 @@
 #define KURLYK_AUTO_INIT 0
 #include <kurlyk.hpp>
-#include <server_http.hpp>
+#include "local_http_server.hpp"
 
-#include <chrono>
-#include <future>
 #include <iostream>
-#include <sstream>
 #include <string>
-#include <thread>
 
 namespace {
-
-using HttpServer = SimpleWeb::Server<SimpleWeb::HTTP>;
 
 void require(bool condition, const std::string& message) {
     if (!condition) {
@@ -20,97 +14,49 @@ void require(bool condition, const std::string& message) {
     }
 }
 
-std::string make_response(long status, const std::string& reason, const std::string& body) {
-    std::ostringstream out;
-    out << "HTTP/1.1 " << status << ' ' << reason << "\r\n"
-        << "Content-Length: " << body.size() << "\r\n"
-        << "Content-Type: text/plain\r\n"
-        << "Connection: close\r\n\r\n"
-        << body;
-    return out.str();
-}
-
-std::string make_head_response(long status, const std::string& reason, std::size_t content_length) {
-    std::ostringstream out;
-    out << "HTTP/1.1 " << status << ' ' << reason << "\r\n"
-        << "Content-Length: " << content_length << "\r\n"
-        << "Content-Type: text/plain\r\n"
-        << "Connection: close\r\n\r\n";
-    return out.str();
-}
-
-std::string header_value(const std::shared_ptr<HttpServer::Request>& request, const std::string& key) {
-    auto it = request->header.find(key);
-    return it == request->header.end() ? std::string() : it->second;
+std::string header_value(const kurlyk_tests::LocalHttpRequest& request, const std::string& key) {
+    auto it = request.headers.find(key);
+    return it == request.headers.end() ? std::string() : it->second;
 }
 
 } // namespace
 
 int main() {
-    HttpServer server;
-    server.config.port = 0;
-    server.config.thread_pool_size = 1;
-
-    server.resource["^/ok$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
-                                            std::shared_ptr<HttpServer::Request>) {
-        *response << make_response(200, "OK", "local-ok");
-    };
-
-    server.resource["^/echo$"]["POST"] = [](std::shared_ptr<HttpServer::Response> response,
-                                             std::shared_ptr<HttpServer::Request> request) {
-        const std::string body = request->content.string();
-        *response << make_response(200, "OK", body);
-    };
-
-    server.resource["^/query$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
-                                             std::shared_ptr<HttpServer::Request> request) {
-        *response << make_response(200, "OK", request->query_string);
-    };
-
-    server.resource["^/headers$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
-                                               std::shared_ptr<HttpServer::Request> request) {
-        *response << make_response(200, "OK", header_value(request, "X-Kurlyk-Test"));
-    };
-
-    server.resource["^/head$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
-                                            std::shared_ptr<HttpServer::Request>) {
-        *response << make_response(200, "OK", "head-body");
-    };
-    server.resource["^/head$"]["HEAD"] = [](std::shared_ptr<HttpServer::Response> response,
-                                             std::shared_ptr<HttpServer::Request>) {
-        *response << make_head_response(200, "OK", std::string("head-body").size());
-    };
-
-    server.resource["^/missing$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
-                                               std::shared_ptr<HttpServer::Request>) {
-        *response << make_response(404, "Not Found", "missing");
-    };
-
-    server.resource["^/redirect$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
-                                                std::shared_ptr<HttpServer::Request>) {
-        *response << "HTTP/1.1 302 Found\r\n"
-                  << "Location: /ok\r\n"
-                  << "Content-Length: 0\r\n"
-                  << "Connection: close\r\n\r\n";
-    };
-
-    std::promise<unsigned short> port_promise;
-    auto port_future = port_promise.get_future();
-    std::thread server_thread([&server, &port_promise]() {
-        server.start([&port_promise](unsigned short port) {
-            try {
-                port_promise.set_value(port);
-            } catch (...) {
-            }
-        });
+    kurlyk_tests::LocalHttpServer server([](const kurlyk_tests::LocalHttpRequest& request) {
+        if (request.method == "GET" && request.path == "/ok") {
+            return kurlyk_tests::make_http_response(200, "OK", "local-ok");
+        }
+        if (request.method == "POST" && request.path == "/echo") {
+            return kurlyk_tests::make_http_response(200, "OK", request.body);
+        }
+        if (request.method == "GET" && request.path == "/query") {
+            return kurlyk_tests::make_http_response(200, "OK", request.query);
+        }
+        if (request.method == "GET" && request.path == "/headers") {
+            return kurlyk_tests::make_http_response(200, "OK", header_value(request, "X-Kurlyk-Test"));
+        }
+        if (request.method == "GET" && request.path == "/head") {
+            return kurlyk_tests::make_http_response(200, "OK", "head-body");
+        }
+        if (request.method == "HEAD" && request.path == "/head") {
+            return kurlyk_tests::make_http_head_response(200, "OK", std::string("head-body").size());
+        }
+        if (request.method == "GET" && request.path == "/missing") {
+            return kurlyk_tests::make_http_response(404, "Not Found", "missing");
+        }
+        if (request.method == "GET" && request.path == "/redirect") {
+            return std::string("HTTP/1.1 302 Found\r\n") +
+                   "Location: /ok\r\n" +
+                   "Content-Length: 0\r\n" +
+                   "Connection: close\r\n\r\n";
+        }
+        return kurlyk_tests::make_http_response(404, "Not Found", "not-found");
     });
-
-    const unsigned short port = port_future.get();
-    const std::string host = "http://127.0.0.1:" + std::to_string(port);
+    server.start();
 
     kurlyk::init(true);
     {
-        kurlyk::HttpClient client(host);
+        kurlyk::HttpClient client(server.host());
 
         auto ok = client.get("/ok", kurlyk::QueryParams(), kurlyk::Headers()).get();
         require(ok && ok->ready, "GET /ok returned no final response");
@@ -155,9 +101,7 @@ int main() {
         require(redirect->content == "local-ok", "GET /redirect returned unexpected body");
     }
     kurlyk::deinit();
-
     server.stop();
-    server_thread.join();
 
     std::cout << "Local HTTP integration test passed" << std::endl;
     return 0;
