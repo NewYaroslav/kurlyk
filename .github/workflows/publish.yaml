@@ -24,8 +24,7 @@ jobs:
           sed -i "0,/VERSION_PLACEHOLDER/s//$TAG/" docs/mainpage.dox
       - name: Generate Documentation
         uses: mattnotmitt/doxygen-action@edge
-      - name: Check generated documentation changes
-        id: docs_diff
+      - name: Check and publish documentation
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
@@ -44,16 +43,11 @@ jobs:
           git add --all
 
           if git diff --cached --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No documentation changes to publish."
-          else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "Documentation changes detected."
+            exit 0
           fi
-      - name: Publish generated content to GitHub Pages
-        if: steps.docs_diff.outputs.changed == 'true'
-        uses: tsunematsu21/actions-publish-gh-pages@v1.0.2
-        with:
-          dir: docs/html
-          branch: gh-pages
-          token: ${{ secrets.ACCESS_TOKEN }}
+
+          git config user.name "${GITHUB_REPOSITORY_OWNER}"
+          git config user.email "${GITHUB_REPOSITORY_OWNER}@users.noreply.github.com"
+          git commit -m "Publish generated documentation"
+          git push origin gh-pages
