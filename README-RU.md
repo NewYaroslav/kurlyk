@@ -608,14 +608,14 @@ kurlyk/include
 
 ### Пакеты Linux
 
-В Debian/Ubuntu-based системах установите development-пакеты OpenSSL и libcurl:
+В системах на базе Debian/Ubuntu установите development-пакеты OpenSSL и libcurl:
 
 ```bash
 sudo apt-get update
 sudo apt-get install -y libcurl4-openssl-dev libssl-dev
 ```
 
-Linux CMake-сборка использует системные пакеты OpenSSL/libcurl. Binary fallback packages для OpenSSL и libcurl сейчас доступны только для Windows.
+Linux CMake-сборка использует системные пакеты OpenSSL/libcurl. Бинарные fallback-пакеты для OpenSSL и libcurl сейчас доступны только для Windows.
 
 ### OpenSSL
 
@@ -692,7 +692,7 @@ crypt32
 
 Библиотека поддерживает автоматическую загрузку части зависимостей в случае их отсутствия. Наличие fallback'а зависит от платформы, компилятора и типа линковки.
 
-Binary fallback packages для OpenSSL и libcurl сейчас доступны только для Windows. В Linux используйте системные пакеты OpenSSL и libcurl.
+Бинарные fallback-пакеты для OpenSSL и libcurl сейчас доступны только для Windows. В Linux используйте системные пакеты OpenSSL и libcurl.
 
 | Dependency | MinGW (Shared) | MinGW (Static) | MSVC (Shared) | MSVC (Static) |
 |------------|---------------|---------------|---------------|---------------|
@@ -811,7 +811,7 @@ c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++17 -o header_smoke
 
 | Платформа | Что проверяется |
 |-----------|-----------------|
-| Windows | Integration-сборки MinGW и MSVC с fallback-зависимостями, локальные HTTP integration tests, HTTP retry/streaming/destructor regression tests и локальное WebSocket integration coverage. |
+| Windows | Integration-сборки MinGW и MSVC с fallback-зависимостями, локальные HTTP integration tests, regression-тесты HTTP retry/streaming/destructor и локальное WebSocket integration-покрытие. |
 | Windows extras | ODR-проверки singleton и auto-init заголовков. |
 | Linux | C++11/C++17 header smoke test и полная CMake-сборка examples с включёнными HTTP/WebSocket. |
 | macOS | C++11/C++17 header smoke test с отключёнными HTTP/WebSocket. |
