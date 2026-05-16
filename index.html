@@ -150,10 +150,11 @@ Basic GET request</h3>
 </div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="http_proxy"></a>
 Using a proxy</h3>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classkurlyk_1_1HttpClient.html">kurlyk::HttpClient</a> client(<span class="stringliteral">&quot;https://httpbin.org&quot;</span>);</div>
-<div class="line">client.set_proxy(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 8080, <span class="stringliteral">&quot;user&quot;</span>, <span class="stringliteral">&quot;pass&quot;</span>, kurlyk::ProxyType::HTTP);</div>
+<div class="line">client.set_proxy(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 8080, <span class="stringliteral">&quot;user&quot;</span>, <span class="stringliteral">&quot;pass&quot;</span>, <a class="code hl_enumvalue" href="namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3da7df92075ddc48c0c2e21a8dcfa3b11f7">kurlyk::ProxyType::PROXY_HTTP</a>);</div>
 <div class="line">client.get(<span class="stringliteral">&quot;/ip&quot;</span>, {}, {}, [](<a class="code hl_typedef" href="namespacekurlyk.html#a3edebba92661af6dfefe442ba4ee09f4">kurlyk::HttpResponsePtr</a> res) {</div>
 <div class="line">    std::cout &lt;&lt; res-&gt;content &lt;&lt; std::endl;</div>
 <div class="line">});</div>
+<div class="ttc" id="anamespacekurlyk_html_a28765fa05a81543bbe931861c0fe0c3da7df92075ddc48c0c2e21a8dcfa3b11f7"><div class="ttname"><a href="namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3da7df92075ddc48c0c2e21a8dcfa3b11f7">kurlyk::ProxyType::PROXY_HTTP</a></div><div class="ttdeci">@ PROXY_HTTP</div><div class="ttdoc">HTTP proxy.</div><div class="ttdef"><b>Definition</b> <a href="enums_8hpp_source.html#l00013">enums.hpp:13</a></div></div>
 </div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="http_ping"></a>
 Measuring latency</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
