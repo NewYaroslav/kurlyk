@@ -13,8 +13,12 @@ function(use_or_fetch_openssl out_target)
 	
 	
 	# if consumer has package
-	set(OPENSSL_USE_STATIC_LIBS OFF CACHE BOOL "" FORCE)
-	find_package(OpenSSL 3.4.0 QUIET)
+	if(WIN32)
+		set(OPENSSL_USE_STATIC_LIBS OFF CACHE BOOL "" FORCE)
+		find_package(OpenSSL 3.4.0 QUIET)
+	else()
+		find_package(OpenSSL QUIET)
+	endif()
 	if (OpenSSL_FOUND AND TARGET OpenSSL::SSL AND TARGET OpenSSL::Crypto)
 		message(STATUS "OpenSSL: using existing package OpenSSL::SSL / OpenSSL::Crypto")
 		target_link_libraries(${out_target} INTERFACE 

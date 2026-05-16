@@ -19,6 +19,14 @@
 #include <boost/asio/ssl.hpp>
 #endif
 
+#ifdef _WIN32
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#include <wincrypt.h>
+#endif
+
 namespace SimpleWeb {
     using WSS = asio::ssl::stream<asio::ip::tcp::socket>;
 
@@ -67,7 +75,6 @@ namespace SimpleWeb {
             if(verify_file.size() > 0) {
                 context.load_verify_file(verify_file);
             } else {
-                //context.set_default_verify_paths();
                 add_root_certificates();
             }
 
@@ -82,9 +89,10 @@ namespace SimpleWeb {
 
         /// \brief Adds root certificates from the system to the SSL context.
         ///
-        /// This method loads root certificates from the system certificate store and adds them to the SSL context.
-        /// It is used when no specific certificate authority file is provided.
+        /// On Windows, this method loads certificates from the system ROOT store.
+        /// On Unix-like systems, it uses OpenSSL default verify paths.
         void add_root_certificates() {
+#ifdef _WIN32
             X509_STORE* store = ::SSL_CTX_get_cert_store(context.native_handle());
             HCERTSTORE hCertStore = CertOpenSystemStore(0LL, "ROOT");
             if (!hCertStore) {
@@ -97,15 +105,17 @@ namespace SimpleWeb {
                 if (!certContext) {
                     break;
                 }
-                X509* x509 = d2i_X509(nullptr, (const unsigned char**)&certContext->pbCertEncoded,
-                                      certContext->cbCertEncoded);
+                const unsigned char* encoded = certContext->pbCertEncoded;
+                X509* x509 = d2i_X509(nullptr, &encoded, certContext->cbCertEncoded);
                 if (x509) {
                     X509_STORE_add_cert(store, x509);
                     X509_free(x509);
                 }
             }
-            CertFreeCertificateContext(certContext);
             CertCloseStore(hCertStore, 0);
+#else
+            context.set_default_verify_paths();
+#endif
         }
 
     protected:

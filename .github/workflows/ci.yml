@@ -18,10 +18,27 @@ jobs:
         with:
           submodules: true
       - run: git submodule update --init --recursive
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev ninja-build
       - name: Build smoke test
         run: c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++${{ matrix.std }} -o header_smoke
       - name: Run smoke test
         run: ./header_smoke
+      - name: Configure Linux CMake build
+        run: |
+          cmake -S . \
+                -B build-linux-cmake-${{ matrix.std }} \
+                -G Ninja \
+                -DCMAKE_CXX_STANDARD=${{ matrix.std }} \
+                -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+                -DKURLYK_BUILD_EXAMPLES=ON \
+                -DKURLYK_USE_FALLBACK_ASIO=ON \
+                -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON \
+                -Wno-dev
+      - name: Build Linux CMake examples
+        run: cmake --build build-linux-cmake-${{ matrix.std }}
 
   macos:
     runs-on: macos-latest
