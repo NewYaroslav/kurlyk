@@ -3,22 +3,22 @@
 #define _KURLYK_HTTP_RESPONSE_HPP_INCLUDED
 
 /// \file HttpResponse.hpp
-/// \brief Defines the HttpResponse class and related types for handling HTTP responses.
+/// \brief Defines the HttpResponse class and related HTTP response types.
 
 namespace kurlyk {
 
     /// \class HttpResponse
-    /// \brief Represents the response received from an HTTP request, including headers, content, and status.
+    /// \brief Represents an HTTP response, including headers, body, status, errors, and timing metrics.
     class HttpResponse {
     public:
         Headers         headers;            ///< HTTP response headers.
-        std::string     content;            ///< The body content of the HTTP response.
-        std::error_code error_code;         ///< Error code indicating issues with the response, if any.
-        std::string     error_message;      ///< Error message detailing the issue, if any.
+        std::string     content;            ///< Body content of the HTTP response.
+        std::error_code error_code;         ///< Error code indicating response or transport issues, if any.
+        std::string     error_message;      ///< Error message describing the issue, if any.
         long            status_code = 0;    ///< HTTP status code of the response (e.g., 200, 404).
         long            retry_attempt = 0;  ///< Number of retry attempts performed for this request.
-        bool            ready = false;      ///< Indicates if the response is final and ready to be processed.
-        bool            stream_chunk = false; ///< Indicates if content contains an intermediate streaming body chunk.
+        bool            ready = false;      ///< Indicates whether the response is final and ready to be processed.
+        bool            stream_chunk = false; ///< Indicates whether content contains an intermediate streaming body chunk.
         
         // --- Timing metrics (all values in seconds) ---
         double namelookup_time    = -1; ///< Time until name resolution completed (DNS).
@@ -29,11 +29,11 @@ namespace kurlyk {
         double total_time         = -1; ///< Total time of the transfer.
     }; // HttpResponse
 
-    /// \brief A unique pointer to an HttpResponse object for memory management.
+    /// \brief Owning pointer to an HTTP response.
     using HttpResponsePtr = std::unique_ptr<HttpResponse>;
 
-    /// \brief Type definition for the callback function used to handle HTTP responses.
-    /// \param response A pointer to the HttpResponse object.
+    /// \brief Callback invoked with an HTTP response.
+    /// \param response Owning pointer to the HTTP response.
     using HttpResponseCallback = std::function<void(HttpResponsePtr response)>;
 
 } // namespace kurlyk

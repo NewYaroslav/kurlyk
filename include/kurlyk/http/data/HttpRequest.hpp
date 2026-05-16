@@ -3,16 +3,16 @@
 #define _KURLYK_HTTP_REQUEST_HPP_INCLUDED
 
 /// \file HttpRequest.hpp
-/// \brief Defines the Request class for managing HTTP requests.
+/// \brief Defines the HttpRequest class for configuring HTTP requests.
 
 namespace kurlyk {
 
     /// \class HttpRequest
-    /// \brief Represents an HTTP request.
+    /// \brief Stores HTTP request parameters and settings.
     ///
-    /// The HttpRequest class encapsulates various parameters and settings for an HTTP request,
-    /// including headers, URL, method, data, and connection options. It provides methods
-    /// for configuring these parameters and handling HTTP requests.
+    /// The HttpRequest class stores parameters for an HTTP request,
+    /// including headers, URL, method, body, proxy, TLS, timeout, retry,
+    /// and rate-limit options.
     class HttpRequest {
     public:
         uint64_t request_id = 0;         ///< Unique ID of this concrete HTTP request.
@@ -39,7 +39,7 @@ namespace kurlyk {
         bool follow_location = true;     ///< Automatically follow HTTP redirects.
         long max_redirects   = 10;       ///< Maximum allowed redirects.
         bool auto_referer    = false;    ///< Automatically set Referer header.
-        bool head_only       = false;    ///< If true, sends the request without a response body (HEAD-like behavior).
+        bool head_only       = false;    ///< If `true`, does not download the response body (HEAD-like behavior).
         bool streaming       = false;    ///< Enable intermediate callbacks for response body chunks.
 
         long timeout         = 30;       ///< Request timeout in seconds.
@@ -58,8 +58,8 @@ namespace kurlyk {
         bool verbose = false;            ///< Enable verbose output (CURLOPT_VERBOSE).
         bool debug_header = false;       ///< Include headers in debug output (CURLOPT_HEADER).
 
-        /// \brief Sets the request URL with host, path, and optional query parameters.
-        /// \param host Hostname or IP address.
+        /// \brief Sets the request URL with base URL, path, and optional query parameters.
+        /// \param host Base URL or host prefix, for example "https://example.com".
         /// \param path Path to resource.
         /// \param query Optional query parameters as a string.
         void set_url(
@@ -77,8 +77,8 @@ namespace kurlyk {
             }
         }
 
-        /// \brief Sets the request URL with host, path, and optional query parameters as a dictionary.
-        /// \param host Hostname or IP address.
+        /// \brief Sets the request URL with base URL, path, and query parameters.
+        /// \param host Base URL or host prefix, for example "https://example.com".
         /// \param path Path to resource.
         /// \param query Query parameters in dictionary format.
         void set_url(
@@ -120,25 +120,25 @@ namespace kurlyk {
         }
 
         /// \brief Sets the Accept-Language header value.
-        /// \param value The language value to be sent with the Accept-Language header.
+        /// \param value Language value to be sent with the Accept-Language header.
         void set_accept_language(const std::string& value) {
             headers.emplace("Accept-Language", value);
         }
 
         /// \brief Sets the Content-Type header value.
-        /// \param value The MIME type for the Content-Type header.
+        /// \param value MIME type for the Content-Type header.
         void set_content_type(const std::string& value) {
             headers.emplace("Content-Type", value);
         }
 
         /// \brief Sets the Origin header value.
-        /// \param value The origin to be sent with the Origin header.
+        /// \param value Origin to be sent with the Origin header.
         void set_origin(const std::string& value) {
             headers.emplace("Origin", value);
         }
 
         /// \brief Sets the Referer header value.
-        /// \param value The referer URL to be sent with the Referer header.
+        /// \param value Referer URL to be sent with the Referer header.
         void set_referer(const std::string& value) {
             headers.emplace("Referer", value);
         }
@@ -217,13 +217,13 @@ namespace kurlyk {
         }
         
         /// \brief Adds a single valid HTTP status code.
-        /// \param status The HTTP status code to add to the set of valid statuses.
+        /// \param status HTTP status code to add to the set of valid statuses.
         void add_valid_status(long status) {
             valid_statuses.insert(status);
         }
 
         /// \brief Sets the valid HTTP status codes, replacing any existing values.
-        /// \param statuses The new set of valid HTTP status codes.
+        /// \param statuses New set of valid HTTP status codes.
         void set_valid_statuses(const std::set<long>& statuses) {
             valid_statuses = statuses;
         }
@@ -270,26 +270,26 @@ namespace kurlyk {
         }
 
         /// \brief Enables or disables intermediate callbacks for response body chunks.
-        /// \param streaming Enable (true) or disable (false) streaming callbacks.
+        /// \param streaming Enable (`true`) or disable (`false`) streaming callbacks.
         void set_streaming(bool streaming) {
             this->streaming = streaming;
         }
 
         /// \brief Enables or disables verbose mode.
-        /// \param verbose Enable (true) or disable (false) verbose output.
+        /// \param verbose Enable (`true`) or disable (`false`) verbose output.
         void set_verbose(bool verbose) {
             this->verbose = verbose;
         }
 
         /// \brief Enables or disables debugging headers in output.
-        /// \param debug_header Enable (true) or disable (false) debug headers.
+        /// \param debug_header Enable (`true`) or disable (`false`) debug headers.
         void set_debug_header(bool debug_header) {
             this->debug_header = debug_header;
         }
 
     }; // HttpRequest
     
-    /// \brief A unique pointer to an HttpRequest object for memory management.
+    /// \brief Owning pointer to an HTTP request.
     using HttpRequestPtr = std::unique_ptr<HttpRequest>;
 
 }; // namespace kurlyk

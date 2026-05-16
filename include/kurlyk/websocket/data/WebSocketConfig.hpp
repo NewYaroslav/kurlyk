@@ -28,8 +28,8 @@ namespace kurlyk {
         long reconnect_delay    = 5;    ///< Delay in seconds between reconnection attempts.
         long reconnect_attempts = 0;    ///< Number of reconnection attempts (0 means infinite attempts).
         std::size_t max_send_queue_size = 0; ///< Maximum number of queued outbound send operations, or zero if unbounded.
-        bool reconnect      = true;     ///< Enables automatic reconnection if true.
-        bool verify_cert    = true;     ///< If true, verifies the server’s certificate and hostname according to RFC 2818.
+        bool reconnect      = true;     ///< Enables automatic reconnection if `true`.
+        bool verify_cert    = true;     ///< If `true`, verifies the server’s certificate and hostname according to RFC 2818.
 
         /// \struct RateLimitData
         /// \brief Defines rate limit parameters.
@@ -43,8 +43,8 @@ namespace kurlyk {
 
         std::vector<RateLimitData> rate_limits; ///< List of rate limits applied to WebSocket messages.
 
-        /// \brief Sets the WebSocket server URL with optional query parameters.
-        /// \param host Hostname or IP address.
+        /// \brief Sets the WebSocket server URL with base URL, path, and optional query parameters.
+        /// \param host Base URL or host prefix, for example "wss://example.com".
         /// \param path Path for the request.
         /// \param query Optional query parameters.
         void set_url(const std::string& host, const std::string& path, const std::string& query = "") {
@@ -58,7 +58,7 @@ namespace kurlyk {
             }
         }
 
-        /// \brief Sets the WebSocket server URL with specified query parameters.
+        /// \brief Sets the WebSocket server URL and appends query parameters.
         /// \param url Full URL of the server.
         /// \param query Query parameters as a dictionary.
         void set_url(const std::string& url, const QueryParams& query) {
@@ -190,7 +190,7 @@ namespace kurlyk {
         }
 
         /// \brief Sets certificate verification and sets the CA certificate file.
-        /// \param verify_cert If true, enables server certificate verification.
+        /// \param verify_cert If `true`, enables server certificate verification.
         /// \param ca_file Path to the CA certificate file.
         void set_ca_file(bool verify_cert, const std::string& ca_file) {
             this->verify_cert = verify_cert;
@@ -198,7 +198,7 @@ namespace kurlyk {
         }
 
         /// \brief Sets whether to verify the server’s certificate.
-        /// \param verify_cert If true, enables server certificate verification.
+        /// \param verify_cert If `true`, enables server certificate verification.
         void set_verify_cert(bool verify_cert) {
             this->verify_cert = verify_cert;
         }
@@ -209,9 +209,9 @@ namespace kurlyk {
         /// requests by default. Additional rate limits can be added for specific types of requests
         /// or contexts as needed.
         ///
-        /// \param requests_per_period The maximum number of messages allowed within the specified period.
-        /// \param period_ms The time period in milliseconds during which the request limit applies.
-        /// \return The index of the added rate limit configuration.
+        /// \param requests_per_period Maximum number of messages allowed within the specified period.
+        /// \param period_ms Time period in milliseconds during which the request limit applies.
+        /// \return Index of the added rate limit configuration.
         long add_rate_limit(long requests_per_period, long period_ms) {
             rate_limits.emplace_back(requests_per_period, period_ms);
             return rate_limits.size() - 1;
@@ -219,7 +219,7 @@ namespace kurlyk {
 
         /// \brief Adds a rate limit based on Requests Per Minute (RPM).
         /// \param requests_per_minute Maximum number of requests allowed per minute.
-        /// \return The index of the added rate limit configuration.
+        /// \return Index of the added rate limit configuration.
         long add_rate_limit_rpm(long requests_per_minute) {
             long period_ms = 60000; // 1 minute in milliseconds
             return add_rate_limit(requests_per_minute, period_ms);
@@ -227,7 +227,7 @@ namespace kurlyk {
 
         /// \brief Adds a rate limit based on Requests Per Second (RPS).
         /// \param requests_per_second Maximum number of requests allowed per second.
-        /// \return The index of the added rate limit configuration.
+        /// \return Index of the added rate limit configuration.
         long add_rate_limit_rps(long requests_per_second) {
             long period_ms = 1000; // 1 second in milliseconds
             return add_rate_limit(requests_per_second, period_ms);

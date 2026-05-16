@@ -124,7 +124,7 @@ namespace kurlyk {
         /// \param in_flight_token Token identifying the in-flight request; 0 skips sequential checks.
         /// \param general_key Partition key for the general limit; empty means default state.
         /// \param specific_key Partition key for the specific limit; empty means default state.
-        /// \return True if the request is allowed, false otherwise (state unchanged on failure).
+        /// \return true if the request is allowed, false otherwise (state unchanged on failure).
         bool allow_request(
                 const HttpRateLimitHandlePtr& general_limit,
                 const HttpRateLimitHandlePtr& specific_limit,
@@ -264,7 +264,7 @@ namespace kurlyk {
         /// \param general_key Partition key for the general limit; empty means default shared state.
         /// \param specific_key Partition key for the specific limit; empty means default shared state.
         /// \return RateLimitDelay describing the maximum delay across both dimensions.
-        ///         `duration` is 0 if either dimension allows immediately.
+        ///         `duration` is 0 only when all present dimensions allow immediately.
         ///         `sequential_blocked` is true when at least one dimension is blocked
         ///         by a sequential in-flight request (`duration == Duration::max()`).
         template<typename Duration = std::chrono::milliseconds>
@@ -334,9 +334,9 @@ namespace kurlyk {
         /// \tparam Duration Duration type; defaults to `std::chrono::milliseconds`.
         /// \return RateLimitDelay where `duration` is the minimum positive delay across
         ///         all keys of all limits. If no limit reports a positive delay,
-        ///         `duration` is 0. `sequential_blocked` is true only when the minimum
-        ///         positive delay is `Duration::max()`, i.e. every live key is blocked
-        ///         by a sequential in-flight request.
+        ///         `duration` is 0. `sequential_blocked` is true when the selected
+        ///         positive delay is `Duration::max()`, meaning no finite positive
+        ///         delay was found among currently delayed keys.
         template<typename Duration = std::chrono::milliseconds>
         RateLimitDelay<Duration> time_until_any_limit_allows() {
             std::lock_guard<std::mutex> lock(m_mutex);
@@ -393,7 +393,7 @@ namespace kurlyk {
             std::unordered_map<std::string, KeyState> keys;       ///< Mutable state per partition key.
         };
 
-        /// \brief Physically removes LimitData from m_limits.
+        /// \brief Marks a limit as removed and erases it only when no key state remains.
         ///
         /// This method is intentionally private. It must be called only from
         /// HttpRateLimitHandle destruction path.
@@ -493,7 +493,7 @@ namespace kurlyk {
             ++state.count;
         }
 
-        /// \brief Releases an in-flight token from a specific key and erases the key if it becomes empty and stale.
+        /// \brief Releases an in-flight token from a specific key and erases the key if it has no runtime state.
         void release_key(LimitData& limit, const std::string& key, uint64_t token) {
             auto it = limit.keys.find(key);
             if (it == limit.keys.end()) {
@@ -563,7 +563,7 @@ namespace kurlyk {
             return period_duration - elapsed;
         }
 
-        /// \brief Erases keys that are empty and whose period has expired.
+        /// \brief Erases keys that are empty or whose period has expired.
         void gc_stale_keys(const time_point_t& now) {
             for (auto limit_it = m_limits.begin(); limit_it != m_limits.end(); ) {
                 auto& limit = limit_it->second;
