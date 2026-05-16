@@ -30,6 +30,15 @@ std::string make_response(long status, const std::string& reason, const std::str
     return out.str();
 }
 
+std::string make_head_response(long status, const std::string& reason, std::size_t content_length) {
+    std::ostringstream out;
+    out << "HTTP/1.1 " << status << ' ' << reason << "\r\n"
+        << "Content-Length: " << content_length << "\r\n"
+        << "Content-Type: text/plain\r\n"
+        << "Connection: close\r\n\r\n";
+    return out.str();
+}
+
 std::string header_value(const std::shared_ptr<HttpServer::Request>& request, const std::string& key) {
     auto it = request->header.find(key);
     return it == request->header.end() ? std::string() : it->second;
@@ -66,6 +75,10 @@ int main() {
     server.resource["^/head$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
                                             std::shared_ptr<HttpServer::Request>) {
         *response << make_response(200, "OK", "head-body");
+    };
+    server.resource["^/head$"]["HEAD"] = [](std::shared_ptr<HttpServer::Response> response,
+                                             std::shared_ptr<HttpServer::Request>) {
+        *response << make_head_response(200, "OK", std::string("head-body").size());
     };
 
     server.resource["^/missing$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
