@@ -24,30 +24,9 @@ jobs:
           sed -i "0,/VERSION_PLACEHOLDER/s//$TAG/" docs/mainpage.dox
       - name: Generate Documentation
         uses: mattnotmitt/doxygen-action@edge
-      - name: Check and publish documentation
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: |
-          set -euo pipefail
-
-          test -d docs/html || { echo "docs/html not found!"; exit 1; }
-
-          worktree="$(mktemp -d)"
-          git clone --depth 1 --branch gh-pages \
-            "https://x-access-token:${ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
-            "$worktree"
-
-          rsync -a --delete --exclude .git docs/html/ "$worktree/"
-
-          cd "$worktree"
-          git add --all
-
-          if git diff --cached --quiet; then
-            echo "No documentation changes to publish."
-            exit 0
-          fi
-
-          git config user.name "${GITHUB_REPOSITORY_OWNER}"
-          git config user.email "${GITHUB_REPOSITORY_OWNER}@users.noreply.github.com"
-          git commit -m "Publish generated documentation"
-          git push origin gh-pages
+      - name: Publish generated content to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          publish_dir: docs/html
+          publish_branch: gh-pages
