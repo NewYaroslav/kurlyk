@@ -28,8 +28,8 @@ namespace kurlyk {
         long reconnect_delay    = 5;    ///< Delay in seconds between reconnection attempts.
         long reconnect_attempts = 0;    ///< Number of reconnection attempts (0 means infinite attempts).
         std::size_t max_send_queue_size = 0; ///< Maximum number of queued outbound send operations, or zero if unbounded.
-        bool reconnect      = true;     ///< Enables automatic reconnection if true.
-        bool verify_cert    = true;     ///< If true, verifies the server’s certificate and hostname according to RFC 2818.
+        bool reconnect      = true;     ///< Enables automatic reconnection if `true`.
+        bool verify_cert    = true;     ///< If `true`, verifies the server’s certificate and hostname according to RFC 2818.
 
         /// \struct RateLimitData
         /// \brief Defines rate limit parameters.
@@ -190,7 +190,7 @@ namespace kurlyk {
         }
 
         /// \brief Sets certificate verification and sets the CA certificate file.
-        /// \param verify_cert If true, enables server certificate verification.
+        /// \param verify_cert If `true`, enables server certificate verification.
         /// \param ca_file Path to the CA certificate file.
         void set_ca_file(bool verify_cert, const std::string& ca_file) {
             this->verify_cert = verify_cert;
@@ -198,7 +198,7 @@ namespace kurlyk {
         }
 
         /// \brief Sets whether to verify the server’s certificate.
-        /// \param verify_cert If true, enables server certificate verification.
+        /// \param verify_cert If `true`, enables server certificate verification.
         void set_verify_cert(bool verify_cert) {
             this->verify_cert = verify_cert;
         }
