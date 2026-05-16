@@ -11,7 +11,7 @@ cmake 	-S $ScriptDir `
 		-Wno-dev
 			
 if ($LASTEXITCODE -ne 0) {
-	Write-Error "Configure failed for config $($cfg.Name)"
+	Write-Error "Configure failed"
 	exit $LASTEXITCODE
 }
 	
@@ -42,5 +42,6 @@ function Run-Exe([string]$Path) {
 
 Run-Exe (Join-Path $BuildDir "src_files.exe")
 Run-Exe (Join-Path $BuildDir "odr_autoinit.exe")
+Run-Exe (Join-Path $BuildDir "lifecycle_sync.exe")
 
 Write-Host "All ODR tests passed." -ForegroundColor Green
