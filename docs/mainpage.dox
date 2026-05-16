@@ -63,7 +63,7 @@ http.get("/ip", {}, {}, [](kurlyk::HttpResponsePtr res) {
 \subsubsection http_proxy Using a proxy
 \code{.cpp}
 kurlyk::HttpClient client("https://httpbin.org");
-client.set_proxy("127.0.0.1", 8080, "user", "pass", kurlyk::ProxyType::HTTP);
+client.set_proxy("127.0.0.1", 8080, "user", "pass", kurlyk::ProxyType::PROXY_HTTP);
 client.get("/ip", {}, {}, [](kurlyk::HttpResponsePtr res) {
     std::cout << res->content << std::endl;
 });

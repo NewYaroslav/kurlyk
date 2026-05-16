@@ -21,9 +21,9 @@
 ## Возможности
 
 - Асинхронное выполнение HTTP и WebSocket запросов.
-- Фоновый worker или синхронная обработка через `kurlyk::process()`.
+- Фоновый worker или синхронная обработка.
 - HTTP callback API и `std::future` API.
-- Rate limits (с разбиением по ключу), retry, proxy, пользовательские заголовки, cookie и таймауты.
+- Rate limits, retry, proxy, пользовательские заголовки, cookie и таймауты.
 - Streaming HTTP responses с callback'ом на каждый chunk.
 - WebSocket events, отправка сообщений и автоматическое переподключение.
 - Bounded admission/backpressure для HTTP pending queue и WebSocket send queue.
@@ -31,7 +31,7 @@
 
 ## Быстрый старт
 
-### Минимальный HTTP GET
+### Минимальный HTTP GET (future API)
 
 ```cpp
 #include <kurlyk.hpp>
@@ -50,7 +50,28 @@ int main() {
 }
 ```
 
-Для C++11/14 или ручного управления жизненным циклом используйте `kurlyk::init()` / `kurlyk::deinit()`.
+По умолчанию `KURLYK_AUTO_INIT=1`, поэтому простые примеры могут сразу создавать клиентов. Для ручного управления или синхронного режима отключите auto-init и используйте `kurlyk::init()` / `kurlyk::deinit()`.
+
+### Минимальный HTTP GET с callback
+
+```cpp
+#include <kurlyk.hpp>
+#include <iostream>
+
+int main() {
+    kurlyk::HttpClient client("https://httpbin.org");
+
+    client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers(),
+        [](const kurlyk::HttpResponsePtr response) {
+            if (response && response->ready) {
+                std::cout << response->content << std::endl;
+            }
+        });
+
+    std::cin.get();  // удерживает процесс до прихода асинхронного callback'а
+    return 0;
+}
+```
 
 ### Минимальный WebSocket echo
 
@@ -104,7 +125,7 @@ cmake --build build-examples-mingw --config Release
 
 ## Базовое использование HTTP
 
-HTTP-клиент можно использовать через callbacks, futures или низкоуровневые helper'ы. При auto-init, включённом по умолчанию, `HttpClient` можно создавать без ручных `kurlyk::init()` / `kurlyk::deinit()`; ручной lifecycle нужен для C++11/14, синхронного режима или явного управления worker'ом.
+HTTP-клиент можно использовать через callbacks, futures или низкоуровневые helper'ы. При auto-init, включённом по умолчанию, `HttpClient` можно создавать без ручных `kurlyk::init()` / `kurlyk::deinit()`; ручной lifecycle нужен для синхронного режима или явного управления worker'ом.
 
 ### Общий helper для примеров
 
@@ -130,6 +151,14 @@ void print_response(const kurlyk::HttpResponsePtr& response) {
 ### Callback API
 
 Callback-overload'ы `get(...)`, `post(...)` и `request(...)` возвращают `bool`: `true`, если запрос принят в очередь, и `false`, если он отклонён на этапе admission. Сам callback получает `kurlyk::HttpResponsePtr` и вызывается не только на финальный ответ: в streaming-режиме он приходит на каждый chunk с `stream_chunk == true`, а при retry может прийти промежуточный неготовый response для неуспешной попытки. Финальный результат определяется по `response && response->ready`.
+
+**Как интерпретировать HTTP callback response:**
+
+- `response == nullptr` — защитный null; данных нет.
+- `response->stream_chunk == true` — chunk body, не финальный результат.
+- `response->ready == false` — промежуточное состояние (chunk или неуспешная попытка перед retry).
+- `response->ready == true` — финальный, авторитетный результат запроса.
+- `response->error_code` — установлен, если финальный результат или промежуточное состояние содержит ошибку.
 
 ```cpp
 int main() {
@@ -177,7 +206,7 @@ int main() {
 int main() {
     kurlyk::HttpClient client("https://httpbin.org");
 
-    client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::HTTP);
+    client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::PROXY_HTTP);
 
     client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers(),
         [](const kurlyk::HttpResponsePtr response) {
@@ -194,6 +223,8 @@ int main() {
 
 Низкоуровневые helper'ы удобны, когда нужен ID конкретного запроса или прямой доступ к standalone HTTP API.
 
+#### Standalone GET с request ID
+
 ```cpp
 int main() {
     const uint64_t request_id = kurlyk::http_get(
@@ -208,10 +239,11 @@ int main() {
     KURLYK_PRINT << "Press Enter to exit..." << std::endl;
     std::cin.get();
 
-    kurlyk::cancel_request_by_id(request_id).wait();
     return 0;
 }
 ```
+
+#### Standalone GET с future
 
 ```cpp
 int main() {
@@ -223,6 +255,23 @@ int main() {
     KURLYK_PRINT << "Request id: " << result.first << std::endl;
     print_response(result.second.get());
 
+    return 0;
+}
+```
+
+#### Отмена запроса по ID
+
+```cpp
+int main() {
+    const uint64_t request_id = kurlyk::http_get(
+        "https://httpbin.org/delay/5",
+        kurlyk::QueryParams(),
+        kurlyk::Headers(),
+        [](const kurlyk::HttpResponsePtr response) {
+            print_response(response);
+        });
+
+    kurlyk::cancel_request_by_id(request_id).wait();
     return 0;
 }
 ```
@@ -310,7 +359,15 @@ client.set_max_send_queue_size(32);
 
 int main() {
     kurlyk::init(true);
-    kurlyk::HttpClient client("https://httpbin.org");
+
+    {
+        kurlyk::HttpClient client("https://httpbin.org");
+        auto response = client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers()).get();
+        if (response && response->ready) {
+            std::cout << response->content << std::endl;
+        }
+    }
+
     kurlyk::deinit();
     return 0;
 }
@@ -492,17 +549,19 @@ Proxy можно настроить на уровне `HttpClient`, после �
 
 ```cpp
 kurlyk::HttpClient client("https://httpbin.org");
-client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::HTTP);
+client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::PROXY_HTTP);
 ```
 
 ## Установка и зависимости
 
 ### Поддерживаемые toolchains
 
-- **MSVC**
-- **MinGW (GCC)**
+Полная CMake-сборка с HTTP/WebSocket сейчас доступна только под Windows:
 
-Сборка под MSVC пока нестабильна; подтверждённая конфигурация: **C++17** с **Visual Studio 2022 (generator: Visual Studio 17 2022)**.
+- **MinGW (GCC)**
+- **MSVC / Visual Studio 2022** — экспериментально
+
+Linux и macOS используются в CI только для portable header smoke tests с отключёнными HTTP/WebSocket.
 
 ### Подключение kurlyk
 
@@ -538,17 +597,14 @@ OpenSSL-Win64/lib/VC/x64/MD
 OpenSSL-Win64/bin
 ```
 
-Подключите библиотеки OpenSSL из папки `lib/VC/x64/MD`:
+Подключите библиотеки OpenSSL из папки `lib/VC/x64/MD`. Минимальный набор обычно:
 
 ```text
-capi.lib
-dasync.lib
-libcrypto.lib
 libssl.lib
-openssl.lib
-ossltest.lib
-padlock.lib
+libcrypto.lib
 ```
+
+Если ваша Windows-сборка OpenSSL требует дополнительные provider или engine библиотеки (например `capi.lib`, `dasync.lib`, `padlock.lib`), добавьте их из той же папки.
 
 ### Asio
 
@@ -625,6 +681,34 @@ Asio и Simple-WebSocket-Server — header-only библиотеки и подх
 | `KURLYK_CURL_SHARED` | Загружает libcurl как shared library, если fallback включён. |
 | `KURLYK_BUILD_EXAMPLES` | Собирает все targets из каталога `examples/`. |
 
+Пример сборки со всеми fallback-зависимостями:
+
+```powershell
+cmake -S . -B build `
+    -DKURLYK_BUILD_EXAMPLES=ON `
+    -DKURLYK_USE_FALLBACK_OPENSSL=ON `
+    -DKURLYK_USE_FALLBACK_CURL=ON `
+    -DKURLYK_USE_FALLBACK_ASIO=ON `
+    -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON
+
+cmake --build build --config Release
+```
+
+Для MinGW с fallback:
+
+```powershell
+cmake -S . -B build-mingw -G "MinGW Makefiles" `
+    -DCMAKE_C_COMPILER=gcc `
+    -DCMAKE_CXX_COMPILER=g++ `
+    -DKURLYK_BUILD_EXAMPLES=ON `
+    -DKURLYK_USE_FALLBACK_OPENSSL=ON `
+    -DKURLYK_USE_FALLBACK_CURL=ON `
+    -DKURLYK_USE_FALLBACK_ASIO=ON `
+    -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON
+
+cmake --build build-mingw
+```
+
 ## Конфигурационные макросы
 
 Перед подключением `kurlyk.hpp` можно определить следующие макросы для настройки библиотеки:
@@ -695,6 +779,14 @@ doxygen Doxyfile
 ```
 
 Опубликованная документация: <https://newyaroslav.github.io/kurlyk/>.
+
+## Типичные ошибки
+
+- Не вызывайте `kurlyk::deinit()` до уничтожения объектов `HttpClient` / `WebSocketClient`; деструктор может блокироваться на callback'ах отмены, которым нужен работающий worker.
+- В callback API проверяйте `response && response->ready`, если нужен именно финальный результат; callback может сработать и для streaming chunk, и для промежуточного состояния retry.
+- Для streaming сначала проверяйте `response->stream_chunk`, а затем `response->ready`; итоговый `ready`-ответ является авторитетным результатом передачи.
+- `bool`, возвращаемый `get(...)` / `post(...)` / `send_message(...)`, показывает admission (запрос принят в очередь), а не итоговый сетевой результат.
+- Лимит очереди `0` означает неограниченную очередь; используйте `SubmitResult`, если нужно явно обрабатывать отказы admission.
 
 ## Лицензия
 
