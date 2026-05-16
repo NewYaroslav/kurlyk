@@ -35,13 +35,15 @@ use_or_fetch_asio(kurlyk)
 include(cmake/deps/simple_ws_server.cmake)
 use_or_fetch_simple_ws_server(kurlyk)
 
-# зависимости от винды
+# OS-specific dependencies
 if (WIN32)
 	include(cmake/deps/win_deps.cmake)
+elseif(UNIX AND NOT APPLE)
+	include(cmake/deps/unix_deps.cmake)
 elseif(APPLE)
-	message(FATAL_ERROR "This option for MacOS is not supported yet.")
+	message(FATAL_ERROR "Full CMake build for macOS is not supported yet.")
 else()
-	message(FATAL_ERROR "This option for Linux is not supported yet.")
+	message(FATAL_ERROR "Unsupported platform.")
 endif()
 use_os_deps(kurlyk)
 
