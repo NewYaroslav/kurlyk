@@ -39,7 +39,7 @@ namespace kurlyk {
         bool follow_location = true;     ///< Automatically follow HTTP redirects.
         long max_redirects   = 10;       ///< Maximum allowed redirects.
         bool auto_referer    = false;    ///< Automatically set Referer header.
-        bool head_only       = false;    ///< If true, does not download the response body (HEAD-like behavior).
+        bool head_only       = false;    ///< If `true`, does not download the response body (HEAD-like behavior).
         bool streaming       = false;    ///< Enable intermediate callbacks for response body chunks.
 
         long timeout         = 30;       ///< Request timeout in seconds.
@@ -270,19 +270,19 @@ namespace kurlyk {
         }
 
         /// \brief Enables or disables intermediate callbacks for response body chunks.
-        /// \param streaming Enable (true) or disable (false) streaming callbacks.
+        /// \param streaming Enable (`true`) or disable (`false`) streaming callbacks.
         void set_streaming(bool streaming) {
             this->streaming = streaming;
         }
 
         /// \brief Enables or disables verbose mode.
-        /// \param verbose Enable (true) or disable (false) verbose output.
+        /// \param verbose Enable (`true`) or disable (`false`) verbose output.
         void set_verbose(bool verbose) {
             this->verbose = verbose;
         }
 
         /// \brief Enables or disables debugging headers in output.
-        /// \param debug_header Enable (true) or disable (false) debug headers.
+        /// \param debug_header Enable (`true`) or disable (`false`) debug headers.
         void set_debug_header(bool debug_header) {
             this->debug_header = debug_header;
         }
