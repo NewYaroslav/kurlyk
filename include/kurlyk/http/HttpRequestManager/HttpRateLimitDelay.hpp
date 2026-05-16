@@ -3,7 +3,7 @@
 #define _KURLYK_HTTP_RATE_LIMIT_DELAY_HPP_INCLUDED
 
 /// \file HttpRateLimitDelay.hpp
-/// \brief Defines the RateLimitDelay result type for time-until-allowed queries. 
+/// \brief Defines the RateLimitDelay result type for time-until-allowed queries.
 
 namespace kurlyk {
 
