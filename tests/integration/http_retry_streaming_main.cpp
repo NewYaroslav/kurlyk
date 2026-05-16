@@ -1,22 +1,36 @@
 #define KURLYK_AUTO_INIT 0
 #include <kurlyk.hpp>
-#include "local_http_server.hpp"
+#include <server_http.hpp>
 
 #include <atomic>
 #include <chrono>
 #include <future>
 #include <iostream>
 #include <mutex>
+#include <sstream>
 #include <string>
+#include <thread>
 #include <vector>
 
 namespace {
+
+using HttpServer = SimpleWeb::Server<SimpleWeb::HTTP>;
 
 void require(bool condition, const std::string& message) {
     if (!condition) {
         std::cerr << message << std::endl;
         std::exit(1);
     }
+}
+
+std::string make_response(long status, const std::string& reason, const std::string& body) {
+    std::ostringstream out;
+    out << "HTTP/1.1 " << status << ' ' << reason << "\r\n"
+        << "Content-Length: " << body.size() << "\r\n"
+        << "Content-Type: text/plain\r\n"
+        << "Connection: close\r\n\r\n"
+        << body;
+    return out.str();
 }
 
 struct CallbackStats {
@@ -34,44 +48,55 @@ struct CallbackStats {
 } // namespace
 
 int main() {
+    HttpServer server;
+    server.config.address = "127.0.0.1";
+    server.config.port = 0;
+    server.config.thread_pool_size = 1;
+
     std::atomic<int> unstable_hits(0);
     std::atomic<int> stream_partial_hits(0);
 
-    kurlyk_tests::LocalHttpServer server([&](const kurlyk_tests::LocalHttpRequest& request) {
-        if (request.method == "GET" && request.path == "/unstable") {
-            const int hit = ++unstable_hits;
-            if (hit < 3) {
-                return kurlyk_tests::make_http_response(500, "Internal Server Error", "retry-me");
-            }
-            return kurlyk_tests::make_http_response(200, "OK", "retry-ok");
+    server.resource["^/unstable$"]["GET"] = [&unstable_hits](std::shared_ptr<HttpServer::Response> response,
+                                                              std::shared_ptr<HttpServer::Request>) {
+        const int hit = ++unstable_hits;
+        if (hit < 3) {
+            *response << make_response(500, "Internal Server Error", "retry-me");
+            return;
         }
+        *response << make_response(200, "OK", "retry-ok");
+    };
 
-        if (request.method == "GET" && request.path == "/always-fail") {
-            return kurlyk_tests::make_http_response(500, "Internal Server Error", "still-failing");
-        }
+    server.resource["^/always-fail$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
+                                                   std::shared_ptr<HttpServer::Request>) {
+        *response << make_response(500, "Internal Server Error", "still-failing");
+    };
 
-        if (request.method == "GET" && request.path == "/stream") {
-            return kurlyk_tests::make_http_response(200, "OK", "stream-body");
-        }
+    server.resource["^/stream$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
+                                              std::shared_ptr<HttpServer::Request>) {
+        *response << make_response(200, "OK", "stream-body");
+    };
 
-        // Sends fewer bytes than declared. libcurl should report a transfer error after
-        // at least one body chunk. kurlyk must not retry after streaming data was emitted.
-        if (request.method == "GET" && request.path == "/stream-partial") {
-            ++stream_partial_hits;
-            return std::string("HTTP/1.1 200 OK\r\n") +
-                   "Content-Length: 64\r\n" +
-                   "Content-Type: text/plain\r\n" +
-                   "Connection: close\r\n\r\n" +
-                   "partial-body";
-        }
+    // Sends fewer bytes than declared. libcurl should report a transfer error after
+    // at least one body chunk. kurlyk must not retry after streaming data was emitted.
+    server.resource["^/stream-partial$"]["GET"] = [&stream_partial_hits](std::shared_ptr<HttpServer::Response> response,
+                                                                          std::shared_ptr<HttpServer::Request>) {
+        ++stream_partial_hits;
+        *response << "HTTP/1.1 200 OK\r\n"
+                  << "Content-Length: 64\r\n"
+                  << "Content-Type: text/plain\r\n"
+                  << "Connection: close\r\n\r\n"
+                  << "partial-body";
+    };
 
-        return kurlyk_tests::make_http_response(404, "Not Found", "not-found");
+    const unsigned short port = server.bind();
+    std::thread server_thread([&server]() {
+        server.accept_and_run();
     });
-    server.start();
+    const std::string host = "http://127.0.0.1:" + std::to_string(port);
 
     kurlyk::init(true);
     {
-        kurlyk::HttpClient retry_client(server.host());
+        kurlyk::HttpClient retry_client(host);
         retry_client.set_retry_attempts(3, 0);
 
         CallbackStats retry_stats;
@@ -107,7 +132,7 @@ int main() {
         require(failed->retry_attempt == 3, "Always-fail retry request should exhaust three attempts");
         require(static_cast<bool>(failed->error_code), "Always-fail retry request should set error_code");
 
-        kurlyk::HttpClient streaming_client(server.host());
+        kurlyk::HttpClient streaming_client(host);
         streaming_client.set_streaming(true);
 
         CallbackStats stream_stats;
@@ -137,7 +162,7 @@ int main() {
         require(stream_stats.final_status == 200, "Streaming final status should be 200");
         require(stream_stats.final_content == "stream-body", "Streaming final body mismatch");
 
-        kurlyk::HttpClient partial_client(server.host());
+        kurlyk::HttpClient partial_client(host);
         partial_client.set_streaming(true);
         partial_client.set_retry_attempts(3, 0);
 
@@ -173,7 +198,9 @@ int main() {
                 "Partial streaming final response should contain a status code");
     }
     kurlyk::deinit();
+
     server.stop();
+    server_thread.join();
 
     std::cout << "HTTP retry and streaming integration test passed" << std::endl;
     return 0;
