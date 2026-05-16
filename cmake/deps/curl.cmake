@@ -1,4 +1,4 @@
-# for now only for MinGW
+# for now fallback binaries are only for Windows
 function(use_or_fetch_curl out_target)
 	
 	
@@ -11,7 +11,11 @@ function(use_or_fetch_curl out_target)
 	
 	
 	# if consumer has package
-	find_package(CURL 8.11.0 QUIET)
+	if(WIN32)
+		find_package(CURL 8.11.0 QUIET)
+	else()
+		find_package(CURL QUIET)
+	endif()
 	if (CURL_FOUND AND TARGET CURL::libcurl)
 		message(STATUS "CURL: using existing CURL::libcurl")
 		target_link_libraries(${out_target} INTERFACE CURL::libcurl)
