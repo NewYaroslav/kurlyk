@@ -98,6 +98,11 @@ target_link_libraries(http_local_test PRIVATE kurlyk)
 target_link_libraries(http_retry_streaming_test PRIVATE kurlyk)
 target_link_libraries(http_client_destructor_test PRIVATE kurlyk)
 
+include(fallbacks/load_simple_web_server)
+load_simple_web_server(http_local_test)
+load_simple_web_server(http_retry_streaming_test)
+load_simple_web_server(http_client_destructor_test)
+
 target_compile_features(integr_test PRIVATE cxx_std_17)
 target_compile_features(ws_local_test PRIVATE cxx_std_17)
 target_compile_features(backpressure_test PRIVATE cxx_std_17)
