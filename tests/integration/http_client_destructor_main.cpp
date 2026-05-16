@@ -1,17 +1,21 @@
 #define KURLYK_AUTO_INIT 0
 #include <kurlyk.hpp>
-#include "local_http_server.hpp"
+#include <server_http.hpp>
 
 #include <algorithm>
 #include <atomic>
 #include <chrono>
+#include <future>
 #include <iostream>
 #include <mutex>
+#include <sstream>
 #include <string>
 #include <thread>
 #include <vector>
 
 namespace {
+
+using HttpServer = SimpleWeb::Server<SimpleWeb::HTTP>;
 
 void require(bool condition, const std::string& message) {
     if (!condition) {
@@ -20,20 +24,37 @@ void require(bool condition, const std::string& message) {
     }
 }
 
+std::string make_response(long status, const std::string& reason, const std::string& body) {
+    std::ostringstream out;
+    out << "HTTP/1.1 " << status << ' ' << reason << "\r\n"
+        << "Content-Length: " << body.size() << "\r\n"
+        << "Content-Type: text/plain\r\n"
+        << "Connection: close\r\n\r\n"
+        << body;
+    return out.str();
+}
+
 } // namespace
 
 int main() {
-    std::atomic<int> slow_hits(0);
+    HttpServer server;
+    server.config.address = "127.0.0.1";
+    server.config.port = 0;
+    server.config.thread_pool_size = 1;
 
-    kurlyk_tests::LocalHttpServer server([&slow_hits](const kurlyk_tests::LocalHttpRequest& request) {
-        if (request.method == "GET" && request.path == "/slow") {
-            ++slow_hits;
-            std::this_thread::sleep_for(std::chrono::seconds(3));
-            return kurlyk_tests::make_http_response(200, "OK", "too-late");
-        }
-        return kurlyk_tests::make_http_response(404, "Not Found", "not-found");
+    std::atomic<int> slow_hits(0);
+    server.resource["^/slow$"]["GET"] = [&slow_hits](std::shared_ptr<HttpServer::Response> response,
+                                                       std::shared_ptr<HttpServer::Request>) {
+        ++slow_hits;
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+        *response << make_response(200, "OK", "too-late");
+    };
+
+    const unsigned short port = server.bind();
+    std::thread server_thread([&server]() {
+        server.accept_and_run();
     });
-    server.start();
+    const std::string host = "http://127.0.0.1:" + std::to_string(port);
 
     std::mutex mutex;
     std::vector<long> statuses;
@@ -41,7 +62,7 @@ int main() {
 
     kurlyk::init(true);
     {
-        kurlyk::HttpClient client(server.host());
+        kurlyk::HttpClient client(host);
         client.set_rate_limit(1, 60000, kurlyk::RateLimitType::RL_GENERAL, true);
 
         auto callback = [&mutex, &statuses, &errors](kurlyk::HttpResponsePtr response) {
@@ -73,7 +94,9 @@ int main() {
     }
 
     kurlyk::deinit();
+
     server.stop();
+    server_thread.join();
 
     std::cout << "HTTP client destructor cancellation integration test passed" << std::endl;
     return 0;
