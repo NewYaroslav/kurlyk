@@ -116,9 +116,9 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:HttpRequest" id="r_HttpRequest"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpRequest.html">HttpRequest</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an HTTP request.  <a href="classkurlyk_1_1HttpRequest.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores HTTP request parameters and settings.  <a href="classkurlyk_1_1HttpRequest.html#details">More...</a><br /></td></tr>
 <tr class="memitem:HttpResponse" id="r_HttpResponse"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpResponse.html">HttpResponse</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the response received from an HTTP request, including headers, content, and status.  <a href="classkurlyk_1_1HttpResponse.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an HTTP response, including headers, body, status, errors, and timing metrics.  <a href="classkurlyk_1_1HttpResponse.html#details">More...</a><br /></td></tr>
 <tr class="memitem:HttpClient" id="r_HttpClient"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpClient.html">HttpClient</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concrete HTTP client for making requests to a specific host.  <a href="classkurlyk_1_1HttpClient.html#details">More...</a><br /></td></tr>
 <tr class="memitem:HttpRequestManager" id="r_HttpRequestManager"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpRequestManager.html">HttpRequestManager</a></td></tr>
@@ -167,11 +167,11 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a563e39da6d8822827dbff7b371167cda" id="r_a563e39da6d8822827dbff7b371167cda"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a563e39da6d8822827dbff7b371167cda">HttpRequestPtr</a> = std::unique_ptr&lt;<a class="el" href="classkurlyk_1_1HttpRequest.html">HttpRequest</a>&gt;</td></tr>
-<tr class="memdesc:a563e39da6d8822827dbff7b371167cda"><td class="mdescLeft">&#160;</td><td class="mdescRight">A unique pointer to an <a class="el" href="classkurlyk_1_1HttpRequest.html" title="Represents an HTTP request.">HttpRequest</a> object for memory management.  <br /></td></tr>
+<tr class="memdesc:a563e39da6d8822827dbff7b371167cda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Owning pointer to an HTTP request.  <br /></td></tr>
 <tr class="memitem:a3edebba92661af6dfefe442ba4ee09f4" id="r_a3edebba92661af6dfefe442ba4ee09f4"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> = std::unique_ptr&lt;<a class="el" href="classkurlyk_1_1HttpResponse.html">HttpResponse</a>&gt;</td></tr>
-<tr class="memdesc:a3edebba92661af6dfefe442ba4ee09f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A unique pointer to an <a class="el" href="classkurlyk_1_1HttpResponse.html" title="Represents the response received from an HTTP request, including headers, content,...">HttpResponse</a> object for memory management.  <br /></td></tr>
+<tr class="memdesc:a3edebba92661af6dfefe442ba4ee09f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Owning pointer to an HTTP response.  <br /></td></tr>
 <tr class="memitem:a083281e24e253ffb0cdc59981611c9e0" id="r_a083281e24e253ffb0cdc59981611c9e0"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a083281e24e253ffb0cdc59981611c9e0">HttpResponseCallback</a> = std::function&lt;void(<a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4">HttpResponsePtr</a> response)&gt;</td></tr>
-<tr class="memdesc:a083281e24e253ffb0cdc59981611c9e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definition for the callback function used to handle HTTP responses.  <br /></td></tr>
+<tr class="memdesc:a083281e24e253ffb0cdc59981611c9e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback invoked with an HTTP response.  <br /></td></tr>
 <tr class="memitem:add287752edc6bc19d26a46274b8d524d" id="r_add287752edc6bc19d26a46274b8d524d"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#add287752edc6bc19d26a46274b8d524d">HttpRateLimitHandlePtr</a> = std::shared_ptr&lt;<a class="el" href="classkurlyk_1_1HttpRateLimitHandle.html">HttpRateLimitHandle</a>&gt;</td></tr>
 <tr class="memdesc:add287752edc6bc19d26a46274b8d524d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared RAII handle for HTTP rate limits.  <br /></td></tr>
 <tr class="memitem:a987e16c5aba72ff54627a8ad3a0e9fec" id="r_a987e16c5aba72ff54627a8ad3a0e9fec"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a987e16c5aba72ff54627a8ad3a0e9fec">Headers</a> = <a class="el" href="namespacekurlyk_1_1utils.html#a0f1c389206408eed954a5a761683aec7">utils::CaseInsensitiveMultimap</a></td></tr>
@@ -375,7 +375,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>A unique pointer to an <a class="el" href="classkurlyk_1_1HttpRequest.html" title="Represents an HTTP request.">HttpRequest</a> object for memory management. </p>
+<p>Owning pointer to an HTTP request. </p>
 
 <p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00293">293</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
@@ -393,10 +393,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Type definition for the callback function used to handle HTTP responses. </p>
+<p>Callback invoked with an HTTP response. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">response</td><td>A pointer to the <a class="el" href="classkurlyk_1_1HttpResponse.html" title="Represents the response received from an HTTP request, including headers, content,...">HttpResponse</a> object. </td></tr>
+    <tr><td class="paramname">response</td><td>Owning pointer to the HTTP response. </td></tr>
   </table>
   </dd>
 </dl>
@@ -417,7 +417,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>A unique pointer to an <a class="el" href="classkurlyk_1_1HttpResponse.html" title="Represents the response received from an HTTP request, including headers, content,...">HttpResponse</a> object for memory management. </p>
+<p>Owning pointer to an HTTP response. </p>
 
 <p class="definition">Definition at line <a class="el" href="HttpResponse_8hpp_source.html#l00033">33</a> of file <a class="el" href="HttpResponse_8hpp_source.html">HttpResponse.hpp</a>.</p>
 
@@ -1770,7 +1770,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> with the response details. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A future containing the <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4" title="Owning pointer to an HTTP response.">HttpResponsePtr</a> with the response details. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00219">219</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 
@@ -1882,7 +1882,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A ready <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4" title="A unique pointer to an HttpResponse object for memory management.">HttpResponsePtr</a> describing the rejection. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A ready <a class="el" href="#a3edebba92661af6dfefe442ba4ee09f4" title="Owning pointer to an HTTP response.">HttpResponsePtr</a> describing the rejection. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="http_2utils_8hpp_source.html#l00156">156</a> of file <a class="el" href="http_2utils_8hpp_source.html">utils.hpp</a>.</p>
 

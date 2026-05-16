@@ -117,9 +117,9 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a739ad424467f4525b1f72b363ddc8a62" id="r_a739ad424467f4525b1f72b363ddc8a62"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a739ad424467f4525b1f72b363ddc8a62">set_url</a> (const std::string &amp;host, const std::string &amp;path, const std::string &amp;query=&quot;&quot;)</td></tr>
-<tr class="memdesc:a739ad424467f4525b1f72b363ddc8a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the WebSocket server URL with optional query parameters.  <br /></td></tr>
+<tr class="memdesc:a739ad424467f4525b1f72b363ddc8a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the WebSocket server URL with base URL, path, and optional query parameters.  <br /></td></tr>
 <tr class="memitem:afced4c7750eb153faa3c75eaace5cd6a" id="r_afced4c7750eb153faa3c75eaace5cd6a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afced4c7750eb153faa3c75eaace5cd6a">set_url</a> (const std::string &amp;<a class="el" href="#a66f7eaa5b340b73684e35b7a4ae4102e">url</a>, const <a class="el" href="namespacekurlyk.html#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query)</td></tr>
-<tr class="memdesc:afced4c7750eb153faa3c75eaace5cd6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the WebSocket server URL with specified query parameters.  <br /></td></tr>
+<tr class="memdesc:afced4c7750eb153faa3c75eaace5cd6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the WebSocket server URL and appends query parameters.  <br /></td></tr>
 <tr class="memitem:afa5e221b30a27af3253a3680bb388c88" id="r_afa5e221b30a27af3253a3680bb388c88"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afa5e221b30a27af3253a3680bb388c88">set_accept_encoding</a> (bool identity=false, bool deflate=false, bool gzip=false, bool brotli=false)</td></tr>
 <tr class="memdesc:afa5e221b30a27af3253a3680bb388c88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the Accept-Encoding header with specified encodings.  <br /></td></tr>
 <tr class="memitem:a3ec70a4916f3c1f438c561d492f27ded" id="r_a3ec70a4916f3c1f438c561d492f27ded"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3ec70a4916f3c1f438c561d492f27ded">set_proxy</a> (const std::string &amp;ip, int port)</td></tr>
@@ -200,9 +200,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a4032d2d5f8ba6fe42a5dcb2b7aaa0128" id="r_a4032d2d5f8ba6fe42a5dcb2b7aaa0128"><td class="memItemLeft">std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#a4032d2d5f8ba6fe42a5dcb2b7aaa0128">max_send_queue_size</a> = 0</td></tr>
 <tr class="memdesc:a4032d2d5f8ba6fe42a5dcb2b7aaa0128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of queued outbound send operations, or zero if unbounded.  <br /></td></tr>
 <tr class="memitem:ae0ad7d538b3ad4f30b9e3a48e92e6009" id="r_ae0ad7d538b3ad4f30b9e3a48e92e6009"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ae0ad7d538b3ad4f30b9e3a48e92e6009">reconnect</a> = true</td></tr>
-<tr class="memdesc:ae0ad7d538b3ad4f30b9e3a48e92e6009"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables automatic reconnection if true.  <br /></td></tr>
+<tr class="memdesc:ae0ad7d538b3ad4f30b9e3a48e92e6009"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables automatic reconnection if <span class="tt">true</span>.  <br /></td></tr>
 <tr class="memitem:aa5bf033c568b524d018cd7f2f597910f" id="r_aa5bf033c568b524d018cd7f2f597910f"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aa5bf033c568b524d018cd7f2f597910f">verify_cert</a> = true</td></tr>
-<tr class="memdesc:aa5bf033c568b524d018cd7f2f597910f"><td class="mdescLeft">&#160;</td><td class="mdescRight">If true, verifies the server’s certificate and hostname according to RFC 2818.  <br /></td></tr>
+<tr class="memdesc:aa5bf033c568b524d018cd7f2f597910f"><td class="mdescLeft">&#160;</td><td class="mdescRight">If <span class="tt">true</span>, verifies the server’s certificate and hostname according to RFC 2818.  <br /></td></tr>
 <tr class="memitem:a69ad6b109e288a9565016fa0688db218" id="r_a69ad6b109e288a9565016fa0688db218"><td class="memItemLeft">std::vector&lt; <a class="el" href="structkurlyk_1_1WebSocketConfig_1_1RateLimitData.html">RateLimitData</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a69ad6b109e288a9565016fa0688db218">rate_limits</a></td></tr>
 <tr class="memdesc:a69ad6b109e288a9565016fa0688db218"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of rate limits applied to WebSocket messages.  <br /></td></tr>
 </table>
@@ -242,12 +242,12 @@ Public Attributes</h2></td></tr>
 <p>The first rate limit added will serve as the primary rate limit, applying to all WebSocket requests by default. Additional rate limits can be added for specific types of requests or contexts as needed.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">requests_per_period</td><td>The maximum number of messages allowed within the specified period. </td></tr>
-    <tr><td class="paramname">period_ms</td><td>The time period in milliseconds during which the request limit applies. </td></tr>
+    <tr><td class="paramname">requests_per_period</td><td>Maximum number of messages allowed within the specified period. </td></tr>
+    <tr><td class="paramname">period_ms</td><td>Time period in milliseconds during which the request limit applies. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The index of the added rate limit configuration. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Index of the added rate limit configuration. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00215">215</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
@@ -283,7 +283,7 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The index of the added rate limit configuration. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Index of the added rate limit configuration. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00223">223</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
@@ -319,7 +319,7 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The index of the added rate limit configuration. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Index of the added rate limit configuration. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00231">231</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
@@ -442,7 +442,7 @@ Public Attributes</h2></td></tr>
 <p>Sets certificate verification and sets the CA certificate file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"><a class="el" href="#aa5bf033c568b524d018cd7f2f597910f" title="If true, verifies the server’s certificate and hostname according to RFC 2818.">verify_cert</a></td><td>If true, enables server certificate verification. </td></tr>
+    <tr><td class="paramname"><a class="el" href="#aa5bf033c568b524d018cd7f2f597910f" title="If true, verifies the server’s certificate and hostname according to RFC 2818.">verify_cert</a></td><td>If <span class="tt">true</span>, enables server certificate verification. </td></tr>
     <tr><td class="paramname"><a class="el" href="#a58782b930ea77a671b92d4a9dcf503e1" title="Path to the Root CA certificate file.">ca_file</a></td><td>Path to the CA certificate file. </td></tr>
   </table>
   </dd>
@@ -994,10 +994,10 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets the WebSocket server URL with optional query parameters. </p>
+<p>Sets the WebSocket server URL with base URL, path, and optional query parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">host</td><td>Hostname or IP address. </td></tr>
+    <tr><td class="paramname">host</td><td>Base URL or host prefix, for example "wss://example.com". </td></tr>
     <tr><td class="paramname">path</td><td>Path for the request. </td></tr>
     <tr><td class="paramname">query</td><td>Optional query parameters. </td></tr>
   </table>
@@ -1035,7 +1035,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets the WebSocket server URL with specified query parameters. </p>
+<p>Sets the WebSocket server URL and appends query parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"><a class="el" href="#a66f7eaa5b340b73684e35b7a4ae4102e" title="URL of the WebSocket server.">url</a></td><td>Full URL of the server. </td></tr>
@@ -1109,7 +1109,7 @@ Public Attributes</h2></td></tr>
 <p>Sets whether to verify the server’s certificate. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"><a class="el" href="#aa5bf033c568b524d018cd7f2f597910f" title="If true, verifies the server’s certificate and hostname according to RFC 2818.">verify_cert</a></td><td>If true, enables server certificate verification. </td></tr>
+    <tr><td class="paramname"><a class="el" href="#aa5bf033c568b524d018cd7f2f597910f" title="If true, verifies the server’s certificate and hostname according to RFC 2818.">verify_cert</a></td><td>If <span class="tt">true</span>, enables server certificate verification. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1365,7 +1365,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enables automatic reconnection if true. </p>
+<p>Enables automatic reconnection if <span class="tt">true</span>. </p>
 
 <p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00031">31</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 
@@ -1473,7 +1473,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>If true, verifies the server’s certificate and hostname according to RFC 2818. </p>
+<p>If <span class="tt">true</span>, verifies the server’s certificate and hostname according to RFC 2818. </p>
 
 <p class="definition">Definition at line <a class="el" href="WebSocketConfig_8hpp_source.html#l00032">32</a> of file <a class="el" href="WebSocketConfig_8hpp_source.html">WebSocketConfig.hpp</a>.</p>
 

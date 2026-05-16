@@ -104,7 +104,7 @@ $(function(){initNavTree('classkurlyk_1_1HttpRequest.html','','classkurlyk_1_1Ht
 </div><!--header-->
 <div class="contents">
 
-<p>Represents an HTTP request.  
+<p>Stores HTTP request parameters and settings.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>&gt;</code></p>
@@ -112,9 +112,9 @@ $(function(){initNavTree('classkurlyk_1_1HttpRequest.html','','classkurlyk_1_1Ht
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac310c94ee7d9177d5efdce52ab60bece" id="r_ac310c94ee7d9177d5efdce52ab60bece"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac310c94ee7d9177d5efdce52ab60bece">set_url</a> (const std::string &amp;host, const std::string &amp;path, const std::string &amp;query=std::string())</td></tr>
-<tr class="memdesc:ac310c94ee7d9177d5efdce52ab60bece"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the request URL with host, path, and optional query parameters.  <br /></td></tr>
+<tr class="memdesc:ac310c94ee7d9177d5efdce52ab60bece"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the request URL with base URL, path, and optional query parameters.  <br /></td></tr>
 <tr class="memitem:a690803ed8f59a562d061b770aa94a351" id="r_a690803ed8f59a562d061b770aa94a351"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a690803ed8f59a562d061b770aa94a351">set_url</a> (const std::string &amp;host, const std::string &amp;path, const <a class="el" href="namespacekurlyk.html#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query)</td></tr>
-<tr class="memdesc:a690803ed8f59a562d061b770aa94a351"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the request URL with host, path, and optional query parameters as a dictionary.  <br /></td></tr>
+<tr class="memdesc:a690803ed8f59a562d061b770aa94a351"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the request URL with base URL, path, and query parameters.  <br /></td></tr>
 <tr class="memitem:a8c518639c761c5c0509724d20d62a134" id="r_a8c518639c761c5c0509724d20d62a134"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8c518639c761c5c0509724d20d62a134">set_url</a> (const std::string &amp;<a class="el" href="#a56e04746cd86cb402533e1d3463f316e">url</a>, const <a class="el" href="namespacekurlyk.html#ae6eb5e4e8f3237dc0b1b57f78adcfe5f">QueryParams</a> &amp;query)</td></tr>
 <tr class="memdesc:a8c518639c761c5c0509724d20d62a134"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the request URL and appends optional query parameters.  <br /></td></tr>
 <tr class="memitem:ab14022c24fd4756f93eb749883827f6a" id="r_ab14022c24fd4756f93eb749883827f6a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab14022c24fd4756f93eb749883827f6a">set_accept_encoding</a> (bool identity=false, bool deflate=false, bool gzip=false, bool brotli=false)</td></tr>
@@ -217,7 +217,7 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a9c6b68a72c71a926c575178c480d8deb" id="r_a9c6b68a72c71a926c575178c480d8deb"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a9c6b68a72c71a926c575178c480d8deb">auto_referer</a> = false</td></tr>
 <tr class="memdesc:a9c6b68a72c71a926c575178c480d8deb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically set Referer header.  <br /></td></tr>
 <tr class="memitem:a2b822c2c1ea747c5163933cc6029f162" id="r_a2b822c2c1ea747c5163933cc6029f162"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a2b822c2c1ea747c5163933cc6029f162">head_only</a> = false</td></tr>
-<tr class="memdesc:a2b822c2c1ea747c5163933cc6029f162"><td class="mdescLeft">&#160;</td><td class="mdescRight">If true, sends the request without a response body (HEAD-like behavior).  <br /></td></tr>
+<tr class="memdesc:a2b822c2c1ea747c5163933cc6029f162"><td class="mdescLeft">&#160;</td><td class="mdescRight">If <span class="tt">true</span>, does not download the response body (HEAD-like behavior).  <br /></td></tr>
 <tr class="memitem:a6e59e84de88b9f615a1746266f249e94" id="r_a6e59e84de88b9f615a1746266f249e94"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a6e59e84de88b9f615a1746266f249e94">streaming</a> = false</td></tr>
 <tr class="memdesc:a6e59e84de88b9f615a1746266f249e94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable intermediate callbacks for response body chunks.  <br /></td></tr>
 <tr class="memitem:a26d7a2976007a657247d0ab7b1e8b931" id="r_a26d7a2976007a657247d0ab7b1e8b931"><td class="memItemLeft">long&#160;</td><td class="memItemRight"><a class="el" href="#a26d7a2976007a657247d0ab7b1e8b931">timeout</a> = 30</td></tr>
@@ -246,8 +246,8 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:a342d3ee102d4d3b33a3302edbce1032f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Include headers in debug output (CURLOPT_HEADER).  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents an HTTP request. </p>
-<p>The <a class="el" href="classkurlyk_1_1HttpRequest.html" title="Represents an HTTP request.">HttpRequest</a> class encapsulates various parameters and settings for an HTTP request, including headers, URL, method, data, and connection options. It provides methods for configuring these parameters and handling HTTP requests. </p>
+<div class="textblock"><p>Stores HTTP request parameters and settings. </p>
+<p>The <a class="el" href="classkurlyk_1_1HttpRequest.html" title="Stores HTTP request parameters and settings.">HttpRequest</a> class stores parameters for an HTTP request, including headers, URL, method, body, proxy, TLS, timeout, retry, and rate-limit options. </p>
 
 <p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00016">16</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -277,7 +277,7 @@ Public Attributes</h2></td></tr>
 <p>Adds a single valid HTTP status code. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">status</td><td>The HTTP status code to add to the set of valid statuses. </td></tr>
+    <tr><td class="paramname">status</td><td>HTTP status code to add to the set of valid statuses. </td></tr>
   </table>
   </dd>
 </dl>
@@ -393,7 +393,7 @@ Public Attributes</h2></td></tr>
 <p>Sets the Accept-Language header value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>The language value to be sent with the Accept-Language header. </td></tr>
+    <tr><td class="paramname">value</td><td>Language value to be sent with the Accept-Language header. </td></tr>
   </table>
   </dd>
 </dl>
@@ -533,7 +533,7 @@ Public Attributes</h2></td></tr>
 <p>Sets the Content-Type header value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>The MIME type for the Content-Type header. </td></tr>
+    <tr><td class="paramname">value</td><td>MIME type for the Content-Type header. </td></tr>
   </table>
   </dd>
 </dl>
@@ -603,7 +603,7 @@ Public Attributes</h2></td></tr>
 <p>Enables or disables debugging headers in output. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"><a class="el" href="#a342d3ee102d4d3b33a3302edbce1032f" title="Include headers in debug output (CURLOPT_HEADER).">debug_header</a></td><td>Enable (true) or disable (false) debug headers. </td></tr>
+    <tr><td class="paramname"><a class="el" href="#a342d3ee102d4d3b33a3302edbce1032f" title="Include headers in debug output (CURLOPT_HEADER).">debug_header</a></td><td>Enable (<span class="tt">true</span>) or disable (<span class="tt">false</span>) debug headers. </td></tr>
   </table>
   </dd>
 </dl>
@@ -638,7 +638,7 @@ Public Attributes</h2></td></tr>
 <p>Sets the Origin header value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>The origin to be sent with the Origin header. </td></tr>
+    <tr><td class="paramname">value</td><td>Origin to be sent with the Origin header. </td></tr>
   </table>
   </dd>
 </dl>
@@ -962,7 +962,7 @@ Public Attributes</h2></td></tr>
 <p>Sets the Referer header value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>The referer URL to be sent with the Referer header. </td></tr>
+    <tr><td class="paramname">value</td><td>Referer URL to be sent with the Referer header. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1037,7 +1037,7 @@ Public Attributes</h2></td></tr>
 <p>Enables or disables intermediate callbacks for response body chunks. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"><a class="el" href="#a6e59e84de88b9f615a1746266f249e94" title="Enable intermediate callbacks for response body chunks.">streaming</a></td><td>Enable (true) or disable (false) streaming callbacks. </td></tr>
+    <tr><td class="paramname"><a class="el" href="#a6e59e84de88b9f615a1746266f249e94" title="Enable intermediate callbacks for response body chunks.">streaming</a></td><td>Enable (<span class="tt">true</span>) or disable (<span class="tt">false</span>) streaming callbacks. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1113,10 +1113,10 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets the request URL with host, path, and optional query parameters as a dictionary. </p>
+<p>Sets the request URL with base URL, path, and query parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">host</td><td>Hostname or IP address. </td></tr>
+    <tr><td class="paramname">host</td><td>Base URL or host prefix, for example "https://example.com". </td></tr>
     <tr><td class="paramname">path</td><td>Path to resource. </td></tr>
     <tr><td class="paramname">query</td><td>Query parameters in dictionary format. </td></tr>
   </table>
@@ -1159,10 +1159,10 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets the request URL with host, path, and optional query parameters. </p>
+<p>Sets the request URL with base URL, path, and optional query parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">host</td><td>Hostname or IP address. </td></tr>
+    <tr><td class="paramname">host</td><td>Base URL or host prefix, for example "https://example.com". </td></tr>
     <tr><td class="paramname">path</td><td>Path to resource. </td></tr>
     <tr><td class="paramname">query</td><td>Optional query parameters as a string. </td></tr>
   </table>
@@ -1274,7 +1274,7 @@ Public Attributes</h2></td></tr>
 <p>Sets the valid HTTP status codes, replacing any existing values. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">statuses</td><td>The new set of valid HTTP status codes. </td></tr>
+    <tr><td class="paramname">statuses</td><td>New set of valid HTTP status codes. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1309,7 +1309,7 @@ Public Attributes</h2></td></tr>
 <p>Enables or disables verbose mode. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"><a class="el" href="#a36813dc657e76b9f9ee0919b63992e6b" title="Enable verbose output (CURLOPT_VERBOSE).">verbose</a></td><td>Enable (true) or disable (false) verbose output. </td></tr>
+    <tr><td class="paramname"><a class="el" href="#a36813dc657e76b9f9ee0919b63992e6b" title="Enable verbose output (CURLOPT_VERBOSE).">verbose</a></td><td>Enable (<span class="tt">true</span>) or disable (<span class="tt">false</span>) verbose output. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1601,7 +1601,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>If true, sends the request without a response body (HEAD-like behavior). </p>
+<p>If <span class="tt">true</span>, does not download the response body (HEAD-like behavior). </p>
 
 <p class="definition">Definition at line <a class="el" href="HttpRequest_8hpp_source.html#l00042">42</a> of file <a class="el" href="HttpRequest_8hpp_source.html">HttpRequest.hpp</a>.</p>
 
