@@ -7,7 +7,7 @@ function(load_simple_web_server target)
 	include(FetchContent)
 	FetchContent_Declare(simple_web_server
 		GIT_REPOSITORY https://gitlab.com/eidheim/Simple-Web-Server.git
-		GIT_TAG 35ebb10782507f887802df64a2b6bfc8b427d81f
+		GIT_TAG master
 	)
 	FetchContent_GetProperties(simple_web_server)
 	if (NOT simple_web_server_POPULATED)
