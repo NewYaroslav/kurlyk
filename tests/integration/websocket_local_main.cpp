@@ -67,7 +67,7 @@ int main() {
     {
         kurlyk::WebSocketClient client("ws://127.0.0.1:" + std::to_string(port) + "/echo");
         client.set_max_send_queue_size(1);
-        client.on_event([&](std::unique_ptr<kurlyk::WebSocketEventData> event) {
+        client.on_event([&events, &open_status_code, &done, &done_promise, &echoed_message](std::unique_ptr<kurlyk::WebSocketEventData> event) {
             events.push_back(event->event_type);
             switch (event->event_type) {
             case kurlyk::WebSocketEventType::WS_OPEN:

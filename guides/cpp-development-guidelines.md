@@ -59,6 +59,20 @@
 - The default standard is C++11. Guard C++17-only code with
   `#if __cplusplus >= 201703L` as in existing headers.
 
+## Lambdas and Captures
+
+- Do not use lambda default captures (`[&]` or `[=]`).
+- List every captured variable explicitly, and capture `this` explicitly when
+  member access is needed.
+- Prefer small, single-purpose lambdas over nested captures of many variables.
+
+## Concurrency and Storage
+
+- Do not introduce `thread_local` STL scratch buffers in serialization paths.
+  They complicate ODR, testing, and cleanup ordering.
+- Use explicit lifetime management (RAII handles, queues, or task-local storage)
+  instead.
+
 ## Constants and Macros
 
 - Constants and macro names use `UPPER_SNAKE_CASE`.
