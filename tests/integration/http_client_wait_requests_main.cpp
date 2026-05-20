@@ -1,5 +1,6 @@
 #define KURLYK_AUTO_INIT 0
 #include <kurlyk.hpp>
+#include <server_http.hpp>
 
 #include <atomic>
 #include <chrono>
@@ -9,6 +10,8 @@
 #include <thread>
 
 namespace {
+
+using HttpServer = SimpleWeb::Server<SimpleWeb::HTTP>;
 
 void require(bool condition, const std::string& message) {
     if (!condition) {
@@ -40,16 +43,42 @@ struct ProcessorGuard {
 int main() {
     kurlyk::init(false);
 
+    HttpServer server;
+    server.config.port = 0;
+    server.config.thread_pool_size = 1;
+
+    server.resource["^/fast$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
+                                           std::shared_ptr<HttpServer::Request> request) {
+        *response << "HTTP/1.1 200 OK\r\nContent-Length: 4\r\n\r\nfast";
+    };
+
+    server.resource["^/slow$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
+                                           std::shared_ptr<HttpServer::Request> request) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        *response << "HTTP/1.1 200 OK\r\nContent-Length: 4\r\n\r\nslow";
+    };
+
+    std::promise<unsigned short> port_promise;
+    std::thread server_thread([&server, &port_promise]() {
+        server.start([&port_promise](unsigned short port) {
+            try {
+                port_promise.set_value(port);
+            } catch (...) {
+            }
+        });
+    });
+
+    const unsigned short port = port_promise.get_future().get();
+    const std::string base_url = "http://127.0.0.1:" + std::to_string(port);
+
     // --- Test 1: wait_requests() waits for callback ---
     {
         ProcessorGuard pg;
 
-        auto client = std::make_unique<kurlyk::HttpClient>("http://127.0.0.1");
-        client->set_connect_timeout(1);
-        client->set_timeout(1);
+        auto client = std::make_unique<kurlyk::HttpClient>(base_url);
         std::atomic<int> callback_count{0};
 
-        bool ok = client->get("/", kurlyk::QueryParams(), kurlyk::Headers(),
+        bool ok = client->get("/fast", kurlyk::QueryParams(), kurlyk::Headers(),
             [&](kurlyk::HttpResponsePtr response) {
                 if (response && response->ready) {
                     ++callback_count;
@@ -68,29 +97,30 @@ int main() {
     {
         ProcessorGuard pg;
 
-        auto client_a = std::make_unique<kurlyk::HttpClient>("http://127.0.0.1");
-        client_a->set_connect_timeout(1);
-        client_a->set_timeout(1);
-        auto client_b = std::make_unique<kurlyk::HttpClient>("http://127.0.0.1");
-        client_b->set_connect_timeout(1);
-        client_b->set_timeout(1);
+        auto client_a = std::make_unique<kurlyk::HttpClient>(base_url);
+        auto client_b = std::make_unique<kurlyk::HttpClient>(base_url);
         std::atomic<int> callback_a{0};
         std::atomic<int> callback_b{0};
 
-        bool ok_a = client_a->get("/a", kurlyk::QueryParams(), kurlyk::Headers(),
+        bool ok_a = client_a->get("/fast", kurlyk::QueryParams(), kurlyk::Headers(),
             [&](kurlyk::HttpResponsePtr response) {
                 if (response && response->ready) ++callback_a;
             });
-        bool ok_b = client_b->get("/b", kurlyk::QueryParams(), kurlyk::Headers(),
+        bool ok_b = client_b->get("/slow", kurlyk::QueryParams(), kurlyk::Headers(),
             [&](kurlyk::HttpResponsePtr response) {
                 if (response && response->ready) ++callback_b;
             });
         require(ok_a, "client_a request should be accepted");
         require(ok_b, "client_b request should be accepted");
 
+        auto t0 = std::chrono::steady_clock::now();
         client_a->wait_requests();
+        auto dt = std::chrono::steady_clock::now() - t0;
+
         require(callback_a.load() == 1, "client_a.wait_requests() must wait until client_a callback is delivered");
         require(client_a->in_flight_requests() == 0, "client_a group must be idle after wait_requests()");
+        require(callback_b.load() == 0 || dt < std::chrono::milliseconds(200),
+                "client_a.wait_requests() must not wait for client_b's slow request");
 
         client_a.reset();
         client_b.reset();
@@ -98,12 +128,10 @@ int main() {
 
     // --- Test 3: wait_requests_for() timeout ---
     {
-        auto client = std::make_unique<kurlyk::HttpClient>("http://127.0.0.1");
-        client->set_connect_timeout(1);
-        client->set_timeout(1);
+        auto client = std::make_unique<kurlyk::HttpClient>(base_url);
         std::atomic<int> callback_count{0};
 
-        bool ok = client->get("/", kurlyk::QueryParams(), kurlyk::Headers(),
+        bool ok = client->get("/slow", kurlyk::QueryParams(), kurlyk::Headers(),
             [&](kurlyk::HttpResponsePtr response) {
                 if (response && response->ready) ++callback_count;
             });
@@ -126,17 +154,15 @@ int main() {
     {
         ProcessorGuard pg;
 
-        auto client = std::make_unique<kurlyk::HttpClient>("http://127.0.0.1");
-        client->set_connect_timeout(1);
-        client->set_timeout(1);
+        auto client = std::make_unique<kurlyk::HttpClient>(base_url);
         client->set_max_in_flight(1);
         std::atomic<int> callback_count{0};
 
-        bool first = client->get("/first", kurlyk::QueryParams(), kurlyk::Headers(),
+        bool first = client->get("/fast", kurlyk::QueryParams(), kurlyk::Headers(),
             [&](kurlyk::HttpResponsePtr response) {
                 if (response && response->ready) ++callback_count;
             });
-        bool second = client->get("/second", kurlyk::QueryParams(), kurlyk::Headers(),
+        bool second = client->get("/fast", kurlyk::QueryParams(), kurlyk::Headers(),
             [&](kurlyk::HttpResponsePtr response) {
                 if (response && response->ready) ++callback_count;
             });
@@ -147,7 +173,7 @@ int main() {
         client->wait_requests();
         require(callback_count.load() == 1, "only first callback should be delivered");
 
-        bool third = client->get("/third", kurlyk::QueryParams(), kurlyk::Headers(),
+        bool third = client->get("/fast", kurlyk::QueryParams(), kurlyk::Headers(),
             [&](kurlyk::HttpResponsePtr response) {
                 if (response && response->ready) ++callback_count;
             });
@@ -163,13 +189,11 @@ int main() {
     {
         ProcessorGuard pg;
 
-        auto client = std::make_unique<kurlyk::HttpClient>("http://127.0.0.1");
-        client->set_connect_timeout(1);
-        client->set_timeout(1);
+        auto client = std::make_unique<kurlyk::HttpClient>(base_url);
         client->set_max_in_flight(1);
 
-        auto f1 = client->get("/", kurlyk::QueryParams(), kurlyk::Headers());
-        auto f2 = client->get("/", kurlyk::QueryParams(), kurlyk::Headers());
+        auto f1 = client->get("/fast", kurlyk::QueryParams(), kurlyk::Headers());
+        auto f2 = client->get("/fast", kurlyk::QueryParams(), kurlyk::Headers());
 
         auto rejected = f2.get();
         require(rejected && rejected->ready, "rejected future must be ready");
@@ -181,6 +205,9 @@ int main() {
 
         client.reset();
     }
+
+    server.stop();
+    server_thread.join();
 
     kurlyk::deinit();
     std::cout << "HttpClient wait_requests and max_in_flight integration test passed" << std::endl;

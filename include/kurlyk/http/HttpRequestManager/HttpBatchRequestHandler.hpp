@@ -5,6 +5,8 @@
 /// \file HttpBatchRequestHandler.hpp
 /// \brief Manages multiple asynchronous HTTP requests using libcurl's multi interface.
 
+#include <algorithm>
+
 namespace kurlyk {
 
     /// \class HttpBatchRequestHandler
@@ -52,11 +54,7 @@ namespace kurlyk {
                 if (message->msg != CURLMSG_DONE) continue;
                 handle_completed_request(message);
             }
-            if (still_running == 0) {
-                m_handlers.clear();
-                return true;
-            }
-            return false;
+            return m_handlers.empty();
         }
 
         /// \brief Extracts the list of failed requests.
@@ -126,15 +124,26 @@ namespace kurlyk {
         void handle_completed_request(CURLMsg* message) {
             CURL* curl = message->easy_handle;
 
-            void* ptr = nullptr;
-            curl_easy_getinfo(curl, CURLINFO_PRIVATE, &ptr);
-            auto* handler = static_cast<HttpRequestHandler*>(ptr);
-            if (!handler) return;
+            auto it = std::find_if(
+                m_handlers.begin(),
+                m_handlers.end(),
+                [curl](const std::unique_ptr<HttpRequestHandler>& handler) {
+                    return handler && handler->get_curl() == curl;
+                }
+            );
 
-            if (!handler->handle_curl_message(message)) {
-                m_failed_requests.push_back(handler->get_request_context());
+            if (it == m_handlers.end()) {
+                return;
             }
+
+            bool should_retry = !(*it)->handle_curl_message(message);
             curl_multi_remove_handle(m_multi_handle, curl);
+
+            if (should_retry) {
+                m_failed_requests.push_back((*it)->get_request_context());
+            }
+
+            m_handlers.erase(it);
         }
 
     }; // HttpBatchRequestHandler

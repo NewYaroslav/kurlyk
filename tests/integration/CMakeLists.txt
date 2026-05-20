@@ -84,6 +84,7 @@ target_link_libraries(rate_limit_lifetime_test PRIVATE kurlyk)
 target_link_libraries(request_group_cancel_test PRIVATE kurlyk)
 target_link_libraries(http_client_rate_limit_api_test PRIVATE kurlyk)
 target_link_libraries(http_client_wait_requests_test PRIVATE kurlyk)
+target_include_directories(http_client_wait_requests_test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../external/Simple-Web-Server")
 target_link_libraries(sequential_rate_limit_test PRIVATE kurlyk)
 target_link_libraries(rate_limit_partition_test PRIVATE kurlyk)
 

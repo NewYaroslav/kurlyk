@@ -102,6 +102,8 @@ namespace kurlyk {
         /// \param timeout Maximum time to wait.
         /// \return True if all requests finished; false on timeout or when called from the network worker thread.
         /// \warning Must not be called from the network worker thread.
+        /// \todo A timed-out waiter callback remains registered in HttpRequestManager until the group
+        ///       becomes idle or shutdown fires. For rapid repeated calls this may accumulate callbacks.
         bool wait_requests_for(std::chrono::milliseconds timeout) {
             auto& worker = core::NetworkWorker::get_instance();
             if (worker.is_worker_thread()) {
