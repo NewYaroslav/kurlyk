@@ -7,6 +7,7 @@
 
 #include "HttpRequestManager/HttpRequestContext.hpp"
 #include "HttpRequestManager/HttpRequestHandler.hpp"
+#include "HttpRequestManager/HttpRateLimitDelay.hpp"
 #include "HttpRequestManager/HttpRateLimitHandle.hpp"
 #include "HttpRequestManager/HttpRateLimiter.hpp"
 #include "HttpRequestManager/HttpBatchRequestHandler.hpp"
@@ -16,7 +17,7 @@ namespace kurlyk {
 
     /// \class HttpRequestManager
     /// \brief Manages and processes HTTP requests using a singleton pattern.
-    /// \note All process_*(), is_loaded(), and shutdown() must be called exclusively from the NetworkWorker thread. m_mutex guards only public entry points (submit_request, cancel_request_by_id, cancel_requests_by_group_id).
+    /// \note All process_*(), is_loaded(), and shutdown() must be called exclusively from the NetworkWorker thread. m_mutex guards public entry points and group waiters.
     class HttpRequestManager final : public core::INetworkTaskManager {
     public:
 
@@ -128,8 +129,14 @@ namespace kurlyk {
         }
 
         /// \brief Calculates delay until request is allowed by two handles.
+        /// \tparam Duration Duration type; defaults to `std::chrono::milliseconds`.
+        /// \param general_limit General rate-limit handle (may be empty).
+        /// \param specific_limit Specific rate-limit handle (may be empty).
+        /// \param general_key Partition key for the general limit; empty means default shared state.
+        /// \param specific_key Partition key for the specific limit; empty means default shared state.
+        /// \return RateLimitDelay describing the maximum delay across both dimensions.
         template<typename Duration = std::chrono::milliseconds>
-        Duration time_until_next_allowed(
+        RateLimitDelay<Duration> time_until_next_allowed(
             const HttpRateLimitHandlePtr& general_limit,
             const HttpRateLimitHandlePtr& specific_limit,
             const std::string& general_key,
@@ -163,6 +170,45 @@ namespace kurlyk {
             return m_max_pending_requests.load();
         }
 
+        /// \brief Checks whether pending, failed, or active requests exist for a group.
+        /// \param group_id Group ID to inspect.
+        /// \return True if at least one managed request belongs to this group.
+        bool has_requests_by_group_id(uint64_t group_id) const {
+            return group_request_count(group_id) != 0;
+        }
+
+        /// \brief Counts pending, failed, and active requests for a group.
+        /// \param group_id Group ID to inspect.
+        /// \return Number of managed requests that belong to this group.
+        std::size_t group_request_count(uint64_t group_id) const {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            return group_request_count_unlocked(group_id);
+        }
+
+        /// \brief Registers a callback invoked after all requests from a group finish.
+        /// \param group_id Group ID to wait for.
+        /// \param callback Callback invoked when the group becomes idle.
+        void wait_requests_by_group_id(uint64_t group_id, std::function<void()> callback) {
+            if (m_shutdown || group_id == 0) {
+                if (callback) callback();
+                return;
+            }
+
+            bool invoke_now = false;
+            {
+                std::lock_guard<std::mutex> lock(m_mutex);
+                if (group_request_count_unlocked(group_id) == 0) {
+                    invoke_now = true;
+                } else {
+                    m_group_waiters[group_id].push_back(std::move(callback));
+                }
+            }
+
+            if (invoke_now && callback) {
+                callback();
+            }
+        }
+
         /// \brief Cancels one request by request ID.
         /// \param request_id The unique identifier of the request to cancel.
         /// \param callback An optional callback function to execute after cancellation.
@@ -192,23 +238,27 @@ namespace kurlyk {
         /// Executes pending, active, and retry-eligible failed requests.
         void process() override {
             if (m_shutdown) {
+                notify_all_group_waiters();
                 return;
             }
             process_pending_requests();
             process_active_requests();
             process_retry_failed_requests();
             process_cancel_requests();
+            notify_group_waiters_if_idle();
         }
 
         /// \brief Shuts down the request manager, clearing all active and pending requests.
         /// Stops request processing and releases all resources tied to active and pending requests.
         void shutdown() override {
             if (m_shutdown.exchange(true)) {
+                notify_all_group_waiters();
                 return;
             }
             cleanup_pending_requests();
             process_cancel_requests();
             m_active_request_batches.clear();
+            notify_all_group_waiters();
         }
 
         /// \brief Checks if there are active, pending, or failed requests.
@@ -224,20 +274,80 @@ namespace kurlyk {
         }
 
     private:
-        mutable std::mutex                                  m_mutex;                  ///< Mutex to protect access to the pending requests list and requests-to-cancel map.
+        mutable std::mutex                                  m_mutex;                  ///< Mutex to protect access to manager state shared with public entry points.
         std::list<std::unique_ptr<HttpRequestContext>>      m_pending_requests;       ///< List of pending HTTP requests awaiting processing.
-        std::list<std::unique_ptr<HttpRequestContext>>      m_failed_requests;        ///< List of failed HTTP requests for retrying. Protected by NetworkWorker thread serialization, NOT by m_mutex.
-        std::list<std::unique_ptr<HttpBatchRequestHandler>> m_active_request_batches; ///< List of currently active HTTP request batches. Protected by NetworkWorker thread serialization, NOT by m_mutex.
+        std::list<std::unique_ptr<HttpRequestContext>>      m_failed_requests;        ///< List of failed HTTP requests for retrying.
+        std::list<std::unique_ptr<HttpBatchRequestHandler>> m_active_request_batches; ///< List of currently active HTTP request batches.
         using callback_list_t = std::list<std::function<void()>>;
         using cancel_map_t = std::unordered_map<uint64_t, callback_list_t>;
         cancel_map_t                                       m_requests_to_cancel_by_id; ///< Map of request IDs to their associated cancellation callbacks.
         cancel_map_t                                       m_groups_to_cancel;         ///< Map of group IDs to their associated cancellation callbacks.
+        cancel_map_t                                       m_group_waiters;            ///< Map of group IDs to callbacks waiting until a group becomes idle.
         HttpRateLimiter                                     m_rate_limiter;           ///< Rate limiter for controlling request frequency.
         std::atomic<uint64_t>                               m_next_in_flight_token{1}; ///< Atomic counter for sequential rate-limit tokens.
         std::atomic<uint64_t>                               m_request_id_counter = ATOMIC_VAR_INIT(1); ///< Atomic counter for unique request IDs.
         std::atomic<uint64_t>                               m_group_id_counter = ATOMIC_VAR_INIT(1); ///< Atomic counter for group IDs.
         std::atomic<bool>                                   m_shutdown = ATOMIC_VAR_INIT(false); ///< Flag indicating if shutdown has been requested.
         std::atomic<std::size_t>                            m_max_pending_requests = ATOMIC_VAR_INIT(0); ///< Maximum number of requests accepted into the pending queue, or zero if unbounded.
+
+        std::size_t group_request_count_unlocked(uint64_t group_id) const {
+            if (group_id == 0) return 0;
+
+            std::size_t count = 0;
+            for (const auto& context : m_pending_requests) {
+                if (context && context->request && context->request->group_id == group_id) {
+                    ++count;
+                }
+            }
+            for (const auto& context : m_failed_requests) {
+                if (context && context->request && context->request->group_id == group_id) {
+                    ++count;
+                }
+            }
+            for (const auto& batch : m_active_request_batches) {
+                if (batch) {
+                    count += batch->group_request_count(group_id);
+                }
+            }
+            return count;
+        }
+
+        void notify_group_waiters_if_idle() {
+            cancel_map_t ready_waiters;
+            {
+                std::lock_guard<std::mutex> lock(m_mutex);
+                auto it = m_group_waiters.begin();
+                while (it != m_group_waiters.end()) {
+                    if (group_request_count_unlocked(it->first) != 0) {
+                        ++it;
+                        continue;
+                    }
+                    ready_waiters.emplace(it->first, std::move(it->second));
+                    it = m_group_waiters.erase(it);
+                }
+            }
+
+            for (const auto& item : ready_waiters) {
+                for (const auto& callback : item.second) {
+                    if (callback) callback();
+                }
+            }
+        }
+
+        void notify_all_group_waiters() {
+            cancel_map_t waiters;
+            {
+                std::lock_guard<std::mutex> lock(m_mutex);
+                waiters = std::move(m_group_waiters);
+                m_group_waiters.clear();
+            }
+
+            for (const auto& item : waiters) {
+                for (const auto& callback : item.second) {
+                    if (callback) callback();
+                }
+            }
+        }
 
         /// \brief Processes all pending requests, moving valid requests to active batches or marking them as failed.
         void process_pending_requests() {
@@ -265,6 +375,10 @@ namespace kurlyk {
                 uint64_t token = context->in_flight_token;
                 auto general_key = request->general_rate_limit_key;
                 auto specific_key = request->specific_rate_limit_key;
+
+                // Preserve any previous on_complete so a retry that already owns
+                // a sequential token does not lose its cleanup callback.
+                auto old_on_complete = std::move(context->on_complete);
                 context->on_complete = [this, general_limit, specific_limit, token, general_key, specific_key]() {
                     m_rate_limiter.release_request(general_limit, specific_limit, token, general_key, specific_key);
                 };
@@ -277,7 +391,7 @@ namespace kurlyk {
                     request->general_rate_limit_key,
                     request->specific_rate_limit_key);
                 if (!allowed) {
-                    context->on_complete = nullptr;
+                    context->on_complete = std::move(old_on_complete);
                     ++it;
                     continue;
                 }
