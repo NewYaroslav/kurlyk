@@ -120,10 +120,10 @@ int main() {
         require(a, "First request with time_key_a should be allowed");
 
         auto delay_a = manager.time_until_next_allowed(limit, limit, "time_key_a", "time_key_a");
-        require(delay_a.count() > 0, "time_until_next_allowed for used key should be positive");
+        require(delay_a.duration.count() > 0, "time_until_next_allowed for used key should be positive");
 
         auto delay_b = manager.time_until_next_allowed(limit, limit, "time_key_b", "time_key_b");
-        require(delay_b.count() == 0, "time_until_next_allowed for unused key should be zero");
+        require(delay_b.duration.count() == 0, "time_until_next_allowed for unused key should be zero");
 
         manager.release_request(limit, limit, 17, "time_key_a", "time_key_a");
     }

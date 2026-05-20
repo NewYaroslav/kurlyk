@@ -80,6 +80,65 @@ namespace kurlyk {
             }
         }
 
+        /// \brief Waits until all requests associated with this client group finish.
+        /// \warning Blocks until all callbacks for this client's group are delivered.
+        /// Must not be called from the network worker thread.
+        /// \throws std::logic_error If called from the network worker thread.
+        void wait_requests() {
+            auto& worker = core::NetworkWorker::get_instance();
+            if (worker.is_worker_thread()) {
+                throw std::logic_error("HttpClient::wait_requests() must not be called from the network worker thread");
+            }
+            auto future = make_wait_requests_future();
+            worker.notify();
+            try {
+                future.get();
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "wait_requests() future.get() failed");
+            }
+        }
+
+        /// \brief Waits until all requests associated with this client group finish or timeout expires.
+        /// \param timeout Maximum time to wait.
+        /// \return True if all requests finished; false on timeout or when called from the network worker thread.
+        /// \warning Must not be called from the network worker thread.
+        bool wait_requests_for(std::chrono::milliseconds timeout) {
+            auto& worker = core::NetworkWorker::get_instance();
+            if (worker.is_worker_thread()) {
+                return false;
+            }
+            auto future = make_wait_requests_future();
+            worker.notify();
+            if (future.wait_for(timeout) == std::future_status::timeout) {
+                return false;
+            }
+            try {
+                future.get();
+            } catch (const std::exception& e) {
+                KURLYK_HANDLE_ERROR(e, "wait_requests_for() future.get() failed");
+                return false;
+            }
+            return true;
+        }
+
+        /// \brief Sets maximum number of pending, active, and retry requests for this client group.
+        /// \param max_in_flight Maximum managed requests for this client group. `0` disables the limit.
+        void set_max_in_flight(std::size_t max_in_flight) {
+            m_max_in_flight = max_in_flight;
+        }
+
+        /// \brief Returns maximum number of requests allowed for this client group.
+        /// \return Configured group request limit, or `0` if disabled.
+        std::size_t max_in_flight() const {
+            return m_max_in_flight;
+        }
+
+        /// \brief Returns number of pending, active, and retry requests for this client group.
+        /// \return Number of currently managed requests.
+        std::size_t in_flight_requests() const {
+            return HttpRequestManager::get_instance().group_request_count(m_request.group_id);
+        }
+
         /// \brief Clears the configured rate limit of the specified type.
         /// \param type Rate limit type to clear.
         void clear_rate_limit(RateLimitType type = RateLimitType::RL_GENERAL) {
@@ -482,6 +541,10 @@ namespace kurlyk {
         SubmitResult submit_request(
                 std::unique_ptr<HttpRequest> request_ptr,
                 HttpResponseCallback callback) {
+            if (m_max_in_flight != 0 &&
+                HttpRequestManager::get_instance().group_request_count(m_request.group_id) >= m_max_in_flight) {
+                return SubmitResult{false, utils::make_error_code(utils::ClientError::QueueLimitExceeded)};
+            }
             SubmitResult submit_result = HttpRequestManager::get_instance().submit_request(
                 std::move(request_ptr), std::move(callback));
             if (submit_result) {
@@ -812,6 +875,7 @@ namespace kurlyk {
         std::string m_host;     ///< The base host URL for the HTTP client.
         bool m_owns_general_rate_limit = false; ///< Flag indicating if the client owns the general rate limit.
         bool m_owns_specific_rate_limit = false; ///< Flag indicating if the client owns the specific rate limit.
+        std::size_t m_max_in_flight = 0; ///< Maximum number of in-flight requests for this client group, or 0 for disabled.
 
         /// \brief Adds the request to the request manager and notifies the worker to process it.
         /// \param request_ptr The HTTP request to be sent.
@@ -857,6 +921,33 @@ namespace kurlyk {
             };
 
             safe_submit_request(promise, std::move(request_ptr), std::move(callback));
+            return future;
+        }
+
+        /// \brief Creates a future that becomes ready when all requests in this client group finish.
+        /// \return A future that is satisfied when the group becomes idle.
+        std::future<void> make_wait_requests_future() {
+            auto promise = std::make_shared<std::promise<void>>();
+            auto future = promise->get_future();
+
+            HttpRequestManager::get_instance().wait_requests_by_group_id(
+                m_request.group_id,
+                [promise]() {
+                    try {
+                        promise->set_value();
+                    } catch (const std::future_error& e) {
+                        if (e.code() == std::make_error_condition(std::future_errc::promise_already_satisfied)) {
+                            KURLYK_HANDLE_ERROR(e, "Promise already satisfied in HttpClient::wait_requests callback");
+                        } else {
+                            KURLYK_HANDLE_ERROR(e, "Future error in HttpClient::wait_requests callback");
+                        }
+                    } catch (const std::exception& e) {
+                        KURLYK_HANDLE_ERROR(e, "Unhandled exception in HttpClient::wait_requests callback");
+                    } catch (...) {
+                        // Unknown fatal error in wait callback
+                    }
+                });
+
             return future;
         }
 

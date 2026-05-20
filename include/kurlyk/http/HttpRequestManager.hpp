@@ -142,8 +142,12 @@ namespace kurlyk {
             const std::string& general_key,
             const std::string& specific_key
             ) {
-            return m_rate_limiter.time_until_next_allowed<Duration>(
+            const auto delay = m_rate_limiter.time_until_next_allowed<Duration>(
                 general_limit, specific_limit, general_key, specific_key);
+            RateLimitDelay<Duration> result;
+            result.duration = delay;
+            result.sequential_blocked = (delay == Duration::max());
+            return result;
         }
 
         /// \brief Generates a new unique request ID.
