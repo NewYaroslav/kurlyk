@@ -123,20 +123,28 @@ namespace kurlyk {
             return true;
         }
 
-        /// \brief Sets maximum number of pending, active, and retry requests for this client group.
-        /// \param max_in_flight Maximum managed requests for this client group. `0` disables the limit.
+        /// \brief Sets maximum number of requests this client may submit while its group is busy.
+        /// \param max_in_flight Maximum observed managed requests for this client's group. `0` disables the limit.
+        /// \note This is a per-client admission guard. It is checked before this HttpClient
+        /// submits a request and does not enforce a global per-group invariant for requests
+        /// submitted directly through HttpRequestManager or other producers.
+        /// \note Concurrent submissions through the same HttpClient are serialized for this
+        /// admission check.
         void set_max_in_flight(std::size_t max_in_flight) {
+            std::lock_guard<std::mutex> lock(m_submit_mutex);
             m_max_in_flight = max_in_flight;
         }
 
-        /// \brief Returns maximum number of requests allowed for this client group.
-        /// \return Configured group request limit, or `0` if disabled.
+        /// \brief Returns this client's configured admission cap.
+        /// \return Configured per-client admission cap, or `0` if disabled.
         std::size_t max_in_flight() const {
+            std::lock_guard<std::mutex> lock(m_submit_mutex);
             return m_max_in_flight;
         }
 
-        /// \brief Returns number of pending, active, and retry requests for this client group.
-        /// \return Number of currently managed requests.
+        /// \brief Returns number of pending, active, and retry requests currently observed for this client group.
+        /// \return Number of currently managed requests with this client's group ID.
+        /// \note This is a snapshot of HttpRequestManager state and may change immediately in concurrent code.
         std::size_t in_flight_requests() const {
             return HttpRequestManager::get_instance().group_request_count(m_request.group_id);
         }
@@ -537,18 +545,27 @@ namespace kurlyk {
         }
 
         /// \brief Attempts to submit a prepared request to the global HTTP manager.
-        /// \param request_ptr The prepared HTTP request to be enqueued.
-        /// \param callback The callback function to be called when the request is completed.
+        /// \param request_ptr Prepared HTTP request to be enqueued.
+        /// \param callback Callback function to be called when the request is completed.
         /// \return SubmitResult describing whether the request was accepted into the queue.
+        /// Returns `ClientError::QueueLimitExceeded` when this client's max-in-flight
+        /// admission cap is reached.
         SubmitResult submit_request(
                 std::unique_ptr<HttpRequest> request_ptr,
                 HttpResponseCallback callback) {
-            if (m_max_in_flight != 0 &&
-                HttpRequestManager::get_instance().group_request_count(m_request.group_id) >= m_max_in_flight) {
-                return SubmitResult{false, utils::make_error_code(utils::ClientError::QueueLimitExceeded)};
+            SubmitResult submit_result;
+            {
+                std::lock_guard<std::mutex> lock(m_submit_mutex);
+
+                if (m_max_in_flight != 0 &&
+                    HttpRequestManager::get_instance().group_request_count(m_request.group_id) >= m_max_in_flight) {
+                    return SubmitResult{false, utils::make_error_code(utils::ClientError::QueueLimitExceeded)};
+                }
+
+                submit_result = HttpRequestManager::get_instance().submit_request(
+                    std::move(request_ptr), std::move(callback));
             }
-            SubmitResult submit_result = HttpRequestManager::get_instance().submit_request(
-                std::move(request_ptr), std::move(callback));
+
             if (submit_result) {
                 core::NetworkWorker::get_instance().notify();
             }
@@ -877,6 +894,7 @@ namespace kurlyk {
         std::string m_host;     ///< The base host URL for the HTTP client.
         bool m_owns_general_rate_limit = false; ///< Flag indicating if the client owns the general rate limit.
         bool m_owns_specific_rate_limit = false; ///< Flag indicating if the client owns the specific rate limit.
+        mutable std::mutex m_submit_mutex; ///< Protects client-side submission settings and admission checks.
         std::size_t m_max_in_flight = 0; ///< Maximum number of in-flight requests for this client group, or 0 for disabled.
 
         /// \brief Adds the request to the request manager and notifies the worker to process it.

@@ -272,6 +272,55 @@ int main() {
         client.reset();
     }
 
+    // --- Test 8: concurrent same-client max_in_flight submission ---
+    {
+        ProcessorGuard pg;
+
+        auto client = std::make_unique<kurlyk::HttpClient>(base_url);
+        client->set_max_in_flight(1);
+        std::atomic<int> callback_count{0};
+
+        std::atomic<bool> start{false};
+        std::atomic<int> accepted{0};
+        std::atomic<int> rejected{0};
+
+        auto submit_fn = [&]() {
+            while (!start.load(std::memory_order_acquire)) {
+                std::this_thread::yield();
+            }
+
+            bool ok = client->get("/slow", kurlyk::QueryParams(), kurlyk::Headers(),
+                [&](kurlyk::HttpResponsePtr response) {
+                    if (response && response->ready) ++callback_count;
+                });
+
+            if (ok) {
+                ++accepted;
+            } else {
+                ++rejected;
+            }
+        };
+
+        std::thread t1(submit_fn);
+        std::thread t2(submit_fn);
+
+        start.store(true, std::memory_order_release);
+
+        t1.join();
+        t2.join();
+
+        require(accepted.load() == 1,
+                "only one request should be accepted through one HttpClient with max_in_flight=1");
+        require(rejected.load() == 1,
+                "one request should be rejected by client-side max_in_flight");
+
+        client->wait_requests();
+        require(callback_count.load() == 1, "only accepted request callback should be delivered");
+        require(client->in_flight_requests() == 0, "client group must be idle after wait_requests()");
+
+        client.reset();
+    }
+
     server.stop();
     server_thread.join();
 
