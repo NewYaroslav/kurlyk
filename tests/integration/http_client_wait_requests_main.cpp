@@ -127,11 +127,6 @@ int main() {
         client_a->wait_requests();
         auto dt = std::chrono::steady_clock::now() - t0;
 
-        std::cout << "Test 2: callback_a=" << callback_a.load()
-                  << " callback_b=" << callback_b.load()
-                  << " dt=" << std::chrono::duration_cast<std::chrono::milliseconds>(dt).count() << "ms"
-                  << std::endl;
-
         require(callback_a.load() == 1, "client_a.wait_requests() must wait until client_a callback is delivered");
         require(client_a->in_flight_requests() == 0, "client_a group must be idle after wait_requests()");
         require(callback_b.load() == 0 || dt < std::chrono::milliseconds(200),
@@ -241,7 +236,9 @@ int main() {
         require(ok, "flaky request should be accepted");
 
         client->wait_requests();
-        require(callback_count.load() >= 1, "callback must be delivered at least once");
+        // /flaky returns 500 then 200; with 2 retry attempts we get
+        // one intermediate callback (500, should_retry) and one final (200).
+        require(callback_count.load() == 2, "retry chain should deliver intermediate and final callbacks");
         require(final_status.load() == 200, "final status after retry must be 200");
         require(client->in_flight_requests() == 0, "client group must be idle after wait_requests()");
 
@@ -267,8 +264,6 @@ int main() {
         require(ok, "flaky request with sequential limit should be accepted");
 
         bool done = client->wait_requests_for(std::chrono::seconds(2));
-        std::cout << "Test 7: sequential limit + retry, done=" << done
-                  << " final_status=" << final_status.load() << std::endl;
 
         require(done, "wait_requests_for(2s) must complete before timeout");
         require(final_status.load() == 200, "final status after sequential-limit retry must be 200");
