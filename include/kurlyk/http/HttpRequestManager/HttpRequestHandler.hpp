@@ -109,7 +109,6 @@ namespace kurlyk {
                 m_response->ready = true;
                 m_request_context->callback(std::move(m_response));
                 m_callback_called = true;
-                m_done = true;
                 if (m_request_context) m_request_context->complete();
                 return true;
             }
@@ -135,14 +134,6 @@ namespace kurlyk {
         /// \return The group ID of the HTTP request if the context exists, or 0 if no context is set.
         uint64_t get_group_id() { return m_request_context ? m_request_context->request->group_id : 0; }
 
-        /// \brief Checks whether this request has already received its final callback.
-        /// \return True if the request is fully completed (final callback or cancel).
-        bool is_done() const noexcept { return m_done; }
-
-        /// \brief Marks the request as done without invoking a callback.
-        /// Used by the batch handler when the handler stays in the vector after curl removal.
-        void mark_done() noexcept { m_done = true; }
-
         /// \brief Marks the request as cancelled.
         void cancel() {
             if (!m_callback_called) {
@@ -153,7 +144,6 @@ namespace kurlyk {
                     m_request_context->callback(std::move(m_response));
                 }
                 m_callback_called = true;
-                m_done = true;
                 if (m_request_context) m_request_context->complete();
             }
         }
@@ -166,7 +156,6 @@ namespace kurlyk {
         char                                m_error_buffer[CURL_ERROR_SIZE]; ///< Buffer for CURL error messages.
         bool                                m_callback_called = false; ///< Indicates if the callback was called.
         bool                                m_has_stream_chunk = false; ///< Indicates if a streaming body chunk was emitted.
-        bool                                m_done = false; ///< Indicates if the request has received its final callback.
         mutable std::string                 m_ca_file; ///< Cached CA file path.
 
         /// \brief Initializes CURL options for the request, setting headers, method, SSL, timeouts, and other parameters.
