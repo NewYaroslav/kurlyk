@@ -58,6 +58,16 @@ int main() {
         *response << "HTTP/1.1 200 OK\r\nContent-Length: 4\r\n\r\nslow";
     };
 
+    std::atomic<int> flaky_counter{0};
+    server.resource["^/flaky$"]["GET"] = [&flaky_counter](std::shared_ptr<HttpServer::Response> response,
+                                                          std::shared_ptr<HttpServer::Request> request) {
+        if (flaky_counter.fetch_add(1) == 0) {
+            *response << "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 5\r\n\r\nerror";
+        } else {
+            *response << "HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nok";
+        }
+    };
+
     std::promise<unsigned short> port_promise;
     std::thread server_thread([&server, &port_promise]() {
         server.start([&port_promise](unsigned short port) {
@@ -207,6 +217,62 @@ int main() {
 
         auto completed = f1.get();
         require(completed && completed->ready, "first future must complete");
+
+        client.reset();
+    }
+
+    // --- Test 6: wait_requests() waits through retry chain ---
+    {
+        ProcessorGuard pg;
+        flaky_counter.store(0);
+
+        auto client = std::make_unique<kurlyk::HttpClient>(base_url);
+        client->set_retry_attempts(2, 50);
+        std::atomic<int> callback_count{0};
+        std::atomic<int> final_status{0};
+
+        bool ok = client->get("/flaky", kurlyk::QueryParams(), kurlyk::Headers(),
+            [&](kurlyk::HttpResponsePtr response) {
+                ++callback_count;
+                if (response && response->ready) {
+                    final_status.store(static_cast<int>(response->status_code));
+                }
+            });
+        require(ok, "flaky request should be accepted");
+
+        client->wait_requests();
+        require(callback_count.load() >= 1, "callback must be delivered at least once");
+        require(final_status.load() == 200, "final status after retry must be 200");
+        require(client->in_flight_requests() == 0, "client group must be idle after wait_requests()");
+
+        client.reset();
+    }
+
+    // --- Test 7: sequential rate limit does not self-block retry ---
+    {
+        ProcessorGuard pg;
+        flaky_counter.store(0);
+
+        auto client = std::make_unique<kurlyk::HttpClient>(base_url);
+        client->set_rate_limit(3, 60000, kurlyk::RateLimitType::RL_GENERAL, true);
+        client->set_retry_attempts(2, 50);
+        std::atomic<int> final_status{0};
+
+        bool ok = client->get("/flaky", kurlyk::QueryParams(), kurlyk::Headers(),
+            [&](kurlyk::HttpResponsePtr response) {
+                if (response && response->ready) {
+                    final_status.store(static_cast<int>(response->status_code));
+                }
+            });
+        require(ok, "flaky request with sequential limit should be accepted");
+
+        bool done = client->wait_requests_for(std::chrono::seconds(2));
+        std::cout << "Test 7: sequential limit + retry, done=" << done
+                  << " final_status=" << final_status.load() << std::endl;
+
+        require(done, "wait_requests_for(2s) must complete before timeout");
+        require(final_status.load() == 200, "final status after sequential-limit retry must be 200");
+        require(client->in_flight_requests() == 0, "client group must be idle after wait_requests_for()");
 
         client.reset();
     }
