@@ -54,7 +54,11 @@ namespace kurlyk {
                 if (message->msg != CURLMSG_DONE) continue;
                 handle_completed_request(message);
             }
-            return m_handlers.empty();
+            if (still_running == 0) {
+                m_handlers.clear();
+                return true;
+            }
+            return false;
         }
 
         /// \brief Extracts the list of failed requests.
@@ -78,7 +82,7 @@ namespace kurlyk {
 
             std::size_t count = 0;
             for (const auto& handler : m_handlers) {
-                if (handler && handler->get_group_id() == group_id) {
+                if (handler && !handler->is_done() && handler->get_group_id() == group_id) {
                     ++count;
                 }
             }
@@ -124,26 +128,28 @@ namespace kurlyk {
         void handle_completed_request(CURLMsg* message) {
             CURL* curl = message->easy_handle;
 
-            auto it = std::find_if(
-                m_handlers.begin(),
-                m_handlers.end(),
-                [curl](const std::unique_ptr<HttpRequestHandler>& handler) {
-                    return handler && handler->get_curl() == curl;
-                }
-            );
+            void* ptr = nullptr;
+            curl_easy_getinfo(curl, CURLINFO_PRIVATE, &ptr);
+            auto* handler = static_cast<HttpRequestHandler*>(ptr);
+            if (!handler) return;
 
-            if (it == m_handlers.end()) {
-                return;
-            }
-
-            bool should_retry = !(*it)->handle_curl_message(message);
+            bool should_retry = !handler->handle_curl_message(message);
             curl_multi_remove_handle(m_multi_handle, curl);
 
             if (should_retry) {
-                m_failed_requests.push_back((*it)->get_request_context());
+                m_failed_requests.push_back(handler->get_request_context());
+                // context was moved out — erase the handler from the batch vector
+                auto it = std::find_if(
+                    m_handlers.begin(),
+                    m_handlers.end(),
+                    [handler](const std::unique_ptr<HttpRequestHandler>& h) {
+                        return h.get() == handler;
+                    }
+                );
+                if (it != m_handlers.end()) {
+                    m_handlers.erase(it);
+                }
             }
-
-            m_handlers.erase(it);
         }
 
     }; // HttpBatchRequestHandler
