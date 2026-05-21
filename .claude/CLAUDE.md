@@ -58,10 +58,7 @@ See [tool-priority.md](rules/tool-priority.md) for fallback chains and [delegati
 <execution_protocols>
 Broad requests: explore first, then plan. 2+ independent tasks in parallel. `run_in_background` for builds/tests.
 Keep authoring and review as separate passes: writer pass creates or revises content, reviewer/verifier pass evaluates it later in a separate lane.
-For non-trivial code changes, use `code-reviewer` or `verifier` for the approval pass.
 Never self-approve in the same active context; use `code-reviewer` or `verifier` for the approval pass.
-Do not claim completion without build/test/review evidence where applicable.
-If verification cannot be run, state exactly what was not verified.
 Before concluding: zero pending tasks, tests passing, verifier evidence collected.
 [Hyrum's](rules/software-laws.md#hyrums-law) — document side-effects in notepad
 [Unintended](rules/software-laws.md#law-of-unintended-consequences) — grep rules/ before adding skills/agents
@@ -101,21 +98,26 @@ Say "setup omc" or run `/oh-my-claudecode:omc-setup`.
 
 <!-- User customizations -->
 
+
 <!-- User Overrides — NOT managed by OMC, persists across updates -->
 
 ## Specific Overrides
-- "Delegate" → always route via `~/.claude/rules/delegation.md` routing table; never decide ad-hoc.
-- "Lightest path" → use context-mode for output >20 lines, haiku for lookups, and avoid unnecessary intermediate tools.
-- "Official docs" → use context7 (`resolve-library-id`, then `query-docs`) before any web search.
-- "Tool selection" → follow `~/.claude/rules/tool-priority.md` priority chain.
-- "WebSearch" → prefer DDG MCP > Tavily > Fetch. Do not use built-in WebSearch unless the documented fallback chain requires it.
-- "Software Laws" → all software laws are centralized in `~/.claude/rules/software-laws.md`.
+- "Delegate" → always route via `~/.claude/rules/delegation.md` routing table (never decide ad-hoc)
+- "Lightest path" → use context-mode for output >20 lines, haiku for lookups, skip intermediate tools
+- "Official docs" → use context7 (`resolve-library-id` then `query-docs`) before any web search
+- "Tool selection" → follow `~/.claude/rules/tool-priority.md` priority chain
+- "WebSearch" → NEVER use built-in WebSearch. Use DDG MCP > Tavily > Fetch
+- "Software Laws" → все законы программирования централизованы в `~/.claude/rules/software-laws.md`
+- "Nuanced analysis" → applies to every session via `.claude/rules/nuanced-analysis.md`
+- "Project knowledge" → `guides/` acts as the stationary knowledge layer (4th layer per Karpathy method): project overview, build-and-test, coding-style, commit-conventions, codebase-orientation. Load relevant topic files per task.
+- "Header-only library context" → treat `include/` as the primary source of truth. Generated copies under build directories are not source files. C++11 baseline with C++17 guarded features.
+- "Goal-driven execution" → every non-trivial task needs a verifiable success criterion. Replace imperative with declarative goals.
+- "Surgical edits" → every changed line must relate to the request. Do not improve neighboring code, comments, or formatting. Follow existing style.
 
 ## Additional Agent Rules
 - Nuanced analysis and gray-area work: [nuanced-analysis.md](rules/nuanced-analysis.md)
-- Image analysis and vision workflow: [image-analysis.md](rules/image-analysis.md)
 - General meta-rules, L0/L2, provenance, git, and coding workflow: [AGENTS.md](../AGENTS.md)
-- Project-specific coding, build, architecture, testing, concurrency, and rate-limit rules live in `../guides/`.
+- Project-specific coding, build, architecture, testing, and concurrency rules live in `../guides/`.
 - Do not duplicate guide contents inside this file.
 - When changing relevant code, read the corresponding guide first.
 

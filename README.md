@@ -21,9 +21,9 @@ If, for some reason, other libraries such as *easyhttp-cpp, curl_request, curlpp
 ## Features
 
 - Asynchronous HTTP and WebSocket requests.
-- Background worker or synchronous processing.
+- Background worker or synchronous processing via `kurlyk::process()`.
 - HTTP callback API and `std::future` API.
-- Rate limits, retry, proxy, custom headers, cookies, and timeouts.
+- Rate limits (partitioned by key), retry, proxy, custom headers, cookies, and timeouts.
 - Streaming HTTP responses with a callback for each chunk.
 - WebSocket events, message sending, and automatic reconnection.
 - Bounded admission/backpressure for the HTTP pending queue and WebSocket send queue.
@@ -31,7 +31,7 @@ If, for some reason, other libraries such as *easyhttp-cpp, curl_request, curlpp
 
 ## Quick start
 
-### Minimal HTTP GET (future API)
+### Minimal HTTP GET
 
 ```cpp
 #include <kurlyk.hpp>
@@ -50,28 +50,7 @@ int main() {
 }
 ```
 
-By default `KURLYK_AUTO_INIT=1`, so simple examples can create clients immediately. For manual control or synchronous mode, disable auto-init and use `kurlyk::init()` / `kurlyk::deinit()`.
-
-### Minimal HTTP GET with callback
-
-```cpp
-#include <kurlyk.hpp>
-#include <iostream>
-
-int main() {
-    kurlyk::HttpClient client("https://httpbin.org");
-
-    client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers(),
-        [](const kurlyk::HttpResponsePtr response) {
-            if (response && response->ready) {
-                std::cout << response->content << std::endl;
-            }
-        });
-
-    std::cin.get();  // keeps the process alive until the async callback arrives
-    return 0;
-}
-```
+For C++11/14 or manual lifecycle management, use `kurlyk::init()` / `kurlyk::deinit()`.
 
 ### Minimal WebSocket echo
 
@@ -121,29 +100,11 @@ cmake -S . -B build-examples-mingw -G "MinGW Makefiles" `
 cmake --build build-examples-mingw --config Release
 ```
 
-On Windows/MinGW, dependencies can be provided by system paths, repository submodules, or fallback CMake options.
-
-On Linux, install system OpenSSL and libcurl development packages before configuring the project. Asio and Simple-WebSocket-Server can be loaded through fallback CMake options.
-
-For Linux:
-
-```bash
-sudo apt-get update
-sudo apt-get install -y libcurl4-openssl-dev libssl-dev ninja-build
-
-cmake -S . -B build-linux -G Ninja \
-    -DCMAKE_CXX_STANDARD=17 \
-    -DCMAKE_CXX_STANDARD_REQUIRED=ON \
-    -DKURLYK_BUILD_EXAMPLES=ON \
-    -DKURLYK_USE_FALLBACK_ASIO=ON \
-    -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON
-
-cmake --build build-linux
-```
+For MinGW, dependencies are already available in the repository as git submodules in the `libs` folder, and the fallback CMake options below can build missing dependencies automatically.
 
 ## Basic HTTP usage
 
-The HTTP client can be used through callbacks, futures, or low-level helpers. With auto-init enabled by default, you can create `HttpClient` without manual `kurlyk::init()` / `kurlyk::deinit()` calls; manual lifecycle management is needed for synchronous mode or explicit worker control.
+The HTTP client can be used through callbacks, futures, or low-level helpers. With auto-init enabled by default, you can create `HttpClient` without manual `kurlyk::init()` / `kurlyk::deinit()` calls; manual lifecycle management is needed for C++11/14, synchronous mode, or explicit worker control.
 
 ### Shared helper for examples
 
@@ -169,14 +130,6 @@ void print_response(const kurlyk::HttpResponsePtr& response) {
 ### Callback API
 
 Callback overloads of `get(...)`, `post(...)`, and `request(...)` return `bool`: `true` when the request is accepted into the queue and `false` when it is rejected during admission. The callback itself receives `kurlyk::HttpResponsePtr` and is not limited to the final response: in streaming mode it is called for each chunk with `stream_chunk == true`, and during retry it may receive an intermediate non-ready response for a failed attempt. The final result is identified by `response && response->ready`.
-
-**How to interpret an HTTP callback response:**
-
-- `response == nullptr` — defensive null; treat as no data.
-- `response->stream_chunk == true` — a body chunk, not the final result.
-- `response->ready == false` — an intermediate state (chunk or failed attempt before retry).
-- `response->ready == true` — the final, authoritative result of the request.
-- `response->error_code` — set when the final result or an intermediate state carries an error.
 
 ```cpp
 int main() {
@@ -224,7 +177,7 @@ int main() {
 int main() {
     kurlyk::HttpClient client("https://httpbin.org");
 
-    client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::PROXY_HTTP);
+    client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::HTTP);
 
     client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers(),
         [](const kurlyk::HttpResponsePtr response) {
@@ -241,8 +194,6 @@ int main() {
 
 Low-level helpers are useful when you need the ID of a concrete request or direct access to the standalone HTTP API.
 
-#### Standalone GET with request ID
-
 ```cpp
 int main() {
     const uint64_t request_id = kurlyk::http_get(
@@ -257,11 +208,10 @@ int main() {
     KURLYK_PRINT << "Press Enter to exit..." << std::endl;
     std::cin.get();
 
+    kurlyk::cancel_request_by_id(request_id).wait();
     return 0;
 }
 ```
-
-#### Standalone GET with future
 
 ```cpp
 int main() {
@@ -273,23 +223,6 @@ int main() {
     KURLYK_PRINT << "Request id: " << result.first << std::endl;
     print_response(result.second.get());
 
-    return 0;
-}
-```
-
-#### Cancelling a request by ID
-
-```cpp
-int main() {
-    const uint64_t request_id = kurlyk::http_get(
-        "https://httpbin.org/delay/5",
-        kurlyk::QueryParams(),
-        kurlyk::Headers(),
-        [](const kurlyk::HttpResponsePtr response) {
-            print_response(response);
-        });
-
-    kurlyk::cancel_request_by_id(request_id).wait();
     return 0;
 }
 ```
@@ -377,15 +310,7 @@ In C++17+, auto-initialization is available by default, so simple examples can c
 
 int main() {
     kurlyk::init(true);
-
-    {
-        kurlyk::HttpClient client("https://httpbin.org");
-        auto response = client.get("/ip", kurlyk::QueryParams(), kurlyk::Headers()).get();
-        if (response && response->ready) {
-            std::cout << response->content << std::endl;
-        }
-    }
-
+    kurlyk::HttpClient client("https://httpbin.org");
     kurlyk::deinit();
     return 0;
 }
@@ -567,20 +492,17 @@ Proxy settings can be configured on `HttpClient`, and then they apply to request
 
 ```cpp
 kurlyk::HttpClient client("https://httpbin.org");
-client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::PROXY_HTTP);
+client.set_proxy("127.0.0.1", 8080, "username", "password", kurlyk::ProxyType::HTTP);
 ```
 
 ## Installation and dependencies
 
 ### Supported toolchains
 
-Full CMake builds with HTTP/WebSocket are currently supported on:
+- **MSVC**
+- **MinGW (GCC)**
 
-- **Windows / MinGW (GCC)**
-- **Windows / MSVC / Visual Studio 2022** — experimental
-- **Linux / GCC or Clang**
-
-macOS is currently covered in CI only for portable header smoke tests with HTTP/WebSocket disabled.
+MSVC builds are currently considered unstable. The confirmed configuration is **C++17** with **Visual Studio 2022 (generator: Visual Studio 17 2022)**.
 
 ### Adding kurlyk
 
@@ -594,32 +516,21 @@ kurlyk/include
 
 ### Dependencies
 
-To use **kurlyk** with HTTP/WebSocket enabled, you need these dependencies:
+To use **kurlyk** in a MinGW environment, you need these dependencies:
 
 1. For WebSocket:
    - [Simple-WebSocket-Server](https://gitlab.com/eidheim/Simple-WebSocket-Server)
    - Boost.Asio or [standalone Asio](https://github.com/chriskohlhoff/asio/tree/master)
-   - [OpenSSL](https://www.openssl.org/)
+   - [OpenSSL](https://slproweb.com/products/Win32OpenSSL.html) (*LTS version Win64 OpenSSL v3.0.15*)
 
 2. For HTTP:
-   - [libcurl](https://curl.se/)
+   - [libcurl](https://curl.se/windows/)
 
-Some dependencies are available as submodules in the `external` folder.
-
-### Linux packages
-
-On Debian/Ubuntu-based systems, install OpenSSL and libcurl development packages:
-
-```bash
-sudo apt-get update
-sudo apt-get install -y libcurl4-openssl-dev libssl-dev
-```
-
-The Linux CMake build uses system OpenSSL/libcurl packages. Binary fallback packages for OpenSSL and libcurl are currently Windows-only.
+All dependencies are also included as submodules in the `libs` folder.
 
 ### OpenSSL
 
-On Windows, add OpenSSL paths to the project, for example for version *3.4.0*:
+Add OpenSSL paths to the project, for example for version *3.4.0*:
 
 ```text
 OpenSSL-Win64/include
@@ -627,14 +538,17 @@ OpenSSL-Win64/lib/VC/x64/MD
 OpenSSL-Win64/bin
 ```
 
-Link OpenSSL libraries from `lib/VC/x64/MD`. The minimum set is usually:
+Link OpenSSL libraries from `lib/VC/x64/MD`:
 
 ```text
-libssl.lib
+capi.lib
+dasync.lib
 libcrypto.lib
+libssl.lib
+openssl.lib
+ossltest.lib
+padlock.lib
 ```
-
-If your Windows OpenSSL build requires additional provider or engine libraries (for example `capi.lib`, `dasync.lib`, `padlock.lib`), add them from the same folder.
 
 ### Asio
 
@@ -655,7 +569,7 @@ For Boost.Asio, you do not need to define `ASIO_STANDALONE`.
 
 ### curl
 
-On Windows, add paths for `curl`, for example for version *8.11.0*:
+Add paths for `curl`, for example for version *8.11.0*:
 
 ```text
 curl-8.11.0_1-win64-mingw/bin
@@ -680,7 +594,7 @@ Simple-WebSocket-Server
 
 ### Other dependencies
 
-On Windows, also add these libraries to the linker:
+Also add these libraries to the linker:
 
 ```text
 ws2_32
@@ -690,16 +604,14 @@ crypt32
 
 ### Fallback dependencies
 
-The library supports automatically downloading some dependencies when they are missing. Fallback availability depends on the platform, compiler, and linkage type.
-
-OpenSSL and libcurl binary fallbacks are currently Windows-only. On Linux, use system packages for OpenSSL and libcurl.
+The library supports automatically downloading dependencies when they are missing. Fallback availability depends on the compiler and linkage type.
 
 | Dependency | MinGW (Shared) | MinGW (Static) | MSVC (Shared) | MSVC (Static) |
 |------------|---------------|---------------|---------------|---------------|
 | OpenSSL    | yes           | yes           | yes           | yes           |
 | curl       | yes           | yes           | yes           | no            |
 
-Asio and Simple-WebSocket-Server are header-only libraries and can be loaded through fallback CMake options on supported platforms.
+Asio and Simple-WebSocket-Server are header-only libraries and work for all listed build variants.
 
 #### CMake fallback options
 
@@ -712,47 +624,6 @@ Asio and Simple-WebSocket-Server are header-only libraries and can be loaded thr
 | `KURLYK_OPENSSL_SHARED` | Loads OpenSSL as a shared library when fallback is enabled. |
 | `KURLYK_CURL_SHARED` | Loads libcurl as a shared library when fallback is enabled. |
 | `KURLYK_BUILD_EXAMPLES` | Builds all targets from the `examples/` directory. |
-
-Example build with all fallback dependencies enabled:
-
-```powershell
-cmake -S . -B build `
-    -DKURLYK_BUILD_EXAMPLES=ON `
-    -DKURLYK_USE_FALLBACK_OPENSSL=ON `
-    -DKURLYK_USE_FALLBACK_CURL=ON `
-    -DKURLYK_USE_FALLBACK_ASIO=ON `
-    -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON
-
-cmake --build build --config Release
-```
-
-For MinGW with fallbacks:
-
-```powershell
-cmake -S . -B build-mingw -G "MinGW Makefiles" `
-    -DCMAKE_C_COMPILER=gcc `
-    -DCMAKE_CXX_COMPILER=g++ `
-    -DKURLYK_BUILD_EXAMPLES=ON `
-    -DKURLYK_USE_FALLBACK_OPENSSL=ON `
-    -DKURLYK_USE_FALLBACK_CURL=ON `
-    -DKURLYK_USE_FALLBACK_ASIO=ON `
-    -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON
-
-cmake --build build-mingw
-```
-
-For Linux with system OpenSSL/libcurl and fallback header-only dependencies:
-
-```bash
-cmake -S . -B build-linux -G Ninja \
-    -DCMAKE_CXX_STANDARD=17 \
-    -DCMAKE_CXX_STANDARD_REQUIRED=ON \
-    -DKURLYK_BUILD_EXAMPLES=ON \
-    -DKURLYK_USE_FALLBACK_ASIO=ON \
-    -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON
-
-cmake --build build-linux
-```
 
 ## Configuration macros
 
@@ -777,11 +648,30 @@ Define these macros before including `kurlyk.hpp` to configure the library:
 | `include/kurlyk/websocket` | WebSocket client and connection management. |
 | `include/kurlyk/types` | Shared enums, cookie, proxy config, and helpers. |
 | `include/kurlyk/utils` | Encoding, URL, HTTP, path, and error helpers. |
-| `tests/integration` | Windows dependency and HTTP/WebSocket integration checks. |
-| `external/` | Optional dependency submodules. |
+| `tests/integration` | Windows dependency and integration build checks. |
 | `tests/odr` | Header-only ODR checks. |
 | `tests/smoke` | Portable header smoke checks. |
 | `examples/` | Usage examples. |
+
+## AI agent tooling
+
+The repository includes agent configuration and orchestration metadata for AI coding tools (e.g., Claude Code with oh-my-claudecode). The following MCP servers and plugins are recommended for working with the codebase:
+
+| Category | MCP server / plugin | Purpose |
+|----------|---------------------|---------|
+| Document lookup | context7 | SDK/API docs resolution before web search |
+| Web search | DDG Search (no key) | Primary web search fallback |
+| Web search | Tavily | Deep web search and extraction |
+| Web content | Fetch | Markdown/JSON/TXT fetch for known URLs |
+| Browser automation | Playwright | UI automation and screenshot testing |
+| Repo operations | GitHub | Issues, PRs, and repository file operations |
+| Code intelligence | Codebase Memory | Graph-based code discovery and call chains |
+| Large output | Context-Mode | Batch execution, indexing, and analysis |
+| Structural code | AST grep (OMC plugin) | Structural search and replace |
+| Runtime | Python REPL (OMC plugin) | In-session script execution |
+| Diagnostics | LSP | Symbols, definitions, and diagnostics |
+
+For the full tool priority chain and fallback rules, see [`.claude/rules/tool-priority.md`](.claude/rules/tool-priority.md).
 
 ## Tests
 
@@ -811,9 +701,9 @@ c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++17 -o header_smoke
 
 | Platform | Coverage |
 |----------|----------|
-| Windows | MinGW and MSVC integration builds with fallback dependencies, local HTTP integration tests, HTTP retry/streaming/destructor regression tests, and local WebSocket integration coverage. |
+| Windows | MinGW and MSVC integration builds with fallback dependencies, HTTP backpressure regression, and local WebSocket integration coverage. |
 | Windows extras | ODR checks for singleton and auto-initialization headers. |
-| Linux | C++11/C++17 header smoke test and full CMake example build with HTTP/WebSocket enabled. |
+| Linux | C++11/C++17 header smoke test with HTTP/WebSocket disabled. |
 | macOS | C++11/C++17 header smoke test with HTTP/WebSocket disabled. |
 
 ## Documentation
@@ -825,14 +715,6 @@ doxygen Doxyfile
 ```
 
 Published documentation: <https://newyaroslav.github.io/kurlyk/>.
-
-## Common pitfalls
-
-- Do not call `kurlyk::deinit()` before `HttpClient` / `WebSocketClient` objects are destroyed; the destructor may block on cancellation callbacks that need a running worker.
-- In callback API, check `response && response->ready` when you need the final result; a callback can also fire for streaming chunks or intermediate retry states.
-- For streaming, check `response->stream_chunk` before `response->ready`; the final `ready` response is the authoritative transfer result.
-- `bool` return values from `get(...)` / `post(...)` / `send_message(...)` indicate admission success (request accepted into the queue), not the eventual network result.
-- A queue limit of `0` means unbounded; use `SubmitResult` APIs if you need to distinguish and handle admission rejects explicitly.
 
 ## License
 
