@@ -19,7 +19,8 @@ NEVER use built-in WebSearch tool — it will fail with non-Anthropic providers.
 2. Read/Write/Edit/Glob/Grep — file operations
 3. Context-mode (`ctx_batch_execute`, `ctx_search`, `ctx_execute`, `ctx_execute_file`, `ctx_fetch_and_index`, `ctx_index`, `ctx_purge`, `ctx_vault_graph`, `ctx_vault_index`, `ctx_graph_analyze`, `ctx_complexity`, `ctx_dead_code`, `ctx_dep_graph`, `ctx_insight`, `ctx_stats`, `ctx_upgrade`, `ctx_connector_add`, `ctx_connector_list`, `ctx_connector_sync`, `ctx_context_pack`, `ctx_index_embeddings`, `ctx_semantic_search`) — large output, analysis, indexing
 4. LSP (`lsp_hover`, `lsp_goto_definition`, `lsp_find_references`, `lsp_diagnostics`, `lsp_code_actions`, `lsp_code_action_resolve`, `lsp_document_symbols`, `lsp_workspace_symbols`, `lsp_prepare_rename`, `lsp_rename`, `lsp_servers`) — symbols, definitions, diagnostics
-5. AST grep (`mcp__plugin_oh-my-claudecode_t__ast_grep_search`, `mcp__plugin_oh-my-claudecode_t__ast_grep_replace`) — structural code search and replace
+5. Codebase Memory (`mcp__codebase-memory__search_graph`, `mcp__codebase-memory__trace_path`, `mcp__codebase-memory__get_code_snippet`, `mcp__codebase-memory__search_code`) — graph-based code discovery, call chains, and cross-file relationships
+6. AST grep (`mcp__plugin_oh-my-claudecode_t__ast_grep_search`, `mcp__plugin_oh-my-claudecode_t__ast_grep_replace`) — structural code search and replace
 
 ### External & Network
 6. GitHub plugin (`mcp__github__*`) — repo ops, issues, PRs
@@ -46,6 +47,7 @@ NEVER use built-in WebSearch tool — it will fail with non-Anthropic providers.
 |----------|---------|----------|
 | Large Output | context-mode (`ctx_batch_execute`, `ctx_search`) | No fallback |
 | Code Intelligence | LSP (`lsp_*`) | Grep/Glob |
+| Codebase Discovery | Codebase Memory (`mcp__codebase-memory__search_graph`, `mcp__codebase-memory__trace_path`, `mcp__codebase-memory__get_code_snippet`) | Grep/Glob |
 | Structural Code | AST grep (`mcp__plugin_oh-my-claudecode_t__ast_grep_*`) | Grep |
 
 ### State & Runtime
@@ -64,6 +66,7 @@ NEVER use built-in WebSearch tool — it will fail with non-Anthropic providers.
 - Playwright fail: retry once with `browser_navigate` → no fallback (manual browser required)
 - GitHub plugin fail: fallback to `gh` CLI via Bash immediately
 - LSP disconnected: Grep/Glob fallback immediately
+- Codebase Memory fail: retry once → fallback to Grep/Glob + Read
 - Context-mode fail: retry once → fallback to Bash with output redirected to file
 - Agent error: retry with clearer prompt once, escalate after 2nd failure
 - WebSearch tool call fails: use DDG MCP instead

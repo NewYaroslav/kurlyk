@@ -6,3 +6,5 @@
 /tests/**/build*/
 /.omc/
 .claude/proxy-config.json
+.mcp.json
+.mcp-wrapper.bat

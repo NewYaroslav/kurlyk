@@ -1,35 +1,23 @@
 # Commit Conventions
 
-Use [Conventional Commits](https://www.conventionalcommits.org/).
+Follow the [Conventional Commits](https://www.conventionalcommits.org/) style:
 
-## Format
+- `feat:` new features
+- `fix:` bug fixes
+- `docs:` documentation changes
+- `refactor:` code refactoring without behaviour changes
+- `test:` when adding or modifying tests
 
-```text
-type(scope): imperative summary
+Format: `type(scope): short description` where the scope is optional. Keep messages short and imperative.
 
-Explain why the change is needed and any important trade-offs.
-```
+## Git Trailers (OMC extended format)
 
-## Header
+Use git trailers to preserve decision context in every commit message when the change is non-trivial.
 
-- Keep the first line at 50 characters or less when practical.
-- Use imperative mood.
-- Use a conventional prefix such as `feat:`, `fix:`, `refactor:`, `docs:`,
-  `test:`, `build:`, or `chore:`.
-- Add a scope when it clarifies the touched area (e.g., `http:`, `websocket:`,
-  `core:`, `docs:`).
-
-## Body
-
-- Explain why the change exists, not only what files changed.
-- Mention compatibility, safety, or migration notes when relevant.
-- Do not include real secrets, access keys, private tokens, local credentials,
-  or machine-specific paths that should remain private.
-
-## Change Grouping
-
-- Keep unrelated changes in separate commits.
-- Do not mix dependency updates with feature work unless the dependency change is
-  required for that feature.
-- Do not include edits inside generated build directories unless the task
-  explicitly asks for them.
+Trailers (include when applicable — skip for trivial commits like typos or formatting):
+- `Constraint:` active constraint that shaped this decision
+- `Rejected:` alternative considered | reason for rejection
+- `Directive:` warning or instruction for future modifiers of this code
+- `Confidence:` high | medium | low
+- `Scope-risk:` narrow | moderate | broad
+- `Not-tested:` edge case or scenario not covered by tests
