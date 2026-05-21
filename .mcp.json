@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "codebase-memory": {
+      "type": "stdio",
+      "command": "E:\\_repoz\\MegaRouter\\.mcp-wrapper.bat",
+      "args": []
+    }
+  }
+}

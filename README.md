@@ -653,6 +653,26 @@ Define these macros before including `kurlyk.hpp` to configure the library:
 | `tests/smoke` | Portable header smoke checks. |
 | `examples/` | Usage examples. |
 
+## AI agent tooling
+
+The repository includes agent configuration and orchestration metadata for AI coding tools (e.g., Claude Code with oh-my-claudecode). The following MCP servers and plugins are recommended for working with the codebase:
+
+| Category | MCP server / plugin | Purpose |
+|----------|---------------------|---------|
+| Document lookup | context7 | SDK/API docs resolution before web search |
+| Web search | DDG Search (no key) | Primary web search fallback |
+| Web search | Tavily | Deep web search and extraction |
+| Web content | Fetch | Markdown/JSON/TXT fetch for known URLs |
+| Browser automation | Playwright | UI automation and screenshot testing |
+| Repo operations | GitHub | Issues, PRs, and repository file operations |
+| Code intelligence | Codebase Memory | Graph-based code discovery and call chains |
+| Large output | Context-Mode | Batch execution, indexing, and analysis |
+| Structural code | AST grep (OMC plugin) | Structural search and replace |
+| Runtime | Python REPL (OMC plugin) | In-session script execution |
+| Diagnostics | LSP | Symbols, definitions, and diagnostics |
+
+For the full tool priority chain and fallback rules, see [`.claude/rules/tool-priority.md`](.claude/rules/tool-priority.md).
+
 ## Tests
 
 Run the Windows integration suite:
