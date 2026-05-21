@@ -67,6 +67,7 @@ NEVER use built-in WebSearch tool — it will fail with non-Anthropic providers.
 - GitHub plugin fail: fallback to `gh` CLI via Bash immediately
 - LSP disconnected: Grep/Glob fallback immediately
 - Codebase Memory fail: retry once → fallback to Grep/Glob + Read
+- Codebase Memory index_repository (Windows): use uppercase drive letter (`E:/` not `e:/`) or server rejects path as `store.corrupt` and `artifact.export` fails; `list_projects` may not see the project due to path case mismatch
 - Context-mode fail: retry once → fallback to Bash with output redirected to file
 - Agent error: retry with clearer prompt once, escalate after 2nd failure
 - WebSearch tool call fails: use DDG MCP instead
