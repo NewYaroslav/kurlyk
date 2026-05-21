@@ -90,5 +90,6 @@ var classkurlyk_1_1HttpClient =
     [ "m_max_in_flight", "classkurlyk_1_1HttpClient.html#ac854c67e02db802149417b65104a492d", null ],
     [ "m_owns_general_rate_limit", "classkurlyk_1_1HttpClient.html#a0ea197e7506c5aee5815750ac7943e80", null ],
     [ "m_owns_specific_rate_limit", "classkurlyk_1_1HttpClient.html#abb59bccd6829ff87a0100f8784e98371", null ],
-    [ "m_request", "classkurlyk_1_1HttpClient.html#a1549497a34cc785e90ca3b63f7373d16", null ]
+    [ "m_request", "classkurlyk_1_1HttpClient.html#a1549497a34cc785e90ca3b63f7373d16", null ],
+    [ "m_submit_mutex", "classkurlyk_1_1HttpClient.html#ae35bd1cdbfac7fcae4c3d3f45049c5dd", null ]
 ];

@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"classkurlyk_1_1HttpRequestManager.html#a2a7c2f7109609764e9a3b1512de3eb4a":[3,0,1,6,20],
+"classkurlyk_1_1HttpRequestManager.html#a32ce938812059e06f50fcc3f1af684eb":[2,0,2,6,10],
 "classkurlyk_1_1HttpRequestManager.html#a32ce938812059e06f50fcc3f1af684eb":[3,0,1,6,10],
 "classkurlyk_1_1HttpRequestManager.html#a3379de1bbfdfdf98738ebe5386294752":[2,0,2,6,16],
 "classkurlyk_1_1HttpRequestManager.html#a3379de1bbfdfdf98738ebe5386294752":[3,0,1,6,16],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "classkurlyk_1_1SimpleWebSocketWorker.html#a318354a45c057494bffd2af4bcfb15ee":[3,0,1,22,8],
 "classkurlyk_1_1SimpleWebSocketWorker.html#a47228a93584bf14c79156435534469ac":[2,0,2,22,19],
 "classkurlyk_1_1SimpleWebSocketWorker.html#a47228a93584bf14c79156435534469ac":[3,0,1,22,19],
-"classkurlyk_1_1SimpleWebSocketWorker.html#a48abba3f46ca7b77cc63e3dc7ffc3300":[2,0,2,22,7],
-"classkurlyk_1_1SimpleWebSocketWorker.html#a48abba3f46ca7b77cc63e3dc7ffc3300":[3,0,1,22,7],
-"classkurlyk_1_1SimpleWebSocketWorker.html#a5438197730958c7daabf9ed79207b1e6":[2,0,2,22,10]
+"classkurlyk_1_1SimpleWebSocketWorker.html#a48abba3f46ca7b77cc63e3dc7ffc3300":[2,0,2,22,7]
 };

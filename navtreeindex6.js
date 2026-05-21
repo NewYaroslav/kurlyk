@@ -1,5 +1,7 @@
 var NAVTREEINDEX6 =
 {
+"classkurlyk_1_1WebSocketManager.html#a8ec506304fc4077bff4ae307af8f6ecf":[3,0,1,26,8],
+"classkurlyk_1_1WebSocketManager.html#a9325b8be9f3b1cfcfcd5b4168d46c4a8":[2,0,2,26,1],
 "classkurlyk_1_1WebSocketManager.html#a9325b8be9f3b1cfcfcd5b4168d46c4a8":[3,0,1,26,1],
 "classkurlyk_1_1WebSocketManager.html#a99c87279d9c9187d7b9ae75228c60177":[2,0,2,26,5],
 "classkurlyk_1_1WebSocketManager.html#a99c87279d9c9187d7b9ae75228c60177":[3,0,1,26,5],
@@ -247,7 +249,5 @@ var NAVTREEINDEX6 =
 "functions_func_s.html":[3,3,1,15],
 "functions_func_t.html":[3,3,1,16],
 "functions_func_u.html":[3,3,1,17],
-"functions_func_w.html":[3,3,1,18],
-"functions_func_~.html":[3,3,1,19],
-"functions_g.html":[3,3,0,6]
+"functions_func_w.html":[3,3,1,18]
 };
