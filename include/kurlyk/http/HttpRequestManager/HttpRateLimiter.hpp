@@ -472,6 +472,10 @@ namespace kurlyk {
             if (limit.sequential && token != 0) {
                 state.in_flight_tokens.insert(token);
             }
+
+            // Retry attempts may reuse the same in-flight token to avoid self-blocking
+            // sequential limits, but each actual HTTP attempt still consumes the
+            // count-based rate limit.
             update_key(limit, state, now);
         }
 

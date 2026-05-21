@@ -65,6 +65,28 @@ namespace kurlyk {
             return std::move(m_failed_requests);
         }
 
+        /// \brief Checks whether this batch contains a request from the specified group.
+        /// \param group_id Group ID to inspect.
+        /// \return True if at least one active request belongs to this group.
+        bool has_group_id(uint64_t group_id) const {
+            return group_request_count(group_id) != 0;
+        }
+
+        /// \brief Counts active requests from the specified group.
+        /// \param group_id Group ID to inspect.
+        /// \return Number of active requests belonging to this group.
+        std::size_t group_request_count(uint64_t group_id) const {
+            if (group_id == 0) return 0;
+
+            std::size_t count = 0;
+            for (const auto& handler : m_handlers) {
+                if (handler && !handler->is_done() && handler->get_group_id() == group_id) {
+                    ++count;
+                }
+            }
+            return count;
+        }
+
         /// \brief Cancels HTTP requests based on their unique IDs.
         /// \param to_cancel A map of request IDs to their corresponding cancellation callbacks.
         void cancel_request_by_id(const std::unordered_map<uint64_t, std::list<std::function<void()>>>& to_cancel) {
@@ -109,10 +131,13 @@ namespace kurlyk {
             auto* handler = static_cast<HttpRequestHandler*>(ptr);
             if (!handler) return;
 
-            if (!handler->handle_curl_message(message)) {
+            const bool completed = handler->handle_curl_message(message);
+            curl_multi_remove_handle(m_multi_handle, curl);
+
+            if (!completed) {
+                handler->mark_done();
                 m_failed_requests.push_back(handler->get_request_context());
             }
-            curl_multi_remove_handle(m_multi_handle, curl);
         }
 
     }; // HttpBatchRequestHandler
