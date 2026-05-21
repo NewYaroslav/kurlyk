@@ -25,5 +25,7 @@ var searchData=
   ['get_5frequest_5fcontext_22',['get_request_context',['../classkurlyk_1_1HttpRequestHandler.html#aab7c88822952c44e00f8db3fe8037fcf',1,'kurlyk::HttpRequestHandler']]],
   ['get_5frequest_5fid_23',['get_request_id',['../classkurlyk_1_1HttpRequestHandler.html#a90904611661f76a0774c3e8a8fa22efb',1,'kurlyk::HttpRequestHandler']]],
   ['get_5fusername_24',['get_username',['../structcryptox_1_1ProxyConfig.html#a063d8a7a2d3fcd9b6b600f96177d5c1e',1,'cryptox::ProxyConfig']]],
-  ['group_5fid_25',['group_id',['../classkurlyk_1_1HttpRequest.html#ade463edde7ca9e4e339ad3dc31533e50',1,'kurlyk::HttpRequest']]]
+  ['group_5fid_25',['group_id',['../classkurlyk_1_1HttpRequest.html#ade463edde7ca9e4e339ad3dc31533e50',1,'kurlyk::HttpRequest']]],
+  ['group_5frequest_5fcount_26',['group_request_count',['../classkurlyk_1_1HttpRequestManager.html#a5bf00cd0f207f79896aec1945896834d',1,'kurlyk::HttpRequestManager::group_request_count()'],['../classkurlyk_1_1HttpBatchRequestHandler.html#ad7e017143bd3d721639d3253868272da',1,'kurlyk::HttpBatchRequestHandler::group_request_count()']]],
+  ['group_5frequest_5fcount_5funlocked_27',['group_request_count_unlocked',['../classkurlyk_1_1HttpRequestManager.html#aaab4f9320e4f7223eddf1ef5c3254ca0',1,'kurlyk::HttpRequestManager']]]
 ];

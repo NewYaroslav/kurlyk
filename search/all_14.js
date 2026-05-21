@@ -20,7 +20,8 @@ var searchData=
   ['to_5fquery_5fstring_17',['to_query_string',['../namespacekurlyk_1_1utils.html#a61950d982ba8304ba8d78dcd940c24ef',1,'kurlyk::utils']]],
   ['to_5fstr_18',['to_str',['../namespacekurlyk.html#a70e9e9ab1b4b08a495bdf1ed59d6b506',1,'kurlyk::to_str(ProxyType value) noexcept'],['../namespacekurlyk.html#ad78a685005ff7246fc7b7e339e18a285',1,'kurlyk::to_str(RateLimitType value) noexcept'],['../namespacekurlyk.html#a067b66af5ce34d722a7330f4dbb0cd01',1,'kurlyk::to_str(WebSocketEventType value) noexcept']]],
   ['to_5fupper_5fcase_19',['to_upper_case',['../namespacekurlyk_1_1utils.html#a032620685fe5357dd23313eeba957b0d',1,'kurlyk::utils']]],
-  ['total_5ftime_20',['total_time',['../classkurlyk_1_1HttpResponse.html#a0b5df61b0c6534ea0896a698640adffb',1,'kurlyk::HttpResponse']]],
-  ['type_5futils_2ehpp_21',['type_utils.hpp',['../type__utils_8hpp.html',1,'']]],
-  ['types_2ehpp_22',['types.hpp',['../types_8hpp.html',1,'']]]
+  ['todo_20list_20',['Todo List',['../todo.html',1,'']]],
+  ['total_5ftime_21',['total_time',['../classkurlyk_1_1HttpResponse.html#a0b5df61b0c6534ea0896a698640adffb',1,'kurlyk::HttpResponse']]],
+  ['type_5futils_2ehpp_22',['type_utils.hpp',['../type__utils_8hpp.html',1,'']]],
+  ['types_2ehpp_23',['types.hpp',['../types_8hpp.html',1,'']]]
 ];

@@ -126,6 +126,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a90904611661f76a0774c3e8a8fa22efb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the unique ID of the HTTP request.  <br /></td></tr>
 <tr class="memitem:a6e8d2b09d449255bbdd79d657c1cf1f7" id="r_a6e8d2b09d449255bbdd79d657c1cf1f7"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#a6e8d2b09d449255bbdd79d657c1cf1f7">get_group_id</a> ()</td></tr>
 <tr class="memdesc:a6e8d2b09d449255bbdd79d657c1cf1f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the group ID of the HTTP request.  <br /></td></tr>
+<tr class="memitem:a101a1175f15038e5d09885bee26e1516" id="r_a101a1175f15038e5d09885bee26e1516"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a101a1175f15038e5d09885bee26e1516">is_done</a> () const noexcept</td></tr>
+<tr class="memdesc:a101a1175f15038e5d09885bee26e1516"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether this request has already received its final callback.  <br /></td></tr>
+<tr class="memitem:a91ba146cb712f94c4f66358cb1c0bcd2" id="r_a91ba146cb712f94c4f66358cb1c0bcd2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a91ba146cb712f94c4f66358cb1c0bcd2">mark_done</a> () noexcept</td></tr>
+<tr class="memdesc:a91ba146cb712f94c4f66358cb1c0bcd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks the request as done without invoking a callback.  <br /></td></tr>
 <tr class="memitem:a02c4f648a451bcba47d55c0e9aec8d15" id="r_a02c4f648a451bcba47d55c0e9aec8d15"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a02c4f648a451bcba47d55c0e9aec8d15">cancel</a> ()</td></tr>
 <tr class="memdesc:a02c4f648a451bcba47d55c0e9aec8d15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks the request as cancelled.  <br /></td></tr>
 </table><table class="memberdecls">
@@ -176,6 +180,8 @@ Private Attributes</h2></td></tr>
 <tr class="memdesc:a6251acfa297b2d54d5fd9a25fe7c61f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the callback was called.  <br /></td></tr>
 <tr class="memitem:a10be3fb52a92efd8a5e24071fd69520f" id="r_a10be3fb52a92efd8a5e24071fd69520f"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a10be3fb52a92efd8a5e24071fd69520f">m_has_stream_chunk</a> = false</td></tr>
 <tr class="memdesc:a10be3fb52a92efd8a5e24071fd69520f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if a streaming body chunk was emitted.  <br /></td></tr>
+<tr class="memitem:a14177872f5d6fe91dbb7a54ae0660979" id="r_a14177872f5d6fe91dbb7a54ae0660979"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a14177872f5d6fe91dbb7a54ae0660979">m_done</a> = false</td></tr>
+<tr class="memdesc:a14177872f5d6fe91dbb7a54ae0660979"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the request has received its final callback.  <br /></td></tr>
 <tr class="memitem:a73f0e74a0ea5c6d71c0b83b3f1e8b49f" id="r_a73f0e74a0ea5c6d71c0b83b3f1e8b49f"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a73f0e74a0ea5c6d71c0b83b3f1e8b49f">m_ca_file</a></td></tr>
 <tr class="memdesc:a73f0e74a0ea5c6d71c0b83b3f1e8b49f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cached CA file path.  <br /></td></tr>
 </table>
@@ -275,7 +281,7 @@ Private Attributes</h2></td></tr>
 
 <p>Marks the request as cancelled. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00138">138</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00147">147</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -308,7 +314,7 @@ Private Attributes</h2></td></tr>
 
 <p>Invokes the response callback with an intermediate body chunk. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00197">197</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00208">208</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -335,7 +341,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00233">233</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00244">244</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -364,7 +370,7 @@ Private Attributes</h2></td></tr>
 
 <p>Gets the full path to the CA certificate file. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00341">341</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00352">352</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -394,7 +400,7 @@ Private Attributes</h2></td></tr>
 <p>Retrieves the CURL handle associated with this request. </p>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the CURL handle used for this request, or nullptr if not initialized. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00123">123</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00124">124</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -424,7 +430,7 @@ Private Attributes</h2></td></tr>
 <p>Retrieves the group ID of the HTTP request. </p>
 <dl class="section return"><dt>Returns</dt><dd>The group ID of the HTTP request if the context exists, or 0 if no context is set. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00135">135</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00136">136</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -454,7 +460,7 @@ Private Attributes</h2></td></tr>
 <p>Returns the unique pointer to the <a class="el" href="classkurlyk_1_1HttpRequestContext.html" title="Represents the context of an HTTP request, including the request object, callback function,...">HttpRequestContext</a> object. </p>
 <dl class="section return"><dt>Returns</dt><dd>A unique pointer to the <a class="el" href="classkurlyk_1_1HttpRequestContext.html" title="Represents the context of an HTTP request, including the request object, callback function,...">HttpRequestContext</a> object associated with this request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00127">127</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00128">128</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -484,7 +490,7 @@ Private Attributes</h2></td></tr>
 <p>Retrieves the unique ID of the HTTP request. </p>
 <dl class="section return"><dt>Returns</dt><dd>The unique ID of the HTTP request if the context exists, or 0 if no context is set. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00131">131</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00132">132</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -542,7 +548,67 @@ Private Attributes</h2></td></tr>
 
 <p>Initializes CURL options for the request, setting headers, method, SSL, timeouts, and other parameters. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00162">162</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00173">173</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a101a1175f15038e5d09885bee26e1516" name="a101a1175f15038e5d09885bee26e1516"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a101a1175f15038e5d09885bee26e1516">&#9670;&#160;</a></span>is_done()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool kurlyk::HttpRequestHandler::is_done </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks whether this request has already received its final callback. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the request is fully completed (final callback or cancel). </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00140">140</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a91ba146cb712f94c4f66358cb1c0bcd2" name="a91ba146cb712f94c4f66358cb1c0bcd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91ba146cb712f94c4f66358cb1c0bcd2">&#9670;&#160;</a></span>mark_done()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kurlyk::HttpRequestHandler::mark_done </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Marks the request as done without invoking a callback. </p>
+<p>Used when the handler stays in the batch after curl removal (retry extraction). </p>
+
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00144">144</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -614,7 +680,7 @@ Private Attributes</h2></td></tr>
 
 <p>Sets cookie options if cookies are specified in the request. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00316">316</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00327">327</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -643,7 +709,7 @@ Private Attributes</h2></td></tr>
 
 <p>Appends custom headers to the request if provided. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00281">281</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00292">292</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -672,7 +738,7 @@ Private Attributes</h2></td></tr>
 
 <p>Configures proxy options if set in the request. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00303">303</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00314">314</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -701,7 +767,7 @@ Private Attributes</h2></td></tr>
 
 <p>Sets request body content for applicable HTTP methods. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00329">329</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00340">340</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -730,7 +796,7 @@ Private Attributes</h2></td></tr>
 
 <p>Sets general options such as headers, cookies, and proxy. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00262">262</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00273">273</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -759,7 +825,7 @@ Private Attributes</h2></td></tr>
 
 <p>Sets SSL options such as cert, key, and CA file. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00243">243</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00254">254</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -835,7 +901,7 @@ Private Attributes</h2></td></tr>
 
 <p>Stores received body data and emits a streaming chunk when enabled. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00188">188</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00199">199</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -862,7 +928,7 @@ Private Attributes</h2></td></tr>
 
 <p>Cached CA file path. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00159">159</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00170">170</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -888,7 +954,7 @@ Private Attributes</h2></td></tr>
 
 <p>Indicates if the callback was called. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00157">157</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00167">167</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -914,7 +980,33 @@ Private Attributes</h2></td></tr>
 
 <p>CURL handle for the request. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00154">154</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00164">164</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a14177872f5d6fe91dbb7a54ae0660979" name="a14177872f5d6fe91dbb7a54ae0660979"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14177872f5d6fe91dbb7a54ae0660979">&#9670;&#160;</a></span>m_done</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool kurlyk::HttpRequestHandler::m_done = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicates if the request has received its final callback. </p>
+
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00169">169</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -940,7 +1032,7 @@ Private Attributes</h2></td></tr>
 
 <p>Buffer for CURL error messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00156">156</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00166">166</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -966,7 +1058,7 @@ Private Attributes</h2></td></tr>
 
 <p>Indicates if a streaming body chunk was emitted. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00158">158</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00168">168</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -992,7 +1084,7 @@ Private Attributes</h2></td></tr>
 
 <p>CURL headers list. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00155">155</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00165">165</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -1018,7 +1110,7 @@ Private Attributes</h2></td></tr>
 
 <p>Context for the current request. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00152">152</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00162">162</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -1044,7 +1136,7 @@ Private Attributes</h2></td></tr>
 
 <p>Response object. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00153">153</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpRequestHandler_8hpp_source.html#l00163">163</a> of file <a class="el" href="HttpRequestHandler_8hpp_source.html">HttpRequestHandler.hpp</a>.</p>
 
 </div>
 </div>

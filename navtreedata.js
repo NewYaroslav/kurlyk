@@ -26,6 +26,7 @@ var NAVTREE =
 [
   [ "Kurlyk", "index.html", [
     [ "Kurlyk Library", "index.html", "index" ],
+    [ "Todo List", "todo.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -65,13 +66,13 @@ var NAVTREEINDEX =
 [
 "AutoInitializer_8hpp.html",
 "classkurlyk_1_1BaseWebSocketClient.html#ac15f89168aaca60ee6840cfb00d7ad7c",
-"classkurlyk_1_1HttpClient.html#a0ea2bc6276f2caa9019280de6820c9fd",
-"classkurlyk_1_1HttpRequest.html#a11d0d33609eb065490d13f5d3c487d34",
-"classkurlyk_1_1HttpRequestManager.html#a681170ca7f367000290cd55b2a4c25ba",
-"classkurlyk_1_1WebSocketClient.html#a281cdc161df951e785a5546d37bbcffe",
-"classkurlyk_1_1core_1_1INetworkTaskManager.html",
-"globals_func.html",
-"structcryptox_1_1ProxyConfig.html#a1ad61612de9029e69e63dd9aa6027193"
+"classkurlyk_1_1HttpClient.html#a0b858f95787afa5654001f7a7137ec39",
+"classkurlyk_1_1HttpRateLimiter.html#ad0e052576e8161b02c17bdbd07d29c72",
+"classkurlyk_1_1HttpRequestManager.html#a32ce938812059e06f50fcc3f1af684eb",
+"classkurlyk_1_1SimpleWebSocketWorker.html#a5438197730958c7daabf9ed79207b1e6",
+"classkurlyk_1_1WebSocketManager.html#a9325b8be9f3b1cfcfcd5b4168d46c4a8",
+"functions_h.html",
+"path__utils_8hpp.html#af73c67d4c36e754a0cb555aa253f7ff0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

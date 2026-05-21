@@ -120,6 +120,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a9ae05633a36add802776fb5e94f94d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes the requests within the handler.  <br /></td></tr>
 <tr class="memitem:a9e6e9f0b803d803ec583ac384eca4a36" id="r_a9e6e9f0b803d803ec583ac384eca4a36"><td class="memItemLeft">std::list&lt; std::unique_ptr&lt; <a class="el" href="classkurlyk_1_1HttpRequestContext.html">HttpRequestContext</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a9e6e9f0b803d803ec583ac384eca4a36">extract_failed_requests</a> ()</td></tr>
 <tr class="memdesc:a9e6e9f0b803d803ec583ac384eca4a36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the list of failed requests.  <br /></td></tr>
+<tr class="memitem:a4a73c0df1f73d1be3e49672f48afd822" id="r_a4a73c0df1f73d1be3e49672f48afd822"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4a73c0df1f73d1be3e49672f48afd822">has_group_id</a> (uint64_t group_id) const</td></tr>
+<tr class="memdesc:a4a73c0df1f73d1be3e49672f48afd822"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether this batch contains a request from the specified group.  <br /></td></tr>
+<tr class="memitem:ad7e017143bd3d721639d3253868272da" id="r_ad7e017143bd3d721639d3253868272da"><td class="memItemLeft">std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#ad7e017143bd3d721639d3253868272da">group_request_count</a> (uint64_t group_id) const</td></tr>
+<tr class="memdesc:ad7e017143bd3d721639d3253868272da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts active requests from the specified group.  <br /></td></tr>
 <tr class="memitem:a47144f6b255a7437d68a5d8a6795201a" id="r_a47144f6b255a7437d68a5d8a6795201a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a47144f6b255a7437d68a5d8a6795201a">cancel_request_by_id</a> (const std::unordered_map&lt; uint64_t, std::list&lt; std::function&lt; void()&gt; &gt; &gt; &amp;to_cancel)</td></tr>
 <tr class="memdesc:a47144f6b255a7437d68a5d8a6795201a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels HTTP requests based on their unique IDs.  <br /></td></tr>
 <tr class="memitem:af7280eb7d513cd1322880138ec377a46" id="r_af7280eb7d513cd1322880138ec377a46"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af7280eb7d513cd1322880138ec377a46">cancel_requests</a> (const std::unordered_map&lt; uint64_t, std::list&lt; std::function&lt; void()&gt; &gt; &gt; &amp;requests_to_cancel, const std::unordered_map&lt; uint64_t, std::list&lt; std::function&lt; void()&gt; &gt; &gt; &amp;groups_to_cancel)</td></tr>
@@ -240,7 +244,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00070">70</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00092">92</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -280,7 +284,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00077">77</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00099">99</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -311,6 +315,42 @@ Private Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A list of failed request contexts. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00064">64</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
+
+</div>
+</div>
+<a id="ad7e017143bd3d721639d3253868272da" name="ad7e017143bd3d721639d3253868272da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7e017143bd3d721639d3253868272da">&#9670;&#160;</a></span>group_request_count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t kurlyk::HttpBatchRequestHandler::group_request_count </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>group_id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Counts active requests from the specified group. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">group_id</td><td>Group ID to inspect. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of active requests belonging to this group. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00078">78</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -345,7 +385,43 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00104">104</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00126">126</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a4a73c0df1f73d1be3e49672f48afd822" name="a4a73c0df1f73d1be3e49672f48afd822"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a73c0df1f73d1be3e49672f48afd822">&#9670;&#160;</a></span>has_group_id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool kurlyk::HttpBatchRequestHandler::has_group_id </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>group_id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks whether this batch contains a request from the specified group. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">group_id</td><td>Group ID to inspect. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if at least one active request belongs to this group. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00071">71</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -402,7 +478,7 @@ Private Attributes</h2></td></tr>
 
 <p>List of failed request contexts. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00100">100</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00122">122</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -428,7 +504,7 @@ Private Attributes</h2></td></tr>
 
 <p>Collection of active request handlers. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00099">99</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00121">121</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
 
 </div>
 </div>
@@ -454,7 +530,7 @@ Private Attributes</h2></td></tr>
 
 <p>libcurl multi handle. </p>
 
-<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00098">98</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HttpBatchRequestHandler_8hpp_source.html#l00120">120</a> of file <a class="el" href="HttpBatchRequestHandler_8hpp_source.html">HttpBatchRequestHandler.hpp</a>.</p>
 
 </div>
 </div>

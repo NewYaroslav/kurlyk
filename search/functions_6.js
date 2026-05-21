@@ -21,5 +21,7 @@ var searchData=
   ['get_5fremote_5fendpoint_18',['get_remote_endpoint',['../classkurlyk_1_1IWebSocketSender.html#ad289aaa13c3f2c9d5674e78aff0ced7c',1,'kurlyk::IWebSocketSender::get_remote_endpoint()'],['../classkurlyk_1_1SimpleWebSocketClientAdapter.html#ae0df15311df3f63e4aaab27e52368d51',1,'kurlyk::SimpleWebSocketClientAdapter::get_remote_endpoint()'],['../classkurlyk_1_1WebSocketClient.html#a95984653716fa5f67c81bf0f88857b09',1,'kurlyk::WebSocketClient::get_remote_endpoint()']]],
   ['get_5frequest_5fcontext_19',['get_request_context',['../classkurlyk_1_1HttpRequestHandler.html#aab7c88822952c44e00f8db3fe8037fcf',1,'kurlyk::HttpRequestHandler']]],
   ['get_5frequest_5fid_20',['get_request_id',['../classkurlyk_1_1HttpRequestHandler.html#a90904611661f76a0774c3e8a8fa22efb',1,'kurlyk::HttpRequestHandler']]],
-  ['get_5fusername_21',['get_username',['../structcryptox_1_1ProxyConfig.html#a063d8a7a2d3fcd9b6b600f96177d5c1e',1,'cryptox::ProxyConfig']]]
+  ['get_5fusername_21',['get_username',['../structcryptox_1_1ProxyConfig.html#a063d8a7a2d3fcd9b6b600f96177d5c1e',1,'cryptox::ProxyConfig']]],
+  ['group_5frequest_5fcount_22',['group_request_count',['../classkurlyk_1_1HttpRequestManager.html#a5bf00cd0f207f79896aec1945896834d',1,'kurlyk::HttpRequestManager::group_request_count()'],['../classkurlyk_1_1HttpBatchRequestHandler.html#ad7e017143bd3d721639d3253868272da',1,'kurlyk::HttpBatchRequestHandler::group_request_count()']]],
+  ['group_5frequest_5fcount_5funlocked_23',['group_request_count_unlocked',['../classkurlyk_1_1HttpRequestManager.html#aaab4f9320e4f7223eddf1ef5c3254ca0',1,'kurlyk::HttpRequestManager']]]
 ];
