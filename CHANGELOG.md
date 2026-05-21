@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.3] - 2026-05-21
+- Added `HttpClient::wait_requests()` to block until all callbacks for the client's request group are delivered.
+- Added `HttpClient::wait_requests_for(timeout)` to block with a timeout; returns `false` on timeout.
+- Added per-client in-flight admission cap via `HttpClient::set_max_in_flight()`, `max_in_flight()`, and `in_flight_requests()`; requests exceeding the cap are rejected with `QueueLimitExceeded`.
+- Added `HttpRequestManager::wait_requests_by_group_id()` for lower-level group-waiter registration using callbacks.
+- Added `HttpRequestManager::group_request_count()` and `has_requests_by_group_id()` to query pending, active, and retry requests for a group.
+- Added `HttpBatchRequestHandler::group_request_count()` and `has_group_id()` for batch-level group visibility.
+- Documented retry chain callback contract: intermediate callbacks fire on each retry attempt; the final callback fires on success or retry exhaustion.
+- Fixed `HttpRequestManager::time_until_next_allowed()` wrapper to correctly handle `RateLimitDelay<Duration>` vs raw `Duration` return types.
+- Fixed `HttpBatchRequestHandler::process()` batch completion to use `still_running == 0` as the source of truth instead of `m_handlers.empty()`.
+- Added integration test coverage for `wait_requests()` group isolation, `wait_requests_for()` timeout, per-client `max_in_flight`, retry chains, and sequential rate-limit retry non-blocking behavior.
+
 ## [v1.0.2] - 2026-04-23
 - Added separate HTTP `request_id` and `group_id` semantics so individual requests can be cancelled by request ID while `HttpClient::cancel_requests()` cancels the client's request group.
 - Added RAII-backed HTTP rate limit handles so pending requests keep their assigned limits alive until completion.
