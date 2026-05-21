@@ -45,7 +45,7 @@ int main() {
 
     HttpServer server;
     server.config.port = 0;
-    server.config.thread_pool_size = 1;
+    server.config.thread_pool_size = 2;
 
     server.resource["^/fast$"]["GET"] = [](std::shared_ptr<HttpServer::Response> response,
                                            std::shared_ptr<HttpServer::Request> request) {
@@ -116,6 +116,11 @@ int main() {
         auto t0 = std::chrono::steady_clock::now();
         client_a->wait_requests();
         auto dt = std::chrono::steady_clock::now() - t0;
+
+        std::cout << "Test 2: callback_a=" << callback_a.load()
+                  << " callback_b=" << callback_b.load()
+                  << " dt=" << std::chrono::duration_cast<std::chrono::milliseconds>(dt).count() << "ms"
+                  << std::endl;
 
         require(callback_a.load() == 1, "client_a.wait_requests() must wait until client_a callback is delivered");
         require(client_a->in_flight_requests() == 0, "client_a group must be idle after wait_requests()");

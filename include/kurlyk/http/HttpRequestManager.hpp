@@ -5,6 +5,8 @@
 /// \file HttpRequestManager.hpp
 /// \brief Manages and processes HTTP requests using a singleton pattern.
 
+#include <type_traits>
+
 #include "HttpRequestManager/HttpRequestContext.hpp"
 #include "HttpRequestManager/HttpRequestHandler.hpp"
 #include "HttpRequestManager/HttpRateLimitDelay.hpp"
@@ -142,11 +144,15 @@ namespace kurlyk {
             const std::string& general_key,
             const std::string& specific_key
             ) {
-            const auto delay = m_rate_limiter.time_until_next_allowed<Duration>(
+            auto delay = m_rate_limiter.time_until_next_allowed<Duration>(
                 general_limit, specific_limit, general_key, specific_key);
             RateLimitDelay<Duration> result;
-            result.duration = delay;
-            result.sequential_blocked = (delay == Duration::max());
+            if constexpr (std::is_same_v<decltype(delay), RateLimitDelay<Duration>>) {
+                result = delay;
+            } else {
+                result.duration = delay;
+                result.sequential_blocked = (delay == Duration::max());
+            }
             return result;
         }
 
