@@ -5,8 +5,6 @@
 /// \file HttpBatchRequestHandler.hpp
 /// \brief Manages multiple asynchronous HTTP requests using libcurl's multi interface.
 
-#include <algorithm>
-
 namespace kurlyk {
 
     /// \class HttpBatchRequestHandler
