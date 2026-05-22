@@ -7,6 +7,4 @@
 /.omc/
 .claude/proxy-config.json
 .claude/settings.local.json
-.mcp.json
-.mcp-wrapper.bat
 .codebase-memory/
