@@ -14,4 +14,8 @@
 #include "http/HttpClient.hpp"
 #include "http/utils.hpp"
 
+#if KURLYK_AUTH_SUPPORT
+#include "http/auth.hpp"
+#endif
+
 #endif // _KURLYK_HTTP_HPP_INCLUDED

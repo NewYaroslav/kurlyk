@@ -44,6 +44,12 @@
 #   define KURLYK_USE_JSON
 #endif
 
+/// \def KURLYK_AUTH_SUPPORT
+/// \brief Enables HTTP authentication helpers and OAuth2 PKCE support.
+#ifndef KURLYK_AUTH_SUPPORT
+#   define KURLYK_AUTH_SUPPORT 1
+#endif
+
 #ifdef __EMSCRIPTEN__
 #   define KURLYK_USE_EMSCRIPTEN    ///< Defines the use of Emscripten-specific WebSocket handling.
 #else
@@ -59,6 +65,9 @@
 
 #if KURLYK_HTTP_SUPPORT
 #include "kurlyk/http.hpp"
+#if KURLYK_AUTH_SUPPORT
+#include "kurlyk/http/auth.hpp"
+#endif
 #endif
 
 #if KURLYK_WEBSOCKET_SUPPORT
