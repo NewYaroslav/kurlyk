@@ -19,6 +19,9 @@ set(KURLYK_EXAMPLE_SOURCES
 	websocket_client_lifecycle_test.cpp
 	websocket_echo_example.cpp
 	websocket_independent_clients_example.cpp
+	bearer_token_auth_provider_example.cpp
+	api_key_auth_provider_example.cpp
+	openrouter_oauth_pkce_example.cpp
 )
 
 include(${CMAKE_CURRENT_LIST_DIR}/../cmake/copy_runtime_dlls.cmake)
@@ -29,7 +32,8 @@ foreach(example_source IN LISTS KURLYK_EXAMPLE_SOURCES)
 	target_compile_features(${example_target} PRIVATE cxx_std_17)
 	target_link_libraries(${example_target} PRIVATE kurlyk)
 
-	if(example_target STREQUAL "chatgpt_request_example")
+	if(example_target STREQUAL "chatgpt_request_example" OR
+	   example_target STREQUAL "bearer_token_auth_provider_example")
 		target_include_directories(${example_target} PRIVATE
 			"${PROJECT_SOURCE_DIR}/external/json/include"
 		)
