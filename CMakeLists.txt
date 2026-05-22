@@ -35,6 +35,10 @@ use_or_fetch_asio(kurlyk)
 include(cmake/deps/simple_ws_server.cmake)
 use_or_fetch_simple_ws_server(kurlyk)
 
+# hmac-cpp (SHA-256 for OAuth PKCE)
+include(cmake/deps/hmac_cpp.cmake)
+use_or_fetch_hmac_cpp(kurlyk)
+
 # OS-specific dependencies
 if (WIN32)
 	include(cmake/deps/win_deps.cmake)
