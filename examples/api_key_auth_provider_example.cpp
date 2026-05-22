@@ -30,7 +30,7 @@ int main() {
         // After authorize, the URL should contain ?key=...
         KURLYK_PRINT << "Authorized URL: " << request.url << std::endl;
 
-        auto future = client.request(request.url, request.method, {}, request.headers, "");
+        auto future = client.get(request.url, {}, request.headers);
         auto response = future.get();
 
         if (response->ready && response->status_code == 200) {

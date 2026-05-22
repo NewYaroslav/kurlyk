@@ -5,8 +5,8 @@
 /// \file OAuthPkceClient.hpp
 /// \brief OAuth2 Authorization Code + PKCE client using standalone HTTP helpers.
 
-#include "../data/OAuthConfig.hpp"
-#include "../data/AuthResult.hpp"
+#include "data/OAuthConfig.hpp"
+#include "data/AuthResult.hpp"
 #include "kurlyk/http/utils.hpp"
 #include "kurlyk/utils/http_parser.hpp"
 #include "kurlyk/utils/percent_encoding.hpp"
@@ -57,7 +57,7 @@ namespace auth {
             }
 
             if (m_state.empty()) {
-                m_state = utils::generate_code_verifier(32);
+                m_state = utils::generate_code_verifier(64);
             }
 
             QueryParams params;
@@ -208,7 +208,7 @@ namespace auth {
         /// \param returned_state The state parameter from the redirect.
         /// \return `true` if the state matches the internally stored value.
         bool validate_state(const std::string& returned_state) const {
-            return m_state == returned_state;
+            return !m_state.empty() && m_state == returned_state;
         }
 
         /// \brief Returns the code verifier used in the last PKCE exchange.

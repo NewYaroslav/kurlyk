@@ -28,12 +28,14 @@ namespace auth {
         }
 
         bool authorize(HttpRequest& request) const override {
+            if (m_token.empty()) return false;
             request.headers.erase("Authorization");
             request.headers.emplace("Authorization", "Bearer " + m_token);
             return true;
         }
 
         bool authorize(Headers& headers) const override {
+            if (m_token.empty()) return false;
             headers.erase("Authorization");
             headers.emplace("Authorization", "Bearer " + m_token);
             return true;

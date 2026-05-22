@@ -43,6 +43,7 @@ namespace auth {
         }
 
         bool authorize(HttpRequest& request) const override {
+            if (m_key_name.empty() || m_key_value.empty()) return false;
             if (m_placement == ApiKeyPlacement::HEADER) {
                 request.headers.erase(m_key_name);
                 request.headers.emplace(m_key_name, m_key_value);
@@ -63,6 +64,7 @@ namespace auth {
         }
 
         bool authorize(Headers& headers) const override {
+            if (m_key_name.empty() || m_key_value.empty()) return false;
             if (m_placement != ApiKeyPlacement::HEADER) {
                 return false;
             }

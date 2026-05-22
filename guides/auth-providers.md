@@ -84,4 +84,4 @@ The interface does not prescribe encryption — that is the responsibility of th
 - `examples/api_key_auth_provider_example.cpp`
 - `include/kurlyk/http/auth/BearerTokenAuthProvider.hpp`
 - `include/kurlyk/http/auth/ApiKeyAuthProvider.hpp`
-- `include/kurlyk/http/auth/TokenStorage.hpp`
+- `include/kurlyk/http/auth/storage/TokenStorage.hpp`

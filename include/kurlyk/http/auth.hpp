@@ -5,10 +5,11 @@
 /// \file auth.hpp
 /// \brief Aggregates HTTP authentication providers and OAuth2 PKCE client.
 
+#include "auth/data.hpp"
+#include "auth/storage.hpp"
 #include "auth/IAuthProvider.hpp"
 #include "auth/BearerTokenAuthProvider.hpp"
 #include "auth/ApiKeyAuthProvider.hpp"
-#include "auth/TokenStorage.hpp"
 #include "auth/OAuthPkceClient.hpp"
 
 #endif // _KURLYK_HTTP_AUTH_HPP_INCLUDED
