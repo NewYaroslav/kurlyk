@@ -27,6 +27,8 @@
 - Streaming HTTP responses с callback'ом на каждый chunk.
 - WebSocket events, отправка сообщений и автоматическое переподключение.
 - Bounded admission/backpressure для HTTP pending queue и WebSocket send queue.
+- Провайдеры аутентификации Bearer token и API key (`BearerTokenAuthProvider`, `ApiKeyAuthProvider`).
+- OAuth2 Authorization Code + PKCE клиент (`OAuthPkceClient`) поверх standalone HTTP helpers.
 - Поддержка C++11 и более новых toolchains.
 
 ## Быстрый старт
@@ -687,6 +689,16 @@ powershell -ExecutionPolicy Bypass -File tests/integration/run_integration_tests
 powershell -ExecutionPolicy Bypass -File tests/odr/run_odr_tests.ps1
 ```
 
+Запуск unit-тестов авторизации:
+
+```bash
+cmake -S tests/auth -B build-auth-tests -G "MinGW Makefiles" -DKURLYK_BUILD_EXAMPLES=OFF
+-DKURLYK_USE_FALLBACK_OPENSSL=ON -DKURLYK_USE_FALLBACK_CURL=ON
+-DKURLYK_USE_FALLBACK_ASIO=ON -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON
+cmake --build build-auth-tests --config Release
+ctest --test-dir build-auth-tests
+```
+
 Ручная сборка portable smoke test:
 
 ```bash
@@ -696,6 +708,19 @@ c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++11 -o header_smoke
 c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++17 -o header_smoke
 ./header_smoke
 ```
+
+## Хелперы авторизации
+
+`kurlyk` предоставляет легковесные header-only хелперы для аутентификации поверх существующего HTTP-слоя.
+
+- **`BearerTokenAuthProvider`** — добавляет заголовок `Authorization: Bearer <token>`.
+- **`ApiKeyAuthProvider`** — вставляет API-ключ в заголовок или в query-параметр (с автоматическим percent-encoding).
+- **`OAuthPkceClient`** — строит authorization URL и обменивает authorization code на токен с помощью PKCE (RFC 7636). Использует standalone `kurlyk::http_post`, поэтому не требует `HttpClient`.
+
+Подробнее:
+
+- [OAuth2 / PKCE](guides/oauth.md)
+- [Провайдеры авторизации](guides/auth-providers.md)
 
 ## CI-покрытие
 

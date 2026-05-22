@@ -27,6 +27,8 @@ If, for some reason, other libraries such as *easyhttp-cpp, curl_request, curlpp
 - Streaming HTTP responses with a callback for each chunk.
 - WebSocket events, message sending, and automatic reconnection.
 - Bounded admission/backpressure for the HTTP pending queue and WebSocket send queue.
+- Bearer token and API-key auth providers (`BearerTokenAuthProvider`, `ApiKeyAuthProvider`).
+- OAuth2 Authorization Code + PKCE client (`OAuthPkceClient`) using standalone HTTP helpers.
 - Support for C++11 and newer toolchains.
 
 ## Quick start
@@ -687,6 +689,16 @@ Run the ODR suite:
 powershell -ExecutionPolicy Bypass -File tests/odr/run_odr_tests.ps1
 ```
 
+Run the auth unit tests:
+
+```bash
+cmake -S tests/auth -B build-auth-tests -G "MinGW Makefiles" -DKURLYK_BUILD_EXAMPLES=OFF
+-DKURLYK_USE_FALLBACK_OPENSSL=ON -DKURLYK_USE_FALLBACK_CURL=ON
+-DKURLYK_USE_FALLBACK_ASIO=ON -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON
+cmake --build build-auth-tests --config Release
+ctest --test-dir build-auth-tests
+```
+
 Build the portable smoke test manually:
 
 ```bash
@@ -696,6 +708,19 @@ c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++11 -o header_smoke
 c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++17 -o header_smoke
 ./header_smoke
 ```
+
+## Authentication helpers
+
+`kurlyk` provides lightweight, header-only authentication helpers on top of the existing HTTP layer.
+
+- **`BearerTokenAuthProvider`** — injects `Authorization: Bearer <token>`.
+- **`ApiKeyAuthProvider`** — injects an API key as a custom header or as a query parameter (with automatic percent-encoding).
+- **`OAuthPkceClient`** — builds authorization URLs and exchanges authorization codes for tokens using PKCE (RFC 7636). It uses the standalone `kurlyk::http_post` helper, so it does not require an `HttpClient` instance.
+
+See the full guides for details:
+
+- [OAuth2 / PKCE](guides/oauth.md)
+- [Auth providers](guides/auth-providers.md)
 
 ## CI coverage
 
