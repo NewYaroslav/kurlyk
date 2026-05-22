@@ -1,9 +1,0 @@
-{
-  "servers": {
-    "codebase-memory": {
-      "type": "stdio",
-      "command": "<PATH_TO_REPO>\\.mcp-wrapper.bat",
-      "args": []
-    }
-  }
-}

@@ -6,5 +6,5 @@
 /tests/**/build*/
 /.omc/
 .claude/proxy-config.json
-.mcp.json
-.mcp-wrapper.bat
+.claude/settings.local.json
+.codebase-memory/

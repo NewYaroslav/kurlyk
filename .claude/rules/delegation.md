@@ -75,7 +75,7 @@ TaskCreate = conversation tracking only, NOT delegation.
 
 | Category | Agents | Primary | Fallback |
 |----------|--------|---------|----------|
-| Analysis | explore, analyst, tracer, scientist | ctx_*, python_repl, Grep/Glob, session_search | Bash, DDG |
+| Analysis / Architecture | explore, analyst, tracer, architect, scientist | Codebase Memory (`mcp__codebase-memory__*`), ctx_*, python_repl, Grep/Glob, session_search | Bash, DDG |
 | Implementation | executor, verifier, debugger, test-engineer | Edit/Write, LSP, ast_grep, ctx_execute, Bash (tests) | Bash, Grep, python_repl |
 | Review & Security | code-reviewer, security-reviewer | LSP, ast_grep_search, Grep, ctx_execute_file | Read, Bash |
 | Specialist | document-specialist, architect, writer, git-master | context7, GitHub, LSP, ctx_execute_file, Read | DDG, Fetch, gh CLI |
