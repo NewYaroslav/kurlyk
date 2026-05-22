@@ -1,0 +1,35 @@
+# Codebase Memory ignore — keep index focused on source, not artifacts
+.git
+.github
+.omc
+.codebase-memory
+
+# Build artifacts
+build/
+build-*/
+tests/**/build*/
+*.exe
+*.o
+*.obj
+*.a
+*.so
+*.dll
+*.lib
+*.dylib
+
+# External dependencies (vendored libraries)
+external/
+
+# Generated docs
+/docs/html/
+/docs/latex/
+
+# Local/private configs
+.claude/settings.local.json
+.claude/proxy-config.json
+.mcp.json
+.mcp-wrapper.bat
+
+# Misc
+.venv/
+*.log
