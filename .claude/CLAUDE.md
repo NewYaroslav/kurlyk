@@ -58,7 +58,10 @@ See [tool-priority.md](rules/tool-priority.md) for fallback chains and [delegati
 <execution_protocols>
 Broad requests: explore first, then plan. 2+ independent tasks in parallel. `run_in_background` for builds/tests.
 Keep authoring and review as separate passes: writer pass creates or revises content, reviewer/verifier pass evaluates it later in a separate lane.
+For non-trivial code changes, use `code-reviewer` or `verifier` for the approval pass.
 Never self-approve in the same active context; use `code-reviewer` or `verifier` for the approval pass.
+Do not claim completion without build/test/review evidence where applicable.
+If verification cannot be run, state exactly what was not verified.
 Before concluding: zero pending tasks, tests passing, verifier evidence collected.
 [Hyrum's](rules/software-laws.md#hyrums-law) — document side-effects in notepad
 [Unintended](rules/software-laws.md#law-of-unintended-consequences) — grep rules/ before adding skills/agents
@@ -98,28 +101,55 @@ Say "setup omc" or run `/oh-my-claudecode:omc-setup`.
 
 <!-- User customizations -->
 
-
 <!-- User Overrides — NOT managed by OMC, persists across updates -->
 
+## Mandatory Codebase Discovery Preflight
+
+For any task that requires finding files, symbols, classes, modules, call chains,
+cross-file relationships, or unknown implementation locations, the first discovery
+step MUST be Codebase Memory.
+
+Required sequence:
+
+1. If Codebase Memory tools are not currently visible, resolve them first:
+   `ToolSearch("select:mcp__codebase-memory__index_status")`.
+2. Call `mcp__codebase-memory__index_status`.
+3. If the project is indexed, use:
+   - `mcp__codebase-memory__search_graph` for symbols/classes/modules/files;
+   - `mcp__codebase-memory__trace_path` for call chains/dependencies;
+   - `mcp__codebase-memory__get_architecture` for module structure;
+   - `mcp__codebase-memory__get_code_snippet` for targeted code.
+4. If the project is not indexed or path is ambiguous, use
+   `mcp__codebase-memory__list_projects` and/or `mcp__codebase-memory__index_repository`.
+5. Only if Codebase Memory is unavailable or fails after retry, fall back to
+   Glob/Grep/Read/LSP.
+
+Do not start first-pass codebase discovery with `git status`, Bash, Glob, Grep,
+or Read. `git status` is allowed for worktree safety before edits/staging, but it
+does not satisfy discovery preflight and must not replace Codebase Memory.
+
 ## Specific Overrides
-- "Delegate" → always route via `~/.claude/rules/delegation.md` routing table (never decide ad-hoc)
-- "Lightest path" → use context-mode for output >20 lines, haiku for lookups, skip intermediate tools
-- "Official docs" → use context7 (`resolve-library-id` then `query-docs`) before any web search
-- "Tool selection" → follow `~/.claude/rules/tool-priority.md` priority chain
-- "WebSearch" → NEVER use built-in WebSearch. Use DDG MCP > Tavily > Fetch
-- "Software Laws" → все законы программирования централизованы в `~/.claude/rules/software-laws.md`
-- "Nuanced analysis" → applies to every session via `.claude/rules/nuanced-analysis.md`
-- "Project knowledge" → `guides/` acts as the stationary knowledge layer (4th layer per Karpathy method): project overview, build-and-test, coding-style, commit-conventions, codebase-orientation. Load relevant topic files per task.
-- "Header-only library context" → treat `include/` as the primary source of truth. Generated copies under build directories are not source files. C++11 baseline with C++17 guarded features.
-- "Goal-driven execution" → every non-trivial task needs a verifiable success criterion. Replace imperative with declarative goals.
-- "Surgical edits" → every changed line must relate to the request. Do not improve neighboring code, comments, or formatting. Follow existing style.
+
+- "Delegate" → always route via `~/.claude/rules/delegation.md` routing table; never decide ad-hoc.
+- "Lightest path" → use the fewest tools that preserve correctness.
+  For non-trivial codebase understanding, Codebase Memory is considered the lightest correct first step,
+  not an unnecessary intermediate tool.
+- "Official docs" → use context7 (`resolve-library-id`, then `query-docs`) before any web search.
+- "Tool selection" → follow `~/.claude/rules/tool-priority.md` priority chain.
+- "Codebase discovery" → for non-trivial code questions, architecture questions, cross-file edits,
+  refactors, call chains, and unknown implementation locations, use Codebase Memory before Grep/Read/LSP.
+- "WebSearch" → prefer DDG MCP > Tavily > Fetch. Do not use built-in WebSearch unless the documented fallback chain requires it.
+- "Software Laws" → all software laws are centralized in `~/.claude/rules/software-laws.md`.
 
 ## Additional Agent Rules
+
 - Nuanced analysis and gray-area work: [nuanced-analysis.md](rules/nuanced-analysis.md)
+- Image analysis and vision workflow: [image-analysis.md](rules/image-analysis.md)
 - General meta-rules, L0/L2, provenance, git, and coding workflow: [AGENTS.md](../AGENTS.md)
 - Project-specific coding, build, architecture, testing, and concurrency rules live in `../guides/`.
 - Do not duplicate guide contents inside this file.
 - When changing relevant code, read the corresponding guide first.
 
 ## Agent Configuration Files
+
 - Do not modify `CLAUDE.md`, `AGENTS.md`, `.claude/**`, `.codex/**`, or `.omc/**` unless the user explicitly asks to update agent configuration.

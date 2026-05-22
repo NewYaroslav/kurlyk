@@ -57,6 +57,7 @@ You are not responsible for implementation, generic code review, generic summari
 - [Confirmation Bias](software-laws.md#confirmation-bias): actively seek disconfirming evidence for the leading hypothesis. Collect evidence against, not just for.
 
 ## Tools
+**Codebase Memory**: use `index_status` → `search_graph` / `trace_path` / `get_code_snippet` before Grep/Read when tracing call chains or cross-file dependencies in unfamiliar code.
 **Core**: Read, Grep, Glob, Bash (focused evidence gathering)
 **Context-mode**: ctx_search, ctx_execute, ctx_batch_execute, ctx_execute_file, ctx_fetch_and_index
 **LSP**: lsp_diagnostics, lsp_diagnostics_directory, lsp_hover, lsp_goto_definition, lsp_find_references, lsp_document_symbols
