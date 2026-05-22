@@ -40,6 +40,10 @@
 #   define KURLYK_ENABLE_JSON 0
 #endif
 
+#if KURLYK_ENABLE_JSON
+#   define KURLYK_USE_JSON
+#endif
+
 #ifdef __EMSCRIPTEN__
 #   define KURLYK_USE_EMSCRIPTEN    ///< Defines the use of Emscripten-specific WebSocket handling.
 #else
