@@ -15,6 +15,7 @@ var dir_d28a4824dc47e487b107a5db32ef43c4 =
     [ "openrouter_oauth_pkce_example.cpp", "openrouter__oauth__pkce__example_8cpp.html", "openrouter__oauth__pkce__example_8cpp" ],
     [ "redirect_handling_example.cpp", "redirect__handling__example_8cpp.html", "redirect__handling__example_8cpp" ],
     [ "sequential_rate_limit_example.cpp", "sequential__rate__limit__example_8cpp.html", "sequential__rate__limit__example_8cpp" ],
+    [ "simple_bearer_auth_example.cpp", "simple__bearer__auth__example_8cpp.html", "simple__bearer__auth__example_8cpp" ],
     [ "simple_http_request_example.cpp", "simple__http__request__example_8cpp.html", "simple__http__request__example_8cpp" ],
     [ "threaded_request_processing_example.cpp", "threaded__request__processing__example_8cpp.html", "threaded__request__processing__example_8cpp" ],
     [ "utility_functions_example.cpp", "utility__functions__example_8cpp.html", "utility__functions__example_8cpp" ],
