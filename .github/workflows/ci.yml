@@ -259,6 +259,18 @@ jobs:
         run: cmake --build build-auth-tests
       - name: Run auth tests
         run: ctest --test-dir build-auth-tests --output-on-failure
+      - name: Configure bearer-only example (no hmac-cpp)
+        run: |
+          cmake -S . \
+                -B build-bearer-only \
+                -G Ninja \
+                -DKURLYK_BUILD_EXAMPLES=ON \
+                -DKURLYK_OAUTH_SUPPORT=OFF \
+                -DKURLYK_USE_FALLBACK_ASIO=ON \
+                -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON \
+                -Wno-dev
+      - name: Build bearer-only example
+        run: cmake --build build-bearer-only --target simple_bearer_auth_example
       - name: Upload logs
         if: failure()
         uses: actions/upload-artifact@v4

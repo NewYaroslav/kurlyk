@@ -1,11 +1,12 @@
 #define KURLYK_AUTO_INIT 0
+#ifndef KURLYK_OAUTH_SUPPORT
+#   define KURLYK_OAUTH_SUPPORT 0
+#endif
 #include <kurlyk.hpp>
 #include <iostream>
 
 /// Minimal example showing BearerTokenAuthProvider without OAuth/hmac-cpp.
 /// KURLYK_OAUTH_SUPPORT=0 keeps the hmac-cpp dependency out of the build.
-/// When compiling standalone (not through CMake), define it before including kurlyk.hpp:
-///   #define KURLYK_OAUTH_SUPPORT 0
 int main() {
     kurlyk::init(true);
 
