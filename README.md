@@ -27,6 +27,8 @@ If, for some reason, other libraries such as *easyhttp-cpp, curl_request, curlpp
 - Streaming HTTP responses with a callback for each chunk.
 - WebSocket events, message sending, and automatic reconnection.
 - Bounded admission/backpressure for the HTTP pending queue and WebSocket send queue.
+- Bearer token and API-key auth providers (`BearerTokenAuthProvider`, `ApiKeyAuthProvider`).
+- OAuth2 Authorization Code + PKCE client (`OAuthPkceClient`) using standalone HTTP helpers.
 - Support for C++11 and newer toolchains.
 
 ## Quick start
@@ -635,8 +637,9 @@ Define these macros before including `kurlyk.hpp` to configure the library:
 | `KURLYK_AUTO_INIT_USE_ASYNC` | `1` | Starts the network thread in the background when auto init is enabled. Set to `0` for manual processing. |
 | `KURLYK_HTTP_SUPPORT` | `1` | Enables or disables the HTTP subsystem. |
 | `KURLYK_WEBSOCKET_SUPPORT` | `1` | Enables or disables the WebSocket subsystem. |
-| `KURLYK_ENABLE_JSON` | `0` | Adds helper functions for JSON serialization of some types. |
-| `KURLYK_USE_JSON` | undefined | Enables enum-to-JSON helpers in `type_utils.hpp`; usually used together with `KURLYK_ENABLE_JSON`. |
+| `KURLYK_AUTH_SUPPORT` | `1` | Enables authentication providers (`BearerTokenAuthProvider`, `ApiKeyAuthProvider`). |
+| `KURLYK_OAUTH_SUPPORT` | `KURLYK_AUTH_SUPPORT` | Enables the OAuth2 PKCE client (`OAuthPkceClient`). Requires `KURLYK_AUTH_SUPPORT=1`. |
+| `KURLYK_JSON_SUPPORT` | `0` | Enables nlohmann::json include and JSON-aware types, plus enum-to-JSON helpers in `type_utils.hpp`. |
 
 ## Repository layout
 
@@ -687,6 +690,16 @@ Run the ODR suite:
 powershell -ExecutionPolicy Bypass -File tests/odr/run_odr_tests.ps1
 ```
 
+Run the auth unit tests:
+
+```bash
+cmake -S tests/auth -B build-auth-tests -G "MinGW Makefiles" -DKURLYK_BUILD_EXAMPLES=OFF
+-DKURLYK_USE_FALLBACK_OPENSSL=ON -DKURLYK_USE_FALLBACK_CURL=ON
+-DKURLYK_USE_FALLBACK_ASIO=ON -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON
+cmake --build build-auth-tests --config Release
+ctest --test-dir build-auth-tests
+```
+
 Build the portable smoke test manually:
 
 ```bash
@@ -696,6 +709,19 @@ c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++11 -o header_smoke
 c++ tests/smoke/header_smoke.cpp -Iinclude -std=c++17 -o header_smoke
 ./header_smoke
 ```
+
+## Authentication helpers
+
+`kurlyk` provides lightweight, header-only authentication helpers on top of the existing HTTP layer.
+
+- **`BearerTokenAuthProvider`** — injects `Authorization: Bearer <token>`.
+- **`ApiKeyAuthProvider`** — injects an API key as a custom header or as a query parameter (with automatic percent-encoding).
+- **`OAuthPkceClient`** — builds authorization URLs and exchanges authorization codes for tokens using PKCE (RFC 7636). It uses the standalone `kurlyk::http_post` helper, so it does not require an `HttpClient` instance.
+
+See the full guides for details:
+
+- [OAuth2 / PKCE](guides/oauth.md)
+- [Auth providers](guides/auth-providers.md)
 
 ## CI coverage
 

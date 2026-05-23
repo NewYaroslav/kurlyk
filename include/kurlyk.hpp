@@ -34,10 +34,28 @@
 #   define KURLYK_WEBSOCKET_SUPPORT 1
 #endif
 
-/// \def KURLYK_ENABLE_JSON
+/// \def KURLYK_JSON_SUPPORT
 /// \brief Enables JSON serialization support for enums and types.
-#ifndef KURLYK_ENABLE_JSON
-#   define KURLYK_ENABLE_JSON 0
+#ifndef KURLYK_JSON_SUPPORT
+#   ifdef KURLYK_ENABLE_JSON
+#       define KURLYK_JSON_SUPPORT KURLYK_ENABLE_JSON
+#   elif defined(KURLYK_USE_JSON)
+#       define KURLYK_JSON_SUPPORT 1
+#   else
+#       define KURLYK_JSON_SUPPORT 0
+#   endif
+#endif
+
+/// \def KURLYK_AUTH_SUPPORT
+/// \brief Enables HTTP authentication helpers (Bearer, API-key providers).
+#ifndef KURLYK_AUTH_SUPPORT
+#   define KURLYK_AUTH_SUPPORT 1
+#endif
+
+/// \def KURLYK_OAUTH_SUPPORT
+/// \brief Enables OAuth2 PKCE client and crypto dependencies (requires hmac-cpp).
+#ifndef KURLYK_OAUTH_SUPPORT
+#   define KURLYK_OAUTH_SUPPORT KURLYK_AUTH_SUPPORT
 #endif
 
 #ifdef __EMSCRIPTEN__
@@ -55,6 +73,9 @@
 
 #if KURLYK_HTTP_SUPPORT
 #include "kurlyk/http.hpp"
+#if KURLYK_AUTH_SUPPORT
+#include "kurlyk/http/auth.hpp"
+#endif
 #endif
 
 #if KURLYK_WEBSOCKET_SUPPORT
