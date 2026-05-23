@@ -16,17 +16,56 @@ namespace kurlyk {
         /// \param context_list List of unique pointers to HttpRequestContext objects.
         explicit HttpBatchRequestHandler(std::vector<std::unique_ptr<HttpRequestContext>>& context_list)
             : m_multi_handle(curl_multi_init()) {
+            if (!m_multi_handle) {
+                // libcurl multi handle creation failed: fail all requests immediately.
+                for (auto& context : context_list) {
+                    if (!context || !context->callback) continue;
+#                   if __cplusplus >= 201402L
+                    auto response = std::make_unique<HttpResponse>();
+#                   else
+                    auto response = std::unique_ptr<HttpResponse>(new HttpResponse());
+#                   endif
+                    response->error_code = utils::make_error_code(utils::ClientError::AbortedDuringDestruction);
+                    response->status_code = 499; // Client closed request
+                    response->ready = true;
+                    context->callback(std::move(response));
+                    context->complete();
+                    context.reset();
+                }
+                return;
+            }
             for (auto& context : context_list) {
+                if (!context) continue;
 #               if __cplusplus >= 201402L
                 auto handler = std::make_unique<HttpRequestHandler>(std::move(context));
 #               else
                 auto handler = std::unique_ptr<HttpRequestHandler>(new HttpRequestHandler(std::move(context)));
 #               endif
                 CURL* curl = handler->get_curl();
-                if (!curl) continue;
+                if (!curl) {
+                    // curl_easy_init failed: deliver error immediately.
+                    auto ctx = handler->get_request_context();
+                    if (ctx && ctx->callback) {
+#                       if __cplusplus >= 201402L
+                        auto response = std::make_unique<HttpResponse>();
+#                       else
+                        auto response = std::unique_ptr<HttpResponse>(new HttpResponse());
+#                       endif
+                        response->error_code = utils::make_error_code(utils::ClientError::AbortedDuringDestruction);
+                        response->status_code = 499; // Client closed request
+                        response->ready = true;
+                        ctx->callback(std::move(response));
+                        ctx->complete();
+                    }
+                    continue;
+                }
 
                 curl_multi_add_handle(m_multi_handle, curl);
                 m_handlers.push_back(std::move(handler));
+            }
+            // Ensure the source vector is empty after moving contexts into handlers or failing them.
+            for (auto& context : context_list) {
+                context.reset();
             }
         }
 
@@ -37,12 +76,34 @@ namespace kurlyk {
                 if (!curl) continue;
                 curl_multi_remove_handle(m_multi_handle, curl);
             }
-            curl_multi_cleanup(m_multi_handle);
+            if (m_multi_handle) {
+                curl_multi_cleanup(m_multi_handle);
+            }
         }
 
         /// \brief Processes the requests within the handler.
         /// \return True if all requests are completed, false otherwise.
         bool process() {
+            if (!m_multi_handle) {
+                // Multi handle was never created: fail all handlers immediately.
+                for (auto& handler : m_handlers) {
+                    auto ctx = handler->get_request_context();
+                    if (ctx && ctx->callback) {
+#                       if __cplusplus >= 201402L
+                        auto response = std::make_unique<HttpResponse>();
+#                       else
+                        auto response = std::unique_ptr<HttpResponse>(new HttpResponse());
+#                       endif
+                        response->error_code = utils::make_error_code(utils::ClientError::AbortedDuringDestruction);
+                        response->status_code = 499; // Client closed request
+                        response->ready = true;
+                        ctx->callback(std::move(response));
+                        ctx->complete();
+                    }
+                }
+                m_handlers.clear();
+                return true;
+            }
             int still_running = 0;
             CURLMcode res = curl_multi_perform(m_multi_handle, &still_running);
             if (res != CURLM_OK) return false;

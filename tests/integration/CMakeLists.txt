@@ -37,6 +37,10 @@ add_executable(http_client_wait_requests_test
 	http_client_wait_requests_main.cpp
 )
 
+add_executable(http_client_auth_provider_test
+	http_client_auth_provider_main.cpp
+)
+
 add_executable(sequential_rate_limit_test
 	sequential_rate_limit_main.cpp
 )
@@ -98,6 +102,8 @@ target_link_libraries(request_group_cancel_test PRIVATE kurlyk)
 target_link_libraries(http_client_rate_limit_api_test PRIVATE kurlyk)
 target_link_libraries(http_client_wait_requests_test PRIVATE kurlyk)
 target_include_directories(http_client_wait_requests_test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../external/Simple-Web-Server")
+target_link_libraries(http_client_auth_provider_test PRIVATE kurlyk)
+target_include_directories(http_client_auth_provider_test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../external/Simple-Web-Server")
 target_link_libraries(sequential_rate_limit_test PRIVATE kurlyk)
 target_link_libraries(rate_limit_partition_test PRIVATE kurlyk)
 target_link_libraries(http_local_test PRIVATE kurlyk)
@@ -116,6 +122,7 @@ target_compile_features(rate_limit_lifetime_test PRIVATE cxx_std_17)
 target_compile_features(request_group_cancel_test PRIVATE cxx_std_17)
 target_compile_features(http_client_rate_limit_api_test PRIVATE cxx_std_17)
 target_compile_features(http_client_wait_requests_test PRIVATE cxx_std_17)
+target_compile_features(http_client_auth_provider_test PRIVATE cxx_std_17)
 target_compile_features(sequential_rate_limit_test PRIVATE cxx_std_17)
 target_compile_features(rate_limit_partition_test PRIVATE cxx_std_17)
 target_compile_features(http_local_test PRIVATE cxx_std_17)
@@ -137,6 +144,7 @@ copy_runtime_dlls(rate_limit_lifetime_test)
 copy_runtime_dlls(request_group_cancel_test)
 copy_runtime_dlls(http_client_rate_limit_api_test)
 copy_runtime_dlls(http_client_wait_requests_test)
+copy_runtime_dlls(http_client_auth_provider_test)
 copy_runtime_dlls(sequential_rate_limit_test)
 copy_runtime_dlls(rate_limit_partition_test)
 copy_runtime_dlls(http_local_test)
@@ -150,6 +158,7 @@ add_test(NAME rate_limit_lifetime_test COMMAND rate_limit_lifetime_test)
 add_test(NAME request_group_cancel_test COMMAND request_group_cancel_test)
 add_test(NAME http_client_rate_limit_api_test COMMAND http_client_rate_limit_api_test)
 add_test(NAME http_client_wait_requests_test COMMAND http_client_wait_requests_test)
+add_test(NAME http_client_auth_provider_test COMMAND http_client_auth_provider_test)
 add_test(NAME sequential_rate_limit_test COMMAND sequential_rate_limit_test)
 add_test(NAME rate_limit_partition_test COMMAND rate_limit_partition_test)
 add_test(NAME http_local_test COMMAND http_local_test)

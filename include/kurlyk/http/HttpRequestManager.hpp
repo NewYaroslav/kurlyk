@@ -431,11 +431,28 @@ namespace kurlyk {
 
             // If there are ready requests, create a new HttpBatchRequestHandler to manage them.
             if (pending_request.empty()) return;
-#           if __cplusplus >= 201402L
-            m_active_request_batches.push_back(std::make_unique<HttpBatchRequestHandler>(pending_request));
-#           else
-            m_active_request_batches.push_back(std::unique_ptr<HttpBatchRequestHandler>(new HttpBatchRequestHandler(pending_request)));
-#           endif
+            try {
+#               if __cplusplus >= 201402L
+                m_active_request_batches.push_back(std::make_unique<HttpBatchRequestHandler>(pending_request));
+#               else
+                m_active_request_batches.push_back(std::unique_ptr<HttpBatchRequestHandler>(new HttpBatchRequestHandler(pending_request)));
+#               endif
+            } catch (...) {
+                for (auto& context : pending_request) {
+                    if (!context || !context->callback) continue;
+#                   if __cplusplus >= 201402L
+                    auto response = std::make_unique<HttpResponse>();
+#                   else
+                    auto response = std::unique_ptr<HttpResponse>(new HttpResponse());
+#                   endif
+                    response->error_code = utils::make_error_code(utils::ClientError::AbortedDuringDestruction);
+                    response->status_code = 499; // Client closed request
+                    response->ready = true;
+                    context->callback(std::move(response));
+                    context->complete();
+                }
+                return;
+            }
         }
 
         /// \brief Processes active requests, moving failed ones to the failed requests list for retrying.

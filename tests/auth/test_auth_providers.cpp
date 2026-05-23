@@ -53,5 +53,53 @@ int main() {
         if (req.url != "https://example.com/api?foo=bar&key=val") return 1;
     }
 
+    // Edge cases: empty token returns false and does not inject header
+    {
+        kurlyk::Headers headers;
+        kurlyk::http::auth::BearerTokenAuthProvider bearer("");
+        if (bearer.authorize(headers)) return 1;
+        if (headers.find("Authorization") != headers.end()) return 1;
+    }
+
+    // Edge cases: empty ApiKey name or value returns false
+    {
+        kurlyk::Headers headers;
+        kurlyk::http::auth::ApiKeyAuthProvider api_key(
+            "", "val", kurlyk::http::auth::ApiKeyPlacement::HEADER);
+        if (api_key.authorize(headers)) return 1;
+    }
+    {
+        kurlyk::Headers headers;
+        kurlyk::http::auth::ApiKeyAuthProvider api_key(
+            "key", "", kurlyk::http::auth::ApiKeyPlacement::HEADER);
+        if (api_key.authorize(headers)) return 1;
+    }
+
+    // Edge cases: empty ApiKey name or value in QUERY mode leaves URL unchanged
+    {
+        kurlyk::HttpRequest req;
+        req.url = "https://example.com/api";
+        kurlyk::http::auth::ApiKeyAuthProvider api_key(
+            "", "val", kurlyk::http::auth::ApiKeyPlacement::QUERY);
+        if (api_key.authorize(req)) return 1;
+        if (req.url != "https://example.com/api") return 1;
+    }
+    {
+        kurlyk::HttpRequest req;
+        req.url = "https://example.com/api";
+        kurlyk::http::auth::ApiKeyAuthProvider api_key(
+            "key", "", kurlyk::http::auth::ApiKeyPlacement::QUERY);
+        if (api_key.authorize(req)) return 1;
+        if (req.url != "https://example.com/api") return 1;
+    }
+
+    // Edge case: ApiKeyAuthProvider QUERY placement with Headers interface returns false
+    {
+        kurlyk::Headers headers;
+        kurlyk::http::auth::ApiKeyAuthProvider api_key(
+            "key", "val", kurlyk::http::auth::ApiKeyPlacement::QUERY);
+        if (api_key.authorize(headers)) return 1;
+    }
+
     return 0;
 }
