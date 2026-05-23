@@ -637,6 +637,8 @@ Define these macros before including `kurlyk.hpp` to configure the library:
 | `KURLYK_AUTO_INIT_USE_ASYNC` | `1` | Starts the network thread in the background when auto init is enabled. Set to `0` for manual processing. |
 | `KURLYK_HTTP_SUPPORT` | `1` | Enables or disables the HTTP subsystem. |
 | `KURLYK_WEBSOCKET_SUPPORT` | `1` | Enables or disables the WebSocket subsystem. |
+| `KURLYK_AUTH_SUPPORT` | `1` | Enables authentication providers (`BearerTokenAuthProvider`, `ApiKeyAuthProvider`). |
+| `KURLYK_OAUTH_SUPPORT` | `KURLYK_AUTH_SUPPORT` | Enables the OAuth2 PKCE client (`OAuthPkceClient`). Requires `KURLYK_AUTH_SUPPORT=1`. |
 | `KURLYK_JSON_SUPPORT` | `0` | Enables nlohmann::json include and JSON-aware types, plus enum-to-JSON helpers in `type_utils.hpp`. |
 
 ## Repository layout
