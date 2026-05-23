@@ -5,6 +5,10 @@
 /// \file http.hpp
 /// \brief Aggregates main HTTP interfaces and utilities, including client, request manager, and helpers.
 
+#ifndef KURLYK_AUTH_SUPPORT
+#   define KURLYK_AUTH_SUPPORT 1
+#endif
+
 // Core utilities
 #include "core.hpp"
 

@@ -7,10 +7,10 @@
 
 #include "Base64Url.hpp"
 #include <hmac_cpp/sha256.hpp>
+#include <hmac_cpp/hmac_utils.hpp>
 #include <string>
 #include <vector>
 #include <cstdint>
-#include <random>
 #include <algorithm>
 
 namespace kurlyk {
@@ -33,15 +33,13 @@ namespace utils {
         if (length < 43) length = 43;
         if (length > 128) length = 128;
 
+        std::vector<uint8_t> random_bytes = hmac_cpp::random_bytes(length);
         std::string verifier;
         verifier.reserve(length);
 
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<std::size_t> dist(0, sizeof(allowed) - 2);
-
+        const std::size_t allowed_count = sizeof(allowed) - 2; // exclude null terminator
         for (std::size_t i = 0; i < length; ++i) {
-            verifier.push_back(allowed[dist(gen)]);
+            verifier.push_back(allowed[random_bytes[i] % allowed_count]);
         }
         return verifier;
     }

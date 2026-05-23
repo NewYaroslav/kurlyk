@@ -97,6 +97,12 @@ namespace auth {
         bool exchange_code(const std::string& code, AuthResult& out_result) {
             out_result = AuthResult();
 
+            if (code.empty()) {
+                out_result.error = AuthError::InvalidConfig;
+                out_result.error_message = "authorization code is empty";
+                return false;
+            }
+
             if (m_config.token_endpoint.empty()) {
                 out_result.error = AuthError::InvalidConfig;
                 out_result.error_message = "token_endpoint is not configured";
@@ -139,7 +145,7 @@ namespace auth {
 
             out_result.raw_response = response->content;
 
-            if (response->status_code != 200) {
+            if (response->status_code < 200 || response->status_code >= 300) {
                 out_result.error = AuthError::HttpError;
                 out_result.error_message = "Token endpoint returned HTTP " +
                     std::to_string(response->status_code);
@@ -155,6 +161,12 @@ namespace auth {
         /// \return `true` on success; inspect `out_result` on failure.
         bool refresh_access_token(const std::string& refresh_token, AuthResult& out_result) {
             out_result = AuthResult();
+
+            if (refresh_token.empty()) {
+                out_result.error = AuthError::InvalidConfig;
+                out_result.error_message = "refresh_token is empty";
+                return false;
+            }
 
             if (m_config.token_endpoint.empty()) {
                 out_result.error = AuthError::InvalidConfig;
@@ -194,7 +206,7 @@ namespace auth {
 
             out_result.raw_response = response->content;
 
-            if (response->status_code != 200) {
+            if (response->status_code < 200 || response->status_code >= 300) {
                 out_result.error = AuthError::HttpError;
                 out_result.error_message = "Token endpoint returned HTTP " +
                     std::to_string(response->status_code);
@@ -246,6 +258,12 @@ namespace auth {
                     auto now_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
                         std::chrono::system_clock::now().time_since_epoch()).count();
                     token.expires_at_ms = now_ms + (expires_in * 1000);
+                }
+
+                if (token.access_token.empty()) {
+                    out_result.error = AuthError::InvalidResponse;
+                    out_result.error_message = "access_token is missing in response";
+                    return false;
                 }
 
                 out_result.token = token;

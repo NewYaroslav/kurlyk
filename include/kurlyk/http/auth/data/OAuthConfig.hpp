@@ -1,11 +1,15 @@
 #pragma once
-#ifndef _KURLYK_HTTP_DATA_OAUTH_CONFIG_HPP_INCLUDED
-#define _KURLYK_HTTP_DATA_OAUTH_CONFIG_HPP_INCLUDED
+#ifndef _KURLYK_HTTP_AUTH_DATA_OAUTH_CONFIG_HPP_INCLUDED
+#define _KURLYK_HTTP_AUTH_DATA_OAUTH_CONFIG_HPP_INCLUDED
 
 /// \file OAuthConfig.hpp
 /// \brief Defines the OAuthConfig structure for OAuth2 client configuration.
 
 #include <string>
+
+#if KURLYK_ENABLE_JSON
+#   include <nlohmann/json.hpp>
+#endif
 
 namespace kurlyk {
 
@@ -62,4 +66,4 @@ namespace kurlyk {
 
 #endif // KURLYK_USE_JSON
 
-#endif // _KURLYK_HTTP_DATA_OAUTH_CONFIG_HPP_INCLUDED
+#endif // _KURLYK_HTTP_AUTH_DATA_OAUTH_CONFIG_HPP_INCLUDED

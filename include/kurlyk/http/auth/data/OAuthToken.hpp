@@ -1,12 +1,16 @@
 #pragma once
-#ifndef _KURLYK_HTTP_DATA_OAUTH_TOKEN_HPP_INCLUDED
-#define _KURLYK_HTTP_DATA_OAUTH_TOKEN_HPP_INCLUDED
+#ifndef _KURLYK_HTTP_AUTH_DATA_OAUTH_TOKEN_HPP_INCLUDED
+#define _KURLYK_HTTP_AUTH_DATA_OAUTH_TOKEN_HPP_INCLUDED
 
 /// \file OAuthToken.hpp
 /// \brief Defines the OAuthToken structure for storing OAuth2 token data.
 
 #include <string>
 #include <chrono>
+
+#if KURLYK_ENABLE_JSON
+#   include <nlohmann/json.hpp>
+#endif
 
 namespace kurlyk {
 
@@ -21,12 +25,15 @@ namespace kurlyk {
         std::string raw_response;   ///< Raw server response body for debugging.
 
         /// \brief Checks whether the token has expired.
-        /// \return `true` if the token has a known expiration and it has passed.
-        bool is_expired() const {
+        /// \param skew_ms Safety margin in milliseconds (default 60s) to account
+        ///               for network latency and clock drift.
+        /// \return `true` if the token has a known expiration and it is within
+        ///         the skew margin of expiry.
+        bool is_expired(int64_t skew_ms = 60000) const {
             if (expires_at_ms <= 0) return false;
             auto now_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::system_clock::now().time_since_epoch()).count();
-            return now_ms >= expires_at_ms;
+            return (now_ms + skew_ms) >= expires_at_ms;
         }
     };
 
@@ -58,4 +65,4 @@ namespace kurlyk {
 
 #endif // KURLYK_USE_JSON
 
-#endif // _KURLYK_HTTP_DATA_OAUTH_TOKEN_HPP_INCLUDED
+#endif // _KURLYK_HTTP_AUTH_DATA_OAUTH_TOKEN_HPP_INCLUDED

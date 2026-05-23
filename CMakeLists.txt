@@ -4,6 +4,7 @@ project(kurlyk VERSION 1.0.2 LANGUAGES CXX)
 
 option(KURLYK_USE_STANDALONE_ASIO "Use Asio standalone instead of Boost.Asio" ON)
 option(KURLYK_BUILD_EXAMPLES "Build repository examples" OFF)
+option(KURLYK_AUTH_SUPPORT "Enable HTTP authentication helpers and OAuth2 PKCE" ON)
 
 option(KURLYK_USE_FALLBACK_OPENSSL "Use fallback for OpenSSL" OFF)
 option(KURLYK_USE_FALLBACK_CURL "Use fallback for libcurl" OFF)
@@ -35,9 +36,14 @@ use_or_fetch_asio(kurlyk)
 include(cmake/deps/simple_ws_server.cmake)
 use_or_fetch_simple_ws_server(kurlyk)
 
-# hmac-cpp (SHA-256 for OAuth PKCE)
-include(cmake/deps/hmac_cpp.cmake)
-use_or_fetch_hmac_cpp(kurlyk)
+# hmac-cpp (SHA-256 and CSPRNG for OAuth PKCE)
+if(KURLYK_AUTH_SUPPORT)
+    include(cmake/deps/hmac_cpp.cmake)
+    use_or_fetch_hmac_cpp(kurlyk)
+    target_compile_definitions(kurlyk INTERFACE KURLYK_AUTH_SUPPORT=1)
+else()
+    target_compile_definitions(kurlyk INTERFACE KURLYK_AUTH_SUPPORT=0)
+endif()
 
 # OS-specific dependencies
 if (WIN32)
