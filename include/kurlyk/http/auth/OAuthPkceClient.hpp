@@ -125,12 +125,12 @@ namespace auth {
             Headers headers;
             headers.emplace("Content-Type", "application/x-www-form-urlencoded");
 
-            auto [request_id, future] = http_post(m_config.token_endpoint, QueryParams(), headers, body);
-            (void)request_id;
+            auto request_result = http_post(m_config.token_endpoint, QueryParams(), headers, body);
+            (void)request_result.first;
 
             HttpResponsePtr response;
             try {
-                response = future.get();
+                response = request_result.second.get();
             } catch (const std::exception& e) {
                 out_result.error = AuthError::HttpError;
                 out_result.error_message = std::string("HTTP request failed: ") + e.what();
@@ -186,12 +186,12 @@ namespace auth {
             Headers headers;
             headers.emplace("Content-Type", "application/x-www-form-urlencoded");
 
-            auto [request_id, future] = http_post(m_config.token_endpoint, QueryParams(), headers, body);
-            (void)request_id;
+            auto request_result = http_post(m_config.token_endpoint, QueryParams(), headers, body);
+            (void)request_result.first;
 
             HttpResponsePtr response;
             try {
-                response = future.get();
+                response = request_result.second.get();
             } catch (const std::exception& e) {
                 out_result.error = AuthError::HttpError;
                 out_result.error_message = std::string("HTTP request failed: ") + e.what();

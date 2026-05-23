@@ -9,6 +9,10 @@
 #   define KURLYK_AUTH_SUPPORT 1
 #endif
 
+#ifndef KURLYK_OAUTH_SUPPORT
+#   define KURLYK_OAUTH_SUPPORT KURLYK_AUTH_SUPPORT
+#endif
+
 // Core utilities
 #include "core.hpp"
 

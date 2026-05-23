@@ -44,6 +44,10 @@ else()
     target_compile_definitions(kurlyk INTERFACE KURLYK_AUTH_SUPPORT=0)
 endif()
 
+if(KURLYK_OAUTH_SUPPORT AND NOT KURLYK_AUTH_SUPPORT)
+    message(FATAL_ERROR "KURLYK_OAUTH_SUPPORT requires KURLYK_AUTH_SUPPORT")
+endif()
+
 # OAuth2 PKCE (requires hmac-cpp for SHA-256 and CSPRNG)
 if(KURLYK_OAUTH_SUPPORT)
     include(cmake/deps/hmac_cpp.cmake)
