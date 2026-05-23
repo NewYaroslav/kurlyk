@@ -39,8 +39,6 @@
 #ifndef KURLYK_JSON_SUPPORT
 #   ifdef KURLYK_ENABLE_JSON
 #       define KURLYK_JSON_SUPPORT KURLYK_ENABLE_JSON
-#   elif defined(KURLYK_USE_JSON)
-#       define KURLYK_JSON_SUPPORT 1
 #   else
 #       define KURLYK_JSON_SUPPORT 0
 #   endif
