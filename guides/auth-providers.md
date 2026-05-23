@@ -6,6 +6,8 @@
 
 Injects an `Authorization: Bearer <token>` header, replacing any previous `Authorization` value.
 
+When attached to an `HttpClient` via `set_auth_provider()`, the provider runs **after** per-request headers are merged. This means a provider can overwrite a header that was set manually on an individual request.
+
 ```cpp
 kurlyk::http::auth::BearerTokenAuthProvider auth("my_api_key");
 
@@ -43,6 +45,10 @@ query_auth.authorize(request);
 ```
 
 Query parameters are percent-encoded automatically via `kurlyk::utils::percent_encode`.
+
+## Thread safety
+
+`HttpClient::set_auth_provider()` is not internally synchronized. Set the provider before starting concurrent requests, or guard the call and subsequent submissions with external synchronization.
 
 ## Implementing a custom provider
 

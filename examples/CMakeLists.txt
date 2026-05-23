@@ -19,10 +19,15 @@ set(KURLYK_EXAMPLE_SOURCES
 	websocket_client_lifecycle_test.cpp
 	websocket_echo_example.cpp
 	websocket_independent_clients_example.cpp
-	bearer_token_auth_provider_example.cpp
-	api_key_auth_provider_example.cpp
-	simple_bearer_auth_example.cpp
 )
+
+if(KURLYK_AUTH_SUPPORT)
+	list(APPEND KURLYK_EXAMPLE_SOURCES
+		bearer_token_auth_provider_example.cpp
+		api_key_auth_provider_example.cpp
+		simple_bearer_auth_example.cpp
+	)
+endif()
 
 if(KURLYK_OAUTH_SUPPORT)
 	list(APPEND KURLYK_EXAMPLE_SOURCES

@@ -193,7 +193,10 @@ namespace kurlyk {
         /// \brief Assigns an authentication provider to all requests created by this client.
         /// \param provider Shared pointer to an IAuthProvider implementation.
         /// \note The provider's `authorize()` is called on every request created by this client
-        ///       before submission. Set to `nullptr` to disable.
+        ///       after per-request headers are merged, so it can overwrite headers such as
+        ///       `Authorization` set manually on the request. Set to `nullptr` to disable.
+        /// \note Thread-safety: this setter is not synchronized; call it only before concurrent
+        ///       requests begin, or externally synchronize with request submission.
         void set_auth_provider(std::shared_ptr<http::auth::IAuthProvider> provider) {
             m_auth_provider = provider;
         }
