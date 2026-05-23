@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['path_5futils_2ehpp_0',['path_utils.hpp',['../path__utils_8hpp.html',1,'']]],
-  ['percent_5fencoding_2ehpp_1',['percent_encoding.hpp',['../percent__encoding_8hpp.html',1,'']]],
-  ['print_5futils_2ehpp_2',['print_utils.hpp',['../print__utils_8hpp.html',1,'']]],
-  ['proxyconfig_2ehpp_3',['ProxyConfig.hpp',['../ProxyConfig_8hpp.html',1,'']]]
+  ['oauthconfig_2ehpp_0',['OAuthConfig.hpp',['../OAuthConfig_8hpp.html',1,'']]],
+  ['oauthpkceclient_2ehpp_1',['OAuthPkceClient.hpp',['../OAuthPkceClient_8hpp.html',1,'']]],
+  ['oauthtoken_2ehpp_2',['OAuthToken.hpp',['../OAuthToken_8hpp.html',1,'']]],
+  ['openrouter_5foauth_5fpkce_5fexample_2ecpp_3',['openrouter_oauth_pkce_example.cpp',['../openrouter__oauth__pkce__example_8cpp.html',1,'']]]
 ];

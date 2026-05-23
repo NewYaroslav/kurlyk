@@ -5,9 +5,10 @@ var searchData=
   ['nested_5fhttp_5frequests_5fexample_2ecpp_2',['nested_http_requests_example.cpp',['../nested__http__requests__example_8cpp.html',1,'']]],
   ['networkworker_3',['NetworkWorker',['../classkurlyk_1_1core_1_1NetworkWorker.html',1,'kurlyk::core::NetworkWorker'],['../classkurlyk_1_1core_1_1NetworkWorker.html#ad3f0812494737a2f4a82bb460c8db832',1,'kurlyk::core::NetworkWorker::NetworkWorker()'],['../classkurlyk_1_1core_1_1NetworkWorker.html#a599591e4b2846487d55933f1cddb4222',1,'kurlyk::core::NetworkWorker::NetworkWorker(const NetworkWorker &amp;)=delete']]],
   ['networkworker_2ehpp_4',['NetworkWorker.hpp',['../NetworkWorker_8hpp.html',1,'']]],
-  ['notconnected_5',['NotConnected',['../namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8a4075072d219e061ca0f3124f8fbef463',1,'kurlyk::utils']]],
-  ['notify_6',['notify',['../classkurlyk_1_1core_1_1NetworkWorker.html#a05248e914a6f70ffc8cb678835c86c91',1,'kurlyk::core::NetworkWorker::notify()'],['../classkurlyk_1_1SimpleWebSocketWorker.html#a48abba3f46ca7b77cc63e3dc7ffc3300',1,'kurlyk::SimpleWebSocketWorker::notify()']]],
-  ['notify_5fall_5fgroup_5fwaiters_7',['notify_all_group_waiters',['../classkurlyk_1_1HttpRequestManager.html#a9410c5c9914404840d57fce806d02ce9',1,'kurlyk::HttpRequestManager']]],
-  ['notify_5fgroup_5fwaiters_5fif_5fidle_8',['notify_group_waiters_if_idle',['../classkurlyk_1_1HttpRequestManager.html#a1bdddcab2de882021ccb63c9fb2f43b3',1,'kurlyk::HttpRequestManager']]],
-  ['notify_5fhandler_9',['notify_handler',['../classkurlyk_1_1BaseWebSocketClient.html#ad5e79383d31d19f5073bf36de03f7c13',1,'kurlyk::BaseWebSocketClient::notify_handler()'],['../classkurlyk_1_1IWebSocketClient.html#aaea92a3933f7c9432f25c7d163184d6a',1,'kurlyk::IWebSocketClient::notify_handler()']]]
+  ['none_5',['None',['../namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7ea6adf97f83acf6453d4a6a4b1070f3754',1,'kurlyk']]],
+  ['notconnected_6',['NotConnected',['../namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8a4075072d219e061ca0f3124f8fbef463',1,'kurlyk::utils']]],
+  ['notify_7',['notify',['../classkurlyk_1_1core_1_1NetworkWorker.html#a05248e914a6f70ffc8cb678835c86c91',1,'kurlyk::core::NetworkWorker::notify()'],['../classkurlyk_1_1SimpleWebSocketWorker.html#a48abba3f46ca7b77cc63e3dc7ffc3300',1,'kurlyk::SimpleWebSocketWorker::notify()']]],
+  ['notify_5fall_5fgroup_5fwaiters_8',['notify_all_group_waiters',['../classkurlyk_1_1HttpRequestManager.html#a9410c5c9914404840d57fce806d02ce9',1,'kurlyk::HttpRequestManager']]],
+  ['notify_5fgroup_5fwaiters_5fif_5fidle_9',['notify_group_waiters_if_idle',['../classkurlyk_1_1HttpRequestManager.html#a1bdddcab2de882021ccb63c9fb2f43b3',1,'kurlyk::HttpRequestManager']]],
+  ['notify_5fhandler_10',['notify_handler',['../classkurlyk_1_1BaseWebSocketClient.html#ad5e79383d31d19f5073bf36de03f7c13',1,'kurlyk::BaseWebSocketClient::notify_handler()'],['../classkurlyk_1_1IWebSocketClient.html#aaea92a3933f7c9432f25c7d163184d6a',1,'kurlyk::IWebSocketClient::notify_handler()']]]
 ];

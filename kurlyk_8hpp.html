@@ -109,6 +109,7 @@ $(function(){initNavTree('kurlyk_8hpp.html','',''); });
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="core_8hpp_source.html">kurlyk/core.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="http_8hpp_source.html">kurlyk/http.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="auth_8hpp_source.html">kurlyk/http/auth.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="websocket_8hpp_source.html">kurlyk/websocket.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="startup_8hpp_source.html">kurlyk/startup.hpp</a>&quot;</code><br />
 </div>
@@ -130,8 +131,12 @@ Macros</h2></td></tr>
 <tr class="memdesc:a579201de2b5c9ead25f761a41bd0209e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables HTTP request support in the Kurlyk library.  <br /></td></tr>
 <tr class="memitem:a834d5ca366d54e6fe2aa587896933beb" id="r_a834d5ca366d54e6fe2aa587896933beb"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a834d5ca366d54e6fe2aa587896933beb">KURLYK_WEBSOCKET_SUPPORT</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memdesc:a834d5ca366d54e6fe2aa587896933beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables WebSocket support in the Kurlyk library.  <br /></td></tr>
-<tr class="memitem:a7ddea7a9e56b82507ef3196ba873a85f" id="r_a7ddea7a9e56b82507ef3196ba873a85f"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a7ddea7a9e56b82507ef3196ba873a85f">KURLYK_ENABLE_JSON</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:a7ddea7a9e56b82507ef3196ba873a85f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables JSON serialization support for enums and types.  <br /></td></tr>
+<tr class="memitem:a53e6ff380917d51db382cedd85d3a5ef" id="r_a53e6ff380917d51db382cedd85d3a5ef"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a53e6ff380917d51db382cedd85d3a5ef">KURLYK_JSON_SUPPORT</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:a53e6ff380917d51db382cedd85d3a5ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables JSON serialization support for enums and types.  <br /></td></tr>
+<tr class="memitem:a1b026c6947b2782c006ecbee773be93a" id="r_a1b026c6947b2782c006ecbee773be93a"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a1b026c6947b2782c006ecbee773be93a">KURLYK_AUTH_SUPPORT</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:a1b026c6947b2782c006ecbee773be93a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables HTTP authentication helpers (Bearer, API-key providers).  <br /></td></tr>
+<tr class="memitem:a293fd762b21eec6bfc4b75957826b4f8" id="r_a293fd762b21eec6bfc4b75957826b4f8"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a293fd762b21eec6bfc4b75957826b4f8">KURLYK_OAUTH_SUPPORT</a>&#160;&#160;&#160;<a class="el" href="#a1b026c6947b2782c006ecbee773be93a">KURLYK_AUTH_SUPPORT</a></td></tr>
+<tr class="memdesc:a293fd762b21eec6bfc4b75957826b4f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables OAuth2 PKCE client and crypto dependencies (requires hmac-cpp).  <br /></td></tr>
 <tr class="memitem:a51e571afd5a9ba1054b85786163eb2bb" id="r_a51e571afd5a9ba1054b85786163eb2bb"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a51e571afd5a9ba1054b85786163eb2bb">KURLYK_USE_CURL</a></td></tr>
 <tr class="memdesc:a51e571afd5a9ba1054b85786163eb2bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the use of libcurl for HTTP support on non-Emscripten platforms.  <br /></td></tr>
 <tr class="memitem:aa99dbe01ea0953b305a7f4d31424c5b5" id="r_aa99dbe01ea0953b305a7f4d31424c5b5"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#aa99dbe01ea0953b305a7f4d31424c5b5">KURLYK_USE_SIMPLEWEB</a></td></tr>
@@ -155,6 +160,24 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="kurlyk_8hpp_source.html#l00003">3</a> of file <a class="el" href="kurlyk_8hpp_source.html">kurlyk.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a1b026c6947b2782c006ecbee773be93a" name="a1b026c6947b2782c006ecbee773be93a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b026c6947b2782c006ecbee773be93a">&#9670;&#160;</a></span>KURLYK_AUTH_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define KURLYK_AUTH_SUPPORT&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enables HTTP authentication helpers (Bearer, API-key providers). </p>
+
+<p class="definition">Definition at line <a class="el" href="kurlyk_8hpp_source.html#l00052">52</a> of file <a class="el" href="kurlyk_8hpp_source.html">kurlyk.hpp</a>.</p>
 
 </div>
 </div>
@@ -196,24 +219,6 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a id="a7ddea7a9e56b82507ef3196ba873a85f" name="a7ddea7a9e56b82507ef3196ba873a85f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ddea7a9e56b82507ef3196ba873a85f">&#9670;&#160;</a></span>KURLYK_ENABLE_JSON</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define KURLYK_ENABLE_JSON&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Enables JSON serialization support for enums and types. </p>
-
-<p class="definition">Definition at line <a class="el" href="kurlyk_8hpp_source.html#l00040">40</a> of file <a class="el" href="kurlyk_8hpp_source.html">kurlyk.hpp</a>.</p>
-
-</div>
-</div>
 <a id="a579201de2b5c9ead25f761a41bd0209e" name="a579201de2b5c9ead25f761a41bd0209e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a579201de2b5c9ead25f761a41bd0209e">&#9670;&#160;</a></span>KURLYK_HTTP_SUPPORT</h2>
 
@@ -233,6 +238,42 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a id="a53e6ff380917d51db382cedd85d3a5ef" name="a53e6ff380917d51db382cedd85d3a5ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53e6ff380917d51db382cedd85d3a5ef">&#9670;&#160;</a></span>KURLYK_JSON_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define KURLYK_JSON_SUPPORT&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enables JSON serialization support for enums and types. </p>
+
+<p class="definition">Definition at line <a class="el" href="kurlyk_8hpp_source.html#l00045">45</a> of file <a class="el" href="kurlyk_8hpp_source.html">kurlyk.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a293fd762b21eec6bfc4b75957826b4f8" name="a293fd762b21eec6bfc4b75957826b4f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a293fd762b21eec6bfc4b75957826b4f8">&#9670;&#160;</a></span>KURLYK_OAUTH_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define KURLYK_OAUTH_SUPPORT&#160;&#160;&#160;<a class="el" href="#a1b026c6947b2782c006ecbee773be93a">KURLYK_AUTH_SUPPORT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enables OAuth2 PKCE client and crypto dependencies (requires hmac-cpp). </p>
+
+<p class="definition">Definition at line <a class="el" href="kurlyk_8hpp_source.html#l00058">58</a> of file <a class="el" href="kurlyk_8hpp_source.html">kurlyk.hpp</a>.</p>
+
+</div>
+</div>
 <a id="a51e571afd5a9ba1054b85786163eb2bb" name="a51e571afd5a9ba1054b85786163eb2bb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a51e571afd5a9ba1054b85786163eb2bb">&#9670;&#160;</a></span>KURLYK_USE_CURL</h2>
 
@@ -247,7 +288,7 @@ Macros</h2></td></tr>
 
 <p>Enables the use of libcurl for HTTP support on non-Emscripten platforms. </p>
 
-<p class="definition">Definition at line <a class="el" href="kurlyk_8hpp_source.html#l00047">47</a> of file <a class="el" href="kurlyk_8hpp_source.html">kurlyk.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kurlyk_8hpp_source.html#l00065">65</a> of file <a class="el" href="kurlyk_8hpp_source.html">kurlyk.hpp</a>.</p>
 
 </div>
 </div>
@@ -265,7 +306,7 @@ Macros</h2></td></tr>
 
 <p>Enables the use of Simple-WebSocket-Server for WebSocket support on non-Emscripten platforms. </p>
 
-<p class="definition">Definition at line <a class="el" href="kurlyk_8hpp_source.html#l00050">50</a> of file <a class="el" href="kurlyk_8hpp_source.html">kurlyk.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kurlyk_8hpp_source.html#l00068">68</a> of file <a class="el" href="kurlyk_8hpp_source.html">kurlyk.hpp</a>.</p>
 
 </div>
 </div>

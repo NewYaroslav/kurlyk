@@ -112,12 +112,15 @@ $(function(){initNavTree('http_8hpp.html','',''); });
 <code>#include &quot;<a class="el" href="HttpRequestManager_8hpp_source.html">http/HttpRequestManager.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="HttpClient_8hpp_source.html">http/HttpClient.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="http_2utils_8hpp_source.html">http/utils.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="auth_8hpp_source.html">http/auth.hpp</a>&quot;</code><br />
 </div>
 <p><a href="http_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:af196196c4b8500082fc64a7227b0f27a" id="r_af196196c4b8500082fc64a7227b0f27a"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#af196196c4b8500082fc64a7227b0f27a">_KURLYK_HTTP_HPP_INCLUDED</a></td></tr>
+<tr class="memitem:a1b026c6947b2782c006ecbee773be93a" id="r_a1b026c6947b2782c006ecbee773be93a"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a1b026c6947b2782c006ecbee773be93a">KURLYK_AUTH_SUPPORT</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memitem:a293fd762b21eec6bfc4b75957826b4f8" id="r_a293fd762b21eec6bfc4b75957826b4f8"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a293fd762b21eec6bfc4b75957826b4f8">KURLYK_OAUTH_SUPPORT</a>&#160;&#160;&#160;<a class="el" href="#a1b026c6947b2782c006ecbee773be93a">KURLYK_AUTH_SUPPORT</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Aggregates main HTTP interfaces and utilities, including client, request manager, and helpers. </p>
@@ -137,6 +140,38 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="http_8hpp_source.html#l00003">3</a> of file <a class="el" href="http_8hpp_source.html">http.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a1b026c6947b2782c006ecbee773be93a" name="a1b026c6947b2782c006ecbee773be93a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b026c6947b2782c006ecbee773be93a">&#9670;&#160;</a></span>KURLYK_AUTH_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define KURLYK_AUTH_SUPPORT&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="http_8hpp_source.html#l00009">9</a> of file <a class="el" href="http_8hpp_source.html">http.hpp</a>.</p>
+
+</div>
+</div>
+<a id="a293fd762b21eec6bfc4b75957826b4f8" name="a293fd762b21eec6bfc4b75957826b4f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a293fd762b21eec6bfc4b75957826b4f8">&#9670;&#160;</a></span>KURLYK_OAUTH_SUPPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define KURLYK_OAUTH_SUPPORT&#160;&#160;&#160;<a class="el" href="#a1b026c6947b2782c006ecbee773be93a">KURLYK_AUTH_SUPPORT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="http_8hpp_source.html#l00013">13</a> of file <a class="el" href="http_8hpp_source.html">http.hpp</a>.</p>
 
 </div>
 </div>

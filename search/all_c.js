@@ -8,5 +8,7 @@ var searchData=
   ['limitdata_5',['LimitData',['../structkurlyk_1_1HttpRateLimiter_1_1LimitData.html',1,'kurlyk::HttpRateLimiter::LimitData'],['../structkurlyk_1_1WebSocketRateLimiter_1_1LimitData.html',1,'kurlyk::WebSocketRateLimiter::LimitData'],['../structkurlyk_1_1WebSocketRateLimiter_1_1LimitData.html#a8123ad93bb39061e8f6015b31e0eddeb',1,'kurlyk::WebSocketRateLimiter::LimitData::LimitData()']]],
   ['limits_6',['HTTP admission and queue limits',['../index.html#http_backpressure',1,'']]],
   ['list_7',['Todo List',['../todo.html',1,'']]],
-  ['load_5fapi_5fcredentials_8',['load_api_credentials',['../chatgpt__request__example_8cpp.html#af5fe2996ec70a2aff08314bc08a574c9',1,'chatgpt_request_example.cpp']]]
+  ['load_8',['load',['../classkurlyk_1_1http_1_1auth_1_1ITokenStorage.html#a7f12a7004562ee272a28d52ee83236a3',1,'kurlyk::http::auth::ITokenStorage']]],
+  ['load_5fapi_5fcredentials_9',['load_api_credentials',['../chatgpt__request__example_8cpp.html#af5fe2996ec70a2aff08314bc08a574c9',1,'chatgpt_request_example.cpp']]],
+  ['load_5fapi_5fkey_10',['load_api_key',['../bearer__token__auth__provider__example_8cpp.html#af7d26e95087338606bdc87398f333512',1,'bearer_token_auth_provider_example.cpp']]]
 ];

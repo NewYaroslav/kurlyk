@@ -1,8 +1,12 @@
 var namespacekurlyk =
 [
     [ "core", "namespacekurlyk_1_1core.html", "namespacekurlyk_1_1core" ],
+    [ "http", "namespacekurlyk_1_1http.html", "namespacekurlyk_1_1http" ],
     [ "startup", "namespacekurlyk_1_1startup.html", "namespacekurlyk_1_1startup" ],
     [ "utils", "namespacekurlyk_1_1utils.html", "namespacekurlyk_1_1utils" ],
+    [ "AuthResult", "structkurlyk_1_1AuthResult.html", "structkurlyk_1_1AuthResult" ],
+    [ "OAuthConfig", "structkurlyk_1_1OAuthConfig.html", "structkurlyk_1_1OAuthConfig" ],
+    [ "OAuthToken", "structkurlyk_1_1OAuthToken.html", "structkurlyk_1_1OAuthToken" ],
     [ "HttpRequest", "classkurlyk_1_1HttpRequest.html", "classkurlyk_1_1HttpRequest" ],
     [ "HttpResponse", "classkurlyk_1_1HttpResponse.html", "classkurlyk_1_1HttpResponse" ],
     [ "HttpClient", "classkurlyk_1_1HttpClient.html", "classkurlyk_1_1HttpClient" ],
@@ -38,6 +42,15 @@ var namespacekurlyk =
     [ "selected_backend_client_weak_ptr", "namespacekurlyk.html#a73ed0659126714edca8b349341b3fc56", null ],
     [ "WebSocketClientPtr", "namespacekurlyk.html#ac7905e767ee3a36feb37206bc5179dd2", null ],
     [ "WebSocketSenderPtr", "namespacekurlyk.html#ae21191afea07a4120a34bff9c53e302f", null ],
+    [ "AuthError", "namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7e", [
+      [ "None", "namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7ea6adf97f83acf6453d4a6a4b1070f3754", null ],
+      [ "InvalidConfig", "namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7ea636bc5ca1e0ceb3e4c67067618d7ae09", null ],
+      [ "HttpError", "namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7ea2feb6ea3db3fd8eb9ec285f21f1ef868", null ],
+      [ "InvalidResponse", "namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7ea33f317695948b584444f4b7525da594e", null ],
+      [ "TokenExpired", "namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7eab57797e252164f476125ec32002e3580", null ],
+      [ "UnsupportedFlow", "namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7ea8adcea2b255d9ec5919e67166903cf74", null ],
+      [ "StateMismatch", "namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7eaa118e77d3f616960d3150df6286cd8fc", null ]
+    ] ],
     [ "ProxyType", "namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3d", [
       [ "PROXY_HTTP", "namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3da7df92075ddc48c0c2e21a8dcfa3b11f7", null ],
       [ "PROXY_HTTPS", "namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3da7f825d47094d1c989bcf5aab7ae48ee0", null ],

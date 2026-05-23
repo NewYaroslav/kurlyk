@@ -111,11 +111,18 @@ $(function(){initNavTree('namespacekurlyk.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:core" id="r_core"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacekurlyk_1_1core.html">core</a></td></tr>
+<tr class="memitem:http" id="r_http"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacekurlyk_1_1http.html">http</a></td></tr>
 <tr class="memitem:startup" id="r_startup"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacekurlyk_1_1startup.html">startup</a></td></tr>
 <tr class="memitem:utils" id="r_utils"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacekurlyk_1_1utils.html">utils</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:AuthResult" id="r_AuthResult"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structkurlyk_1_1AuthResult.html">AuthResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encapsulates the outcome of an authentication operation.  <a href="structkurlyk_1_1AuthResult.html#details">More...</a><br /></td></tr>
+<tr class="memitem:OAuthConfig" id="r_OAuthConfig"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structkurlyk_1_1OAuthConfig.html">OAuthConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores client configuration for an OAuth2 Authorization Code + PKCE flow.  <a href="structkurlyk_1_1OAuthConfig.html#details">More...</a><br /></td></tr>
+<tr class="memitem:OAuthToken" id="r_OAuthToken"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structkurlyk_1_1OAuthToken.html">OAuthToken</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the result of an OAuth2 token exchange.  <a href="structkurlyk_1_1OAuthToken.html#details">More...</a><br /></td></tr>
 <tr class="memitem:HttpRequest" id="r_HttpRequest"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpRequest.html">HttpRequest</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an HTTP request configuration.  <a href="classkurlyk_1_1HttpRequest.html#details">More...</a><br /></td></tr>
 <tr class="memitem:HttpResponse" id="r_HttpResponse"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classkurlyk_1_1HttpResponse.html">HttpResponse</a></td></tr>
@@ -192,6 +199,18 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:acbb3f6fe00e24a291a9912c5fc992a7e" id="r_acbb3f6fe00e24a291a9912c5fc992a7e"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#acbb3f6fe00e24a291a9912c5fc992a7e">AuthError</a> { <br />
+&#160;&#160;<a class="el" href="#acbb3f6fe00e24a291a9912c5fc992a7ea6adf97f83acf6453d4a6a4b1070f3754">None</a>
+, <a class="el" href="#acbb3f6fe00e24a291a9912c5fc992a7ea636bc5ca1e0ceb3e4c67067618d7ae09">InvalidConfig</a>
+, <a class="el" href="#acbb3f6fe00e24a291a9912c5fc992a7ea2feb6ea3db3fd8eb9ec285f21f1ef868">HttpError</a>
+, <a class="el" href="#acbb3f6fe00e24a291a9912c5fc992a7ea33f317695948b584444f4b7525da594e">InvalidResponse</a>
+, <br />
+&#160;&#160;<a class="el" href="#acbb3f6fe00e24a291a9912c5fc992a7eab57797e252164f476125ec32002e3580">TokenExpired</a>
+, <a class="el" href="#acbb3f6fe00e24a291a9912c5fc992a7ea8adcea2b255d9ec5919e67166903cf74">UnsupportedFlow</a>
+, <a class="el" href="#acbb3f6fe00e24a291a9912c5fc992a7eaa118e77d3f616960d3150df6286cd8fc">StateMismatch</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:acbb3f6fe00e24a291a9912c5fc992a7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classification of authentication errors.  <a href="#acbb3f6fe00e24a291a9912c5fc992a7e">More...</a><br /></td></tr>
 <tr class="memitem:a28765fa05a81543bbe931861c0fe0c3d" id="r_a28765fa05a81543bbe931861c0fe0c3d"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#a28765fa05a81543bbe931861c0fe0c3d">ProxyType</a> { <br />
 &#160;&#160;<a class="el" href="#a28765fa05a81543bbe931861c0fe0c3da7df92075ddc48c0c2e21a8dcfa3b11f7">PROXY_HTTP</a> = 0
 , <a class="el" href="#a28765fa05a81543bbe931861c0fe0c3da7f825d47094d1c989bcf5aab7ae48ee0">PROXY_HTTPS</a>
@@ -515,6 +534,48 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Enumeration Type Documentation</h2>
+<a id="acbb3f6fe00e24a291a9912c5fc992a7e" name="acbb3f6fe00e24a291a9912c5fc992a7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbb3f6fe00e24a291a9912c5fc992a7e">&#9670;&#160;</a></span>AuthError</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#acbb3f6fe00e24a291a9912c5fc992a7e">kurlyk::AuthError</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Classification of authentication errors. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="acbb3f6fe00e24a291a9912c5fc992a7ea6adf97f83acf6453d4a6a4b1070f3754" name="acbb3f6fe00e24a291a9912c5fc992a7ea6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"><p>No error; operation succeeded. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acbb3f6fe00e24a291a9912c5fc992a7ea636bc5ca1e0ceb3e4c67067618d7ae09" name="acbb3f6fe00e24a291a9912c5fc992a7ea636bc5ca1e0ceb3e4c67067618d7ae09"></a>InvalidConfig&#160;</td><td class="fielddoc"><p>Missing or invalid client configuration. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acbb3f6fe00e24a291a9912c5fc992a7ea2feb6ea3db3fd8eb9ec285f21f1ef868" name="acbb3f6fe00e24a291a9912c5fc992a7ea2feb6ea3db3fd8eb9ec285f21f1ef868"></a>HttpError&#160;</td><td class="fielddoc"><p>HTTP request failed (non-2xx status or transport error). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acbb3f6fe00e24a291a9912c5fc992a7ea33f317695948b584444f4b7525da594e" name="acbb3f6fe00e24a291a9912c5fc992a7ea33f317695948b584444f4b7525da594e"></a>InvalidResponse&#160;</td><td class="fielddoc"><p>Server response could not be parsed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acbb3f6fe00e24a291a9912c5fc992a7eab57797e252164f476125ec32002e3580" name="acbb3f6fe00e24a291a9912c5fc992a7eab57797e252164f476125ec32002e3580"></a>TokenExpired&#160;</td><td class="fielddoc"><p>The token has expired and refresh failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acbb3f6fe00e24a291a9912c5fc992a7ea8adcea2b255d9ec5919e67166903cf74" name="acbb3f6fe00e24a291a9912c5fc992a7ea8adcea2b255d9ec5919e67166903cf74"></a>UnsupportedFlow&#160;</td><td class="fielddoc"><p>The requested OAuth flow is not supported. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acbb3f6fe00e24a291a9912c5fc992a7eaa118e77d3f616960d3150df6286cd8fc" name="acbb3f6fe00e24a291a9912c5fc992a7eaa118e77d3f616960d3150df6286cd8fc"></a>StateMismatch&#160;</td><td class="fielddoc"><p>Returned state parameter does not match expected value. </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="AuthResult_8hpp_source.html#l00019">19</a> of file <a class="el" href="AuthResult_8hpp_source.html">AuthResult.hpp</a>.</p>
+
+</div>
+</div>
 <a id="a28765fa05a81543bbe931861c0fe0c3d" name="a28765fa05a81543bbe931861c0fe0c3d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a28765fa05a81543bbe931861c0fe0c3d">&#9670;&#160;</a></span>ProxyType</h2>
 

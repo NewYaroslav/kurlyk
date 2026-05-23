@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ratelimittype_0',['RateLimitType',['../namespacekurlyk.html#a23c88f8eb4092642746144a019793ccf',1,'kurlyk']]]
+  ['proxytype_0',['ProxyType',['../namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3d',1,'kurlyk']]]
 ];

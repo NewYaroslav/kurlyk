@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['unexpectedclose_0',['UnexpectedClose',['../namespacekurlyk_1_1utils.html#a59cab8e0e0a2e21d60d85065c5582224ae0a3b68b0325c2195a0ebdf50bc2ed27',1,'kurlyk::utils']]],
-  ['unsupporteddatatype_1',['UnsupportedDataType',['../namespacekurlyk_1_1utils.html#a59cab8e0e0a2e21d60d85065c5582224a1112cd49f73f0a15a41ac89f308c6e53',1,'kurlyk::utils']]],
-  ['updateconfig_2',['UpdateConfig',['../classkurlyk_1_1BaseWebSocketClient.html#ad14518b9ad14309b3af910e4d47838a8a211c2a2ab375fd483c7efe00eb62d2f3',1,'kurlyk::BaseWebSocketClient::UpdateConfig'],['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#aee6b756d1774e1256c8234637b377b80a211c2a2ab375fd483c7efe00eb62d2f3',1,'kurlyk::EmscriptenWebSocketClientAdapter::UpdateConfig']]]
+  ['shuttingdown_0',['ShuttingDown',['../namespacekurlyk_1_1utils.html#a1b2f911d69c83070bd7ce9ce320950e8a075d9c9ae8c8f1c79c1a1965cd8c5a42',1,'kurlyk::utils']]],
+  ['start_1',['START',['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#ac86656570c4abc56d1fcd03e8826fd54ab078ffd28db767c502ac367053f6e0ac',1,'kurlyk::EmscriptenWebSocketClientAdapter']]],
+  ['statemismatch_2',['StateMismatch',['../namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7eaa118e77d3f616960d3150df6286cd8fc',1,'kurlyk']]],
+  ['stopped_3',['STOPPED',['../classkurlyk_1_1BaseWebSocketClient.html#a90b3688aedeb9c7a6d8fea9083f8c43fa09d4d696b4e935115b9313e3c412509a',1,'kurlyk::BaseWebSocketClient::STOPPED'],['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#ac86656570c4abc56d1fcd03e8826fd54a09d4d696b4e935115b9313e3c412509a',1,'kurlyk::EmscriptenWebSocketClientAdapter::STOPPED'],['../classkurlyk_1_1EmscriptenWebSocketClientAdapter.html#addc863707fa6f03603297732a1207a0fa09d4d696b4e935115b9313e3c412509a',1,'kurlyk::EmscriptenWebSocketClientAdapter::STOPPED']]]
 ];

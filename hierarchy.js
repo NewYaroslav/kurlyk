@@ -1,5 +1,6 @@
 var hierarchy =
 [
+    [ "kurlyk::AuthResult", "structkurlyk_1_1AuthResult.html", null ],
     [ "kurlyk::startup::AutoInitializer", "classkurlyk_1_1startup_1_1AutoInitializer.html", null ],
     [ "kurlyk::utils::CaseInsensitiveEqual", "classkurlyk_1_1utils_1_1CaseInsensitiveEqual.html", null ],
     [ "kurlyk::utils::CaseInsensitiveHash", "classkurlyk_1_1utils_1_1CaseInsensitiveHash.html", null ],
@@ -26,10 +27,15 @@ var hierarchy =
     [ "kurlyk::HttpRequestContext", "classkurlyk_1_1HttpRequestContext.html", null ],
     [ "kurlyk::HttpRequestHandler", "classkurlyk_1_1HttpRequestHandler.html", null ],
     [ "kurlyk::HttpResponse", "classkurlyk_1_1HttpResponse.html", null ],
+    [ "kurlyk::http::auth::IAuthProvider", "classkurlyk_1_1http_1_1auth_1_1IAuthProvider.html", [
+      [ "kurlyk::http::auth::ApiKeyAuthProvider", "classkurlyk_1_1http_1_1auth_1_1ApiKeyAuthProvider.html", null ],
+      [ "kurlyk::http::auth::BearerTokenAuthProvider", "classkurlyk_1_1http_1_1auth_1_1BearerTokenAuthProvider.html", null ]
+    ] ],
     [ "kurlyk::core::INetworkTaskManager", "classkurlyk_1_1core_1_1INetworkTaskManager.html", [
       [ "kurlyk::HttpRequestManager", "classkurlyk_1_1HttpRequestManager.html", null ],
       [ "kurlyk::WebSocketManager", "classkurlyk_1_1WebSocketManager.html", null ]
     ] ],
+    [ "kurlyk::http::auth::ITokenStorage", "classkurlyk_1_1http_1_1auth_1_1ITokenStorage.html", null ],
     [ "kurlyk::IWebSocketSender", "classkurlyk_1_1IWebSocketSender.html", [
       [ "kurlyk::IWebSocketClient", "classkurlyk_1_1IWebSocketClient.html", [
         [ "kurlyk::BaseWebSocketClient", "classkurlyk_1_1BaseWebSocketClient.html", null ]
@@ -39,9 +45,13 @@ var hierarchy =
     [ "kurlyk::HttpRateLimiter::LimitData", "structkurlyk_1_1HttpRateLimiter_1_1LimitData.html", null ],
     [ "kurlyk::WebSocketRateLimiter::LimitData", "structkurlyk_1_1WebSocketRateLimiter_1_1LimitData.html", null ],
     [ "kurlyk::core::NetworkWorker", "classkurlyk_1_1core_1_1NetworkWorker.html", null ],
+    [ "kurlyk::OAuthConfig", "structkurlyk_1_1OAuthConfig.html", null ],
+    [ "kurlyk::http::auth::OAuthPkceClient", "classkurlyk_1_1http_1_1auth_1_1OAuthPkceClient.html", null ],
+    [ "kurlyk::OAuthToken", "structkurlyk_1_1OAuthToken.html", null ],
     [ "std::ostringstream", null, [
       [ "kurlyk::utils::ThreadSafePrintStream", "classkurlyk_1_1utils_1_1ThreadSafePrintStream.html", null ]
     ] ],
+    [ "kurlyk::utils::PkcePair", "structkurlyk_1_1utils_1_1PkcePair.html", null ],
     [ "kurlyk::utils::ThreadSafePrintStream::PrintStream", "classkurlyk_1_1utils_1_1ThreadSafePrintStream_1_1PrintStream.html", null ],
     [ "cryptox::ProxyConfig", "structcryptox_1_1ProxyConfig.html", null ],
     [ "kurlyk::WebSocketConfig::RateLimitData", "structkurlyk_1_1WebSocketConfig_1_1RateLimitData.html", null ],

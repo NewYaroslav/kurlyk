@@ -8,6 +8,15 @@ var annotated_dup =
         [ "INetworkTaskManager", "classkurlyk_1_1core_1_1INetworkTaskManager.html", "classkurlyk_1_1core_1_1INetworkTaskManager" ],
         [ "NetworkWorker", "classkurlyk_1_1core_1_1NetworkWorker.html", "classkurlyk_1_1core_1_1NetworkWorker" ]
       ] ],
+      [ "http", "namespacekurlyk_1_1http.html", [
+        [ "auth", "namespacekurlyk_1_1http_1_1auth.html", [
+          [ "ApiKeyAuthProvider", "classkurlyk_1_1http_1_1auth_1_1ApiKeyAuthProvider.html", "classkurlyk_1_1http_1_1auth_1_1ApiKeyAuthProvider" ],
+          [ "BearerTokenAuthProvider", "classkurlyk_1_1http_1_1auth_1_1BearerTokenAuthProvider.html", "classkurlyk_1_1http_1_1auth_1_1BearerTokenAuthProvider" ],
+          [ "IAuthProvider", "classkurlyk_1_1http_1_1auth_1_1IAuthProvider.html", "classkurlyk_1_1http_1_1auth_1_1IAuthProvider" ],
+          [ "OAuthPkceClient", "classkurlyk_1_1http_1_1auth_1_1OAuthPkceClient.html", "classkurlyk_1_1http_1_1auth_1_1OAuthPkceClient" ],
+          [ "ITokenStorage", "classkurlyk_1_1http_1_1auth_1_1ITokenStorage.html", "classkurlyk_1_1http_1_1auth_1_1ITokenStorage" ]
+        ] ]
+      ] ],
       [ "startup", "namespacekurlyk_1_1startup.html", [
         [ "AutoInitializer", "classkurlyk_1_1startup_1_1AutoInitializer.html", "classkurlyk_1_1startup_1_1AutoInitializer" ]
       ] ],
@@ -18,9 +27,13 @@ var annotated_dup =
         [ "CurlErrorCategory", "classkurlyk_1_1utils_1_1CurlErrorCategory.html", "classkurlyk_1_1utils_1_1CurlErrorCategory" ],
         [ "EventQueue", "classkurlyk_1_1utils_1_1EventQueue.html", "classkurlyk_1_1utils_1_1EventQueue" ],
         [ "HttpErrorCategory", "classkurlyk_1_1utils_1_1HttpErrorCategory.html", "classkurlyk_1_1utils_1_1HttpErrorCategory" ],
+        [ "PkcePair", "structkurlyk_1_1utils_1_1PkcePair.html", "structkurlyk_1_1utils_1_1PkcePair" ],
         [ "ThreadSafePrintStream", "classkurlyk_1_1utils_1_1ThreadSafePrintStream.html", "classkurlyk_1_1utils_1_1ThreadSafePrintStream" ],
         [ "WebSocketErrorCategory", "classkurlyk_1_1utils_1_1WebSocketErrorCategory.html", "classkurlyk_1_1utils_1_1WebSocketErrorCategory" ]
       ] ],
+      [ "AuthResult", "structkurlyk_1_1AuthResult.html", "structkurlyk_1_1AuthResult" ],
+      [ "OAuthConfig", "structkurlyk_1_1OAuthConfig.html", "structkurlyk_1_1OAuthConfig" ],
+      [ "OAuthToken", "structkurlyk_1_1OAuthToken.html", "structkurlyk_1_1OAuthToken" ],
       [ "HttpRequest", "classkurlyk_1_1HttpRequest.html", "classkurlyk_1_1HttpRequest" ],
       [ "HttpResponse", "classkurlyk_1_1HttpResponse.html", "classkurlyk_1_1HttpResponse" ],
       [ "HttpClient", "classkurlyk_1_1HttpClient.html", "classkurlyk_1_1HttpClient" ],

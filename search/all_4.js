@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['data_2ehpp_0',['data.hpp',['../http_2data_8hpp.html',1,'(Global Namespace)'],['../websocket_2data_8hpp.html',1,'(Global Namespace)']]],
+  ['data_2ehpp_0',['data.hpp',['../http_2auth_2data_8hpp.html',1,'(Global Namespace)'],['../http_2data_8hpp.html',1,'(Global Namespace)'],['../websocket_2data_8hpp.html',1,'(Global Namespace)']]],
   ['debug_5fheader_1',['debug_header',['../classkurlyk_1_1HttpRequest.html#a342d3ee102d4d3b33a3302edbce1032f',1,'kurlyk::HttpRequest']]],
   ['deinit_2',['deinit',['../namespacekurlyk.html#a874abdd250d6f1c6c8433dd28dc22418',1,'kurlyk']]],
   ['deinit_5fwebsocket_3',['deinit_websocket',['../classkurlyk_1_1BaseWebSocketClient.html#a66314968c4cc1ea22a6028d22725c6df',1,'kurlyk::BaseWebSocketClient::deinit_websocket()'],['../classkurlyk_1_1SimpleWebSocketClientAdapter.html#a2eae903fe7be563690cc306b2b67bb6c',1,'kurlyk::SimpleWebSocketClientAdapter::deinit_websocket()']]],
