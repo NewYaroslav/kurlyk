@@ -10,6 +10,9 @@
 #include "auth/IAuthProvider.hpp"
 #include "auth/BearerTokenAuthProvider.hpp"
 #include "auth/ApiKeyAuthProvider.hpp"
+
+#if KURLYK_OAUTH_SUPPORT
 #include "auth/OAuthPkceClient.hpp"
+#endif
 
 #endif // _KURLYK_HTTP_AUTH_HPP_INCLUDED

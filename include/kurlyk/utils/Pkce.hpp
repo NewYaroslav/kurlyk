@@ -37,7 +37,7 @@ namespace utils {
         std::string verifier;
         verifier.reserve(length);
 
-        const std::size_t allowed_count = sizeof(allowed) - 2; // exclude null terminator
+        const std::size_t allowed_count = sizeof(allowed) - 1; // exclude null terminator
         for (std::size_t i = 0; i < length; ++i) {
             verifier.push_back(allowed[random_bytes[i] % allowed_count]);
         }

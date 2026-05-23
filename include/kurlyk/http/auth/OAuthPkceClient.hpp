@@ -15,7 +15,7 @@
 #include <chrono>
 #include <sstream>
 
-#if KURLYK_ENABLE_JSON
+#if KURLYK_JSON_SUPPORT
 #   include <nlohmann/json.hpp>
 #endif
 
@@ -235,7 +235,7 @@ namespace auth {
 
     protected:
         bool parse_token_response(const std::string& raw_response, AuthResult& out_result) {
-#if KURLYK_ENABLE_JSON
+#if KURLYK_JSON_SUPPORT
             try {
                 nlohmann::json j = nlohmann::json::parse(raw_response);
 

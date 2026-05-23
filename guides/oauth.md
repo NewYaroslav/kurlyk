@@ -65,7 +65,7 @@ if (oauth.refresh_access_token(result.token.refresh_token, result)) {
 
 ## Custom token parser (non-JSON builds)
 
-If `KURLYK_ENABLE_JSON` is `0`, `OAuthPkceClient` cannot parse JSON by default. Provide a custom parser:
+If `KURLYK_JSON_SUPPORT` is `0`, `OAuthPkceClient` cannot parse JSON by default. Provide a custom parser:
 
 ```cpp
 oauth.set_token_parser([](const std::string& raw,

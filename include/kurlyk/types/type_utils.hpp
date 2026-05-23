@@ -88,7 +88,7 @@ namespace kurlyk {
         return os << to_str(type);
     }
 
-#ifdef KURLYK_USE_JSON
+#if KURLYK_JSON_SUPPORT
 
     inline void to_json(nlohmann::json& j, const ProxyType& value) {
         j = to_str(value);
@@ -114,7 +114,7 @@ namespace kurlyk {
         value = to_enum<WebSocketEventType>(j.get<std::string>());
     }
 
-#endif // KURLYK_USE_JSON
+#endif // KURLYK_JSON_SUPPORT
 
 #if KURLYK_HTTP_SUPPORT
 

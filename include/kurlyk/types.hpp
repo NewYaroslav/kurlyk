@@ -11,7 +11,7 @@
 #include <stdexcept>
 
 // Optional third-party integration
-#if KURLYK_ENABLE_JSON
+#if KURLYK_JSON_SUPPORT
 #include <nlohmann/json.hpp>
 #endif
 

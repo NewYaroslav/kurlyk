@@ -8,7 +8,7 @@
 #include <string>
 #include <chrono>
 
-#if KURLYK_ENABLE_JSON
+#if KURLYK_JSON_SUPPORT
 #   include <nlohmann/json.hpp>
 #endif
 
@@ -39,7 +39,7 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#ifdef KURLYK_USE_JSON
+#if KURLYK_JSON_SUPPORT
 
 namespace kurlyk {
 
@@ -63,6 +63,6 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#endif // KURLYK_USE_JSON
+#endif // KURLYK_JSON_SUPPORT
 
 #endif // _KURLYK_HTTP_AUTH_DATA_OAUTH_TOKEN_HPP_INCLUDED

@@ -637,8 +637,7 @@ Define these macros before including `kurlyk.hpp` to configure the library:
 | `KURLYK_AUTO_INIT_USE_ASYNC` | `1` | Starts the network thread in the background when auto init is enabled. Set to `0` for manual processing. |
 | `KURLYK_HTTP_SUPPORT` | `1` | Enables or disables the HTTP subsystem. |
 | `KURLYK_WEBSOCKET_SUPPORT` | `1` | Enables or disables the WebSocket subsystem. |
-| `KURLYK_ENABLE_JSON` | `0` | Adds helper functions for JSON serialization of some types. |
-| `KURLYK_USE_JSON` | undefined | Enables enum-to-JSON helpers in `type_utils.hpp`; usually used together with `KURLYK_ENABLE_JSON`. |
+| `KURLYK_JSON_SUPPORT` | `0` | Enables nlohmann::json include and JSON-aware types, plus enum-to-JSON helpers in `type_utils.hpp`. |
 
 ## Repository layout
 

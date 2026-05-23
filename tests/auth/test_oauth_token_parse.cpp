@@ -1,4 +1,4 @@
-#define KURLYK_ENABLE_JSON 0
+#define KURLYK_JSON_SUPPORT 0
 #include <kurlyk.hpp>
 #include <string>
 

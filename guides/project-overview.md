@@ -40,8 +40,7 @@ Define these macros before including `<kurlyk.hpp>` to tailor functionality. "0"
 | `KURLYK_AUTO_INIT_USE_ASYNC` | 0 / 1 | 1 | Run `NetworkWorker` in a background thread during auto-init. Ignored if `KURLYK_AUTO_INIT` = 0. |
 | `KURLYK_HTTP_SUPPORT` | 0 / 1 | 1 | Include HTTP components such as `HttpClient`. |
 | `KURLYK_WEBSOCKET_SUPPORT` | 0 / 1 | 1 | Include WebSocket components such as `WebSocketClient`. |
-| `KURLYK_ENABLE_JSON` | 0 / 1 | 0 | Include nlohmann::json and expose JSON-aware types. |
-| `KURLYK_USE_JSON` | defined / undefined | undefined | Enable enum ↔ JSON helpers in `type_utils.hpp`; usually set alongside `KURLYK_ENABLE_JSON`. |
+| `KURLYK_JSON_SUPPORT` | 0 / 1 | 0 | Include nlohmann::json and expose JSON-aware types and enum helpers. |
 | `KURLYK_USE_CURL` | defined / undefined | defined on non-Emscripten | Use libcurl for HTTP features. |
 | `KURLYK_USE_SIMPLEWEB` | defined / undefined | defined on non-Emscripten | Use Simple-WebSocket-Server for WebSocket features. |
 | `KURLYK_USE_EMSCRIPTEN` | defined / undefined | defined when compiling for Emscripten | Use Emscripten-specific WebSocket adapters instead of curl/SimpleWeb. |

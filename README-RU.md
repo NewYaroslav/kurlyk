@@ -637,8 +637,7 @@ Asio и Simple-WebSocket-Server — header-only библиотеки и подх
 | `KURLYK_AUTO_INIT_USE_ASYNC` | `1` | При включённом auto init запускает сетевой поток в фоне. Установите `0`, если требуется выполнять обработку вручную. |
 | `KURLYK_HTTP_SUPPORT` | `1` | Включает или отключает HTTP-подсистему. |
 | `KURLYK_WEBSOCKET_SUPPORT` | `1` | Включает или отключает WebSocket-подсистему. |
-| `KURLYK_ENABLE_JSON` | `0` | Добавляет вспомогательные функции для JSON-сериализации некоторых типов. |
-| `KURLYK_USE_JSON` | undefined | Включает enum-to-JSON helpers в `type_utils.hpp`; обычно используется вместе с `KURLYK_ENABLE_JSON`. |
+| `KURLYK_JSON_SUPPORT` | `0` | Включает nlohmann::json и JSON-aware типы, а также enum-to-JSON helpers в `type_utils.hpp`. |
 
 ## Структура репозитория
 
