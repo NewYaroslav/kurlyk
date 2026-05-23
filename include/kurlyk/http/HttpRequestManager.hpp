@@ -204,9 +204,18 @@ namespace kurlyk {
                 return;
             }
 
+            bool invoke_now = false;
             {
                 std::lock_guard<std::mutex> lock(m_mutex);
-                m_group_waiters[group_id].push_back(std::move(callback));
+                if (group_request_count_unlocked(group_id) == 0) {
+                    invoke_now = true;
+                } else {
+                    m_group_waiters[group_id].push_back(std::move(callback));
+                }
+            }
+
+            if (invoke_now && callback) {
+                callback();
             }
         }
 
@@ -442,7 +451,6 @@ namespace kurlyk {
                     context->callback(std::move(response));
                     context->complete();
                 }
-                lock.unlock();
                 return;
             }
         }

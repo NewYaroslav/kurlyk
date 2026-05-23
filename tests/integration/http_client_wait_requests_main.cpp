@@ -96,12 +96,7 @@ int main() {
             });
         require(ok, "request should be accepted");
 
-        std::cerr << "[diag test1] ok=" << ok
-                  << " in_flight=" << client->in_flight_requests()
-                  << " callback_count=" << callback_count.load()
-                  << std::endl;
         client->wait_requests();
-        std::cerr << "[diag test1] after wait_requests callback_count=" << callback_count.load() << std::endl;
         require(callback_count.load() == 1, "wait_requests() must wait until callback is delivered");
         require(client->in_flight_requests() == 0, "client group must be idle after wait_requests()");
 

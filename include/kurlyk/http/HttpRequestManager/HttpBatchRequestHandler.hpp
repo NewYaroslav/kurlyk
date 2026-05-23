@@ -76,7 +76,9 @@ namespace kurlyk {
                 if (!curl) continue;
                 curl_multi_remove_handle(m_multi_handle, curl);
             }
-            curl_multi_cleanup(m_multi_handle);
+            if (m_multi_handle) {
+                curl_multi_cleanup(m_multi_handle);
+            }
         }
 
         /// \brief Processes the requests within the handler.
