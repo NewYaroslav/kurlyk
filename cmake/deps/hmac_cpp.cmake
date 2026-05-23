@@ -6,6 +6,16 @@ function(use_or_fetch_hmac_cpp out_target)
         return()
     endif()
 
+    # Prefer local submodule if available
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/external/hmac-cpp/CMakeLists.txt")
+        message(STATUS "hmac-cpp: using local submodule")
+        add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/external/hmac-cpp" EXCLUDE_FROM_ALL)
+        if(TARGET hmac_cpp::hmac_cpp)
+            target_link_libraries(${out_target} INTERFACE hmac_cpp::hmac_cpp)
+            return()
+        endif()
+    endif()
+
     find_package(hmac_cpp QUIET)
     if(hmac_cpp_FOUND AND TARGET hmac_cpp::hmac_cpp)
         message(STATUS "hmac-cpp: using existing hmac_cpp::hmac_cpp")

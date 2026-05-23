@@ -21,8 +21,14 @@ set(KURLYK_EXAMPLE_SOURCES
 	websocket_independent_clients_example.cpp
 	bearer_token_auth_provider_example.cpp
 	api_key_auth_provider_example.cpp
-	openrouter_oauth_pkce_example.cpp
+	simple_bearer_auth_example.cpp
 )
+
+if(KURLYK_OAUTH_SUPPORT)
+	list(APPEND KURLYK_EXAMPLE_SOURCES
+		openrouter_oauth_pkce_example.cpp
+	)
+endif()
 
 include(${CMAKE_CURRENT_LIST_DIR}/../cmake/copy_runtime_dlls.cmake)
 

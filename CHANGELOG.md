@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- Added lightweight HTTP authentication providers:
+  - `BearerTokenAuthProvider` — injects `Authorization: Bearer <token>` header.
+  - `ApiKeyAuthProvider` — injects an API key as a custom header or URL query parameter with automatic percent-encoding.
+- Added `OAuthPkceClient` for OAuth2 Authorization Code + PKCE (RFC 7636) flow:
+  - `build_authorization_url()`, `exchange_code()`, `refresh_access_token()`, `validate_state()`.
+  - Uses standalone `kurlyk::http_post` / `kurlyk::http_request` helpers (no `HttpClient` coupling).
+  - SHA-256 via `hmac-cpp`; Base64Url implemented inline.
+  - Custom token parser fallback for non-JSON builds.
+- Added `ITokenStorage` interface for caller-provided token persistence.
+- Added `OAuthToken`, `OAuthConfig`, `AuthResult` data types with `AuthError` enum.
+- Added `KURLYK_AUTH_SUPPORT`, `KURLYK_OAUTH_SUPPORT`, and `KURLYK_JSON_SUPPORT` feature macros.
+- Added `tests/auth/` standalone test suite: Base64Url, PKCE, auth providers, URL construction, token parsing.
+- Added auth examples: OpenRouter OAuth PKCE, Gemini API key (query), ChatGPT Bearer token.
+- Added `guides/oauth.md` and `guides/auth-providers.md` documentation.
+
+### Changed
+- Replaced dual `KURLYK_ENABLE_JSON` / `KURLYK_USE_JSON` macros with unified `KURLYK_JSON_SUPPORT`.
+  Legacy aliases map automatically for backward compatibility.
+
 ## [v1.0.2] - 2026-04-23
 - Added `HttpClient::wait_requests()` to block until all callbacks for the client's request group are delivered.
 - Added `HttpClient::wait_requests_for(timeout)` to block with a timeout; returns `false` on timeout.
