@@ -5,6 +5,10 @@
 /// \file HttpClient.hpp
 /// \brief Contains the definition of the concrete HttpClient class for making HTTP requests to a specific host.
 
+#if KURLYK_AUTH_SUPPORT
+#   include "auth/IAuthProvider.hpp"
+#endif
+
 namespace kurlyk {
 
     /// \class HttpClient
@@ -184,6 +188,16 @@ namespace kurlyk {
         void set_headers(const kurlyk::Headers& headers) {
             m_request.headers = headers;
         }
+
+#if KURLYK_AUTH_SUPPORT
+        /// \brief Assigns an authentication provider to all requests created by this client.
+        /// \param provider Shared pointer to an IAuthProvider implementation.
+        /// \note The provider's `authorize()` is called on every request created by this client
+        ///       before submission. Set to `nullptr` to disable.
+        void set_auth_provider(std::shared_ptr<http::auth::IAuthProvider> provider) {
+            m_auth_provider = provider;
+        }
+#endif
 
         /// \brief Assigns an existing rate limit to future requests by ID.
         /// \param limit_id The unique identifier of the rate limit to assign.
@@ -896,6 +910,9 @@ namespace kurlyk {
         bool m_owns_specific_rate_limit = false; ///< Flag indicating if the client owns the specific rate limit.
         mutable std::mutex m_submit_mutex; ///< Protects client-side submission settings and admission checks.
         std::size_t m_max_in_flight = 0; ///< Maximum number of in-flight requests for this client group, or 0 for disabled.
+#       if KURLYK_AUTH_SUPPORT
+        std::shared_ptr<http::auth::IAuthProvider> m_auth_provider; ///< Optional authentication provider applied to every request.
+#       endif
 
         /// \brief Adds the request to the request manager and notifies the worker to process it.
         /// \param request_ptr The HTTP request to be sent.
@@ -929,6 +946,11 @@ namespace kurlyk {
             request_ptr->set_url(m_host, path, query);
             request_ptr->headers.insert(headers.begin(), headers.end());
             request_ptr->content = content;
+#           if KURLYK_AUTH_SUPPORT
+            if (m_auth_provider) {
+                m_auth_provider->authorize(*request_ptr);
+            }
+#           endif
             return request_ptr;
         }
 

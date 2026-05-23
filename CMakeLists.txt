@@ -1,4 +1,11 @@
 cmake_minimum_required(VERSION 3.21)
+
+# Preserve legacy FetchContent_Populate behavior to avoid CMake 3.30+ deprecation warnings
+# for fallback dependencies that populate manually (imported targets, interface libraries).
+if(POLICY CMP0169)
+    cmake_policy(SET CMP0169 OLD)
+endif()
+
 project(kurlyk VERSION 1.0.2 LANGUAGES CXX)
 # options
 
