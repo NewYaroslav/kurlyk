@@ -234,3 +234,37 @@ jobs:
             build-odr/CMakeFiles/CMakeOutput.log
             build-odr/Testing/Temporary/LastTest.log
           if-no-files-found: ignore
+
+  auth-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - run: git submodule update --init --recursive
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev ninja-build
+      - name: Configure auth tests
+        run: |
+          cmake -S tests/auth \
+                -B build-auth-tests \
+                -G Ninja \
+                -DKURLYK_BUILD_EXAMPLES=OFF \
+                -DKURLYK_USE_FALLBACK_ASIO=ON \
+                -DKURLYK_USE_FALLBACK_SIMPLE_WS_SERVER=ON \
+                -Wno-dev
+      - name: Build auth tests
+        run: cmake --build build-auth-tests
+      - name: Run auth tests
+        run: ctest --test-dir build-auth-tests --output-on-failure
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-auth-tests
+          path: |
+            build-auth-tests/CMakeFiles/CMakeOutput.log
+            build-auth-tests/Testing/Temporary/LastTest.log
+          if-no-files-found: ignore

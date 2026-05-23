@@ -22,6 +22,7 @@ set(KURLYK_EXAMPLE_SOURCES
 	bearer_token_auth_provider_example.cpp
 	api_key_auth_provider_example.cpp
 	openrouter_oauth_pkce_example.cpp
+	simple_bearer_auth_example.cpp
 )
 
 include(${CMAKE_CURRENT_LIST_DIR}/../cmake/copy_runtime_dlls.cmake)
