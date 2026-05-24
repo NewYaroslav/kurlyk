@@ -56,6 +56,8 @@ Determine the task type and apply the corresponding format:
 
 - [Critical defaults](guides/critical-defaults.md) - mandatory rules for every
   repository task.
+- [Git workflow](guides/git-workflow.md) - branch policy, PR-only workflow,
+  branch naming, and rules for AI agents before editing.
 - [Coding agent workflow](.claude/rules/delegation.md) - default workflow for
   all file-editing tasks (delegation, model routing, verification).
 - [Project overview](guides/project-overview.md) - domain model, public API
@@ -73,6 +75,7 @@ Determine the task type and apply the corresponding format:
 
 See [guides/critical-defaults.md](guides/critical-defaults.md) for the full
 list of mandatory pre-edit, compatibility, testing, and git rules.
+For branch and PR policy, also see [guides/git-workflow.md](guides/git-workflow.md).
 
 ## Provenance and Honesty
 
