@@ -200,6 +200,21 @@ namespace kurlyk {
         void set_auth_provider(std::shared_ptr<http::auth::IAuthProvider> provider) {
             m_auth_provider = provider;
         }
+
+        /// \brief Removes the current authentication provider from this client.
+        void clear_auth_provider() {
+            m_auth_provider.reset();
+        }
+
+        /// \brief Returns whether this client has an active authentication provider.
+        bool has_auth_provider() const {
+            return m_auth_provider != nullptr;
+        }
+
+        /// \brief Returns the current authentication provider, or nullptr if none is set.
+        std::shared_ptr<http::auth::IAuthProvider> auth_provider() const {
+            return m_auth_provider;
+        }
 #endif
 
         /// \brief Assigns an existing rate limit to future requests by ID.
