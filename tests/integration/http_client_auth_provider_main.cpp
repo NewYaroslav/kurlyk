@@ -76,7 +76,24 @@ int main() {
     {
         ProcessorGuard pg;
 
-        // --- Test 1: BearerTokenAuthProvider injected via HttpClient ---
+        // --- Test 1: auth provider accessors reflect client state ---
+        {
+            auto client = std::make_unique<kurlyk::HttpClient>(base_url);
+            require(!client->has_auth_provider(), "client must start without auth provider");
+            require(client->auth_provider() == nullptr, "auth_provider() must return nullptr initially");
+
+            auto provider = std::make_shared<kurlyk::http::auth::BearerTokenAuthProvider>(
+                "accessor-token");
+            client->set_auth_provider(provider);
+            require(client->has_auth_provider(), "has_auth_provider() must be true after set_auth_provider()");
+            require(client->auth_provider() == provider, "auth_provider() must return assigned provider");
+
+            client->clear_auth_provider();
+            require(!client->has_auth_provider(), "has_auth_provider() must be false after clear_auth_provider()");
+            require(client->auth_provider() == nullptr, "auth_provider() must return nullptr after clear_auth_provider()");
+        }
+
+        // --- Test 2: BearerTokenAuthProvider injected via HttpClient ---
         {
             last_auth_header.clear();
             auto client = std::make_unique<kurlyk::HttpClient>(base_url);
@@ -95,7 +112,7 @@ int main() {
                     "Authorization header must be injected by BearerTokenAuthProvider");
         }
 
-        // --- Test 2: per-request Authorization header overwritten by provider ---
+        // --- Test 3: per-request Authorization header overwritten by provider ---
         {
             last_auth_header.clear();
             auto client = std::make_unique<kurlyk::HttpClient>(base_url);
@@ -116,7 +133,7 @@ int main() {
                     "provider must overwrite per-request Authorization header");
         }
 
-        // --- Test 3: set_auth_provider(nullptr) disables injection ---
+        // --- Test 4: set_auth_provider(nullptr) disables injection ---
         {
             last_auth_header.clear();
             auto client = std::make_unique<kurlyk::HttpClient>(base_url);

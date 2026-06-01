@@ -28,4 +28,5 @@ Mandatory rules for every repository task.
 
 ## Git
 
+All changes reach `main` through PRs; do not push directly to `main` unless the user explicitly overrides this rule.
 See [Git workflow](git-workflow.md) for the full branch and PR policy.
