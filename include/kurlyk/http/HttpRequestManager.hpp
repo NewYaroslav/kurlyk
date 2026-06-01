@@ -239,8 +239,18 @@ namespace kurlyk {
                 if (callback) callback();
                 return;
             }
-            std::lock_guard<std::mutex> lock(m_mutex);
-            m_groups_to_cancel[group_id].push_back(std::move(callback));
+            bool invoke_now = false;
+            {
+                std::lock_guard<std::mutex> lock(m_mutex);
+                if (group_request_count_unlocked(group_id) == 0) {
+                    invoke_now = true;
+                } else {
+                    m_groups_to_cancel[group_id].push_back(std::move(callback));
+                }
+            }
+            if (invoke_now && callback) {
+                callback();
+            }
         }
 
         /// \brief Processes all requests in the manager.

@@ -321,6 +321,26 @@ int main() {
         client.reset();
     }
 
+    // --- Test 9: wait_requests() on empty group returns immediately ---
+    {
+        ProcessorGuard pg;
+        auto client = std::make_unique<kurlyk::HttpClient>(base_url);
+        auto t0 = std::chrono::steady_clock::now();
+        client->wait_requests();
+        auto dt = std::chrono::steady_clock::now() - t0;
+        require(dt < std::chrono::milliseconds(50),
+                "wait_requests() on empty group must return immediately");
+        client.reset();
+    }
+
+    // --- Test 10: wait_requests_for() on empty group returns true immediately ---
+    {
+        auto client = std::make_unique<kurlyk::HttpClient>(base_url);
+        bool done = client->wait_requests_for(std::chrono::milliseconds(10));
+        require(done, "wait_requests_for() on empty group must return true immediately");
+        client.reset();
+    }
+
     server.stop();
     server_thread.join();
 
