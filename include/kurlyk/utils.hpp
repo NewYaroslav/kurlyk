@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILIS_HPP_INCLUDED
-#define _KURLYK_UTILIS_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_HPP_INCLUDED
 
 /// \file utils.hpp
 /// \brief Contains utility functions and classes for handling HTTP requests and responses.
@@ -56,4 +56,4 @@
 #include "utils/encoding_utils.hpp"
 #include "utils/string_utils.hpp"
 
-#endif // _KURLYK_UTILIS_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_HPP_INCLUDED

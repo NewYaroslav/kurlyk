@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HTTP_AUTH_IAUTH_PROVIDER_HPP_INCLUDED
-#define _KURLYK_HTTP_AUTH_IAUTH_PROVIDER_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HTTP_AUTH_I_AUTH_PROVIDER_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HTTP_AUTH_I_AUTH_PROVIDER_HPP_INCLUDED
 
 /// \file IAuthProvider.hpp
 /// \brief Defines the IAuthProvider interface for HTTP authentication strategies.
@@ -33,4 +33,4 @@ namespace auth {
 } // namespace http
 } // namespace kurlyk
 
-#endif // _KURLYK_HTTP_AUTH_IAUTH_PROVIDER_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HTTP_AUTH_I_AUTH_PROVIDER_HPP_INCLUDED

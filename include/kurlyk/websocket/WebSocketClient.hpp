@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_WEBSOCKET_CLIENT_HPP_INCLUDED
-#define _KURLYK_WEBSOCKET_CLIENT_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_WEBSOCKET_WEB_SOCKET_CLIENT_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_WEBSOCKET_WEB_SOCKET_CLIENT_HPP_INCLUDED
 
 /// \file WebSocketClient.hpp
 /// \brief Defines the WebSocketClient facade for managing WebSocket connections.
@@ -491,4 +491,4 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#endif // _KURLYK_WEBSOCKET_CLIENT_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_WEBSOCKET_WEB_SOCKET_CLIENT_HPP_INCLUDED

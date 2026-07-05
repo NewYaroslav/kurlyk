@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_TYPES_HPP_INCLUDED
-#define _KURLYK_TYPES_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_TYPES_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_TYPES_HPP_INCLUDED
 
 /// \file types.hpp
 /// \brief Aggregates type enumerations and utilities used throughout the Kurlyk library.
@@ -27,4 +27,4 @@
 #include "types/type_utils.hpp"
 #include "types/Cookie.hpp"
 
-#endif // _KURLYK_TYPES_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_TYPES_HPP_INCLUDED

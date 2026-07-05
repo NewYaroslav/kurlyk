@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HTTP_UTILS_HPP_INCLUDED
-#define _KURLYK_HTTP_UTILS_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HTTP_UTILS_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HTTP_UTILS_HPP_INCLUDED
 
 /// \file utils.hpp
 /// \brief Contains utility functions for handling HTTP requests, rate limiting, and request cancellation.
@@ -555,4 +555,4 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#endif // _KURLYK_HTTP_UTILS_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HTTP_UTILS_HPP_INCLUDED

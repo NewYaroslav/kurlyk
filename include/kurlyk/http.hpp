@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HTTP_HPP_INCLUDED
-#define _KURLYK_HTTP_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HTTP_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HTTP_HPP_INCLUDED
 
 /// \file http.hpp
 /// \brief Aggregates main HTTP interfaces and utilities, including client, request manager, and helpers.
@@ -26,4 +26,4 @@
 #include "http/auth.hpp"
 #endif
 
-#endif // _KURLYK_HTTP_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HTTP_HPP_INCLUDED

@@ -77,6 +77,26 @@ See [guides/critical-defaults.md](guides/critical-defaults.md) for the full
 list of mandatory pre-edit, compatibility, testing, and git rules.
 For branch and PR policy, also see [guides/git-workflow.md](guides/git-workflow.md).
 
+## Header Guards
+
+For every project-owned C/C++ header, use `#pragma once` together with a
+non-reserved include guard. Guard names must be derived from the project prefix
+and header path, and must clearly indicate that the macro is a header guard:
+
+```cpp
+KURLYK_HEADER_<PATH>_<FILE>_<EXT>_INCLUDED
+```
+
+Do not use identifiers reserved for the compiler, standard library, platform SDK,
+or other implementation internals. In particular, do not use include guard names
+that start with an underscore, start with an underscore followed by an uppercase
+letter, or contain a double underscore anywhere.
+
+Implementation fragments such as `.ipp`, `.inl`, or `.tpp` files may remain
+unguarded if they are only included from already guarded headers and are not
+intended for direct inclusion. If they are intended to be included directly, they
+must follow the same non-reserved guard naming rule.
+
 ## Provenance and Honesty
 
 An agent must not:

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HTTP_RESPONSE_HPP_INCLUDED
-#define _KURLYK_HTTP_RESPONSE_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HTTP_DATA_HTTP_RESPONSE_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HTTP_DATA_HTTP_RESPONSE_HPP_INCLUDED
 
 /// \file HttpResponse.hpp
 /// \brief Defines the HttpResponse class and related HTTP response types.
@@ -41,5 +41,5 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#endif // _KURLYK_HTTP_RESPONSE_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HTTP_DATA_HTTP_RESPONSE_HPP_INCLUDED
 

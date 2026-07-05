@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_WEBSOCKET_SEND_INFO_HPP_INCLUDED
-#define _KURLYK_WEBSOCKET_SEND_INFO_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_WEBSOCKET_DATA_WEB_SOCKET_SEND_INFO_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_WEBSOCKET_DATA_WEB_SOCKET_SEND_INFO_HPP_INCLUDED
 
 /// \file WebSocketSendInfo.hpp
 /// \brief Contains the WebSocketSendInfo class, which holds the context for sending WebSocket messages.
@@ -38,4 +38,4 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#endif // _KURLYK_WEBSOCKET_SEND_INFO_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_WEBSOCKET_DATA_WEB_SOCKET_SEND_INFO_HPP_INCLUDED

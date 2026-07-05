@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HTTP_AUTH_DATA_HPP_INCLUDED
-#define _KURLYK_HTTP_AUTH_DATA_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HTTP_AUTH_DATA_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HTTP_AUTH_DATA_HPP_INCLUDED
 
 /// \file data.hpp
 /// \brief Aggregates OAuth2 authentication data structures.
@@ -9,4 +9,4 @@
 #include "data/OAuthConfig.hpp"
 #include "data/AuthResult.hpp"
 
-#endif // _KURLYK_HTTP_AUTH_DATA_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HTTP_AUTH_DATA_HPP_INCLUDED

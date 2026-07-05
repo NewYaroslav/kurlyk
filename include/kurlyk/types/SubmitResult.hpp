@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_TYPES_SUBMIT_RESULT_HPP_INCLUDED
-#define _KURLYK_TYPES_SUBMIT_RESULT_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_TYPES_SUBMIT_RESULT_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_TYPES_SUBMIT_RESULT_HPP_INCLUDED
 
 /// \file SubmitResult.hpp
 /// \brief Defines the SubmitResult structure for synchronous admission results.
@@ -23,4 +23,4 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#endif // _KURLYK_TYPES_SUBMIT_RESULT_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_TYPES_SUBMIT_RESULT_HPP_INCLUDED

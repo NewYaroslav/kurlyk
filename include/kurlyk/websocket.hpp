@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_WEBSOCKET_HPP_INCLUDED
-#define _KURLYK_WEBSOCKET_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_WEBSOCKET_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_WEBSOCKET_HPP_INCLUDED
 
 /// \file websocket.hpp
 /// \brief Aggregates main WebSocket interfaces and utilities.
@@ -13,4 +13,4 @@
 #include "websocket/WebSocketManager.hpp"
 #include "websocket/WebSocketClient.hpp"
 
-#endif // _KURLYK_WEBSOCKET_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_WEBSOCKET_HPP_INCLUDED

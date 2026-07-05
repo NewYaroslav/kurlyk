@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HPP_INCLUDED
-#define _KURLYK_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HPP_INCLUDED
 
 /// \file kurlyk.hpp
 /// \brief Main header file for the Kurlyk library, providing HTTP and WebSocket support.
@@ -88,4 +88,4 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#endif // _KURLYK_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HPP_INCLUDED

@@ -53,7 +53,10 @@
 - Do not use `using namespace`; always qualify names such as `std::`.
 - Keep project headers before system headers in include lists.
 - Header files must start with `#pragma once`; if an include guard is also used,
-  prefer a `_KURLYK_*_HPP_INCLUDED` style guard that matches the file.
+  use a non-reserved guard derived from the project prefix and header path:
+  `KURLYK_HEADER_<PATH>_<FILE>_<EXT>_INCLUDED`.
+- Do not use guard names that start with an underscore, start with an
+  underscore followed by an uppercase letter, or contain a double underscore.
 - Keep source and documentation files in UTF-8.
 - Write non-ASCII C++ string literals as `u8"..."`.
 - The default standard is C++11. Guard C++17-only code with

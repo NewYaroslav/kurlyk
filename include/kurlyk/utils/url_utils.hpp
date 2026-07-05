@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_URL_UTILS_HPP_INCLUDED
-#define _KURLYK_UTILS_URL_UTILS_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_URL_UTILS_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_URL_UTILS_HPP_INCLUDED
 
 /// \file url_utils.hpp
 /// \brief Provides utility functions for parsing and validating URLs and their components.
@@ -169,4 +169,4 @@ namespace kurlyk::utils {
 
 } // namespace kurlyk::utils
 
-#endif // _KURLYK_UTILS_URL_UTILS_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_URL_UTILS_HPP_INCLUDED

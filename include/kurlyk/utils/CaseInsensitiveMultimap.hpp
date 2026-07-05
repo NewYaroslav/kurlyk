@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_CASE_INSENSITIVE_MULTIMAP_HPP_INCLUDED
-#define _KURLYK_UTILS_CASE_INSENSITIVE_MULTIMAP_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_CASE_INSENSITIVE_MULTIMAP_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_CASE_INSENSITIVE_MULTIMAP_HPP_INCLUDED
 
 /// \file CaseInsensitiveMultimap.hpp
 /// \brief Defines case-insensitive utilities and data structures for HTTP headers, cookies, and query parameters.
@@ -69,4 +69,4 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#endif // _KURLYK_UTILS_CASE_INSENSITIVE_MULTIMAP_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_CASE_INSENSITIVE_MULTIMAP_HPP_INCLUDED

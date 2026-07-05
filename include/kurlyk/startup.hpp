@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_STARTUP_HPP_INCLUDED
-#define _KURLYK_STARTUP_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_STARTUP_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_STARTUP_HPP_INCLUDED
 
 /// \file startup.hpp
 /// \brief Provides centralized startup and shutdown routines for the Kurlyk library.
@@ -21,4 +21,4 @@
 
 #include "startup/runtime.hpp"
 
-#endif // _KURLYK_STARTUP_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_STARTUP_HPP_INCLUDED

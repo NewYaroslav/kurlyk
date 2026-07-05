@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HTTP_AUTH_TOKEN_STORAGE_HPP_INCLUDED
-#define _KURLYK_HTTP_AUTH_TOKEN_STORAGE_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HTTP_AUTH_STORAGE_TOKEN_STORAGE_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HTTP_AUTH_STORAGE_TOKEN_STORAGE_HPP_INCLUDED
 
 /// \file TokenStorage.hpp
 /// \brief Defines the ITokenStorage interface for persisting and retrieving OAuth tokens.
@@ -41,4 +41,4 @@ namespace auth {
 } // namespace http
 } // namespace kurlyk
 
-#endif // _KURLYK_HTTP_AUTH_TOKEN_STORAGE_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HTTP_AUTH_STORAGE_TOKEN_STORAGE_HPP_INCLUDED

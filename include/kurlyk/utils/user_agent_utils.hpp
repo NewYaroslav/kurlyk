@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_USER_AGENT_UTILS_HPP_INCLUDED
-#define _KURLYK_UTILS_USER_AGENT_UTILS_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_USER_AGENT_UTILS_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_USER_AGENT_UTILS_HPP_INCLUDED
 
 /// \file user_agent_utils.hpp
 /// \brief Provides functions for converting User-Agent strings to sec-ch-ua format.
@@ -28,4 +28,4 @@ namespace kurlyk::utils {
 
 } // namespace kurlyk::utils
 
-#endif // _KURLYK_UTILS_USER_AGENT_UTILS_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_USER_AGENT_UTILS_HPP_INCLUDED

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_TYPES_COOKIE_HPP_INCLUDED
-#define _KURLYK_TYPES_COOKIE_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_TYPES_COOKIE_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_TYPES_COOKIE_HPP_INCLUDED
 
 /// \file Cookie.hpp
 /// \brief Defines the Cookie class for managing HTTP cookies.
@@ -30,4 +30,4 @@ namespace kurlyk {
 
 }; // namespace kurlyk
 
-#endif // _KURLYK_TYPES_COOKIE_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_TYPES_COOKIE_HPP_INCLUDED

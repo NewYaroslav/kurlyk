@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HTTP_AUTH_HPP_INCLUDED
-#define _KURLYK_HTTP_AUTH_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HTTP_AUTH_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HTTP_AUTH_HPP_INCLUDED
 
 /// \file auth.hpp
 /// \brief Aggregates HTTP authentication providers and OAuth2 PKCE client.
@@ -15,4 +15,4 @@
 #include "auth/OAuthPkceClient.hpp"
 #endif
 
-#endif // _KURLYK_HTTP_AUTH_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HTTP_AUTH_HPP_INCLUDED

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_HTTP_PARSER_HPP_INCLUDED
-#define _KURLYK_UTILS_HTTP_PARSER_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_HTTP_PARSER_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_HTTP_PARSER_HPP_INCLUDED
 
 /// \file http_parser.hpp
 /// \brief Provides utility functions for parsing HTTP headers and cookies.
@@ -188,4 +188,4 @@ namespace kurlyk::utils {
 
 } // namespace kurlyk::utils
 
-#endif // _KURLYK_UTILS_HTTP_PARSER_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_HTTP_PARSER_HPP_INCLUDED

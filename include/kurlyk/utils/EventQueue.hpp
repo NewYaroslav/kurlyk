@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_EVENT_QUEUE_HPP_INCLUDED
-#define _KURLYK_EVENT_QUEUE_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_EVENT_QUEUE_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_EVENT_QUEUE_HPP_INCLUDED
 
 /// \file EventQueue.hpp
 /// \brief Defines the EventQueue class for managing a thread-safe event queue.
@@ -57,4 +57,4 @@ namespace kurlyk::utils {
 
 } // namespace kurlyk::utils
 
-#endif // _KURLYK_EVENT_QUEUE_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_EVENT_QUEUE_HPP_INCLUDED

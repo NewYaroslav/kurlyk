@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED
-#define _KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED
 
 /// \file CurlErrorCategory.hpp
 /// \brief Defines the CurlErrorCategory class for handling CURL error codes.
@@ -35,4 +35,4 @@ namespace kurlyk::utils {
 
 } // namespace kurlyk::utils
 
-#endif // _KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED

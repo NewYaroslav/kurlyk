@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HTTP_CLIENT_HPP_INCLUDED
-#define _KURLYK_HTTP_CLIENT_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HTTP_HTTP_CLIENT_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HTTP_HTTP_CLIENT_HPP_INCLUDED
 
 /// \file HttpClient.hpp
 /// \brief Contains the definition of the concrete HttpClient class for making HTTP requests to a specific host.
@@ -1088,4 +1088,4 @@ namespace kurlyk {
 
 }; // namespace kurlyk
 
-#endif // _KURLYK_HTTP_CLIENT_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HTTP_HTTP_CLIENT_HPP_INCLUDED

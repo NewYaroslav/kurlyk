@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_CORE_HPP_INCLUDED
-#define _KURLYK_CORE_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_CORE_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_CORE_HPP_INCLUDED
 
 /// \file core.hpp
 /// \brief Aggregates core infrastructure components such as task manager interface and the network worker.
@@ -34,4 +34,4 @@
 #include "core/INetworkTaskManager.hpp"
 #include "core/NetworkWorker.hpp"
 
-#endif // _KURLYK_CORE_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_CORE_HPP_INCLUDED

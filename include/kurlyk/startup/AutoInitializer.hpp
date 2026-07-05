@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_STARTUP_AUTO_INITIALIZER_HPP_INCLUDED
-#define _KURLYK_STARTUP_AUTO_INITIALIZER_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_STARTUP_AUTO_INITIALIZER_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_STARTUP_AUTO_INITIALIZER_HPP_INCLUDED
 
 /// \file AutoInitializer.hpp
 /// \brief Provides automatic initialization and shutdown for the Kurlyk network system.
@@ -49,4 +49,4 @@ namespace kurlyk::startup {
 
 } // namespace kurlyk::startup
 
-#endif // _KURLYK_STARTUP_AUTO_INITIALIZER_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_STARTUP_AUTO_INITIALIZER_HPP_INCLUDED

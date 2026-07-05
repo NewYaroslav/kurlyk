@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_PRINT_UTILS_HPP_INCLUDED
-#define _KURLYK_UTILS_PRINT_UTILS_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_PRINT_UTILS_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_PRINT_UTILS_HPP_INCLUDED
 
 /// \file print_utils.hpp
 /// \brief Provides thread-safe console output utilities.
@@ -38,4 +38,4 @@ namespace kurlyk::utils {
 
 } // namespace kurlyk::utils
 
-#endif // _KURLYK_UTILS_PRINT_UTILS_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_PRINT_UTILS_HPP_INCLUDED

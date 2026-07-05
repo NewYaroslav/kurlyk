@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HTTP_REQUEST_MANAGER_HPP_INCLUDED
-#define _KURLYK_HTTP_REQUEST_MANAGER_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HTTP_HTTP_REQUEST_MANAGER_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HTTP_HTTP_REQUEST_MANAGER_HPP_INCLUDED
 
 /// \file HttpRequestManager.hpp
 /// \brief Manages and processes HTTP requests using a singleton pattern.
@@ -643,4 +643,4 @@ namespace kurlyk {
 
 }; // namespace kurlyk
 
-#endif // _KURLYK_HTTP_REQUEST_MANAGER_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HTTP_HTTP_REQUEST_MANAGER_HPP_INCLUDED

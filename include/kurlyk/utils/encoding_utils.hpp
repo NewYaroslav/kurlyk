@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_ENCODING_UTILS_HPP_INCLUDED
-#define _KURLYK_UTILS_ENCODING_UTILS_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_ENCODING_UTILS_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_ENCODING_UTILS_HPP_INCLUDED
 
 /// \file encoding_utils.hpp
 /// \brief Provides character encoding conversion utilities (e.g., UTF-8 to ANSI).
@@ -29,4 +29,4 @@ namespace kurlyk::utils {
 
 } // namespace kurlyk::utils
 
-#endif // _KURLYK_UTILS_ENCODING_UTILS_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_ENCODING_UTILS_HPP_INCLUDED

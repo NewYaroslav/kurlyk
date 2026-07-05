@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _CRYPTOX_DATA_CONNECTION_PROXY_CONFIG_HPP_INCLUDED
-#define _CRYPTOX_DATA_CONNECTION_PROXY_CONFIG_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_TYPES_PROXY_CONFIG_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_TYPES_PROXY_CONFIG_HPP_INCLUDED
 
 /// \file ProxyConfig.hpp
 /// \brief Defines the ProxyConfig structure for proxy server settings.
@@ -122,4 +122,4 @@ namespace cryptox {
 
 } // namespace cryptox
 
-#endif // _CRYPTOX_DATA_CONNECTION_PROXY_CONFIG_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_TYPES_PROXY_CONFIG_HPP_INCLUDED

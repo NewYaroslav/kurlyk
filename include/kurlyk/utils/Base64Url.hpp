@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_BASE64URL_HPP_INCLUDED
-#define _KURLYK_UTILS_BASE64URL_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_BASE64_URL_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_BASE64_URL_HPP_INCLUDED
 
 /// \file Base64Url.hpp
 /// \brief Provides Base64url encoding and decoding (RFC 4648, no padding).
@@ -118,4 +118,4 @@ namespace utils {
 } // namespace utils
 } // namespace kurlyk
 
-#endif // _KURLYK_UTILS_BASE64URL_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_BASE64_URL_HPP_INCLUDED
