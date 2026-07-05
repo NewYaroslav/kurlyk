@@ -128,8 +128,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('Pkce_8hpp_sour
 </div><!--header-->
 <div class="contents">
 <a href="Pkce_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef _KURLYK_UTILS_PKCE_HPP_INCLUDED</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="Pkce_8hpp.html#a4658b7bfbfa36b9b3f60e842f4bf3c62">    3</a></span><span class="preprocessor">#define _KURLYK_UTILS_PKCE_HPP_INCLUDED</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef KURLYK_HEADER_KURLYK_UTILS_PKCE_HPP_INCLUDED</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="Pkce_8hpp.html#a7d056185f7d50d584f10b8cd1da7bcad">    3</a></span><span class="preprocessor">#define KURLYK_HEADER_KURLYK_UTILS_PKCE_HPP_INCLUDED</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="Base64Url_8hpp.html">Base64Url.hpp</a>&quot;</span></div>
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('Pkce_8hpp_sour
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>} <span class="comment">// namespace utils</span></div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>} <span class="comment">// namespace kurlyk</span></div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#endif </span><span class="comment">// _KURLYK_UTILS_PKCE_HPP_INCLUDED</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#endif </span><span class="comment">// KURLYK_HEADER_KURLYK_UTILS_PKCE_HPP_INCLUDED</span></div>
 <div class="ttc" id="aBase64Url_8hpp_html"><div class="ttname"><a href="Base64Url_8hpp.html">Base64Url.hpp</a></div><div class="ttdoc">Provides Base64url encoding and decoding (RFC 4648, no padding).</div></div>
 <div class="ttc" id="anamespacekurlyk_1_1utils_html_a4cd9ffc10257a9e342f8eb38200d69c9"><div class="ttname"><a href="namespacekurlyk_1_1utils.html#a4cd9ffc10257a9e342f8eb38200d69c9">kurlyk::utils::base64url_encode</a></div><div class="ttdeci">std::string base64url_encode(const uint8_t *data, std::size_t length)</div><div class="ttdoc">Encodes a byte buffer using Base64url (RFC 4648) without padding.</div><div class="ttdef"><b>Definition</b> <a href="Base64Url_8hpp_source.html#l00019">Base64Url.hpp:19</a></div></div>
 <div class="ttc" id="anamespacekurlyk_1_1utils_html_a6a241a14f4997276b41b7f44be5beab0"><div class="ttname"><a href="namespacekurlyk_1_1utils.html#a6a241a14f4997276b41b7f44be5beab0">kurlyk::utils::make_s256_code_challenge</a></div><div class="ttdeci">std::string make_s256_code_challenge(const std::string &amp;verifier)</div><div class="ttdoc">Creates an S256 code challenge from a verifier.</div><div class="ttdef"><b>Definition</b> <a href="#l00050">Pkce.hpp:50</a></div></div>

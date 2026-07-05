@@ -1,7 +1,7 @@
 var AuthResult_8hpp =
 [
     [ "kurlyk::AuthResult", "structkurlyk_1_1AuthResult.html", "structkurlyk_1_1AuthResult" ],
-    [ "_KURLYK_HTTP_AUTH_DATA_AUTH_RESULT_HPP_INCLUDED", "AuthResult_8hpp.html#ac51388e48ac1fc14e76369cd3b2fa229", null ],
+    [ "KURLYK_HEADER_KURLYK_HTTP_AUTH_DATA_AUTH_RESULT_HPP_INCLUDED", "AuthResult_8hpp.html#a2dfca725415fb9c7cefe18e74b12b3d8", null ],
     [ "kurlyk::AuthError", "namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7e", [
       [ "kurlyk::AuthError::None", "namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7ea6adf97f83acf6453d4a6a4b1070f3754", null ],
       [ "kurlyk::AuthError::InvalidConfig", "namespacekurlyk.html#acbb3f6fe00e24a291a9912c5fc992a7ea636bc5ca1e0ceb3e4c67067618d7ae09", null ],

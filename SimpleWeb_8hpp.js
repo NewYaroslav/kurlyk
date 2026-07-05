@@ -1,4 +1,4 @@
 var SimpleWeb_8hpp =
 [
-    [ "_KURLYK_WEBSOCKET_CLIENT_SIMPLEWEB_HPP_INCLUDED", "SimpleWeb_8hpp.html#a168f7efbb5caf4c9af5c87a9e992a438", null ]
+    [ "KURLYK_HEADER_KURLYK_WEBSOCKET_CLIENT_SIMPLE_WEB_HPP_INCLUDED", "SimpleWeb_8hpp.html#aa8fa198908cbe1328ca9866225d8979a", null ]
 ];

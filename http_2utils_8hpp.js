@@ -1,6 +1,6 @@
 var http_2utils_8hpp =
 [
-    [ "_KURLYK_HTTP_UTILS_HPP_INCLUDED", "http_2utils_8hpp.html#a62bd4515209d5fc8d8cc38672e95ded7", null ],
+    [ "KURLYK_HEADER_KURLYK_HTTP_UTILS_HPP_INCLUDED", "http_2utils_8hpp.html#a835adb33429e0338d90e634d4fd972fb", null ],
     [ "kurlyk::cancel_request_by_id", "namespacekurlyk.html#a9d19df9f93548f37b62a698c256544ea", null ],
     [ "kurlyk::cancel_request_by_id", "namespacekurlyk.html#af4e359b92f64aabd5129cc30b1c5f715", null ],
     [ "kurlyk::cancel_requests_by_group_id", "namespacekurlyk.html#a2da7af3ac634138be6073b9bd4f33f5c", null ],

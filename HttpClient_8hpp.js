@@ -1,5 +1,5 @@
 var HttpClient_8hpp =
 [
     [ "kurlyk::HttpClient", "classkurlyk_1_1HttpClient.html", "classkurlyk_1_1HttpClient" ],
-    [ "_KURLYK_HTTP_CLIENT_HPP_INCLUDED", "HttpClient_8hpp.html#a0860b7d9e1a8478e8f21399930c85077", null ]
+    [ "KURLYK_HEADER_KURLYK_HTTP_HTTP_CLIENT_HPP_INCLUDED", "HttpClient_8hpp.html#af17488185bc98444486a70a142389885", null ]
 ];

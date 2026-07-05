@@ -1,9 +1,9 @@
 var kurlyk_8hpp =
 [
-    [ "_KURLYK_HPP_INCLUDED", "kurlyk_8hpp.html#aec9e5523233ef57f5563ca8c64cf48e0", null ],
     [ "KURLYK_AUTH_SUPPORT", "kurlyk_8hpp.html#a1b026c6947b2782c006ecbee773be93a", null ],
     [ "KURLYK_AUTO_INIT", "kurlyk_8hpp.html#a372e65e8b39c6631b25aabcb58e7bb84", null ],
     [ "KURLYK_AUTO_INIT_USE_ASYNC", "kurlyk_8hpp.html#a55ea0075f5a7aaffe7884891874481f6", null ],
+    [ "KURLYK_HEADER_KURLYK_HPP_INCLUDED", "kurlyk_8hpp.html#a462403ec7b4b0b715ff45fd89c8edfb4", null ],
     [ "KURLYK_HTTP_SUPPORT", "kurlyk_8hpp.html#a579201de2b5c9ead25f761a41bd0209e", null ],
     [ "KURLYK_JSON_SUPPORT", "kurlyk_8hpp.html#a53e6ff380917d51db382cedd85d3a5ef", null ],
     [ "KURLYK_OAUTH_SUPPORT", "kurlyk_8hpp.html#a293fd762b21eec6bfc4b75957826b4f8", null ],

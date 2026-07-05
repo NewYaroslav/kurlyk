@@ -1,6 +1,6 @@
 var enums_8hpp =
 [
-    [ "_KURLYK_TYPES_ENUMS_HPP_INCLUDED", "enums_8hpp.html#a18d22c95ff6ee0d456ee43345186dbe6", null ],
+    [ "KURLYK_HEADER_KURLYK_TYPES_ENUMS_HPP_INCLUDED", "enums_8hpp.html#aa8de8794ede3e5bccf4166e400cb6db7", null ],
     [ "kurlyk::ProxyType", "namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3d", [
       [ "kurlyk::ProxyType::PROXY_HTTP", "namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3da7df92075ddc48c0c2e21a8dcfa3b11f7", null ],
       [ "kurlyk::ProxyType::PROXY_HTTPS", "namespacekurlyk.html#a28765fa05a81543bbe931861c0fe0c3da7f825d47094d1c989bcf5aab7ae48ee0", null ],

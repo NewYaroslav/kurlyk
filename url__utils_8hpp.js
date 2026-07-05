@@ -1,6 +1,6 @@
 var url__utils_8hpp =
 [
-    [ "_KURLYK_UTILS_URL_UTILS_HPP_INCLUDED", "url__utils_8hpp.html#acd375a874fc0ed4e302ac3cc0f0ef2dc", null ],
+    [ "KURLYK_HEADER_KURLYK_UTILS_URL_UTILS_HPP_INCLUDED", "url__utils_8hpp.html#a8f0241033a775c6b9292826a130f2563", null ],
     [ "kurlyk::utils::extract_protocol", "namespacekurlyk_1_1utils.html#a40cc3ded41234758b6cd5451ac1592f5", null ],
     [ "kurlyk::utils::is_valid_domain", "namespacekurlyk_1_1utils.html#af8f03b4c5fe7994028a8880ff455c932", null ],
     [ "kurlyk::utils::is_valid_path", "namespacekurlyk_1_1utils.html#ab0c697e49c42d39ea9f93e2212e8bfbb", null ],

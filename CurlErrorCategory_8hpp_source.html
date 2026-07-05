@@ -128,8 +128,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('CurlErrorCateg
 </div><!--header-->
 <div class="contents">
 <a href="CurlErrorCategory_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef _KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="CurlErrorCategory_8hpp.html#ac20c15c18d0f6c6aebd6254c94d3dff5">    3</a></span><span class="preprocessor">#define _KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef KURLYK_HEADER_KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="CurlErrorCategory_8hpp.html#a2483f10fe770b2b9713f4418bc8329b8">    3</a></span><span class="preprocessor">#define KURLYK_HEADER_KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacekurlyk_1_1utils.html">kurlyk::utils</a> {</div>
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('CurlErrorCateg
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>} <span class="comment">// namespace kurlyk::utils</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#endif </span><span class="comment">// _KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#endif </span><span class="comment">// KURLYK_HEADER_KURLYK_UTILS_CURL_ERROR_CATEGORY_HPP_INCLUDED</span></div>
 <div class="ttc" id="aclasskurlyk_1_1utils_1_1CurlErrorCategory_html"><div class="ttname"><a href="classkurlyk_1_1utils_1_1CurlErrorCategory.html">kurlyk::utils::CurlErrorCategory</a></div><div class="ttdoc">Represents a custom error category for CURL errors, enabling integration with std::error_code.</div><div class="ttdef"><b>Definition</b> <a href="#l00012">CurlErrorCategory.hpp:12</a></div></div>
 <div class="ttc" id="aclasskurlyk_1_1utils_1_1CurlErrorCategory_html_a10eb84def098d76f8d4e6fc93a99d4c6"><div class="ttname"><a href="classkurlyk_1_1utils_1_1CurlErrorCategory.html#a10eb84def098d76f8d4e6fc93a99d4c6">kurlyk::utils::CurlErrorCategory::name</a></div><div class="ttdeci">const char * name() const noexcept override</div><div class="ttdoc">Returns the name of the error category.</div><div class="ttdef"><b>Definition</b> <a href="#l00016">CurlErrorCategory.hpp:16</a></div></div>
 <div class="ttc" id="aclasskurlyk_1_1utils_1_1CurlErrorCategory_html_a1a136a2cce2a5cfeecd15a444607270f"><div class="ttname"><a href="classkurlyk_1_1utils_1_1CurlErrorCategory.html#a1a136a2cce2a5cfeecd15a444607270f">kurlyk::utils::CurlErrorCategory::message</a></div><div class="ttdeci">std::string message(int ev) const override</div><div class="ttdoc">Returns a descriptive error message for a given CURL error code.</div><div class="ttdef"><b>Definition</b> <a href="#l00023">CurlErrorCategory.hpp:23</a></div></div>

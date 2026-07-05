@@ -1,4 +1,4 @@
 var websocket_8hpp =
 [
-    [ "_KURLYK_WEBSOCKET_HPP_INCLUDED", "websocket_8hpp.html#a3ca0f151ec523073e542853e8db17712", null ]
+    [ "KURLYK_HEADER_KURLYK_WEBSOCKET_HPP_INCLUDED", "websocket_8hpp.html#ae712c6cd00726f71b203929ea1934c1b", null ]
 ];

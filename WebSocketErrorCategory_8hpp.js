@@ -2,7 +2,7 @@ var WebSocketErrorCategory_8hpp =
 [
     [ "kurlyk::utils::WebSocketErrorCategory", "classkurlyk_1_1utils_1_1WebSocketErrorCategory.html", "classkurlyk_1_1utils_1_1WebSocketErrorCategory" ],
     [ "std::is_error_code_enum&lt; kurlyk::utils::WebSocketError &gt;", "structstd_1_1is__error__code__enum_3_01kurlyk_1_1utils_1_1WebSocketError_01_4.html", null ],
-    [ "_KURLYK_UTILS_WEBSOCKET_ERROR_CATEGORY_HPP_INCLUDED", "WebSocketErrorCategory_8hpp.html#a801121e2a827b206144bed2e5caa9039", null ],
+    [ "KURLYK_HEADER_KURLYK_UTILS_WEB_SOCKET_ERROR_CATEGORY_HPP_INCLUDED", "WebSocketErrorCategory_8hpp.html#af9981b5ed9484d66e2dbf45a3b2bfbb3", null ],
     [ "kurlyk::utils::WebSocketError", "namespacekurlyk_1_1utils.html#a59cab8e0e0a2e21d60d85065c5582224", [
       [ "kurlyk::utils::WebSocketError::ConnectionFailed", "namespacekurlyk_1_1utils.html#a59cab8e0e0a2e21d60d85065c5582224aaf98071f760be899f4fcf1d53a29ba17", null ],
       [ "kurlyk::utils::WebSocketError::UnexpectedClose", "namespacekurlyk_1_1utils.html#a59cab8e0e0a2e21d60d85065c5582224ae0a3b68b0325c2195a0ebdf50bc2ed27", null ],

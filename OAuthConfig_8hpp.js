@@ -1,5 +1,5 @@
 var OAuthConfig_8hpp =
 [
     [ "kurlyk::OAuthConfig", "structkurlyk_1_1OAuthConfig.html", "structkurlyk_1_1OAuthConfig" ],
-    [ "_KURLYK_HTTP_AUTH_DATA_OAUTH_CONFIG_HPP_INCLUDED", "OAuthConfig_8hpp.html#a7a0a98ffb7a5f889aadbb2d05fc4f151", null ]
+    [ "KURLYK_HEADER_KURLYK_HTTP_AUTH_DATA_O_AUTH_CONFIG_HPP_INCLUDED", "OAuthConfig_8hpp.html#a9b3d9a38269734e9007d6a36cbe0d0e4", null ]
 ];
