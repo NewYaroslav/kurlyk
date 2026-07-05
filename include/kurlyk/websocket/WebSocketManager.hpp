@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_WEBSOCKET_MANAGER_HPP_INCLUDED
-#define _KURLYK_WEBSOCKET_MANAGER_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_WEBSOCKET_WEB_SOCKET_MANAGER_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_WEBSOCKET_WEB_SOCKET_MANAGER_HPP_INCLUDED
 
 /// \file WebSocketManager.hpp
 /// \brief Defines the WebSocketManager singleton responsible for backend-specific WebSocket client instances.
@@ -131,4 +131,4 @@ namespace kurlyk {
 
 }
 
-#endif // _KURLYK_WEBSOCKET_MANAGER_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_WEBSOCKET_WEB_SOCKET_MANAGER_HPP_INCLUDED

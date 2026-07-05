@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_TYPES_ENUMS_HPP_INCLUDED
-#define _KURLYK_TYPES_ENUMS_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_TYPES_ENUMS_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_TYPES_ENUMS_HPP_INCLUDED
 
 /// \file enums.hpp
 /// \brief Defines enums used across the Kurlyk library, including proxy types, rate limits, and WebSocket events.
@@ -37,4 +37,4 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#endif // _KURLYK_TYPES_ENUMS_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_TYPES_ENUMS_HPP_INCLUDED

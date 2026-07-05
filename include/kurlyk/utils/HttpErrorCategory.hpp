@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_HTTP_ERROR_CATEGORY_HPP_INCLUDED
-#define _KURLYK_UTILS_HTTP_ERROR_CATEGORY_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_HTTP_ERROR_CATEGORY_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_HTTP_ERROR_CATEGORY_HPP_INCLUDED
 
 /// \file HttpErrorCategory.hpp
 /// \brief Defines the HttpErrorCategory class for interpreting HTTP status codes as std::error_code values.
@@ -49,4 +49,4 @@ namespace kurlyk::utils {
 
 } // namespace kurlyk::utils
 
-#endif // _KURLYK_UTILS_HTTP_ERROR_CATEGORY_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_HTTP_ERROR_CATEGORY_HPP_INCLUDED

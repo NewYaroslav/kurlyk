@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_PKCE_HPP_INCLUDED
-#define _KURLYK_UTILS_PKCE_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_PKCE_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_PKCE_HPP_INCLUDED
 
 /// \file Pkce.hpp
 /// \brief Provides PKCE (Proof Key for Code Exchange) utilities per RFC 7636.
@@ -66,4 +66,4 @@ namespace utils {
 } // namespace utils
 } // namespace kurlyk
 
-#endif // _KURLYK_UTILS_PKCE_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_PKCE_HPP_INCLUDED

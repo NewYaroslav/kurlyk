@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_CLIENT_ERROR_CATEGORY_HPP_INCLUDED
-#define _KURLYK_UTILS_CLIENT_ERROR_CATEGORY_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_CLIENT_ERROR_CATEGORY_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_CLIENT_ERROR_CATEGORY_HPP_INCLUDED
 
 /// \file ClientErrorCategory.hpp
 /// \brief Declares the ClientError enumeration and error category for internal client-side failures.
@@ -71,4 +71,4 @@ namespace std {
     struct is_error_code_enum<kurlyk::utils::ClientError> : true_type {};
 }
 
-#endif // _KURLYK_UTILS_CLIENT_ERROR_CATEGORY_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_CLIENT_ERROR_CATEGORY_HPP_INCLUDED

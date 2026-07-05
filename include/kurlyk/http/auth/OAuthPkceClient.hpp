@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HTTP_AUTH_OAUTH_PKCE_CLIENT_HPP_INCLUDED
-#define _KURLYK_HTTP_AUTH_OAUTH_PKCE_CLIENT_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HTTP_AUTH_O_AUTH_PKCE_CLIENT_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HTTP_AUTH_O_AUTH_PKCE_CLIENT_HPP_INCLUDED
 
 /// \file OAuthPkceClient.hpp
 /// \brief OAuth2 Authorization Code + PKCE client using standalone HTTP helpers.
@@ -305,4 +305,4 @@ namespace auth {
 } // namespace http
 } // namespace kurlyk
 
-#endif // _KURLYK_HTTP_AUTH_OAUTH_PKCE_CLIENT_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HTTP_AUTH_O_AUTH_PKCE_CLIENT_HPP_INCLUDED

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_WEBSOCKET_CONFIG_HPP_INCLUDED
-#define _KURLYK_WEBSOCKET_CONFIG_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_WEBSOCKET_DATA_WEB_SOCKET_CONFIG_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_WEBSOCKET_DATA_WEB_SOCKET_CONFIG_HPP_INCLUDED
 
 /// \file WebSocketConfig.hpp
 /// \brief Defines the configuration options for WebSocket connections.
@@ -236,4 +236,4 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#endif // _KURLYK_WEBSOCKET_CONFIG_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_WEBSOCKET_DATA_WEB_SOCKET_CONFIG_HPP_INCLUDED

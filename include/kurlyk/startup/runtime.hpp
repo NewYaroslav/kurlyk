@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_STARTUP_RUNTIME_HPP_INCLUDED
-#define _KURLYK_STARTUP_RUNTIME_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_STARTUP_RUNTIME_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_STARTUP_RUNTIME_HPP_INCLUDED
 
 /// \file runtime.hpp
 /// \brief Provides manual initialization and shutdown functions for the Kurlyk network system.
@@ -47,4 +47,4 @@ namespace kurlyk {
 
 } // namespace kurlyk
 
-#endif // _KURLYK_STARTUP_RUNTIME_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_STARTUP_RUNTIME_HPP_INCLUDED

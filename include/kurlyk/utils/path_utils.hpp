@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_PATH_UTILS_HPP_INCLUDED
-#define _KURLYK_UTILS_PATH_UTILS_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_PATH_UTILS_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_PATH_UTILS_HPP_INCLUDED
 
 /// \file path_utils.hpp
 /// \brief Provides platform-specific utilities for obtaining paths and file locations.
@@ -66,4 +66,4 @@ namespace kurlyk::utils {
 
 } // namespace kurlyk::utils
 
-#endif // _KURLYK_UTILS_PATH_UTILS_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_PATH_UTILS_HPP_INCLUDED

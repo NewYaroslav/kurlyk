@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_CORE_INETWORKTASKMANAGER_HPP_INCLUDED
-#define _KURLYK_CORE_INETWORKTASKMANAGER_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_CORE_I_NETWORK_TASK_MANAGER_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_CORE_I_NETWORK_TASK_MANAGER_HPP_INCLUDED
 
 /// \file INetworkTaskManager.hpp
 /// \brief Defines an interface for modules that can register with the NetworkWorker for lifecycle handling.
@@ -25,4 +25,4 @@ namespace kurlyk::core {
 
 } // namespace kurlyk::core
 
-#endif // _KURLYK_CORE_INETWORKTASKMANAGER_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_CORE_I_NETWORK_TASK_MANAGER_HPP_INCLUDED

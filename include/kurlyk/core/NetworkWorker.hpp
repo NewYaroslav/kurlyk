@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_NETWORK_WORKER_HPP_INCLUDED
-#define _KURLYK_NETWORK_WORKER_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_CORE_NETWORK_WORKER_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_CORE_NETWORK_WORKER_HPP_INCLUDED
 
 /// \file NetworkWorker.hpp
 /// \brief Manages and processes network tasks such as HTTP requests and WebSocket events in a separate thread.
@@ -291,4 +291,4 @@ namespace kurlyk::core {
 
 }; // namespace kurlyk
 
-#endif // _KURLYK_NETWORK_WORKER_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_CORE_NETWORK_WORKER_HPP_INCLUDED

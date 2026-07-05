@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_PERCENT_ENCODING_HPP_INCLUDED
-#define _KURLYK_UTILS_PERCENT_ENCODING_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_PERCENT_ENCODING_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_PERCENT_ENCODING_HPP_INCLUDED
 
 /// \file percent_encoding.hpp
 /// \brief Provides functions for percent-encoding and decoding strings.

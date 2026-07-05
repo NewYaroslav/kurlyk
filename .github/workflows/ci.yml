@@ -69,7 +69,7 @@ jobs:
             openssl_shared: ON
             curl_shared: ON
           - suite: msvc-integration
-            generator: Visual Studio 17 2022
+            generator: Ninja
             preload_deps: ON
             openssl_shared: ON
             curl_shared: ON
@@ -99,7 +99,7 @@ jobs:
           ninja --version
 
       - name: Set up MSVC
-        if: matrix.generator == 'Visual Studio 17 2022'
+        if: matrix.suite == 'msvc-integration'
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure MinGW integration
@@ -136,6 +136,7 @@ jobs:
                 -DKURLYK_TEST_PRELOAD_DEPS=${{ matrix.preload_deps }} `
                 -DKURLYK_OPENSSL_SHARED=${{ matrix.openssl_shared }} `
                 -DKURLYK_CURL_SHARED=${{ matrix.curl_shared }} `
+                -DCMAKE_BUILD_TYPE=Release `
                 -DCMAKE_CXX_STANDARD=17 `
                 -DCMAKE_CXX_STANDARD_REQUIRED=ON `
                 -Wno-dev

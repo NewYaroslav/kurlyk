@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_BASE_WEB_SOCKET_CLIENT_HPP_INCLUDED
-#define _KURLYK_BASE_WEB_SOCKET_CLIENT_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_WEBSOCKET_CLIENT_BASE_WEB_SOCKET_CLIENT_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_WEBSOCKET_CLIENT_BASE_WEB_SOCKET_CLIENT_HPP_INCLUDED
 
 /// \file BaseWebSocketClient.hpp
 /// \brief Contains the definition of the BaseWebSocketClient class, which provides the base functionality for WebSocket clients.
@@ -844,4 +844,4 @@ namespace kurlyk {
 }; // namespace kurlyk
 
 
-#endif // _KURLYK_BASE_WEB_SOCKET_CLIENT_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_WEBSOCKET_CLIENT_BASE_WEB_SOCKET_CLIENT_HPP_INCLUDED

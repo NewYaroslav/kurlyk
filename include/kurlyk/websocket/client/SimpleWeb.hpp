@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_WEBSOCKET_CLIENT_SIMPLEWEB_HPP_INCLUDED
-#define _KURLYK_WEBSOCKET_CLIENT_SIMPLEWEB_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_WEBSOCKET_CLIENT_SIMPLE_WEB_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_WEBSOCKET_CLIENT_SIMPLE_WEB_HPP_INCLUDED
 
 /// \file SimpleWeb.hpp
 /// \brief Declares the SimpleWebSocketClientAdapter implementation for WebSocket communication using Simple-WebSocket-Server.
@@ -9,4 +9,4 @@
 #include "SimpleWeb/SimpleWebSocketWorker.hpp"
 #include "SimpleWeb/SimpleWebSocketClientAdapter.hpp"
 
-#endif // _KURLYK_WEBSOCKET_CLIENT_SIMPLEWEB_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_WEBSOCKET_CLIENT_SIMPLE_WEB_HPP_INCLUDED

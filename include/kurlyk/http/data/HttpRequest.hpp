@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_HTTP_REQUEST_HPP_INCLUDED
-#define _KURLYK_HTTP_REQUEST_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_HTTP_DATA_HTTP_REQUEST_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_HTTP_DATA_HTTP_REQUEST_HPP_INCLUDED
 
 /// \file HttpRequest.hpp
 /// \brief Defines the HttpRequest class for configuring HTTP requests.
@@ -294,4 +294,4 @@ namespace kurlyk {
 
 }; // namespace kurlyk
 
-#endif // _KURLYK_HTTP_REQUEST_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_HTTP_DATA_HTTP_REQUEST_HPP_INCLUDED

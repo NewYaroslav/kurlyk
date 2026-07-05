@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_UTILS_WEBSOCKET_ERROR_CATEGORY_HPP_INCLUDED
-#define _KURLYK_UTILS_WEBSOCKET_ERROR_CATEGORY_HPP_INCLUDED
+#ifndef KURLYK_HEADER_KURLYK_UTILS_WEB_SOCKET_ERROR_CATEGORY_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_UTILS_WEB_SOCKET_ERROR_CATEGORY_HPP_INCLUDED
 
 /// \file WebSocketErrorCategory.hpp
 /// \brief Defines the WebSocketError enumeration and corresponding error category for WebSocket-level failures.
@@ -65,4 +65,4 @@ namespace std {
     struct is_error_code_enum<kurlyk::utils::WebSocketError> : true_type {};
 }
 
-#endif // _KURLYK_UTILS_WEBSOCKET_ERROR_CATEGORY_HPP_INCLUDED
+#endif // KURLYK_HEADER_KURLYK_UTILS_WEB_SOCKET_ERROR_CATEGORY_HPP_INCLUDED

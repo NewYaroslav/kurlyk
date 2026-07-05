@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _KURLYK_SIMPLE_WEB_SOCKET_CLIENT_WSS_HPP
-#define _KURLYK_SIMPLE_WEB_SOCKET_CLIENT_WSS_HPP
+#ifndef KURLYK_HEADER_KURLYK_WEBSOCKET_CLIENT_SIMPLE_WEB_SOCKET_CLIENT_HPP_INCLUDED
+#define KURLYK_HEADER_KURLYK_WEBSOCKET_CLIENT_SIMPLE_WEB_SOCKET_CLIENT_HPP_INCLUDED
 
 /// \file SocketClient.hpp
 /// \brief Defines a WebSocket client with SSL support, extending the functionality of the Simple-Web-Server library.
@@ -232,4 +232,4 @@ namespace SimpleWeb {
 
 } // namespace SimpleWeb
 
-#endif // _KURLYK_SIMPLE_WEB_SOCKET_CLIENT_WSS_HPP
+#endif // KURLYK_HEADER_KURLYK_WEBSOCKET_CLIENT_SIMPLE_WEB_SOCKET_CLIENT_HPP_INCLUDED
